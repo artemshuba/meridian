@@ -34,7 +34,7 @@ namespace VkLib.Core.News
                 parameters.Add("count", count.ToString());
 
             if (offset > 0)
-                parameters.Add("new_offset", offset.ToString());
+                parameters.Add("offset", offset.ToString());
 
             _vkontakte.SignMethod(parameters);
 
