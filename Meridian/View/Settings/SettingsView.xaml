@@ -1,0 +1,67 @@
+﻿<controls:PageBase x:Class="Meridian.View.Settings.SettingsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:behaviours="clr-namespace:Meridian.Behaviours"
+      xmlns:controls="clr-namespace:Meridian.Controls"
+      xmlns:localization="clr-namespace:Meridian.Resources.Localization"
+      mc:Ignorable="d"
+      KeepAlive="False"
+      d:DesignHeight="600" d:DesignWidth="600"
+      x:Name="pageRoot" Background="{StaticResource MainBackgroundBrush}"
+      Loaded="SettingsView_OnLoaded">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!-- Menu -->
+        <Rectangle Fill="Black" Grid.RowSpan="2"/>
+        <Grid Width="200" Background="{StaticResource SidebarBackgroundBrush}">
+            <StackPanel>
+                <Button x:Name="MeridianButton" HorizontalAlignment="Left" Margin="0,5,0,0"
+                        Command="{Binding CloseSettingsCommand}" ToolTip="{x:Static localization:MainResources.BackButton}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <StackPanel x:Name="rootPanel" Opacity="0.7" Orientation="Horizontal" Background="Transparent">
+                                <Path Data="{StaticResource BackIcon}" Fill="{StaticResource SidebarForegroundBrush}" Stretch="Uniform" Width="12" Margin="18,3,0,0"/>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource SidebarForegroundBrush}" Opacity="1" FontSize="13" Margin="8,1,0,0" 
+                                           Text="{x:Static localization:MainResources.Settings}" FontWeight="Regular" TextOptions.TextFormattingMode="Display"/>
+                            </StackPanel>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="1" TargetName="rootPanel"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Opacity" Value="0.6" TargetName="rootPanel"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <ListBox x:Name="MenuListBox" Margin="0,30,0,0" Padding="0,10,0,10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding MenuItems}"
+                         Foreground="White" Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource MainMenuListBoxItemStyle}"
+                         SelectedIndex="0">
+                    <i:Interaction.Behaviors>
+                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40"/>
+                    </i:Interaction.Behaviors>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Key}" FontFamily="Segoe UI SemiLight"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Grid>
+        <Frame x:Name="SettingsFrame" Grid.Column="1" Source="{Binding SelectedItem.Value, ElementName=MenuListBox}" JournalOwnership="OwnsJournal"
+               NavigationUIVisibility="Hidden" Navigated="SettingsFrame_OnNavigated"/>
+    </Grid>
+</controls:PageBase>

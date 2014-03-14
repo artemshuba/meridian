@@ -1,0 +1,404 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PortableRest</name>
+    </assembly>
+    <members>
+        <member name="F:PortableRest.ContentTypes.ByteArray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PortableRest.ContentTypes.FormUrlEncoded">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PortableRest.ContentTypes.Json">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PortableRest.ContentTypes.Xml">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PortableRest.EncodedParameter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PortableRest.EncodedParameter.#ctor(System.String,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:PortableRest.EncodedParameter.#ctor(System.String,System.Object,PortableRest.ParameterEncoding)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <param name="encoding"></param>
+        </member>
+        <member name="P:PortableRest.EncodedParameter.Key">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PortableRest.EncodedParameter.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PortableRest.EncodedParameter.Encoding">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PortableRest.Extensions.StreamExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PortableRest.Extensions.StreamExtensions.ToArray(System.IO.Stream)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PortableRest.TypeExtensions.IsSimpleType(System.Type)">
+            <summary>
+            Determine whether a type is simple (String, Decimal, DateTime, etc) 
+            or complex (i.e. custom class with public properties and methods).
+            </summary>
+            <see cref="!:http://stackoverflow.com/questions/2442534/how-to-test-if-type-is-primitive"/>
+        </member>
+        <member name="T:PortableRest.ParameterEncoding">
+            <summary>
+            Specifies how a body paremeter should be encoded before transmission.
+            </summary>
+        </member>
+        <member name="F:PortableRest.ParameterEncoding.Base64">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PortableRest.ParameterEncoding.ByteArray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PortableRest.ParameterEncoding.UriEncoded">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PortableRest.ParameterEncoding.Unencoded">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PortableRest.PortableRestException.#ctor">
+            <summary>
+            A clean instance of the PortableRestException.
+            </summary>
+            <remarks>You should probably pass more information than this constructor allows.</remarks>
+        </member>
+        <member name="M:PortableRest.PortableRestException.#ctor(System.String)">
+            <summary>
+            An instance of PortableRestException that passes along a human-readable message.
+            </summary>
+            <param name="message">A human-readable message to pass back to the developer.</param>
+        </member>
+        <member name="M:PortableRest.PortableRestException.#ctor(System.String,System.String)">
+            <summary>
+            An instance of PortableRestException that passes along a human-readable message, 
+            along with the node causing the problem.
+            </summary>
+            <param name="message">A human-readable message to pass back to the developer.</param>
+            <param name="xmlReaderContents">The contents of the XmlReader at the time of the exception.</param>
+        </member>
+        <member name="M:PortableRest.PortableRestException.#ctor(System.String,System.Exception)">
+            <summary>
+            An instance of PortableRestException that passes along a human-readable message, 
+            along with the original Exception thrown by the Serializer.
+            </summary>
+            <param name="message">A human-readable message to pass back to the developer.</param>
+            <param name="inner">The Exception thrown by the Serializer.</param>
+        </member>
+        <member name="M:PortableRest.PortableRestException.#ctor(System.String,System.String,System.Exception)">
+            <summary>
+            An instance of PortableRestException that passes along a human-readable message, 
+            along with the node causing the problem, and the original Exception thrown by the Serializer.
+            </summary>
+            <param name="message">A human-readable message to pass back to the developer.</param>
+            <param name="xmlReaderContents">The contents of the XmlReader at the time of the exception.</param>
+            <param name="inner">The Exception thrown by the Serializer.</param>
+            <remarks>This is the instance that will typically be thrown on a serialization error.</remarks>
+        </member>
+        <member name="P:PortableRest.PortableRestException.XmlReaderContents">
+            <summary>
+            The contents of the XmlReader at the time of the exception.
+            </summary>
+            <remarks>This can help you figure out what node is causing the problem with Serialization,
+            as DataCOntractSerializer does not provide this information by default.</remarks>
+        </member>
+        <member name="T:PortableRest.RestClient">
+            <summary>
+            Base client to create REST requests and process REST responses. Uses <see cref="T:System.Net.Http.HttpClient"/> as the underlying transport.
+            </summary>
+        </member>
+        <member name="M:PortableRest.RestClient.#ctor">
+            <summary>
+            Creates a new instance of the RestClient class.
+            </summary>
+        </member>
+        <member name="M:PortableRest.RestClient.AddHeader(System.String,System.String)">
+            <summary>
+            Adds a header for a given string key and string value.
+            </summary>
+            <param name="key">The header to add.</param>
+            <param name="value">The value of the header being added.</param>
+        </member>
+        <member name="M:PortableRest.RestClient.SetUserAgent``1(System.String)">
+            <summary>
+            Sets the <see cref="P:PortableRest.RestClient.UserAgent"/> for this client in a standardized format using a Type from your client library.
+            </summary>
+            <param name="displayName">
+            Optional. The name you want displayed for this Client. If left blank, it will default to the AssemblyTitleAttribute value from the AssemblyInfo file.
+            </param>
+            <typeparam name="T">A type from your Client Library that can be used to get the assembly information.</typeparam>
+            <remarks>This will set the <see cref="P:PortableRest.RestClient.UserAgent"/> to "YourAssemblyName Major.Minor.Revision (PortableRest Major.Minor.Revision)</remarks>
+        </member>
+        <member name="M:PortableRest.RestClient.ExecuteAsync``1(PortableRest.RestRequest)">
+            <summary>
+            Executes an asynchronous request to the given resource and deserializes the response to an object of T.
+            </summary>
+            <typeparam name="T">The type to deserialize to.</typeparam>
+            <param name="restRequest">The RestRequest to execute.</param>
+            <returns>An object of T.</returns>
+        </member>
+        <member name="M:PortableRest.RestClient.Transform(System.Xml.Linq.XNode,PortableRest.RestRequest)">
+            <summary>
+            Helps deal with the fact that the XmlSerializer is not supported, and the DataContractSerializer hates XmlAttributes.
+            </summary>
+            <param name="node"></param>
+            <param name="request"></param>
+            <returns></returns>
+            <remarks>Technique from http://blogs.msdn.com/b/ericwhite/archive/2009/07/20/a-tutorial-in-the-recursive-approach-to-pure-functional-transformations-of-xml.aspx </remarks>
+        </member>
+        <member name="P:PortableRest.RestClient.BaseUrl">
+            <summary>
+            The base URL for the resource this client will access.
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestClient.DateFormat">
+            <summary>
+            The format to be used when serializing and deserializing dates.
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestClient.UserAgent">
+            <summary>
+            The User Agent string to pass back to the API.
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestClient.Headers">
+            <summary>
+            A list of KeyValuePairs that will be appended to the Headers collection for all requests.
+            </summary>
+        </member>
+        <member name="T:PortableRest.RestRequest">
+            <summary>
+            Specifies the parameters for the HTTP request that will be executed against a given resource.
+            </summary>
+        </member>
+        <member name="M:PortableRest.RestRequest.#ctor">
+            <summary>
+            Creates a new RestRequest instance, assuming the request will be an HTTP GET.
+            </summary>
+        </member>
+        <member name="M:PortableRest.RestRequest.#ctor(System.String)">
+            <summary>
+            Creates a new RestRequest instance for a given Resource.
+            </summary>
+            <param name="resource">The specific resource to access.</param>
+        </member>
+        <member name="M:PortableRest.RestRequest.#ctor(System.String,System.Net.Http.HttpMethod)">
+            <summary>
+            Creates a new RestRequest instance for a given Resource and Method.
+            </summary>
+            <param name="resource">The specific resource to access.</param>
+            <param name="method">The HTTP method to use for the request.</param>
+        </member>
+        <member name="M:PortableRest.RestRequest.#ctor(System.String,System.Net.Http.HttpMethod,System.Boolean)">
+            <summary>
+            Creates a new RestRequest instance for a given Resource and Method, specifying whether or not to ignore the root object in the response.
+            </summary>
+            <param name="resource">The URL format string of the resource to request.</param>
+            <param name="method">The <see cref="T:System.Net.Http.HttpMethod"/> for the request.</param>
+            <param name="ignoreRoot">Whether or not the root object from the response should be ignored.</param>
+        </member>
+        <member name="M:PortableRest.RestRequest.AddHeader(System.String,System.Object)">
+            <summary>
+            Adds an Header to only this specific request.
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <remarks>Use this if you have an authentication token that times out on a regular basis.</remarks>
+        </member>
+        <member name="M:PortableRest.RestRequest.AddParameter(System.Object)">
+            <summary>
+            Adds an unnamed parameter to the body of the request.
+            </summary>
+            <param name="value"></param>
+            <remarks>Use this method if you're not using UrlFormEncoded requests.</remarks>
+        </member>
+        <member name="M:PortableRest.RestRequest.AddParameter(System.String,System.Object,PortableRest.ParameterEncoding)">
+            <summary>
+            Adds a parameter to the body of the request, to be encoded with the specified format.
+            </summary>
+            <param name="key"></param>
+            <param name="value">
+            For ByteArrays or Base64, this needs to be a Stream, or an exception will be thrown when the request is executed.
+            </param>
+            <param name="encoding"></param>
+            <remarks>Note: If the ContentType is anything other than UrlFormEncoded, only the first Parameter will be serialzed to the request body.</remarks>
+        </member>
+        <member name="M:PortableRest.RestRequest.AddUrlSegment(System.String,System.String)">
+            <summary>
+            Replaces tokenized segments of the URL with a desired value.
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <example>If <code>Resource = "{entity}/Samples.aspx"</code> and <code>someVariable.Publisher = "Disney";</code>, then
+            <code>Resource.AddUrlSegment("entity", someVariable.Publisher);</code> becomes <code>Resource = "Disney/Samples.aspx";</code></example>
+        </member>
+        <member name="M:PortableRest.RestRequest.AddQueryString(System.String,System.String)">
+            <summary>
+            Appends a key/value pair to the end of the existing QueryString in a URI.
+            </summary>
+            <param name="key">The string key to append to the QueryString.</param>
+            <param name="value">The string value to append to the QueryString.</param>
+        </member>
+        <member name="M:PortableRest.RestRequest.AddQueryString(System.String,System.Object)">
+            <summary>
+            Appends a key/value pair to the end of the existing QueryString in a URI.
+            </summary>
+            <param name="key">The string key to append to the QueryString.</param>
+            <param name="value">The value to append to the QueryString (we will call .ToString() for you).</param>
+        </member>
+        <member name="M:PortableRest.RestRequest.GetResourceUri(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="baseUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PortableRest.RestRequest.GetContentType">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PortableRest.RestRequest.GetRequestBody">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PortableRest.RestRequest.Transform(System.Xml.Linq.XNode,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="node"></param>
+            <param name="type"></param>
+            <returns></returns>
+            <remarks>Technique from http://blogs.msdn.com/b/ericwhite/archive/2009/07/20/a-tutorial-in-the-recursive-approach-to-pure-functional-transformations-of-xml.aspx </remarks>
+        </member>
+        <member name="P:PortableRest.RestRequest.UrlSegments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestRequest.Parameters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestRequest.ContentType">
+            <summary>
+            The <see cref="P:PortableRest.RestRequest.ContentType"/> of the request.
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestRequest.DateFormat">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestRequest.Headers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestRequest.IgnoreRootElement">
+            <summary>
+            Specifies whether or not the root element in the response.
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestRequest.IgnoreXmlAttributes">
+            <summary>
+            When <see cref="F:PortableRest.ContentTypes.Xml"/>, specifies whether or not attributes should be ignored.
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestRequest.Method">
+            <summary>
+            The HTTP method to use for the request.
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestRequest.Resource">
+            <summary>
+            A string representation of the specific resource to access, using ASP.NET MVC-like replaceable tokens.
+            </summary>
+        </member>
+        <member name="P:PortableRest.RestRequest.ReturnRawString">
+            <summary>
+            Tells the RestClient to skip deserialization and return the raw result.
+            </summary>
+        </member>
+        <member name="M:PortableRest.UrlSegment.#ctor(System.String,System.String)">
+            <summary>
+            The default constructor for UrlSegments.
+            </summary>
+            <param name="key">The segment name.</param>
+            <param name="value">The segment value.</param>
+        </member>
+        <member name="M:PortableRest.UrlSegment.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            The default constructor for QueryStrings.
+            </summary>
+            <param name="key">The QueryString name.</param>
+            <param name="value">The QueryString value.</param>
+            <param name="isQueryString"></param>
+        </member>
+        <member name="P:PortableRest.UrlSegment.Key">
+            <summary>
+            The variable name part of the Segment
+            </summary>
+        </member>
+        <member name="P:PortableRest.UrlSegment.Value">
+            <summary>
+            The value to pass back to the service.
+            </summary>
+        </member>
+        <member name="P:PortableRest.UrlSegment.IsQueryString">
+            <summary>
+            Whether or not the Segment is part of the main URL or the QueryString.
+            </summary>
+        </member>
+    </members>
+</doc>

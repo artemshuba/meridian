@@ -1,0 +1,528 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Xbox.Music</name>
+    </assembly>
+    <members>
+        <member name="T:Xbox.Music.Album">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Xbox.Music.EntryBase">
+            <summary>
+            The base object from which the main Xbox Music types inherit.
+            </summary>
+        </member>
+        <member name="M:Xbox.Music.EntryBase.GetImage(System.Int32,System.Int32,Xbox.Music.ImageResizeMode,System.String)">
+            <summary>
+            Gets a resized image based on the formatting criteria allowed by the Xbox Music service.
+            </summary>
+            <param name="width">Image width in pixels.</param>
+            <param name="height">Image height in pixels.</param>
+            <param name="mode">The mode with wich to resize the image.</param>
+            <param name="backgroundColor">
+            HTML-compliant color for letterbox resize mode background. Hex values must start with a #. 
+            Can also use color names, such as "green". Defaults to an empty string.
+            </param>
+            <returns>A string with the URL for the requested image specifications.</returns>
+        </member>
+        <member name="M:Xbox.Music.EntryBase.GetDeepLink(Xbox.Music.LinkAction)">
+            <summary>
+            Creates a link that opens the platform's Xbox Music app with the specified view.
+            </summary>
+            <param name="action">The view to open for this particular entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Xbox.Music.EntryBase.GetDeepLink(System.String,Xbox.Music.LinkAction)">
+            <summary>
+            Creates an Affiliate link that opens the platform's Xbox Music app with the specified view.
+            </summary>
+            <param name="affiliateId">The AffiliateID assigned to you by LinkSynergy.</param>
+            <param name="action">The view to open for this particular entity.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Xbox.Music.EntryBase.Id">
+            <summary>
+            Identifier for this piece of content. All IDs are of the form {namespace}.{actual identifier} 
+            and may be used in lookup requests.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.EntryBase.Name">
+            <summary>
+            The name of this piece of content.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.EntryBase.ImageUrl">
+            <summary>
+            A direct link to the default image associated with this piece of content.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.EntryBase.Link">
+            <summary>
+            A music.xbox.com link that redirects to a contextual page for this piece of content on the 
+            relevant Xbox Music client application depending on the user's device or operating system.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.EntryBase.OtherIds">
+            <summary>
+            An optional collection of other IDs that identify this piece of content on top of the main ID. 
+            Each key is the namespace or subnamespace in which the ID belongs, and each value is a secondary ID for this piece of content.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.EntryBase.Source">
+            <summary>
+            An indication of the data source for this piece of content. Currently only "Catalog" is supported.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Album.ReleaseDate">
+            <summary>
+            Nullable. The album release date.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Album.Duration">
+            <summary>
+            Nullable. The album total duration.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Album.TrackCount">
+            <summary>
+            Nullable. The number of tracks on the album.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Album.IsExplicit">
+            <summary>
+            Nullable. True if the album contains explicit content.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Album.LabelName">
+            <summary>
+            The name of the music label that produced this album.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Album.Genres">
+            <summary>
+            The list of musical genres associated with this album.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Album.AlbumType">
+            <summary>
+            The type of album (for example, Album, Single, and so on).
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Album.Rights">
+            <summary>
+            The list of distribution rights associated with this album in Xbox Music (for example, Stream, Purchase, and so on).
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Album.Artists">
+            <summary>
+            The list of contributors (artists and their roles) to the album.
+            </summary>
+        </member>
+        <member name="T:Xbox.Music.Artist">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Artist.Genres">
+            <summary>
+            The list of musical genres associated with this artist.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Artist.RelatedArtists">
+            <summary>
+            An optional paginated list of related artists. 
+            </summary>
+            <remarks>
+            This list is null by default unless requested as extra information in a lookup request. Artists in this list contain 
+            only a few fields, including the ID that should be used in a lookup request in order to have the full artist properties.
+            </remarks>
+        </member>
+        <member name="P:Xbox.Music.Artist.Albums">
+            <summary>
+            An optional paginated list of the artist's albums, ordered by decreasing order of release date (latest first).
+            </summary>
+            <remarks>
+            This list is null by default unless requested as extra information in a lookup request. Albums in this list contain only 
+            a few fields, including the ID that should be used in a lookup request in order to have the full album properties.
+            </remarks>
+        </member>
+        <member name="P:Xbox.Music.Artist.TopTracks">
+            <summary>
+            A paginated list of the artist's top tracks, ordered by decreasing order of popularity. 
+            </summary>
+            <remarks>
+            This list is null by default unless requested as extra information in a lookup request. Tracks in this list contain 
+            only a few fields, including the ID that should be used in a lookup request in order to have the full track properties.
+            </remarks>
+        </member>
+        <member name="T:Xbox.Music.ContentResponse">
+            <summary>
+            The root object returned by the service.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.ContentResponse.Artists">
+            <summary>
+            A paginated list of Artists that matched the request criteria.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.ContentResponse.Albums">
+            <summary>
+            A paginated list of Albums that matched the request criteria.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.ContentResponse.Tracks">
+            <summary>
+            A paginated list of Tracks that matched the request criteria.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.ContentResponse.Error">
+            <summary>
+            Optional error.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Error.ErrorCode">
+            <summary>
+            The error code, as described in the following table of error codes.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Error.Description">
+            <summary>
+            A user-friendly description of the error code.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Error.Message">
+            <summary>
+            A more contextual message describing what may have gone wrong.
+            </summary>
+        </member>
+        <member name="T:Xbox.Music.ImageResizeMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Xbox.Music.ImageResizeMode.Scale">
+            <summary>
+            Resize to maximum size which fits dimension without changing the aspect ratio.
+            </summary>
+        </member>
+        <member name="F:Xbox.Music.ImageResizeMode.Letterbox">
+            <summary>
+            Pad to dimension after resize if aspect ratio didn't match.
+            </summary>
+        </member>
+        <member name="F:Xbox.Music.ImageResizeMode.Crop">
+            <summary>
+            Get the required width and height but image is cropped.
+            </summary>
+        </member>
+        <member name="T:Xbox.Music.LookupOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Xbox.Music.LookupOptions.#ctor">
+            <summary>
+            Creates a new <see cref="T:Xbox.Music.LookupOptions"/> instance with all options disabled.
+            </summary>
+        </member>
+        <member name="M:Xbox.Music.LookupOptions.#ctor(System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:Xbox.Music.LookupOptions"/> instance that specifies whether or not with all options should be enabled.
+            </summary>
+            <param name="getEverything">Specifies whether or not all lookup options should be returned.</param>
+        </member>
+        <member name="P:Xbox.Music.LookupOptions.GetArtistAlbums">
+            <summary>
+            Specifies whether or not Albums should be returned for each Artist.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.LookupOptions.GetArtistTopTracks">
+            <summary>
+            Specifies whether or not <see cref="P:Xbox.Music.Artist.TopTracks">Top Tracks</see> should be returned for each Artist.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.LookupOptions.GetAlbumTracks">
+            <summary>
+            Specifies whether or not Tracks should be returned for each Album.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.LookupOptions.GetAlbumArtistDetails">
+            <summary>
+            Specifies whether or not Artist details should be returned for each Album.
+            </summary>
+            <remarks>Level of detail equivalent to a Lookup call on the <see cref="T:Xbox.Music.Artist"/>.</remarks>
+        </member>
+        <member name="P:Xbox.Music.LookupOptions.GetTrackAlbumDetails">
+            <summary>
+            Specifies whether or not Album details should be returned for each Track.
+            </summary>
+            <remarks>Level of detail equivalent to a Lookup call on the <see cref="T:Xbox.Music.Album"/>.</remarks>
+        </member>
+        <member name="P:Xbox.Music.LookupOptions.GetTrackArtistDetails">
+            <summary>
+            Specifies whether or not Artist details should be returned for each Track.
+            </summary>
+            <remarks>Level of detail equivalent to a Lookup call on the <see cref="T:Xbox.Music.Artist"/>.</remarks>
+        </member>
+        <member name="P:Xbox.Music.TokenResponse.AccessToken">
+            <summary>
+            The access token that you can use to authenticate you access to the Xbox Music RESTful API.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.TokenResponse.TokenType">
+            <summary>
+            The data type of the token. Currently, Azure Marketplace returns http://schemas.xmlsoap.org/ws/2009/11/swt-token-profile-1.0, which indicates that a Simple Web Token will be returned.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.TokenResponse.ExpiresInSeconds">
+            <summary>
+            The number of seconds for which the access token is valid.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.TokenResponse.Scope">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.TokenResponse.TimeStamp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.TokenResponse.IsValid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.TokenResponse.NeedsRefresh">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Xbox.Music.LinkAction.View">
+            <summary>
+            Default. Launches the content details view.
+            </summary>
+        </member>
+        <member name="F:Xbox.Music.LinkAction.Play">
+            <summary>
+            Launches playback of the media content.
+            </summary>
+        </member>
+        <member name="F:Xbox.Music.LinkAction.AddToCollection">
+            <summary>
+            Opens the "add to collection" screen on the Xbox Music service.
+            </summary>
+        </member>
+        <member name="F:Xbox.Music.LinkAction.Buy">
+            <summary>
+            Opens the appropriate purchase flow on the Xbox Music service.
+            </summary>
+        </member>
+        <member name="T:Xbox.Music.MusicClient">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new instance of the MusicClient for a given ClientId and ClientSecret.
+            </summary>
+            <param name="clientId"></param>
+            <param name="clientSecret"></param>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.Find(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Allows you to find a <see cref="T:Xbox.Music.Artist"/>/<see cref="T:Xbox.Music.Album"/>/<see cref="T:Xbox.Music.Track"/> by a string query.
+            </summary>
+            <param name="query">The term to search for.</param>
+            <param name="maxItems">The maximum number of results per page to return.</param>
+            <param name="getArtists">Specifies whether or not to include <see cref="T:Xbox.Music.Artist">Artists</see> in the results. Defaults to true.</param>
+            <param name="getAlbums">Specifies whether or not to include <see cref="T:Xbox.Music.Album">Albums</see> in the results. Defaults to true.</param>
+            <param name="getTracks">Specifies whether or not to include <see cref="T:Xbox.Music.Track">Tracks</see> in the results. Defaults to true.</param>
+            <returns>A <see cref="T:Xbox.Music.ContentResponse"/> object populated with results from the Xbox Music service.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">This exception is thrown if you try to ask for more than 25 items.</exception>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.Find(System.String,System.String)">
+            <summary>
+            Allows you to continue a previous search request.
+            </summary>
+            <param name="query">The term to search for.</param>
+            <param name="continuationToken"></param>
+            <returns>A <see cref="T:Xbox.Music.ContentResponse"/> object populated with results from the Xbox Music service.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">This exception is thrown if you try to ask for more than 25 items.</exception>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.Get(System.String,Xbox.Music.LookupOptions)">
+            <summary>
+            Allows you to get an <see cref="T:Xbox.Music.Artist"/>/<see cref="T:Xbox.Music.Album"/>/<see cref="T:Xbox.Music.Track"/> by a known identifier. 
+            </summary>
+            <param name="id">The ID to search for. Must start with "music."</param>
+            <param name="options"></param>
+            <returns>A <see cref="T:Xbox.Music.ContentResponse"/> object populated with results from the Xbox Music service.</returns>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.Get(System.Collections.Generic.List{System.String},Xbox.Music.LookupOptions)">
+            <summary>
+            Allows you to get multiple <see cref="T:Xbox.Music.Artist">Artists</see>/<see cref="T:Xbox.Music.Album">Albums</see>/<see cref="T:Xbox.Music.Track">Tracks</see> by known identifiers. 
+            </summary>
+            <param name="ids">A List of IDs to search for. Must start with "music."</param>
+            <param name="options">Optional. A <see cref="T:Xbox.Music.LookupOptions"/> instance with details on what additional information should be returned.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>A <see cref="T:Xbox.Music.ContentResponse"/> object populated with results from the Xbox Music service.</returns>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.Get(System.String,System.String)">
+            <summary>
+            Allows you to get an <see cref="T:Xbox.Music.Artist"/>/<see cref="T:Xbox.Music.Album"/>/<see cref="T:Xbox.Music.Track"/> by a known identifier, 
+            and the ContinuationToken from a previous request.
+            </summary>
+            <param name="id">The ID to search for. Must start with "music."</param>
+            <param name="continuationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.Get(System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Allows you to get multiple <see cref="T:Xbox.Music.Artist">Artists</see>/<see cref="T:Xbox.Music.Album">Albums</see>/<see cref="T:Xbox.Music.Track">Tracks</see> by known identifiers,
+            and the ContinuationToken from a previous request.
+            </summary>
+            <param name="ids">A List of IDs to search for. Must start with "music."</param>
+            <param name="continuationToken">The PaginatedList.ContinuationToken from a previous request.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.GetPopulatedRequest(System.String)">
+            <summary>
+            Gets a new <see cref="T:PortableRest.RestRequest"/> populated with the common values for every request.
+            </summary>
+            <param name="resourceUrl"></param>
+            <returns>A new <see cref="T:PortableRest.RestRequest"/> populated with the common values for every request</returns>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.CheckToken">
+            <summary>
+            Checks to see if the token needs to be acquired or refreshed. If the Token is null or invalid, 
+            it will block the calling method until the Token request completes. Otherwise it will be considered
+            a proactive refresh and get an updated token in the background.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Xbox.Music.MusicClient.Authenticate">
+            <summary>
+            Acquires a new AuthToken from Azure Access Control.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Xbox.Music.MusicClient.ClientId">
+            <summary>
+            The Client ID assigned to you from your Azure Marketplace account.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.MusicClient.ClientSecret">
+            <summary>
+            The Client Secret assigned to you from your Azure Marketplace account.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.MusicClient.Language">
+            <summary>
+            Optional. The two-letter standard code identifying the requested language for the response content. 
+            If not specified, defaults to the country's primary language.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.MusicClient.Country">
+            <summary>
+            Optional. The standard two-letter code that identifies the country/region of the user. 
+            If not specified, the value defaults to the geolocated country/region of the client's IP address. 
+            Responses will be filtered to provide only those that match the user's country/region.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.MusicClient.TokenResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Xbox.Music.PaginatedList`1">
+            <summary>
+            Some of the methods in the Xbox Music RESTful API return lists of elements in their responses (for example, 
+            search results, albums of an artist, tracks of an album, and so on). These lists can potentially be very large, 
+            so we have put in place a mechanism to paginate these lists by using a continuation token. These lists and 
+            tokens are returned in a PaginatedList object. 
+            </summary>
+            <typeparam name="T">The type of item (inheriting from EntryBase) that comprises the List.</typeparam>
+        </member>
+        <member name="P:Xbox.Music.PaginatedList`1.Items">
+            <summary>
+            The items composing the paginated list.
+            </summary>
+            <remarks>
+            When a list is of relatively small size, Items will contain the full list and ContinuationToken 
+            will be null. However, the list may be incomplete, which is indicated by the value of ContinuationToken.
+            </remarks>
+        </member>
+        <member name="P:Xbox.Music.PaginatedList`1.ContinuationToken">
+            <summary>
+            An opaque string that may be provided in a subsequent request to the same URL in order to continue the list.
+            </summary>
+            <remarks>
+             If ContinuationToken is not null, then the list is not complete, and the token may be used to retrieve the 
+            remaining elements. A null value indicates that the list has no remaining items yet to be returned.
+            </remarks>
+        </member>
+        <member name="T:Xbox.Music.Track">
+            <summary>
+            An individual piece of musical content from an <see cref="P:Xbox.Music.Track.Album"/>. 
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Track.Duration">
+            <summary>
+            Nullable. The track duration.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Track.TrackNumber">
+            <summary>
+            Nullable. The position of the track in the album.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Track.IsExplicit">
+            <summary>
+            Nullable. True if the track contains explicit content.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Track.Genres">
+            <summary>
+            The list of musical genres associated with this track.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Track.Rights">
+            <summary>
+            The list of distribution rights associated with this track in Xbox Music (for example, Stream, Purchase, and so on).
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Track.Album">
+            <summary>
+            The album this track belongs to.
+            </summary>
+            <remarks>
+            Only a few fields are populated in this Album element, including the ID that should be used in a lookup request in order to have the full album properties.
+            </remarks>
+        </member>
+        <member name="P:Xbox.Music.Track.Artists">
+            <summary>
+            The list of contributors (artists and their roles) to the album.
+            </summary>
+        </member>
+        <member name="T:Xbox.Music.Contributor">
+            <summary>
+            An individual or group who contributed work to an <see cref="T:Xbox.Music.Album"/> or <see cref="T:Xbox.Music.Track"/>.
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Contributor.Role">
+            <summary>
+            The type of contribution, such as "Main" or "Featured".
+            </summary>
+        </member>
+        <member name="P:Xbox.Music.Contributor.Artist">
+            <summary>
+            The contributing artist.
+            </summary>
+        </member>
+    </members>
+</doc>

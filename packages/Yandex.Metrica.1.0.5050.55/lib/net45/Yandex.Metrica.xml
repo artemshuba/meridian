@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Yandex.Metrica</name>
+  </assembly>
+  <members>
+    <member name="T:Yandex.Metrica.Counter">
+      <summary>
+            Static class which exposes methods for Metrica operations.
+            </summary>
+    </member>
+    <member name="P:Yandex.Metrica.Counter.ApiKey">
+      <summary>
+            Yandex.Metrica API Key value. Must be an unsigned int.
+            </summary>
+    </member>
+    <member name="P:Yandex.Metrica.Counter.CustomAppVersion">
+      <summary>
+            Version of application.
+            </summary>
+    </member>
+    <member name="P:Yandex.Metrica.Counter.CustomReportUrl">
+      <summary>
+            Base URI of report host.
+            </summary>
+    </member>
+    <member name="P:Yandex.Metrica.Counter.DispatchPeriod">
+      <summary>
+            Interval between events cache sending.
+            </summary>
+    </member>
+    <member name="P:Yandex.Metrica.Counter.MaxReportsCount">
+      <summary>
+            As soon as this number of events is in cache data is sent.
+            </summary>
+    </member>
+    <member name="P:Yandex.Metrica.Counter.ReportCrashesEnabled">
+      <summary>
+            Indicates library should catch unhandled exceptions.
+            </summary>
+    </member>
+    <member name="M:Yandex.Metrica.Counter.ReportError(System.String,System.Exception)">
+      <summary>
+            Report an error or a handled exception. Returns immediately.
+            </summary>
+      <param name="message">Description of an error.</param>
+      <param name="ex">Exception object.</param>
+    </member>
+    <member name="M:Yandex.Metrica.Counter.ReportEvent(System.String)">
+      <summary>
+            Report application event. Returns immediately.
+            </summary>
+      <param name="eventName">Event name.</param>
+    </member>
+    <member name="M:Yandex.Metrica.Counter.ReportExit">
+      <summary>
+            Call this method when application is about to exit.
+            This allows metrica to save its state and cached events.
+            </summary>
+    </member>
+    <member name="M:Yandex.Metrica.Counter.ReportUnhandledException(System.Exception)">
+      <summary>
+            Report unhandled exception. Does not return immediately.
+            </summary>
+      <param name="ex">Unhandled exception object.</param>
+    </member>
+    <member name="M:Yandex.Metrica.Counter.SendEventsBuffer">
+      <summary>
+            Send events immediately.
+            </summary>
+      <exception cref="T:System.InvalidOperationException">
+            If ApiKey was not specified before this call. 
+            Specify ApiKey using <see cref="M:Yandex.Metrica.Counter.Start(System.UInt32)" /> method.</exception>
+    </member>
+    <member name="M:Yandex.Metrica.Counter.SetLocation(System.Double,System.Double)">
+      <summary>
+            Specify session location explicitly.
+            </summary>
+      <param name="latitude">Location latitude.</param>
+      <param name="longitude">Location longitude.</param>
+    </member>
+    <member name="M:Yandex.Metrica.Counter.Start(System.UInt32)">
+      <summary>
+            Start counter service with specified options.
+            </summary>
+      <param name="apiKey">Mandatory ApiKey.</param>
+    </member>
+    <member name="M:Yandex.Metrica.Counter.StartNewSessionManually">
+      <summary>
+            Report session start. Returns immediately.
+            </summary>
+    </member>
+    <member name="P:Yandex.Metrica.Counter.TrackLocationEnabled">
+      <summary>
+            Indicates library can use location services.
+            </summary>
+    </member>
+  </members>
+</doc>

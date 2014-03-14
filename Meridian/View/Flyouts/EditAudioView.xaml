@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Meridian.View.Flyouts.EditAudioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:localization="clr-namespace:Meridian.Resources.Localization"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400"
+             Focusable="True" FocusManager.IsFocusScope="True"
+             Background="{StaticResource MainBackgroundBrush}" VerticalAlignment="Center">
+    <Grid HorizontalAlignment="Center" Width="320" Height="380">
+        <StackPanel Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+            <TextBlock Text="{x:Static localization:MainResources.EditAudioTitle}" Foreground="{StaticResource AccentBrush}" FontSize="24" FontWeight="Light"/>
+            <TextBlock Text="{x:Static localization:MainResources.EditAudioName}" FontSize="12" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBox x:Name="TitleTextBox" Margin="0,3,0,0" Text="{Binding Title, Mode=TwoWay}" Style="{StaticResource CommonTextBoxStyle}" Foreground="{StaticResource ForegroundBrush}" />
+            <TextBlock Text="{x:Static localization:MainResources.EditAudioArtist}" FontSize="12" Margin="0,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBox Margin="0,3,0,0" Text="{Binding Artist, Mode=TwoWay}" Style="{StaticResource CommonTextBoxStyle}" Foreground="{StaticResource ForegroundBrush}" />
+            <TextBlock Text="{x:Static localization:MainResources.EditAudioLyrics}" FontSize="12" Margin="0,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+            <ScrollViewer Margin="0,3,0,0">
+                <TextBox AcceptsReturn="True" Text="{Binding Lyrics, Mode=TwoWay}" TextWrapping="Wrap" Style="{StaticResource CommonTextBoxStyle}" Height="100"
+                         Foreground="{StaticResource ForegroundBrush}" MaxLength="999999"/>
+            </ScrollViewer>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                <Button Content="{x:Static localization:MainResources.EditAudioSave}" Padding="23,3" Margin="0,0,10,0" Style="{StaticResource HighlightedButtonStyle}" Command="{Binding SaveCommand}"/>
+                <Button Content="{x:Static localization:MainResources.CancelButton}" Padding="23,3" Style="{StaticResource CommonButtonStyle}" Command="{Binding CloseCommand}"/>
+            </StackPanel>
+        </StackPanel>
+        <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,87 @@
+﻿<controls:PageBase x:Class="Meridian.View.Search.ArtistAlbumsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:controls="clr-namespace:Meridian.Controls"
+      xmlns:helpers="clr-namespace:Meridian.Helpers"
+      xmlns:localization="clr-namespace:Meridian.Resources.Localization"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="600"
+      Background="{StaticResource MainBackgroundBrush}"
+      x:Name="pageRoot" KeepAlive="False">
+
+    <Page.RenderTransform>
+        <TranslateTransform />
+    </Page.RenderTransform>
+
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
+        </EventTrigger>
+    </Page.Triggers>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="120" StaysOpen="False" VerticalOffset="10"
+                   PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
+                <Border Background="White" BorderThickness="1" BorderBrush="Black">
+                    <ItemsControl>
+                        <MenuItem Header="{x:Static localization:MainResources.HeaderMenuShare}" Command="{Binding ShareCommand}" Click="MenuItem_OnClick"/>
+                    </ItemsControl>
+                </Border>
+            </Popup>
+            <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
+                    HorizontalAlignment="Left" Width="25" Height="25"
+                    Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Grid Margin="24,20,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image helpers:ImageAsyncHelper.SourceUri="{Binding Artist.ImageLarge}" Width="45" Height="45"/>
+                <ToggleButton x:Name="HeaderButton" Style="{StaticResource HeaderButtonStyle}"
+                              Grid.Column="1" Content="{Binding Artist.Name}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+        </StackPanel>
+
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+
+        <ListBox Grid.Row="1" Margin="20,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding AllAlbums}" Style="{StaticResource CommonListBoxStyle}" 
+                         VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ItemContainerStyle="{StaticResource LastFmAlbumListBoxItemStyle}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button Style="{StaticResource SimpleButtonStyle}" Command="{Binding DataContext.GoToAlbumCommand, ElementName=pageRoot}" CommandParameter="{Binding}">
+                        <Button.RenderTransform>
+                            <TranslateTransform />
+                        </Button.RenderTransform>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard Storyboard="{StaticResource FriendLoadAnim}" />
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Grid Width="80">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image helpers:ImageAsyncHelper.SourceUri="{Binding ImageMedium}" Width="80" Height="80"/>
+                            <TextBlock Grid.Row="1" Text="{Binding Name}" Margin="0,0,0,0" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
+                                           FontSize="11" Height="30" Foreground="{StaticResource ForegroundBrush}"/>
+                        </Grid>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</controls:PageBase>

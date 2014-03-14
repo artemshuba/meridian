@@ -1,0 +1,781 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C769D3C7-9A2F-440D-8CA1-25FE0BE98135}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Meridian</RootNamespace>
+    <AssemblyName>Meridian</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Meridian.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight">
+      <HintPath>..\packages\Portable.MvvmLightLibs.4.2.30.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <HintPath>..\packages\Portable.MvvmLightLibs.4.2.30.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform">
+      <HintPath>..\packages\Portable.MvvmLightLibs.4.2.30.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop, Version=0.1.3.11, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\refs\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\Portable.CommonServiceLocator.1.2.2\lib\net35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\net45\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\net45\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PortableRest">
+      <HintPath>..\packages\PortableRest.2.4.1\lib\portable-net45+sl5+wp8+win8\PortableRest.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.ObjectModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xbox.Music">
+      <HintPath>..\packages\Xbox.Music.1.0.0\lib\portable-net45+wp8+win8\Xbox.Music.dll</HintPath>
+    </Reference>
+    <Reference Include="Yandex.Metrica">
+      <HintPath>..\packages\Yandex.Metrica.1.0.5050.55\lib\net45\Yandex.Metrica.dll</HintPath>
+    </Reference>
+    <Reference Include="Zlib.Portable">
+      <HintPath>..\packages\Zlib.Portable.1.9.2\lib\portable-net4+sl4+wp71+win8\Zlib.Portable.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Behaviours\AutoScrollToCurrentItemBehaviour.cs" />
+    <Compile Include="Behaviours\FocusBehaviour.cs" />
+    <Compile Include="Behaviours\TransitionBehaviour.cs" />
+    <Compile Include="Behaviours\VisibilityTransitionBehaviour.cs" />
+    <Compile Include="Controls\BindablePasswordBox.cs" />
+    <Compile Include="Controls\BusyIndicator.cs" />
+    <Compile Include="Controls\ContentTransitionControl.xaml.cs">
+      <DependentUpon>ContentTransitionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExtendedListBox.cs" />
+    <Compile Include="Controls\FlyoutControl.xaml.cs">
+      <DependentUpon>FlyoutControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageTransitionControl.xaml.cs">
+      <DependentUpon>ImageTransitionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LocalSearchControl.xaml.cs">
+      <DependentUpon>LocalSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NotificationControl.xaml.cs">
+      <DependentUpon>NotificationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PageBase.cs" />
+    <Compile Include="Controls\PlayerBarControl.xaml.cs">
+      <DependentUpon>PlayerBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ShareBarControl.xaml.cs">
+      <DependentUpon>ShareBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextBoxWithHint.cs" />
+    <Compile Include="Controls\VolumeControl.xaml.cs">
+      <DependentUpon>VolumeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\AlbumContextMenuVisibilityConverter.cs" />
+    <Compile Include="Converters\AlbumListItemContainerSelector.cs" />
+    <Compile Include="Converters\AudioTemplateSelector.cs" />
+    <Compile Include="Converters\AudioTimeSpanConverter.cs" />
+    <Compile Include="Converters\BooleanToValueConverter.cs" />
+    <Compile Include="Converters\MainMenuGroupStyleSelector.cs" />
+    <Compile Include="Converters\SearchResultTemplateSelector.cs" />
+    <Compile Include="Domain\Settings.cs" />
+    <Compile Include="Extensions\AudioExtensions.cs" />
+    <Compile Include="Extensions\CommonExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Helpers\DateTimeConverter.cs" />
+    <Compile Include="Helpers\HotKeyManager.cs" />
+    <Compile Include="Helpers\ImageAsyncHelper.cs" />
+    <Compile Include="Helpers\LongRunningOperation.cs" />
+    <Compile Include="Helpers\NativeMethods.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Model\Audio.cs" />
+    <Compile Include="Model\AudioPost.cs" />
+    <Compile Include="Model\ColorScheme.cs" />
+    <Compile Include="Model\ItemsResponse.cs" />
+    <Compile Include="Model\MainMenuItem.cs" />
+    <Compile Include="Model\RadioStation.cs" />
+    <Compile Include="Model\Recommendation.cs" />
+    <Compile Include="Model\SettingsHotKey.cs" />
+    <Compile Include="Model\SettingsLanguage.cs" />
+    <Compile Include="Model\UIMode.cs" />
+    <Compile Include="Resources\Localization\ErrorResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Localization\MainResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AccountManager.cs" />
+    <Compile Include="Services\AudioService.cs" />
+    <Compile Include="Services\CacheService.cs" />
+    <Compile Include="Services\DataService.cs" />
+    <Compile Include="Services\LoggingService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Services\RadioService.cs" />
+    <Compile Include="Services\UpdateService.cs" />
+    <Compile Include="ViewModel\Search\AlbumViewModel.cs" />
+    <Compile Include="ViewModel\Search\ArtistViewModel.cs" />
+    <Compile Include="ViewModel\Flyouts\EditAudioViewModel.cs" />
+    <Compile Include="ViewModel\People\FriendAudioViewModel.cs" />
+    <Compile Include="ViewModel\People\FriendsViewModel.cs" />
+    <Compile Include="ViewModel\Flyouts\LoginLastFmViewModel.cs" />
+    <Compile Include="ViewModel\Main\LoginViewModel.cs" />
+    <Compile Include="ViewModel\Flyouts\LyricsViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\Messages\CurrentAudioChangedMessage.cs" />
+    <Compile Include="ViewModel\Messages\LoginMessage.cs" />
+    <Compile Include="ViewModel\Messages\PlayerPositionChangedMessage.cs" />
+    <Compile Include="ViewModel\Messages\PlayStateChangedMessage.cs" />
+    <Compile Include="ViewModel\Messages\UserTracksChangedMessage.cs" />
+    <Compile Include="ViewModel\Main\MusicViewModel.cs" />
+    <Compile Include="ViewModel\Main\NowPlayingViewModel.cs" />
+    <Compile Include="ViewModel\Main\PopularAudioViewModel.cs" />
+    <Compile Include="ViewModel\Main\RadioViewModel.cs" />
+    <Compile Include="ViewModel\Main\RecommendationsViewModel.cs" />
+    <Compile Include="ViewModel\Search\SearchViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\Flyouts\ShareViewModel.cs" />
+    <Compile Include="ViewModel\People\SocietiesViewModel.cs" />
+    <Compile Include="ViewModel\People\SocietyAudioViewModel.cs" />
+    <Compile Include="ViewModel\People\SubscriptionsViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Search\AlbumView.xaml.cs">
+      <DependentUpon>AlbumView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\ArtistAlbumsView.xaml.cs">
+      <DependentUpon>ArtistAlbumsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\ArtistAudioView.xaml.cs">
+      <DependentUpon>ArtistAudioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\ArtistView.xaml.cs">
+      <DependentUpon>ArtistView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\CaptchaRequestView.xaml.cs">
+      <DependentUpon>CaptchaRequestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\CommonErrorView.xaml.cs">
+      <DependentUpon>CommonErrorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CompactView.xaml.cs">
+      <DependentUpon>CompactView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\CreateRadioStationView.xaml.cs">
+      <DependentUpon>CreateRadioStationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\EditAlbumView.xaml.cs">
+      <DependentUpon>EditAlbumView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\EditAudioView.xaml.cs">
+      <DependentUpon>EditAudioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\AddToAlbumView.xaml.cs">
+      <DependentUpon>AddToAlbumView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\CommonMessageView.xaml.cs">
+      <DependentUpon>CommonMessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\People\FriendsAudioView.xaml.cs">
+      <DependentUpon>FriendsAudioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\People\FriendsView.xaml.cs">
+      <DependentUpon>FriendsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\LoginLastFmMessageView.xaml.cs">
+      <DependentUpon>LoginLastFmMessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\LoginLastFmView.xaml.cs">
+      <DependentUpon>LoginLastFmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\LyricsView.xaml.cs">
+      <DependentUpon>LyricsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\MusicView.xaml.cs">
+      <DependentUpon>MusicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\NowPlayingView.xaml.cs">
+      <DependentUpon>NowPlayingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\PopularAudioView.xaml.cs">
+      <DependentUpon>PopularAudioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\RadioView.xaml.cs">
+      <DependentUpon>RadioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\RecommendationsView.xaml.cs">
+      <DependentUpon>RecommendationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\SearchResultsView.xaml.cs">
+      <DependentUpon>SearchResultsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsAboutView.xaml.cs">
+      <DependentUpon>SettingsAboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsAccountsView.xaml.cs">
+      <DependentUpon>SettingsAccountsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsHotkeysView.xaml.cs">
+      <DependentUpon>SettingsHotkeysView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsUIView.xaml.cs">
+      <DependentUpon>SettingsUIView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsUpdatesView.xaml.cs">
+      <DependentUpon>SettingsUpdatesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\ShareView.xaml.cs">
+      <DependentUpon>ShareView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\People\SocietiesView.xaml.cs">
+      <DependentUpon>SocietiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\People\SocietyAudioView.xaml.cs">
+      <DependentUpon>SocietyAudioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\TellFriendsRequestView.xaml.cs">
+      <DependentUpon>TellFriendsRequestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\TellResultView.xaml.cs">
+      <DependentUpon>TellResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\People\SubscriptionsView.xaml.cs">
+      <DependentUpon>SubscriptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TrackNotifcationView.xaml.cs">
+      <DependentUpon>TrackNotifcationView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\ContentTransitionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FlyoutControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ImageTransitionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LocalSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NotificationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PlayerBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ShareBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\VolumeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ChromeWindow\ChromeWindowBehaviour.cs" />
+    <Compile Include="ChromeWindow\NativeHelper.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resources\Styles\Animations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\AudioControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\CheckBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ComboBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ContextMenuStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\DataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ExpanderStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ListBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ProgressBarStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ScrollbarStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\SliderStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\TextBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\WindowButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Purple.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Pink.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Blue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Emerald.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Magenta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Mango.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Red.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Sea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Sky.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\Accent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\Graphite.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\Dark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\Light.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Search\AlbumView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Search\ArtistAlbumsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Search\ArtistAudioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Search\ArtistView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\CaptchaRequestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\CommonErrorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CompactView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\CreateRadioStationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\EditAlbumView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\EditAudioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\AddToAlbumView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\CommonMessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\People\FriendsAudioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\People\FriendsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\LoginLastFmMessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\LoginLastFmView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\LyricsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\MusicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\NowPlayingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\PopularAudioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\RadioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\RecommendationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Search\SearchResultsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsAboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsAccountsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsHotkeysView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsUIView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsUpdatesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\ShareView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\People\SocietiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\People\SocietyAudioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\TellFriendsRequestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\TellResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\People\SubscriptionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TrackNotifcationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Localization\ErrorResources.ru.resx" />
+    <EmbeddedResource Include="Resources\Localization\ErrorResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Localization\MainResources.ru.resx" />
+    <EmbeddedResource Include="Resources\Localization\MainResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\next_thumb.png" />
+    <Resource Include="Resources\Images\pause_thumb.png" />
+    <Resource Include="Resources\Images\play_thumb.png" />
+    <Resource Include="Resources\Images\prev_thumb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\echonest_logo_light.gif" />
+    <Resource Include="Resources\Images\lastfm_logo.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\cover_default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EchonestApi\Trunk\EchonestApi.csproj">
+      <Project>{da5b936a-fac0-48c8-973a-01af3902cb16}</Project>
+      <Name>EchonestApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LastFmLibPortable\Trunk\LastFmLibPortable.csproj">
+      <Project>{476c6b20-3acf-4c71-8847-afcd90e29fbd}</Project>
+      <Name>LastFmLibPortable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Neptune\Trunk\Neptune.Base\Neptune.Base.csproj">
+      <Project>{d914b630-6f50-47de-9719-6cd7644c6908}</Project>
+      <Name>Neptune.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Neptune\Trunk\Neptune.Desktop\Neptune.Desktop.csproj">
+      <Project>{4aa2609b-b5e4-4f3e-95fd-47c1a27929b2}</Project>
+      <Name>Neptune.Desktop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Neptune\Trunk\Neptune.UI.Desktop\Neptune.UI.Desktop.csproj">
+      <Project>{2097b5fe-54ab-4347-9b7c-b895f3657be6}</Project>
+      <Name>Neptune.UI.Desktop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VkLibPortable\Trunk\VkLibPortable.csproj">
+      <Project>{96824317-5143-413a-8ec6-5f92de7ab60e}</Project>
+      <Name>VkLibPortable</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Target Name="AfterBuild">
+    <!-- Get "My Application" assembly version -->
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="CurrentAssembly" />
+    </GetAssemblyIdentity>
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+      if $(ConfigurationName) == Debug goto Exit
+      if exist "ready" rd /s /q "ready"
+      mkdir "ready"
+      mkdir "ready\libs"
+      copy /y "*.*" "ready"
+      mkdir "ready\ru"
+      copy /y "ru\*.*" "ready\ru\"
+      cd "ready"
+      move /y "*.dll" "libs"
+      del *.pdb
+      del *.xml
+	  del *.pri
+      del ver.txt
+      del *.settings
+      del *.js
+      move /y "App.config" "Meridian.exe.config"
+      "C:\Program Files\7-Zip\7z.exe" a -tzip "meridian-release.zip"
+      :Exit
+</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

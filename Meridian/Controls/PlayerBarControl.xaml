@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="Meridian.Controls.PlayerBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Meridian.Controls"
+             xmlns:localization="clr-namespace:Meridian.Resources.Localization"
+             mc:Ignorable="d" 
+             d:DesignHeight="90" d:DesignWidth="800" Background="Transparent"
+             DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Popup x:Name="CurrentAudioPopup" PlacementTarget="{Binding ElementName=CurrentAudioButton}" Width="200" StaysOpen="False"
+               PopupAnimation="Fade" AllowsTransparency="True" Placement="Top">
+            <Border Background="White" BorderThickness="1" BorderBrush="#a0a0a0">
+                <ItemsControl DataContext="{Binding Main.CurrentAudio, Source={StaticResource Locator}}">
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuAdd}" Visibility="{Binding IsAddedByCurrentUser, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" Command="{Binding Main.AddRemoveAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"
+                              Click="MenuItem_OnClick"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuEdit}" Visibility="{Binding IsAddedByCurrentUser, Converter={StaticResource BoolToVisibilityConverter}}" Command="{Binding Main.EditAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"
+                              Click="MenuItem_OnClick"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuRemove}" Visibility="{Binding IsAddedByCurrentUser, Converter={StaticResource BoolToVisibilityConverter}}" Command="{Binding Main.AddRemoveAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"
+                              Click="MenuItem_OnClick"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuShare}" Command="{Binding Main.ShareAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"
+                              Click="MenuItem_OnClick"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuLyrics}" IsEnabled="{Binding HasLyrics}" Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"
+                              Click="MenuItem_OnClick"/>
+                    <Separator Style="{StaticResource CommonSeparatorStyle}"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" 
+                              Click="MenuItem_OnClick"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuShowArtistInfo}" Command="{Binding Main.ShowArtistInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" 
+                              Click="MenuItem_OnClick"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" 
+                              Click="MenuItem_OnClick"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuCopyInfo}" Command="{Binding Main.CopyInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" 
+                              Click="MenuItem_OnClick"/>
+                </ItemsControl>
+            </Border>
+        </Popup>
+
+        <Button x:Name="CurrentAudioButton" Grid.Column="0" Padding="0,5,0,5" VerticalAlignment="Center" Style="{StaticResource CurrentAudioButtonStyle}" Click="CurrentAudioButton_OnClick">
+            <Grid Margin="18,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Background="{StaticResource AccentBrush}" Width="35" Height="35">
+                    <Grid>
+                        <Image Source="/Resources/Images/cover_default.png" Margin="8" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <controls:ImageTransitionControl Source="{Binding TrackImage}"/>
+                    </Grid>
+                </Border>
+                <controls:ContentTransitionControl Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center"
+                                                   Visibility="{Binding Main.CurrentAudio, Source={StaticResource Locator}, Converter={StaticResource NullToVisibilityConverter}}"
+                                                   Source="{Binding Main.CurrentAudio, Source={StaticResource Locator}}">
+                    <controls:ContentTransitionControl.ContentTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" FontWeight="Normal" FontSize="12" TextTrimming="CharacterEllipsis" MaxHeight="36"
+                                           Foreground="{StaticResource SidebarForegroundBrush}" ToolTip="{Binding Title}">
+                                </TextBlock>
+                                <TextBlock Text="{Binding Artist}" FontWeight="Normal" FontSize="12" Opacity="0.7" Margin="0,0,0,0" TextTrimming="CharacterEllipsis"
+                                           Foreground="{StaticResource SidebarForegroundBrush}" ToolTip="{Binding Artist}">
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </controls:ContentTransitionControl.ContentTemplate>
+                </controls:ContentTransitionControl>
+            </Grid>
+        </Button>
+        <Grid Grid.Column="2" VerticalAlignment="Center"  Margin="24,10,24,0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Slider IsMoveToPointEnabled="True"
+                Value="{Binding Main.CurrentAudioPositionSeconds, Source={StaticResource Locator}, Mode=TwoWay}" Maximum="{Binding Main.CurrentAudioDuration.TotalSeconds, Source={StaticResource Locator}, Mode=OneWay}"
+                Style="{StaticResource CommonSliderStyle}" />
+            <TextBlock Text="{Binding Main.CurrentAudioPosition, Source={StaticResource Locator}, Converter={StaticResource AudioTimeSpanConverter}}" FontSize="12" Opacity="0.5" Margin="0,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBlock Text="{Binding Main.CurrentAudioDuration, Source={StaticResource Locator}, Converter={StaticResource AudioTimeSpanConverter}}" FontSize="12" Opacity="0.5" Margin="0,10,0,0" HorizontalAlignment="Right" Foreground="{StaticResource ForegroundBrush}"/>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="3" Margin="0,0,10,0">
+            <ToggleButton Width="32" Height="32" Margin="0,0,5,0" IsChecked="{Binding Main.Shuffle, Mode=TwoWay, Source={StaticResource Locator}}" Style="{StaticResource ShuffleButtonStyle}"
+                          ToolTip="{x:Static localization:MainResources.Shuffle}">
+                <ToggleButton.RenderTransform>
+                    <TranslateTransform />
+                </ToggleButton.RenderTransform>
+            </ToggleButton>
+            <ToggleButton Width="32" Height="32" Margin="0,0,7,0" IsChecked="{Binding Main.Repeat, Mode=TwoWay, Source={StaticResource Locator}}" Style="{StaticResource RepeatButtonStyle}"
+                          ToolTip="{x:Static localization:MainResources.Repeat}">
+                <ToggleButton.RenderTransform>
+                    <TranslateTransform />
+                </ToggleButton.RenderTransform>
+            </ToggleButton>
+
+            <Button Margin="0,0,7,0" Command="{Binding Main.PrevAudioCommand, Source={StaticResource Locator}}" Width="26" Height="26" Style="{StaticResource PrevButtonStyle}" Foreground="{StaticResource ForegroundBrush}"
+                    ToolTip="{x:Static localization:MainResources.PrevTrack}">
+                <Button.RenderTransform>
+                    <TranslateTransform />
+                </Button.RenderTransform>
+            </Button>
+            <ToggleButton Width="36" Height="36" IsChecked="{Binding IsPlaying, Mode=TwoWay}" Command="{Binding Main.PlayPauseCommand, Source={StaticResource Locator}}" Style="{StaticResource PlayPauseButtonStyle}" Foreground="{StaticResource ForegroundBrush}"
+                          ToolTip="{x:Static localization:MainResources.PlayPause}">
+                <ToggleButton.RenderTransform>
+                    <TranslateTransform />
+                </ToggleButton.RenderTransform>
+            </ToggleButton>
+            <Button Margin="7,0,0,0" Command="{Binding Main.NextAudioCommand, Source={StaticResource Locator}}" Width="26" Height="26" Style="{StaticResource NextButtonStyle}" Foreground="{StaticResource ForegroundBrush}"
+                    ToolTip="{x:Static localization:MainResources.NextTrack}">
+                <Button.RenderTransform>
+                    <TranslateTransform />
+                </Button.RenderTransform>
+            </Button>
+
+            <ToggleButton Margin="7,0,0,0" Width="32" Height="32" IsChecked="{Binding Main.EnableStatusBroadcasting, Mode=TwoWay, Source={StaticResource Locator}}" Style="{StaticResource VkStatusButtonStyle}"
+                          ToolTip="{x:Static localization:MainResources.VkStatusBroadcasting}">
+                <ToggleButton.RenderTransform>
+                    <TranslateTransform />
+                </ToggleButton.RenderTransform>
+            </ToggleButton>
+            <ToggleButton Width="32" Height="32" IsEnabled="True" IsChecked="{Binding Main.EnableScrobbling, Mode=TwoWay, Source={StaticResource Locator}}" Style="{StaticResource LastFmScrobbleButtonStyle}"
+                          ToolTip="{x:Static localization:MainResources.LastFmScrobbling}">
+                <ToggleButton.RenderTransform>
+                    <TranslateTransform />
+                </ToggleButton.RenderTransform>
+            </ToggleButton>
+            <controls:VolumeControl Volume="{Binding Volume, Mode=TwoWay}" ToolTip="{x:Static localization:MainResources.Volume}" Margin="-5,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

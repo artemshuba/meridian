@@ -1,0 +1,70 @@
+﻿<controls:PageBase x:Class="Meridian.View.People.SocietyAudioView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:controls="clr-namespace:Meridian.Controls"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:behaviours="clr-namespace:Meridian.Behaviours"
+      xmlns:localization="clr-namespace:Meridian.Resources.Localization"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="600"
+      x:Name="pageRoot"
+      Unloaded="SocietyAudioView_OnUnloaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="180"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.ColumnSpan="2">
+            <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="120" StaysOpen="False" VerticalOffset="10"
+                   PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
+                <Border Background="White" BorderThickness="1" BorderBrush="Black">
+                    <ItemsControl>
+                        <MenuItem Header="{x:Static localization:MainResources.HeaderMenuRefresh}" Command="{Binding RefreshCommand}" CommandParameter="{Binding}" Click="MenuItem_OnClick"/>
+                    </ItemsControl>
+                </Border>
+            </Popup>
+
+            <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
+                    HorizontalAlignment="Left" Width="25" Height="25"
+                    Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+            <ToggleButton x:Name="HeaderButton" Content="{Binding SelectedSociety.Name}" Style="{StaticResource HeaderButtonStyle}"/>
+        </StackPanel>
+
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+
+        <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
+            <ListBox x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Tracks}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                 ItemTemplate="{StaticResource AudioItemTemplate}">
+                <i:Interaction.Behaviors>
+                    <behaviours:AutoScrollToCurrentItemBehaviour />
+                </i:Interaction.Behaviors>
+            </ListBox>
+        </controls:BusyIndicator>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.MyMusicAlbums}" FontSize="12" Opacity="0.3" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+        <controls:ExtendedListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" ItemsSource="{Binding Albums}" Style="{StaticResource CommonListBoxStyle}" 
+                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyleSelector="{StaticResource AlbumItemStyleSelector}"
+                 SelectedItem="{Binding SelectedAlbum, Mode=TwoWay}"
+                 LoadMoreCommand="{Binding LoadMoreAlbumsCommand}">
+            <i:Interaction.Behaviors>
+                <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="65"/>
+            </i:Interaction.Behaviors>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </controls:ExtendedListBox>
+    </Grid>
+</controls:PageBase>
