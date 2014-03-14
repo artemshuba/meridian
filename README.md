@@ -4,8 +4,6 @@ Official website: [meridianvk.com](http://meridianvk.com)
 
 ![Screenshot](http://meridianvk.com/Content/img/index/m4beta.png)
 
-##Requirements
-
 ##Source code
 This is a source code of the latest 4.1 version which is still in development.
 Unfortunately most parts of code isn't documented yet.
