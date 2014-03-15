@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using GalaSoft.MvvmLight.Command;
 using GongSolutions.Wpf.DragDrop;
 using Meridian.Controls;
@@ -557,6 +558,15 @@ namespace Meridian.ViewModel.Main
                     dropInfo.Effects = DragDropEffects.Move;
                     dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
                 }
+                else if (dropInfo.TargetCollection is ListCollectionView)
+                {
+                    var c = (ListCollectionView)dropInfo.TargetCollection;
+                    if (c.SourceCollection == Tracks && c.IsLiveFiltering == false)
+                    {
+                        dropInfo.Effects = DragDropEffects.Move;
+                        dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
+                    }
+                }
                 else if (dropInfo.TargetCollection == Albums && (dropInfo.TargetItem is VkAudioAlbum && ((VkAudioAlbum)dropInfo.TargetItem).Id >= -1))
                 {
                     dropInfo.Effects = DragDropEffects.Move;
@@ -570,7 +580,22 @@ namespace Meridian.ViewModel.Main
             if (dropInfo.Data is Audio)
             {
                 var source = (Audio)dropInfo.Data;
-                if (dropInfo.TargetCollection == Tracks)
+                IEnumerable targetCollection = dropInfo.TargetCollection;
+                IEnumerable sourceCollection = dropInfo.DragInfo.SourceCollection;
+
+                if (targetCollection is ListCollectionView)
+                {
+                    var c = (ListCollectionView)targetCollection;
+                    targetCollection = c.SourceCollection;
+                }
+
+                if (sourceCollection is ListCollectionView)
+                {
+                    var c = (ListCollectionView)sourceCollection;
+                    sourceCollection = c.SourceCollection;
+                }
+
+                if (targetCollection == Tracks)
                 {
                     var target = (Audio)dropInfo.TargetItem;
                     if (source == target)
@@ -602,8 +627,8 @@ namespace Meridian.ViewModel.Main
 
                     if (await ViewModelLocator.Vkontakte.Audio.Reorder(source.Id, afterAid, beforeAid))
                     {
-                        ((IList)dropInfo.DragInfo.SourceCollection).Remove(source);
-                        ((IList)dropInfo.TargetCollection).Insert(index, source);
+                        ((IList)sourceCollection).Remove(source);
+                        ((IList)targetCollection).Insert(index, source);
                     }
                     else
                     {

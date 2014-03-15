@@ -94,6 +94,8 @@ namespace Meridian.Controls
 
             if (Source != null && Source.View != null)
             {
+                Source.IsLiveFilteringRequested = !string.IsNullOrEmpty(Query);
+
                 if (Source.View.Filter == null)
                     Source.View.Filter = Filter;
                 else
