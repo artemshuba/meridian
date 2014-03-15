@@ -21,6 +21,10 @@
             <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
         </EventTrigger>
     </Page.Triggers>
+    
+    <Page.Resources>
+        <CollectionViewSource x:Key="TracksCollection" Source="{Binding Tracks}" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -42,11 +46,12 @@
             </Image.OpacityMask>
         </Image>-->
         <StackPanel Grid.ColumnSpan="2">
-            <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="120" StaysOpen="False" VerticalOffset="10"
+            <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                    PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
                 <Border Background="White" BorderThickness="1" BorderBrush="Black">
                     <ItemsControl>
                         <MenuItem Header="{x:Static localization:MainResources.HeaderMenuRefresh}" Command="{Binding RefreshCommand}" CommandParameter="{Binding}" Click="MenuItem_OnClick"/>
+                        <MenuItem x:Name="LocalSearchItem" Header="{x:Static localization:MainResources.HeaderMenuLocalSearch}" Click="LocalSearchItem_OnClick"/>
                     </ItemsControl>
                 </Border>
             </Popup>
@@ -62,7 +67,7 @@
         <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
-            <ListBox x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Tracks}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            <ListBox x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                  ItemTemplate="{StaticResource AudioItemTemplate}">
                 <i:Interaction.Behaviors>
@@ -85,5 +90,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </controls:ExtendedListBox>
+
+        <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Grid.Row="1" Source="{StaticResource TracksCollection}"/>
     </Grid>
 </controls:PageBase>
