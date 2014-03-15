@@ -335,7 +335,7 @@ namespace Meridian.Services
                 SwitchNext();
             else
                 if (RadioService.CurrentRadio == null)
-                    Next();
+                    Next(true);
                 else
                     RadioService.SkipNext();
         }
@@ -351,11 +351,11 @@ namespace Meridian.Services
                 RadioService.SwitchNext();
         }
 
-        private static void Next()
+        private static void Next(bool invokedByUser = false)
         {
             if (_playlist != null)
             {
-                if (Repeat)
+                if (Repeat && !invokedByUser)
                 {
                     //
                     Play(CurrentAudio);
