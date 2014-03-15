@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Meridian.Model;
 
 namespace Meridian.Controls
 {
@@ -23,13 +22,11 @@ namespace Meridian.Controls
             var c = (LocalSearchControl)d;
             if ((bool)e.NewValue)
             {
-                c.Visibility = Visibility.Visible;
+                //c.Visibility = Visibility.Visible;
             }
             else
             {
-                c.Visibility = Visibility.Collapsed;
-                if (c.Source != null && c.Source.View != null)
-                    c.Source.View.Filter = null;
+                //c.Visibility = Visibility.Collapsed;
                 c.LocalSearchBox.Text = string.Empty;
             }
         }
