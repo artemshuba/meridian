@@ -290,7 +290,18 @@ namespace Meridian.Services
                 if (index >= 0)
                 {
                     index++;
-                    Playlist.Insert(index, audio);
+                    var newAudio = new Audio();
+                    newAudio.Id = audio.Id;
+                    newAudio.OwnerId = audio.OwnerId;
+                    newAudio.Title = audio.Title;
+                    newAudio.Artist = audio.Artist;
+                    newAudio.AlbumId = audio.AlbumId;
+                    newAudio.Duration = audio.Duration;
+                    newAudio.IsAddedByCurrentUser = audio.IsAddedByCurrentUser;
+                    newAudio.Url = audio.Url;
+                    newAudio.Lyrics = audio.Lyrics;
+                    newAudio.LyricsId = audio.LyricsId;
+                    Playlist.Insert(index, newAudio);
                 }
             }
         }
