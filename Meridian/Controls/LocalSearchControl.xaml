@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:Meridian.Controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviours="clr-namespace:Meridian.Behaviours"
+             xmlns:localization="clr-namespace:Meridian.Resources.Localization"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              x:Name="rootElement"
@@ -23,7 +24,7 @@
             <SolidColorBrush Color="{StaticResource ForegroundColor}" Opacity="0.15"/>
         </Border.BorderBrush>
         <Grid>
-            <controls:TextBoxWithHint x:Name="LocalSearchBox" Style="{StaticResource LocalSearchBoxStyle}" Padding="0,0,20,0" Margin="10,10,5,10" Hint="Start typing" Height="24" 
+            <controls:TextBoxWithHint x:Name="LocalSearchBox" Style="{StaticResource LocalSearchBoxStyle}" Padding="0,0,20,0" Margin="10,10,5,10" Hint="{x:Static localization:MainResources.LocalSearchBoxHint}" Height="24" 
                                       HintStyle="{StaticResource TextBoxHintStyle}"
                                       TextChanged="LocalSearchBox_OnTextChanged">
             </controls:TextBoxWithHint>

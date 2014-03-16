@@ -592,6 +592,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start typing.
+        /// </summary>
+        public static string LocalSearchBoxHint {
+            get {
+                return ResourceManager.GetString("LocalSearchBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please wait, we are just loading your profile.
         /// </summary>
         public static string LoginLoading {

@@ -681,4 +681,7 @@
   <data name="ContextMenuAddToAlbum" xml:space="preserve">
     <value>Add to album</value>
   </data>
+  <data name="LocalSearchBoxHint" xml:space="preserve">
+    <value>Start typing</value>
+  </data>
 </root>
