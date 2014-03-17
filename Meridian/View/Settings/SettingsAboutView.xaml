@@ -86,7 +86,7 @@
                 <Image Source="/Resources/Images/lastfm_logo.gif" Stretch="UniformToFill" Width="60" HorizontalAlignment="Left" Margin="10,5,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
             </StackPanel>
 
-            <TextBlock Text="{x:Static localization:MainResources.AboutTellFriendsTitle}" Margin="0,20,0,0"/>
+            <TextBlock Text="{x:Static localization:MainResources.AboutTellFriendsTitle}" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}"/>
             <Button Style="{StaticResource CommonButtonStyle}" HorizontalAlignment="Left" Content="{x:Static localization:MainResources.AboutTellFriends}" Margin="0,5,0,0"
                     Command="{Binding TellCommand}"/>
         </StackPanel>
