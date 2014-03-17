@@ -90,8 +90,8 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Storyboard>
-    
-    <Storyboard x:Key="ShareBarTransitionIn">
+
+    <Storyboard x:Key="ShareBarTransitionIn" x:Shared="False">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Height">
             <DiscreteDoubleKeyFrame KeyTime="0" Value="0"/>
             <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="150">
@@ -133,7 +133,7 @@
         </Storyboard>
     </Storyboard>
 
-    <Storyboard x:Key="LocalSearchBoxTransitionIn">
+    <Storyboard x:Key="LocalSearchBoxTransitionIn" x:Shared="False">
         <Storyboard>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
                 <DiscreteDoubleKeyFrame KeyTime="0" Value="-10"/>
