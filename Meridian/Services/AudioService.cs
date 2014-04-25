@@ -252,12 +252,19 @@ namespace Meridian.Services
                 }
             }
 
+#if DEBUG
+            LoggingService.Log(string.Format("Playing: {0} {1} {2} {3}", track.Id + "_" + track.OwnerId, track.Artist, track.Title, track.Url));
+#endif
+
             if (token.IsCancellationRequested)
                 return;
 
             track.IsPlaying = true;
+            //похоже что MediaElement не умеет https, поэтому временный хак
+            var url = track.Url;
+            url = url.Replace("https://", "http://");
 
-            MediaPlayer.Source = new Uri(track.Url);
+            MediaPlayer.Source = new Uri(url);
             MediaPlayer.Play();
 
             State = PlayerPlayState.Playing;
