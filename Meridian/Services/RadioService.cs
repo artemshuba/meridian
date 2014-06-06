@@ -190,7 +190,7 @@ namespace Meridian.Services
             _currentSong = song;
 
             AudioService.Play(audio);
-            AudioService.Playlist.Add(audio);
+            AudioService.Playlist.Insert(0, audio);
             //AudioService.SetCurrentPlaylist(new[] { audio }, true);
         }
 

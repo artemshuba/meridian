@@ -422,10 +422,20 @@ namespace Meridian.Services
                         currentIndex = _playlist.IndexOf(current);
                 }
 
-                currentIndex--;
+                if (RadioService.CurrentRadio == null)
+                {
+                    currentIndex--;
 
-                if (currentIndex >= 0)
-                    Play(_playlist[currentIndex]);
+                    if (currentIndex >= 0)
+                        Play(_playlist[currentIndex]);
+                }
+                else
+                {
+                    currentIndex++;
+
+                    if (currentIndex < _playlist.Count)
+                        Play(_playlist[currentIndex]);
+                }
             }
         }
 
