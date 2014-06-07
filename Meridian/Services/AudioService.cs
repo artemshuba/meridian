@@ -371,16 +371,17 @@ namespace Meridian.Services
 
         private static void Next(bool invokedByUser = false)
         {
-            if (_playlist != null)
+            if (Repeat && !invokedByUser)
             {
-                if (Repeat && !invokedByUser)
-                {
-                    //
-                    Play(CurrentAudio);
-                    NotifyAudioChanged(CurrentAudio); //to scrobble repeating track
-                    return;
-                }
+                //
+                Play(CurrentAudio);
+                NotifyAudioChanged(CurrentAudio); //to scrobble repeating track
+                return;
+            }
 
+
+            if (_playlist != null && _playlist.Count > 0)
+            {
                 int currentIndex = -1;
                 if (_currentAudio != null)
                 {
