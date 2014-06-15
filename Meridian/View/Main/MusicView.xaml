@@ -142,8 +142,13 @@
                         </i:Interaction.Behaviors>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
-
+                                <TextBlock  Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
+                                    <TextBlock.ContextMenu>
+                                        <ContextMenu Visibility="{Binding Converter={StaticResource AlbumContextMenuVisibilityConverter}}" Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
+                                            <MenuItem Header="{x:Static Properties:MainResources.ContextMenuPlay}" Command="{Binding PlacementTarget.Tag.PlayArtistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                            <MenuItem Header="{x:Static Properties:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding PlacementTarget.Tag.AddArtistToNowPlayingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                        </ContextMenu>
+                                    </TextBlock.ContextMenu>
                                 </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

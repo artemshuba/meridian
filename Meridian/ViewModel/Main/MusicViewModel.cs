@@ -78,6 +78,16 @@ namespace Meridian.ViewModel.Main
         /// </summary>
         public RelayCommand<VkAudioAlbum> AddAlbumToNowPlayingCommand { get; private set; }
 
+        /// <summary>
+        /// Команда воспроизведения исполнителя
+        /// </summary>
+        public RelayCommand<AudioArtist> PlayArtistCommand { get; private set; }
+
+        /// <summary>
+        /// Команда добавления исполнителя в NowPlaying
+        /// </summary>
+        public RelayCommand<AudioArtist> AddArtistToNowPlayingCommand { get; private set; }
+
         #endregion
 
         /// <summary>
@@ -214,6 +224,20 @@ namespace Meridian.ViewModel.Main
             PlayAlbumCommand = new RelayCommand<VkAudioAlbum>(PlayAlbum);
 
             AddAlbumToNowPlayingCommand = new RelayCommand<VkAudioAlbum>(AddAlbumToNowPlaying);
+
+            PlayArtistCommand = new RelayCommand<AudioArtist>(artist =>
+            {
+                AudioService.Play(artist.Tracks.First());
+                AudioService.SetCurrentPlaylist(artist.Tracks);
+            });
+
+            AddArtistToNowPlayingCommand = new RelayCommand<AudioArtist>(artist =>
+            {
+                foreach (var track in artist.Tracks)
+                {
+                    AudioService.Playlist.Add(track);
+                }
+            });
         }
 
         private void InitializeMessageInterception()
