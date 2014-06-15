@@ -35,6 +35,7 @@
                     <converters:TimeSpanConverter x:Key="TimeSpanConverter"/>
                     <converters:InvertBooleanConverter x:Key="InvertBoolConverter" />
                     <converters1:AudioTimeSpanConverter x:Key="AudioTimeSpanConverter"/>
+                    <converters1:AlbumContextMenuVisibilityConverter x:Key="AlbumContextMenuVisibilityConverter"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="/Resources/Styles/DataTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>

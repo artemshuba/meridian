@@ -11,6 +11,7 @@ using System.Windows.Data;
 using GalaSoft.MvvmLight.Command;
 using GongSolutions.Wpf.DragDrop;
 using Meridian.Controls;
+using Meridian.Extensions;
 using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
@@ -62,6 +63,16 @@ namespace Meridian.ViewModel.Main
         /// Команда обновления списка аудиозаписей
         /// </summary>
         public RelayCommand RefreshCommand { get; private set; }
+
+        /// <summary>
+        /// Команда воспроизведения альбома
+        /// </summary>
+        public RelayCommand<VkAudioAlbum> PlayAlbumCommand { get; private set; }
+
+        /// <summary>
+        /// Команда добавления альбома в NowPlaying
+        /// </summary>
+        public RelayCommand<VkAudioAlbum> AddAlbumToNowPlayingCommand { get; private set; }
 
         #endregion
 
@@ -161,6 +172,10 @@ namespace Meridian.ViewModel.Main
             EditAlbumCommand = new RelayCommand<VkAudioAlbum>(EditAlbum);
 
             RemoveAlbumCommand = new RelayCommand<VkAudioAlbum>(RemoveAlbum);
+
+            PlayAlbumCommand = new RelayCommand<VkAudioAlbum>(PlayAlbum);
+
+            AddAlbumToNowPlayingCommand = new RelayCommand<VkAudioAlbum>(AddAlbumToNowPlaying);
         }
 
         private void InitializeMessageInterception()
@@ -549,6 +564,44 @@ namespace Meridian.ViewModel.Main
             }
         }
 
+        private async void PlayAlbum(VkAudioAlbum album)
+        {
+            try
+            {
+                var audio = await DataService.GetUserTracks(albumId: album.Id, ownerId: album.OwnerId);
+                if (audio.Items != null && audio.Items.Count > 0)
+                {
+                    AudioService.Play(audio.Items.First());
+                    AudioService.SetCurrentPlaylist(audio.Items);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
+        }
+
+        private async void AddAlbumToNowPlaying(VkAudioAlbum album)
+        {
+            try
+            {
+                var audio = await DataService.GetUserTracks(albumId: album.Id, ownerId: album.OwnerId);
+                if (audio.Items != null && audio.Items.Count > 0)
+                {
+                    foreach (var track in audio.Items)
+                    {
+                        AudioService.Playlist.Add(track);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
+        }
+
+        #region Drag&Drop
+
         public void DragOver(IDropInfo dropInfo)
         {
             if (dropInfo.Data is Audio && !ViewModelLocator.Main.ShowShareBar)
@@ -661,5 +714,7 @@ namespace Meridian.ViewModel.Main
                 }
             }
         }
+
+        #endregion
     }
 }

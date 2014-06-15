@@ -681,4 +681,7 @@
   <data name="ContextMenuAddToAlbum" xml:space="preserve">
     <value>Add to album</value>
   </data>
+  <data name="ContextMenuPlay" xml:space="preserve">
+    <value>Play</value>
+  </data>
 </root>

@@ -681,4 +681,7 @@
   <data name="ContextMenuAddToAlbum" xml:space="preserve">
     <value>Добавить в альбом</value>
   </data>
+  <data name="ContextMenuPlay" xml:space="preserve">
+    <value>Воспроизвести</value>
+  </data>
 </root>

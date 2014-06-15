@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using Meridian.Domain;
 using VkLib.Core.Audio;
 
 namespace Meridian.Converters
@@ -15,7 +14,7 @@ namespace Meridian.Converters
             if (album == null)
                 return Visibility.Visible;
 
-            if (album.OwnerId == Settings.Instance.AccessToken.UserId)
+            if (album.OwnerId != 0)
                 return Visibility.Visible;
 
             return Visibility.Collapsed;

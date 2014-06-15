@@ -18,7 +18,6 @@
 
     <Page.Resources>
         <converters:AudioTemplateSelector x:Key="AudioTemplateSelector" AudioTemplate="{StaticResource AudioItemTemplate}" PostTemplate="{StaticResource PostItemDataTemplate}"/>
-        <converters:AlbumContextMenuVisibilityConverter x:Key="AlbumContextMenuVisibilityConverter"/>
 
         <CollectionViewSource x:Key="TracksCollection" Source="{Binding Tracks}" />
     </Page.Resources>
@@ -99,6 +98,9 @@
                         <TextBlock Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
                             <TextBlock.ContextMenu>
                                 <ContextMenu Visibility="{Binding Converter={StaticResource AlbumContextMenuVisibilityConverter}}" Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
+                                    <MenuItem Header="{x:Static Properties:MainResources.ContextMenuPlay}" Command="{Binding PlacementTarget.Tag.PlayAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                    <MenuItem Header="{x:Static Properties:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding PlacementTarget.Tag.AddAlbumToNowPlayingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                    <Separator />
                                     <MenuItem Header="{x:Static Properties:MainResources.ContextMenuEdit}" Command="{Binding PlacementTarget.Tag.EditAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
                                     <MenuItem Header="{x:Static Properties:MainResources.ContextMenuRemoveRadio}" Command="{Binding PlacementTarget.Tag.RemoveAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
                                 </ContextMenu>

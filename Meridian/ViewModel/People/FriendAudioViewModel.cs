@@ -34,6 +34,10 @@ namespace Meridian.ViewModel.People
 
         public RelayCommand RefreshCommand { get; private set; }
 
+        public RelayCommand<VkAudioAlbum> PlayAlbumCommand { get; private set; }
+
+        public RelayCommand<VkAudioAlbum> AddAlbumToNowPlayingCommand { get; private set; }
+
         #endregion
 
         public VkProfile SelectedFriend
@@ -109,6 +113,10 @@ namespace Meridian.ViewModel.People
             LoadMoreAlbumsCommand = new RelayCommand(() => LoadMoreAlbums());
 
             RefreshCommand = new RelayCommand(() => LoadTracks(_cancellationToken.Token));
+
+            PlayAlbumCommand = new RelayCommand<VkAudioAlbum>(PlayAlbum);
+
+            AddAlbumToNowPlayingCommand = new RelayCommand<VkAudioAlbum>(AddAlbumToNowPlaying);
         }
 
         private async Task LoadAlbums()
@@ -276,6 +284,42 @@ namespace Meridian.ViewModel.People
             }
 
             OnTaskFinished("audio");
+        }
+
+        private async void PlayAlbum(VkAudioAlbum album)
+        {
+            try
+            {
+                var audio = await DataService.GetUserTracks(albumId: album.Id, ownerId: album.OwnerId);
+                if (audio.Items != null && audio.Items.Count > 0)
+                {
+                    AudioService.Play(audio.Items.First());
+                    AudioService.SetCurrentPlaylist(audio.Items);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
+        }
+
+        private async void AddAlbumToNowPlaying(VkAudioAlbum album)
+        {
+            try
+            {
+                var audio = await DataService.GetUserTracks(albumId: album.Id, ownerId: album.OwnerId);
+                if (audio.Items != null && audio.Items.Count > 0)
+                {
+                    foreach (var track in audio.Items)
+                    {
+                        AudioService.Playlist.Add(track);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
         }
 
         private void CancelAsync()
