@@ -7,6 +7,7 @@
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       xmlns:controls="clr-namespace:Meridian.Controls"
+      xmlns:dragDrop="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
       x:Name="pageRoot" KeepAlive="False"
@@ -90,7 +91,8 @@
                  ItemsSource="{Binding Source={StaticResource TracksCollection}}" 
                  Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
-                 ItemTemplate="{StaticResource NowPlayingAudioItemTemplate}">
+                 ItemTemplate="{StaticResource NowPlayingAudioItemTemplate}"
+                 dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}">
             <i:Interaction.Behaviors>
                 <behaviours:AutoScrollToCurrentItemBehaviour />
             </i:Interaction.Behaviors>

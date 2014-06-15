@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Threading;
+using System.Windows;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.Command;
+using GongSolutions.Wpf.DragDrop;
 using Meridian.Model;
 using Meridian.Services;
 using Meridian.ViewModel.Messages;
 
 namespace Meridian.ViewModel.Main
 {
-    public class NowPlayingViewModel : ViewModelBase
+    public class NowPlayingViewModel : ViewModelBase, IDropTarget
     {
         private ImageSource _artistImage;
         private string _lastArtist;
@@ -152,5 +155,36 @@ namespace Meridian.ViewModel.Main
 
             _cancellationToken = new CancellationTokenSource();
         }
+
+        #region Drag&Drop
+
+        public void DragOver(IDropInfo dropInfo)
+        {
+            if (dropInfo.Data is Audio)
+            {
+                dropInfo.Effects = DragDropEffects.Move;
+                dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
+            }
+        }
+
+        public void Drop(IDropInfo dropInfo)
+        {
+            if (dropInfo.Data is Audio)
+            {
+                var source = (Audio)dropInfo.Data;
+                var target = (Audio)dropInfo.TargetItem;
+                if (source == target)
+                    return;
+
+                int index = ViewModelLocator.Main.CurrentPlaylist.IndexOf(target);
+                if (index >= 0)
+                {
+                    ViewModelLocator.Main.CurrentPlaylist.Remove(source);
+                    ViewModelLocator.Main.CurrentPlaylist.Insert(index, source);
+                }
+            }
+        }
+
+        #endregion
     }
 }

@@ -245,6 +245,7 @@
                             <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
                             <Setter Property="Opacity" TargetName="contentPresenter" Value="1"/>
                             <Setter Property="FontFamily" Value="Segoe UI"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource SelectedPlaylistItemBackgroundBrush}"/>
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -254,6 +255,7 @@
                             <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
                             <Setter Property="Opacity" TargetName="contentPresenter" Value="1"/>
                             <Setter Property="FontFamily" Value="Segoe UI"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource SelectedPlaylistItemBackgroundBrush}"/>
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>

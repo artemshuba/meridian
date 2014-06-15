@@ -33,6 +33,7 @@
     <SolidColorBrush x:Key="PlaylistItemForegroundBrush" Color="#707070"/>
     <SolidColorBrush x:Key="HotPlaylistItemBackgroundBrush" Color="{StaticResource ForegroundColor}" Opacity="0.1"/>
     <SolidColorBrush x:Key="SelectedPlaylistItemForegroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="SelectedPlaylistItemBackgroundBrush" Color="White" Opacity="0.3"/>
 
     <!-- Current track -->
     <SolidColorBrush x:Key="HotCurrentTrackBackgroundBrush" Color="{StaticResource ForegroundColor}" Opacity="0.1"/>
