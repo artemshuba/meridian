@@ -10,6 +10,7 @@ using LastFmLib.Core.Album;
 using LastFmLib.Core.Artist;
 using Meridian.Domain;
 using Meridian.Extensions;
+using Meridian.Helpers;
 using Meridian.Model;
 using Meridian.ViewModel;
 using VkLib;
@@ -742,7 +743,7 @@ namespace Meridian.Services
 
         public static async Task<string> EditAudio(string audioId, string ownerId, string title, string artist, string lyrics = null)
         {
-            var lyricsId = await _vkontakte.Audio.Edit(long.Parse(audioId), long.Parse(ownerId), artist, title, lyrics);
+            var lyricsId = await _vkontakte.Audio.Edit(long.Parse(ownerId), long.Parse(audioId), artist, title, lyrics);
             return lyricsId.ToString();
         }
 
@@ -820,6 +821,36 @@ namespace Meridian.Services
             }
 
             return null;
+        }
+
+        public static Task<List<AudioArtist>> GetArtistsFromTracks(IEnumerable<Audio> tracks, CancellationToken token)
+        {
+            return Task.Run(() =>
+            {
+                var artists = new Dictionary<string, AudioArtist>();
+
+                foreach (var track in tracks)
+                {
+                    if (token.IsCancellationRequested)
+                        break;
+
+                    //parse artist
+
+                    var artistName = track.Artist;
+                    var artistId = Md5Helper.Md5(artistName.ToLowerInvariant()); //artistid = md5(artistName)
+                    if (!artists.ContainsKey(artistId))
+                    {
+                        var artist = new AudioArtist();
+                        artist.Id = artistId;
+                        artist.Title = artistName;
+                        artists.Add(artistId, artist);
+                    }
+
+                    artists[artistId].Tracks.Add(track);
+                }
+
+                return artists.Values.OrderBy(a => a.Title).ToList();
+            });
         }
     }
 }

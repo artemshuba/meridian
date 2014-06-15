@@ -37,11 +37,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="180"/>
-        </Grid.ColumnDefinitions>
-
         <StackPanel>
             <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                    PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
@@ -57,60 +52,108 @@
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <ToggleButton x:Name="HeaderButton" Content="{x:Static Properties:MainResources.MainMenuMyMusic}" Style="{StaticResource HeaderButtonStyle}"/>
         </StackPanel>
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
-        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
 
-        <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
-            <ListBox x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" 
-                     VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                     ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
-                     ItemTemplateSelector="{StaticResource AudioTemplateSelector}"
-                     dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}"
-                     dragDrop:DragDrop.ScrollOnDrag="{Binding Main.ShowShareBar, Source={StaticResource Locator}, Converter={StaticResource InvertBoolConverter}}">
-                <i:Interaction.Behaviors>
-                    <behaviours:AutoScrollToCurrentItemBehaviour />
-                </i:Interaction.Behaviors>
-            </ListBox>
-        </controls:BusyIndicator>
+        <TabControl Grid.Row="1" Style="{StaticResource CommonTabControlStyle}" Margin="0,-15,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+            <TabItem Header="{x:Static Properties:MainResources.TracksTab}" Style="{StaticResource CommonTabItemStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="180"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
+                        <ListBox x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" 
+                                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplateSelector="{StaticResource AudioTemplateSelector}"
+                                 dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}"
+                                 dragDrop:DragDrop.ScrollOnDrag="{Binding Main.ShowShareBar, Source={StaticResource Locator}, Converter={StaticResource InvertBoolConverter}}">
+                            <i:Interaction.Behaviors>
+                                <behaviours:AutoScrollToCurrentItemBehaviour />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                    </controls:BusyIndicator>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="12,10,0,0">
-            <TextBlock Text="{x:Static Properties:MainResources.MyMusicAlbums}" FontSize="12" Opacity="0.3" Foreground="{StaticResource ForegroundBrush}"/>
-            <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddAlbumCommand}"
-                    ToolTip="{x:Static Properties:MainResources.MyMusicAlbumsAdd}"/>
-        </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="12,10,0,0">
+                        <TextBlock Text="{x:Static Properties:MainResources.MyMusicAlbums}" FontSize="12" Opacity="0.3" Foreground="{StaticResource ForegroundBrush}"/>
+                        <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddAlbumCommand}"
+                                ToolTip="{x:Static Properties:MainResources.MyMusicAlbumsAdd}"/>
+                    </StackPanel>
 
-        <controls:BusyIndicator Margin="0,30,0,0" Grid.Row="1" Grid.Column="1" IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
-            <controls:BusyIndicator.BusyContentStyle>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Margin" Value="12,5,5,0"/>
-                </Style>
-            </controls:BusyIndicator.BusyContentStyle>
-            <controls:ExtendedListBox ItemsSource="{Binding Albums}" Style="{StaticResource CommonListBoxStyle}" 
-                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 SelectedItem="{Binding SelectedAlbum, Mode=TwoWay}" ItemContainerStyleSelector="{StaticResource AlbumItemStyleSelector}"
-                 LoadMoreCommand="{Binding LoadMoreAlbumsCommand}"
-                 dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}">
-                <i:Interaction.Behaviors>
-                    <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
-                </i:Interaction.Behaviors>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
-                            <TextBlock.ContextMenu>
-                                <ContextMenu Visibility="{Binding Converter={StaticResource AlbumContextMenuVisibilityConverter}}" Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
-                                    <MenuItem Header="{x:Static Properties:MainResources.ContextMenuPlay}" Command="{Binding PlacementTarget.Tag.PlayAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
-                                    <MenuItem Header="{x:Static Properties:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding PlacementTarget.Tag.AddAlbumToNowPlayingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
-                                    <Separator />
-                                    <MenuItem Header="{x:Static Properties:MainResources.ContextMenuEdit}" Command="{Binding PlacementTarget.Tag.EditAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
-                                    <MenuItem Header="{x:Static Properties:MainResources.ContextMenuRemoveRadio}" Command="{Binding PlacementTarget.Tag.RemoveAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
-                                </ContextMenu>
-                            </TextBlock.ContextMenu>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </controls:ExtendedListBox>
-        </controls:BusyIndicator>
+                    <controls:BusyIndicator Margin="0,30,0,0" Grid.Column="1" IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
+                        <controls:BusyIndicator.BusyContentStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Margin" Value="12,5,5,0"/>
+                            </Style>
+                        </controls:BusyIndicator.BusyContentStyle>
+                        <controls:ExtendedListBox ItemsSource="{Binding Albums}" Style="{StaticResource CommonListBoxStyle}" 
+                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             SelectedItem="{Binding SelectedAlbum, Mode=TwoWay}" ItemContainerStyleSelector="{StaticResource AlbumItemStyleSelector}"
+                             LoadMoreCommand="{Binding LoadMoreAlbumsCommand}"
+                             dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}">
+                            <i:Interaction.Behaviors>
+                                <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
+                            </i:Interaction.Behaviors>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
+                                        <TextBlock.ContextMenu>
+                                            <ContextMenu Visibility="{Binding Converter={StaticResource AlbumContextMenuVisibilityConverter}}" Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
+                                                <MenuItem Header="{x:Static Properties:MainResources.ContextMenuPlay}" Command="{Binding PlacementTarget.Tag.PlayAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                                <MenuItem Header="{x:Static Properties:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding PlacementTarget.Tag.AddAlbumToNowPlayingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                                <Separator />
+                                                <MenuItem Header="{x:Static Properties:MainResources.ContextMenuEdit}" Command="{Binding PlacementTarget.Tag.EditAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                                <MenuItem Header="{x:Static Properties:MainResources.ContextMenuRemoveRadio}" Command="{Binding PlacementTarget.Tag.RemoveAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                            </ContextMenu>
+                                        </TextBlock.ContextMenu>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </controls:ExtendedListBox>
+                    </controls:BusyIndicator>
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
 
-        <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Grid.Row="1" Source="{StaticResource TracksCollection}"/>
+                    <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Grid.Row="1" Source="{StaticResource TracksCollection}" FontSize="12"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{x:Static Properties:MainResources.ArtistsTab}" Style="{StaticResource CommonTabItemStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="180"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:BusyIndicator IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
+                        <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding ElementName=ArtistList, Path=SelectedItem.Tracks}" Style="{StaticResource CommonListBoxStyle}" 
+                                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplateSelector="{StaticResource AudioTemplateSelector}">
+                            <i:Interaction.Behaviors>
+                                <behaviours:AutoScrollToCurrentItemBehaviour />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                    </controls:BusyIndicator>
+
+                    <ListBox x:Name="ArtistList" Grid.Column="1" ItemsSource="{Binding Artists}" Style="{StaticResource CommonListBoxStyle}" 
+                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}" SelectedItem="{Binding SelectedArtist, Mode=TwoWay}">
+                        <i:Interaction.Behaviors>
+                            <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
+                        </i:Interaction.Behaviors>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
+
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+
+                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Page>

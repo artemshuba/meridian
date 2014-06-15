@@ -442,7 +442,7 @@ namespace VkLib.Core.Audio
 
             const string method = "audio.edit";
 
-            parameters.Add("ownerId", ownerId.ToString());
+            parameters.Add("owner_id", ownerId.ToString());
             parameters.Add("audio_id", audioId.ToString());
 
             if (!string.IsNullOrEmpty(artist))

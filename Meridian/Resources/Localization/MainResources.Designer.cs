@@ -115,6 +115,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to artists.
+        /// </summary>
+        public static string ArtistsTab {
+            get {
+                return ResourceManager.GetString("ArtistsTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TOP TRACKS.
         /// </summary>
         public static string ArtistTopTracks {
@@ -1740,6 +1749,15 @@ namespace Meridian.Resources.Localization {
         public static string TellViewTitle {
             get {
                 return ResourceManager.GetString("TellViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tracks.
+        /// </summary>
+        public static string TracksTab {
+            get {
+                return ResourceManager.GetString("TracksTab", resourceCulture);
             }
         }
         

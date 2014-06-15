@@ -187,9 +187,11 @@
     <Compile Include="Helpers\HotKeyManager.cs" />
     <Compile Include="Helpers\ImageAsyncHelper.cs" />
     <Compile Include="Helpers\LongRunningOperation.cs" />
+    <Compile Include="Helpers\Md5Helper.cs" />
     <Compile Include="Helpers\NativeMethods.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Model\Audio.cs" />
+    <Compile Include="Model\AudioArtist.cs" />
     <Compile Include="Model\AudioPost.cs" />
     <Compile Include="Model\ColorScheme.cs" />
     <Compile Include="Model\ItemsResponse.cs" />
@@ -454,6 +456,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\TabControlStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

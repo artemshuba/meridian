@@ -9,6 +9,7 @@ namespace Meridian.Model
         private string _lyrics;
         private int _order;
         private bool _isAddedByCurrentUser;
+        private string _artistId;
 
         public new string Title
         {

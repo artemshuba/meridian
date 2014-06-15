@@ -684,4 +684,10 @@
   <data name="ContextMenuPlay" xml:space="preserve">
     <value>Воспроизвести</value>
   </data>
+  <data name="ArtistsTab" xml:space="preserve">
+    <value>исполнители</value>
+  </data>
+  <data name="TracksTab" xml:space="preserve">
+    <value>треки</value>
+  </data>
 </root>

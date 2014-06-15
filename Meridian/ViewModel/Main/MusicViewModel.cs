@@ -12,6 +12,7 @@ using GalaSoft.MvvmLight.Command;
 using GongSolutions.Wpf.DragDrop;
 using Meridian.Controls;
 using Meridian.Extensions;
+using Meridian.Helpers;
 using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
@@ -28,9 +29,12 @@ namespace Meridian.ViewModel.Main
 
         private ObservableCollection<VkAudioAlbum> _albums;
         private ObservableCollection<Audio> _tracks;
+        private ObservableCollection<AudioArtist> _artists;
         private VkAudioAlbum _selectedAlbum;
         private CancellationTokenSource _cancellationToken;
         private int _totalAlbumsCount;
+        private int _selectedTabIndex;
+        private AudioArtist _selectedArtist;
 
         #region Commands
 
@@ -95,6 +99,16 @@ namespace Meridian.ViewModel.Main
         }
 
         /// <summary>
+        /// Список исполнителей
+        /// </summary>
+        public ObservableCollection<AudioArtist> Artists
+        {
+            get { return _artists; }
+            set { Set(ref _artists, value); }
+        }
+
+
+        /// <summary>
         /// Выбранный альбом
         /// </summary>
         public VkAudioAlbum SelectedAlbum
@@ -128,6 +142,18 @@ namespace Meridian.ViewModel.Main
             }
         }
 
+        public int SelectedTabIndex
+        {
+            get { return _selectedTabIndex; }
+            set { Set(ref _selectedTabIndex, value); }
+        }
+
+        public AudioArtist SelectedArtist
+        {
+            get { return _selectedArtist; }
+            set { Set(ref _selectedArtist, value); }
+        }
+
         public MusicViewModel()
         {
             _cancellationToken = new CancellationTokenSource();
@@ -142,6 +168,9 @@ namespace Meridian.ViewModel.Main
         {
             if (Albums == null || Albums.Count == 0)
                 await LoadAlbums();
+
+            if (Artists == null || Artists.Count == 0)
+                await LoadArtists(_cancellationToken.Token);
         }
 
         public void Deactivate()
@@ -156,7 +185,15 @@ namespace Meridian.ViewModel.Main
             PlayAudioCommand = new RelayCommand<Audio>(audio =>
             {
                 AudioService.Play(audio);
-                AudioService.SetCurrentPlaylist(Tracks);
+
+                if (SelectedTabIndex == 1 && SelectedArtist != null)
+                {
+                    AudioService.SetCurrentPlaylist(SelectedArtist.Tracks);
+                }
+                else
+                {
+                    AudioService.SetCurrentPlaylist(Tracks);
+                }
             });
 
             LoadMoreAlbumsCommand = new RelayCommand(() => LoadMoreAlbums());
@@ -165,6 +202,7 @@ namespace Meridian.ViewModel.Main
             {
                 CancelAsync();
                 LoadTracks(_cancellationToken.Token);
+                LoadArtists(_cancellationToken.Token);
             });
 
             AddAlbumCommand = new RelayCommand(AddNewAlbum);
@@ -488,6 +526,33 @@ namespace Meridian.ViewModel.Main
 
             IsWorking = false;
             OnTaskFinished("audio");
+        }
+
+        private async Task LoadArtists(CancellationToken token)
+        {
+            var audio = await DataService.GetUserTracks();
+
+            if (audio.Items == null || token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            var tracks = audio.Items;
+
+            try
+            {
+                var artists = await DataService.GetArtistsFromTracks(tracks, token);
+                if (artists != null)
+                {
+                    Artists = new ObservableCollection<AudioArtist>(artists);
+
+                    SelectedArtist = Artists.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
         }
 
         private void CancelAsync()

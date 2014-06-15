@@ -684,4 +684,10 @@
   <data name="ContextMenuPlay" xml:space="preserve">
     <value>Play</value>
   </data>
+  <data name="ArtistsTab" xml:space="preserve">
+    <value>artists</value>
+  </data>
+  <data name="TracksTab" xml:space="preserve">
+    <value>tracks</value>
+  </data>
 </root>

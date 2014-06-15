@@ -24,6 +24,7 @@
                 <ResourceDictionary Source="/Resources/Styles/CheckBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ProgressBarStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ContextMenuStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Animations.xaml" />
                 <ResourceDictionary>
