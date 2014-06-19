@@ -571,7 +571,7 @@
     <value>Meridian обновлен. Изменения вступят в силу после перезапуска.</value>
   </data>
   <data name="NotificationSaved" xml:space="preserve">
-    <value>Saved</value>
+    <value>Сохранено</value>
   </data>
   <data name="NotificationSaving" xml:space="preserve">
     <value>Сохранение</value>
@@ -689,5 +689,8 @@
   </data>
   <data name="TracksTab" xml:space="preserve">
     <value>треки</value>
+  </data>
+  <data name="ContextMenuCopyToMyAlbums" xml:space="preserve">
+    <value>Сохранить в свои альбомы</value>
   </data>
 </root>

@@ -5,10 +5,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using GalaSoft.MvvmLight.Command;
+using Meridian.Controls;
 using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
+using Meridian.View.Flyouts;
 using VkLib.Core.Audio;
 using VkLib.Core.Groups;
 using VkLib.Error;
@@ -37,6 +40,8 @@ namespace Meridian.ViewModel.People
         public RelayCommand<VkAudioAlbum> PlayAlbumCommand { get; private set; }
 
         public RelayCommand<VkAudioAlbum> AddAlbumToNowPlayingCommand { get; private set; }
+
+        public RelayCommand<VkAudioAlbum> CopyAlbumCommand { get; private set; }
 
         #endregion
 
@@ -117,6 +122,8 @@ namespace Meridian.ViewModel.People
             PlayAlbumCommand = new RelayCommand<VkAudioAlbum>(PlayAlbum);
 
             AddAlbumToNowPlayingCommand = new RelayCommand<VkAudioAlbum>(AddAlbumToNowPlaying);
+
+            CopyAlbumCommand = new RelayCommand<VkAudioAlbum>(CopyAlbum);
         }
 
         private async Task LoadAlbums()
@@ -223,7 +230,7 @@ namespace Meridian.ViewModel.People
             catch (Exception ex)
             {
                 LoggingService.Log(ex);
-                
+
                 OnTaskError("audio", ErrorResources.LoadAudiosErrorCommon);
             }
 
@@ -326,6 +333,18 @@ namespace Meridian.ViewModel.People
                         AudioService.Playlist.Add(track);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
+        }
+
+        private async void CopyAlbum(VkAudioAlbum album)
+        {
+            try
+            {
+                await DataService.CopyAlbum(album.Title, album.Id, -album.OwnerId);
             }
             catch (Exception ex)
             {

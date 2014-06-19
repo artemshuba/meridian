@@ -268,6 +268,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy to my albums.
+        /// </summary>
+        public static string ContextMenuCopyToMyAlbums {
+            get {
+                return ResourceManager.GetString("ContextMenuCopyToMyAlbums", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string ContextMenuEdit {
@@ -1042,7 +1051,7 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Saving.
         /// </summary>
         public static string NotificationSaving {
             get {

@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 using LastFmLib;
 using LastFmLib.Core.Album;
 using LastFmLib.Core.Artist;
+using Meridian.Controls;
 using Meridian.Domain;
 using Meridian.Extensions;
 using Meridian.Helpers;
 using Meridian.Model;
+using Meridian.Resources.Localization;
+using Meridian.View.Flyouts;
 using Meridian.ViewModel;
 using VkLib;
 using VkLib.Core.Attachments;
@@ -851,6 +854,82 @@ namespace Meridian.Services
 
                 return artists.Values.OrderBy(a => a.Title).ToList();
             });
+        }
+
+        public static async Task CopyAlbum(string title, long albumId, long ownerId)
+        {
+            var newAlbumId = await ViewModelLocator.Vkontakte.Audio.AddAlbum(title);
+
+            var audio = await GetUserTracks(albumId: albumId, ownerId: ownerId);
+            if (audio.Items != null && audio.Items.Count > 0)
+            {
+
+                NotificationService.NotifyProgressStarted(MainResources.NotificationSaving);
+                int progressStep = (int)(100.0f / audio.Items.Count);
+
+
+                bool captchaNeeded = false;
+                string captchaImg = string.Empty;
+                string captchaSid = string.Empty;
+                string captchaKey = string.Empty;
+
+                var audioIds = new List<long>();
+
+                int count = 0;
+                audio.Items.Reverse();
+                for (int i = 0; i < audio.Items.Count; i++)
+                {
+                    var track = audio.Items[i];
+
+                    if (count > 1)
+                    {
+                        count = 0;
+                        await Task.Delay(1000); //не больше 2-х запросов в секунду
+                    }
+
+                    try
+                    {
+                        var newAudioId = await ViewModelLocator.Vkontakte.Audio.Add(track.Id, track.OwnerId, captchaSid: captchaSid, captchaKey: captchaKey);
+                        audioIds.Add(newAudioId);
+
+                        captchaNeeded = false;
+                        captchaKey = null;
+                        captchaSid = null;
+                    }
+                    catch (VkCaptchaNeededException ex)
+                    {
+                        captchaNeeded = true;
+                        captchaImg = ex.CaptchaImg;
+                        captchaSid = ex.CaptchaSid;
+                    }
+
+                    if (captchaNeeded)
+                    {
+                        var flyout = new FlyoutControl();
+                        flyout.FlyoutContent = new CaptchaRequestView(captchaSid, captchaImg);
+                        var result = await flyout.ShowAsync();
+                        if (!string.IsNullOrEmpty((string)result))
+                        {
+                            captchaKey = (string)result;
+                            i = i - 1;
+                            continue;
+                        }
+                        else
+                        {
+                            NotificationService.NotifyProgressFinished();
+                            return;
+                        }
+                    }
+
+                    count++;
+
+                    NotificationService.NotifyProgressChanged(progressStep);
+                }
+
+                await ViewModelLocator.Vkontakte.Audio.MoveToAlbum(newAlbumId, audioIds);
+
+                NotificationService.NotifyProgressFinished(MainResources.NotificationSaved);
+            }
         }
     }
 }

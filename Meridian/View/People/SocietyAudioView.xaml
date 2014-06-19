@@ -82,6 +82,8 @@
                             <ContextMenu Visibility="{Binding Converter={StaticResource AlbumContextMenuVisibilityConverter}}" Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
                                 <MenuItem Header="{x:Static localization:MainResources.ContextMenuPlay}" Command="{Binding PlacementTarget.Tag.PlayAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
                                 <MenuItem Header="{x:Static localization:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding PlacementTarget.Tag.AddAlbumToNowPlayingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                <Separator />
+                                <MenuItem Header="{x:Static localization:MainResources.ContextMenuCopyToMyAlbums}" Command="{Binding PlacementTarget.Tag.CopyAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
                             </ContextMenu>
                         </TextBlock.ContextMenu>
                     </TextBlock>

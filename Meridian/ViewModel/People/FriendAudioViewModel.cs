@@ -38,6 +38,8 @@ namespace Meridian.ViewModel.People
 
         public RelayCommand<VkAudioAlbum> AddAlbumToNowPlayingCommand { get; private set; }
 
+        public RelayCommand<VkAudioAlbum> CopyAlbumCommand { get; private set; } 
+
         #endregion
 
         public VkProfile SelectedFriend
@@ -117,6 +119,8 @@ namespace Meridian.ViewModel.People
             PlayAlbumCommand = new RelayCommand<VkAudioAlbum>(PlayAlbum);
 
             AddAlbumToNowPlayingCommand = new RelayCommand<VkAudioAlbum>(AddAlbumToNowPlaying);
+
+            CopyAlbumCommand = new RelayCommand<VkAudioAlbum>(CopyAlbum);
         }
 
         private async Task LoadAlbums()
@@ -315,6 +319,18 @@ namespace Meridian.ViewModel.People
                         AudioService.Playlist.Add(track);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
+        }
+
+        private async void CopyAlbum(VkAudioAlbum album)
+        {
+            try
+            {
+                await DataService.CopyAlbum(album.Title, album.Id, album.OwnerId);
             }
             catch (Exception ex)
             {

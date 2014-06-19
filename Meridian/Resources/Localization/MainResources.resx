@@ -571,7 +571,7 @@
     <value>Meridian was updated. Restart to apply changes.</value>
   </data>
   <data name="NotificationSaving" xml:space="preserve">
-    <value />
+    <value>Saving</value>
   </data>
   <data name="NotificationSaved" xml:space="preserve">
     <value>Saved</value>
@@ -689,5 +689,8 @@
   </data>
   <data name="TracksTab" xml:space="preserve">
     <value>tracks</value>
+  </data>
+  <data name="ContextMenuCopyToMyAlbums" xml:space="preserve">
+    <value>Copy to my albums</value>
   </data>
 </root>
