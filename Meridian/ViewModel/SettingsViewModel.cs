@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -376,16 +377,16 @@ namespace Meridian.ViewModel
 
             #endregion
 
+        }
+
+        public async void Activate()
+        {
             //check cache
             if (Directory.Exists("Cache"))
             {
-                CacheSize = StringHelper.FormatSize(Math.Round(CalculateFolderSize("Cache"), 1));
+                var cacheSize = await CalculateFolderSizeAsync("Cache");
+                CacheSize = StringHelper.FormatSize(Math.Round(cacheSize, 1));
             }
-        }
-
-        public void Activate()
-        {
-
         }
 
         private void InitializeCommands()
@@ -419,7 +420,7 @@ namespace Meridian.ViewModel
 
             CheckUpdatesCommand = new RelayCommand(() => ViewModelLocator.UpdateService.CheckUpdates());
 
-            ClearCacheCommand = new RelayCommand(() =>
+            ClearCacheCommand = new RelayCommand(async () =>
             {
                 if (!Directory.Exists("Cache"))
                     return;
@@ -448,7 +449,8 @@ namespace Meridian.ViewModel
                     }
                 }
 
-                CacheSize = StringHelper.FormatSize(Math.Round(CalculateFolderSize("Cache"), 1));
+                var cacheSize = await CalculateFolderSizeAsync("Cache");
+                CacheSize = StringHelper.FormatSize(Math.Round(cacheSize, 1));
             });
 
             TellCommand = new RelayCommand(Tell);
@@ -666,6 +668,14 @@ namespace Meridian.ViewModel
             Domain.Settings.Instance.Save();
 
             CloseSettingsCommand.Execute(null);
+        }
+
+        private static Task<float> CalculateFolderSizeAsync(string folder)
+        {
+            return Task.Run(() =>
+            {
+                return CalculateFolderSize(folder);
+            });
         }
 
         private static float CalculateFolderSize(string folder)
