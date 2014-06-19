@@ -11,8 +11,6 @@ using System.Windows.Data;
 using GalaSoft.MvvmLight.Command;
 using GongSolutions.Wpf.DragDrop;
 using Meridian.Controls;
-using Meridian.Extensions;
-using Meridian.Helpers;
 using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;

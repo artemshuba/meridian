@@ -288,6 +288,28 @@
         </Setter>
     </Style>
 
+    <Style x:Key="EditButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="56"/>
+        <Setter Property="Height" Value="56"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Name="RootGrid" Background="Transparent">
+                        <Path x:Name="Icon" Fill="{StaticResource AccentBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource EditIcon}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Icon" Property="Opacity" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Icon" Property="Opacity" Value="0.2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ShareIconButtonStyle" TargetType="Button">
         <Setter Property="Width" Value="56"/>
         <Setter Property="Height" Value="56"/>

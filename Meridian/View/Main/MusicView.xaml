@@ -65,7 +65,7 @@
                                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                                  ItemTemplateSelector="{StaticResource AudioTemplateSelector}"
-                                 dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}"
+                                 dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" 
                                  dragDrop:DragDrop.ScrollOnDrag="{Binding Main.ShowShareBar, Source={StaticResource Locator}, Converter={StaticResource InvertBoolConverter}}">
                             <i:Interaction.Behaviors>
                                 <behaviours:AutoScrollToCurrentItemBehaviour />
@@ -113,7 +113,7 @@
                     <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                     <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
 
-                    <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Grid.Row="1" Source="{StaticResource TracksCollection}" FontSize="12"/>
+                    <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Grid.Row="1" Source="{StaticResource TracksCollection}" FontSize="12" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.ArtistsTab}" Style="{StaticResource CommonTabItemStyle}">
