@@ -65,7 +65,7 @@
                                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                                  ItemTemplateSelector="{StaticResource AudioTemplateSelector}"
-                                 dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" 
+                                 dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}" dragDrop:DragDrop.DropHandler="{Binding}"
                                  dragDrop:DragDrop.ScrollOnDrag="{Binding Main.ShowShareBar, Source={StaticResource Locator}, Converter={StaticResource InvertBoolConverter}}">
                             <i:Interaction.Behaviors>
                                 <behaviours:AutoScrollToCurrentItemBehaviour />
@@ -89,7 +89,7 @@
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              SelectedItem="{Binding SelectedAlbum, Mode=TwoWay}" ItemContainerStyleSelector="{StaticResource AlbumItemStyleSelector}"
                              LoadMoreCommand="{Binding LoadMoreAlbumsCommand}"
-                             dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}">
+                             dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DropHandler="{Binding}">
                             <i:Interaction.Behaviors>
                                 <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
                             </i:Interaction.Behaviors>

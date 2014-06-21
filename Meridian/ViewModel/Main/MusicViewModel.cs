@@ -778,15 +778,18 @@ namespace Meridian.ViewModel.Main
                 else
                 {
                     var target = (VkAudioAlbum)dropInfo.TargetItem;
-                    long targetId = (long)Math.Abs(target.Id);
+                    long targetId = target.Id;
                     //перемещаем в альбом
                     try
                     {
+                        if (targetId < 0)
+                            targetId = 0;
+
                         if (await ViewModelLocator.Vkontakte.Audio.MoveToAlbum(targetId,
                             new List<long>() { source.Id }))
                         {
                             if (SelectedAlbum.Id > 0)
-                                ((IList)dropInfo.DragInfo.SourceCollection).Remove(source);
+                                ((ListCollectionView)dropInfo.DragInfo.SourceCollection).Remove(source);
                         }
                         else
                         {
