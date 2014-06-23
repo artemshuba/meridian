@@ -8,6 +8,7 @@ using Meridian.ViewModel.Messages;
 using Neptune.Messages;
 using VkLib;
 using VkLib.Auth;
+using VkLib.Core.Auth;
 
 namespace Meridian.Services
 {
@@ -34,6 +35,21 @@ namespace Meridian.Services
             }
             else
             {
+                Settings.Instance.AccessToken = token;
+                Settings.Instance.Save();
+                Messenger.Default.Send(new LoginMessage() { Type = LoginType.LogIn, Service = "vk" });
+            }
+        }
+
+        public static void SetLoginVk(AccessToken token)
+        {
+            if (token == null || token.Token == null)
+            {
+                throw new ArgumentException("AccessToken is empty");
+            }
+            else
+            {
+                _vkontakte.AccessToken = token;
                 Settings.Instance.AccessToken = token;
                 Settings.Instance.Save();
                 Messenger.Default.Send(new LoginMessage() { Type = LoginType.LogIn, Service = "vk" });

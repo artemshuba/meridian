@@ -199,7 +199,7 @@ namespace Meridian.Services
 
         public static async Task<Uri> GetTrackImage(string artist, string title)
         {
-            var info = await _lastFm.Track.GetInfo(artist, title);
+            var info = await _lastFm.Track.GetInfo(title, artist);
             if (info == null || info.ImageExtraLarge == null || string.IsNullOrEmpty(info.ImageExtraLarge))
                 return null;
 

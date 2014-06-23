@@ -921,7 +921,7 @@ namespace Meridian.ViewModel
 
             try
             {
-                var imageUri = await DataService.GetTrackImage(CurrentAudio.Title, CurrentAudio.Artist);
+                var imageUri = await DataService.GetTrackImage(CurrentAudio.Artist, CurrentAudio.Title);
                 if (imageUri == null)
                 {
                     TrackImage = null;

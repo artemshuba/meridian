@@ -108,6 +108,7 @@
     <Compile Include="Error\VkException.cs" />
     <Compile Include="Error\VkInvalidClientException.cs" />
     <Compile Include="Error\VkInvalidTokenException.cs" />
+    <Compile Include="Error\VkNeedValidationException.cs" />
     <Compile Include="Error\VkStatusBroadcastDisabledException.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />

@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
+using Meridian.Controls;
+using Meridian.Domain;
 using Meridian.Resources.Localization;
 using Meridian.Services;
+using Meridian.View.Flyouts;
 using Neptune.Messages;
+using VkLib.Core.Auth;
 using VkLib.Error;
 
 namespace Meridian.ViewModel.Main
@@ -195,7 +200,7 @@ namespace Meridian.ViewModel.Main
             {
                 await AccountManager.LoginVk(Login, Password, _captchaSid, _captchaKey);
 
-                MessengerInstance.Send(new NavigateToPageMessage() { Page = "/Main.MusicView" });
+                MessengerInstance.Send(new NavigateToPageMessage() {Page = "/Main.MusicView"});
             }
             catch (VkCaptchaNeededException ex)
             {
@@ -213,6 +218,13 @@ namespace Meridian.ViewModel.Main
                 IsWorking = false;
 
                 LoggingService.Log(ex.ToString());
+            }
+            catch (VkNeedValidationException ex)
+            {
+                LoginError = ErrorResources.LoginErrorNeedValidation;
+                IsWorking = false;
+
+                ValidateUser(ex.RedirectUri);
             }
             catch (Exception ex)
             {
@@ -232,5 +244,17 @@ namespace Meridian.ViewModel.Main
             Process.Start(uri.OriginalString);
         }
 
+        private async void ValidateUser(Uri redirectUri)
+        {
+            var flyout = new FlyoutControl();
+            flyout.FlyoutContent = new WebValidationView(redirectUri);
+            var token = await flyout.ShowAsync() as AccessToken;
+            if (token != null)
+            {
+                AccountManager.SetLoginVk(token);
+
+                MessengerInstance.Send(new NavigateToPageMessage() { Page = "/Main.MusicView" });
+            }
+        }
     }
 }

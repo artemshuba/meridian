@@ -66,6 +66,9 @@ namespace VkLib.Core.Auth
 
                     case "invalid_client":
                         throw new VkInvalidClientException();
+
+                    case "need_validation":
+                        throw new VkNeedValidationException() { RedirectUri = new Uri(response["redirect_uri"].Value<string>()) };
                 }
 
                 return null;

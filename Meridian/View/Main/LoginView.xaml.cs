@@ -10,7 +10,7 @@ namespace Meridian.View.Main
     /// </summary>
     public partial class LoginView : PageBase
     {
-        private LoginViewModel _viewModel;
+        private readonly LoginViewModel _viewModel;
 
         public LoginView()
         {

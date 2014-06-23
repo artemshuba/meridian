@@ -159,6 +159,9 @@
   <data name="LoginErrorInvalidClient" xml:space="preserve">
     <value>Не удалось войти. Проверьте ваш логин и пароль, и попробуйте снова.</value>
   </data>
+  <data name="LoginErrorNeedValidation" xml:space="preserve">
+    <value>Необходимо подтверждение. Вы будете перенаправлены на страницу подтверждения.</value>
+  </data>
   <data name="WmpMissingError" xml:space="preserve">
     <value>Для воспроизведения музыки требуется Windows Media Player 10 или выше.</value>
   </data>

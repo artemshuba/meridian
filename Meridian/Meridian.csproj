@@ -246,6 +246,9 @@
     <Compile Include="ViewModel\People\SubscriptionsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Flyouts\WebValidationView.xaml.cs">
+      <DependentUpon>WebValidationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Search\AlbumView.xaml.cs">
       <DependentUpon>AlbumView.xaml</DependentUpon>
     </Compile>
@@ -520,6 +523,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Themes\Light.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\WebValidationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
