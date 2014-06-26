@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace LastFmLib.Core.Album
 {
@@ -27,7 +28,12 @@ namespace LastFmLib.Core.Album
 
             if (response.SelectToken("results.albummatches.album") != null)
             {
-                return (from a in response.SelectToken("results.albummatches.album") select LastFmAlbum.FromJson(a)).ToList();
+                var albumJson = response.SelectToken("results.albummatches.album");
+                if (albumJson is JArray)
+                    return
+                        (from a in response.SelectToken("results.albummatches.album") select LastFmAlbum.FromJson(a)).ToList();
+                else
+                    return new List<LastFmAlbum>() { LastFmAlbum.FromJson(albumJson) };
             }
 
             return null;
@@ -45,7 +51,7 @@ namespace LastFmLib.Core.Album
             }
 
             if (autoCorrect)
-                parameters.Add("autocorrect","1");
+                parameters.Add("autocorrect", "1");
 
             parameters.Add("api_key", _lastFm.ApiKey);
 
