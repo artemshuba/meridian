@@ -76,7 +76,7 @@
              </list>
              </remarks>
              <example><code>
-             public class Foo : INotifyPropertyChanged {
+             internal class Foo : INotifyPropertyChanged {
                public event PropertyChangedEventHandler PropertyChanged;
                [NotifyPropertyChangedInvocator]
                protected virtual void NotifyChanged(string propertyName) { ... }
@@ -147,7 +147,7 @@
             </summary>
             <example><code>
             [LocalizationRequiredAttribute(true)]
-            public class Foo {
+            internal class Foo {
               private string str = "my string"; // Warning: Localizable string
             }
             </code></example>
@@ -180,9 +180,9 @@
             </summary>
             <example><code>
             [BaseTypeRequired(typeof(IComponent)] // Specify requirement
-            public class ComponentAttribute : Attribute { }
+            internal class ComponentAttribute : Attribute { }
             [Component] // ComponentAttribute requires implementing IComponent interface
-            public class MyComponent : IComponent { }
+            internal class MyComponent : IComponent { }
             </code></example>
         </member>
         <member name="T:JetBrains.Annotations.UsedImplicitlyAttribute">
@@ -6140,6 +6140,16 @@
             <param name="text">The text to be post-processed.</param>
             <returns>Post-processed text.</returns>
         </member>
+        <member name="M:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.ReplaceNamedGroup(System.String,System.String,System.String,System.Text.RegularExpressions.Match)">
+            <summary>
+            A match evaluator for Regular Expression based replacing
+            </summary>
+            <param name="input"></param>
+            <param name="groupName"></param>
+            <param name="replacement"></param>
+            <param name="match"></param>
+            <returns></returns>
+        </member>
         <member name="P:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.SearchFor">
             <summary>
             Gets or sets the text to search for.
@@ -6161,6 +6171,14 @@
             <value>The replacement string.</value>
             <docgen category='Search/Replace Options' order='10' />
         </member>
+        <member name="P:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.ReplaceGroupName">
+            <summary>
+            Gets or sets the group name to replace when using regular expressions.
+            Leave null or empty to replace without using group name.
+            </summary>
+            <value>The group name.</value>
+            <docgen category='Search/Replace Options' order='10' />
+        </member>
         <member name="P:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.IgnoreCase">
             <summary>
             Gets or sets a value indicating whether to ignore case.
@@ -6174,6 +6192,11 @@
             </summary>
             <value>A value of <c>true</c> if whole words should be searched for; otherwise, <c>false</c>.</value>
             <docgen category='Search/Replace Options' order='10' />
+        </member>
+        <member name="T:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.Replacer">
+            <summary>
+            This class was created instead of simply using a lambda expression so that the "ThreadAgnosticAttributeTest" will pass
+            </summary>
         </member>
         <member name="T:NLog.LayoutRenderers.Wrappers.Rot13LayoutRendererWrapper">
             <summary>
@@ -10811,6 +10834,11 @@
             Gets or sets the log which should be always used regardless of source level.
             </summary>
         </member>
+        <member name="P:NLog.NLogTraceListener.DisableFlush">
+            <summary>
+            Gets or sets a value indicating whether flush calls from trace sources should be ignored.
+            </summary>
+        </member>
         <member name="P:NLog.NLogTraceListener.IsThreadSafe">
             <summary>
             Gets a value indicating whether the trace listener is thread safe.
@@ -10967,6 +10995,13 @@
             optimize batch writes.
             </summary>
             <param name="logEvents">Logging events to be written out.</param>
+        </member>
+        <member name="M:NLog.Targets.Target.MergeEventProperties(NLog.LogEventInfo)">
+            <summary>
+            Merges (copies) the event context properties from any event info object stored in
+            parameters of the given event info object.
+            </summary>
+            <param name="logEvent">The event info object to perform the merge to.</param>
         </member>
         <member name="P:NLog.Targets.Target.Name">
             <summary>
@@ -12845,6 +12880,11 @@
             Gets or sets a value indicating whether NewLine characters in the body should be replaced with <br/> tags.
             </summary>
             <remarks>Only happens when <see cref="P:NLog.Targets.MailTarget.Html"/> is set to true.</remarks>
+        </member>
+        <member name="P:NLog.Targets.MailTarget.Timeout">
+            <summary>
+            Gets or sets a value indicating the SMTP client timeout.
+            </summary>
         </member>
         <member name="T:NLog.Targets.MemoryTarget">
             <summary>

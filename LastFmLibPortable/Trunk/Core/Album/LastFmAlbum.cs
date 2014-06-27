@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LastFmLib.Core.Track;
 using Newtonsoft.Json.Linq;
 
@@ -64,11 +65,12 @@ namespace LastFmLib.Core.Album
             if (json.SelectToken("tracks.track") != null)
             {
                 result.Tracks = new List<LastFmTrack>();
-                foreach (var trackToken in json.SelectToken("tracks.track"))
-                {
-                    var track = LastFmTrack.FromJson(trackToken);
-                    result.Tracks.Add(track);
-                }
+
+                var trackJson = json.SelectToken("tracks.track");
+                if (trackJson is JArray)
+                    result.Tracks.AddRange((from a in trackJson select LastFmTrack.FromJson(a)).ToList());
+                else
+                    result.Tracks.Add(LastFmTrack.FromJson(trackJson));
             }
 
             if (json.SelectToken("toptags.tag") != null)

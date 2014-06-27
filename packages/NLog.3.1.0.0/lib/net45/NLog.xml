@@ -76,7 +76,7 @@
              </list>
              </remarks>
              <example><code>
-             public class Foo : INotifyPropertyChanged {
+             internal class Foo : INotifyPropertyChanged {
                public event PropertyChangedEventHandler PropertyChanged;
                [NotifyPropertyChangedInvocator]
                protected virtual void NotifyChanged(string propertyName) { ... }
@@ -147,7 +147,7 @@
             </summary>
             <example><code>
             [LocalizationRequiredAttribute(true)]
-            public class Foo {
+            internal class Foo {
               private string str = "my string"; // Warning: Localizable string
             }
             </code></example>
@@ -180,9 +180,9 @@
             </summary>
             <example><code>
             [BaseTypeRequired(typeof(IComponent)] // Specify requirement
-            public class ComponentAttribute : Attribute { }
+            internal class ComponentAttribute : Attribute { }
             [Component] // ComponentAttribute requires implementing IComponent interface
-            public class MyComponent : IComponent { }
+            internal class MyComponent : IComponent { }
             </code></example>
         </member>
         <member name="T:JetBrains.Annotations.UsedImplicitlyAttribute">
@@ -3570,56 +3570,6 @@
             Supports mocking of SMTP Client code.
             </summary>
         </member>
-        <member name="M:NLog.Internal.MySmtpClient.Dispose">
-            <summary>
-            Sends a QUIT message to the SMTP server, gracefully ends the TCP connection, and releases all resources used by the current instance of the <see cref="T:System.Net.Mail.SmtpClient"/> class.
-            </summary>
-        </member>
-        <member name="M:NLog.Internal.MySmtpClient.NLog#Internal#ISmtpClient#get_Host">
-            <summary>
-            Supports mocking of SMTP Client code.
-            </summary>
-        </member>
-        <member name="M:NLog.Internal.MySmtpClient.NLog#Internal#ISmtpClient#set_Host(System.String)">
-            <summary>
-            Supports mocking of SMTP Client code.
-            </summary>
-        </member>
-        <member name="M:NLog.Internal.MySmtpClient.NLog#Internal#ISmtpClient#get_Port">
-            <summary>
-            Supports mocking of SMTP Client code.
-            </summary>
-        </member>
-        <member name="M:NLog.Internal.MySmtpClient.NLog#Internal#ISmtpClient#set_Port(System.Int32)">
-            <summary>
-            Supports mocking of SMTP Client code.
-            </summary>
-        </member>
-        <member name="M:NLog.Internal.MySmtpClient.NLog#Internal#ISmtpClient#get_Credentials">
-            <summary>
-            Supports mocking of SMTP Client code.
-            </summary>
-        </member>
-        <member name="M:NLog.Internal.MySmtpClient.NLog#Internal#ISmtpClient#set_Credentials(System.Net.ICredentialsByHost)">
-            <summary>
-            Supports mocking of SMTP Client code.
-            </summary>
-        </member>
-        <member name="M:NLog.Internal.MySmtpClient.NLog#Internal#ISmtpClient#get_EnableSsl">
-            <summary>
-            Supports mocking of SMTP Client code.
-            </summary>
-        </member>
-        <member name="M:NLog.Internal.MySmtpClient.NLog#Internal#ISmtpClient#set_EnableSsl(System.Boolean)">
-            <summary>
-            Supports mocking of SMTP Client code.
-            </summary>
-        </member>
-        <member name="M:NLog.Internal.MySmtpClient.NLog#Internal#ISmtpClient#Send(System.Net.Mail.MailMessage)">
-            <summary>
-            Supports mocking of SMTP Client code.
-            </summary>
-        </member>
         <member name="T:NLog.Internal.NetworkSenders.HttpNetworkSender">
             <summary>
             Network sender which uses HTTP or HTTPS POST.
@@ -6190,6 +6140,16 @@
             <param name="text">The text to be post-processed.</param>
             <returns>Post-processed text.</returns>
         </member>
+        <member name="M:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.ReplaceNamedGroup(System.String,System.String,System.String,System.Text.RegularExpressions.Match)">
+            <summary>
+            A match evaluator for Regular Expression based replacing
+            </summary>
+            <param name="input"></param>
+            <param name="groupName"></param>
+            <param name="replacement"></param>
+            <param name="match"></param>
+            <returns></returns>
+        </member>
         <member name="P:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.SearchFor">
             <summary>
             Gets or sets the text to search for.
@@ -6211,6 +6171,14 @@
             <value>The replacement string.</value>
             <docgen category='Search/Replace Options' order='10' />
         </member>
+        <member name="P:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.ReplaceGroupName">
+            <summary>
+            Gets or sets the group name to replace when using regular expressions.
+            Leave null or empty to replace without using group name.
+            </summary>
+            <value>The group name.</value>
+            <docgen category='Search/Replace Options' order='10' />
+        </member>
         <member name="P:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.IgnoreCase">
             <summary>
             Gets or sets a value indicating whether to ignore case.
@@ -6224,6 +6192,11 @@
             </summary>
             <value>A value of <c>true</c> if whole words should be searched for; otherwise, <c>false</c>.</value>
             <docgen category='Search/Replace Options' order='10' />
+        </member>
+        <member name="T:NLog.LayoutRenderers.Wrappers.ReplaceLayoutRendererWrapper.Replacer">
+            <summary>
+            This class was created instead of simply using a lambda expression so that the "ThreadAgnosticAttributeTest" will pass
+            </summary>
         </member>
         <member name="T:NLog.LayoutRenderers.Wrappers.Rot13LayoutRendererWrapper">
             <summary>
@@ -8180,6 +8153,31 @@
             </summary>
             <typeparam name="T">Return type of the provided function.</typeparam>
             <param name="func">Function to run.</param>
+            <param name="fallback">Fallback value to return in case of exception. Defaults to default value of type T.</param>
+            <returns>Result returned by the provided function or fallback value in case of exception.</returns>
+        </member>
+        <member name="M:NLog.Logger.SwallowAsync(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Runs async action. If the action throws, the exception is logged at <c>Error</c> level. Exception is not propagated outside of this method.
+            </summary>
+            <param name="asyncAction">Async action to execute.</param>
+        </member>
+        <member name="M:NLog.Logger.SwallowAsync``1(System.Func{System.Threading.Tasks.Task{``0}})">
+            <summary>
+            Runs the provided async function and returns its result. If exception is thrown, it is logged at <c>Error</c> level.
+            Exception is not propagated outside of this method. Fallback value is returned instead.
+            </summary>
+            <typeparam name="T">Return type of the provided function.</typeparam>
+            <param name="asyncFunc">Async function to run.</param>
+            <returns>Result returned by the provided function or fallback value in case of exception.</returns>
+        </member>
+        <member name="M:NLog.Logger.SwallowAsync``1(System.Func{System.Threading.Tasks.Task{``0}},``0)">
+            <summary>
+            Runs the provided async function and returns its result. If exception is thrown, it is logged at <c>Error</c> level.
+            Exception is not propagated outside of this method. Fallback value is returned instead.
+            </summary>
+            <typeparam name="T">Return type of the provided function.</typeparam>
+            <param name="asyncFunc">Async function to run.</param>
             <param name="fallback">Fallback value to return in case of exception. Defaults to default value of type T.</param>
             <returns>Result returned by the provided function or fallback value in case of exception.</returns>
         </member>
@@ -10861,6 +10859,11 @@
             Gets or sets the log which should be always used regardless of source level.
             </summary>
         </member>
+        <member name="P:NLog.NLogTraceListener.DisableFlush">
+            <summary>
+            Gets or sets a value indicating whether flush calls from trace sources should be ignored.
+            </summary>
+        </member>
         <member name="P:NLog.NLogTraceListener.IsThreadSafe">
             <summary>
             Gets a value indicating whether the trace listener is thread safe.
@@ -11017,6 +11020,13 @@
             optimize batch writes.
             </summary>
             <param name="logEvents">Logging events to be written out.</param>
+        </member>
+        <member name="M:NLog.Targets.Target.MergeEventProperties(NLog.LogEventInfo)">
+            <summary>
+            Merges (copies) the event context properties from any event info object stored in
+            parameters of the given event info object.
+            </summary>
+            <param name="logEvent">The event info object to perform the merge to.</param>
         </member>
         <member name="P:NLog.Targets.Target.Name">
             <summary>
@@ -12895,6 +12905,11 @@
             Gets or sets a value indicating whether NewLine characters in the body should be replaced with <br/> tags.
             </summary>
             <remarks>Only happens when <see cref="P:NLog.Targets.MailTarget.Html"/> is set to true.</remarks>
+        </member>
+        <member name="P:NLog.Targets.MailTarget.Timeout">
+            <summary>
+            Gets or sets a value indicating the SMTP client timeout.
+            </summary>
         </member>
         <member name="T:NLog.Targets.MemoryTarget">
             <summary>
