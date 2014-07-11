@@ -655,7 +655,10 @@ namespace Meridian.ViewModel
                     var artists = await DataService.SearchArtists(artist);
                     if (artists != null && artists.Count > 0)
                     {
-                        var a = artists.First();
+                        var a = artists.FirstOrDefault(x => x.Name.ToLower() == artist.ToLower());
+                        if (a == null)
+                            a = artists.First();
+
                         MessengerInstance.Send(new NavigateToPageMessage()
                         {
                             Page = "/Search.ArtistView",
