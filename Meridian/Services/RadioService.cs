@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,10 +62,17 @@ namespace Meridian.Services
 
         public static async Task<EchoArtist> FindArtist(string name)
         {
-            var artists = await ViewModelLocator.Echonest.Artist.Search(name);
-            if (artists != null && artists.Count > 0)
+            try
             {
-                return artists.FirstOrDefault();
+                var artists = await ViewModelLocator.Echonest.Artist.Search(name);
+                if (artists != null && artists.Count > 0)
+                {
+                    return artists.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
             }
 
             return null;
@@ -104,10 +112,17 @@ namespace Meridian.Services
 
         public static async Task<EchoSong> FindSong(string title, string artist)
         {
-            var songs = await ViewModelLocator.Echonest.Song.Search(title, artist);
-            if (songs != null && songs.Count > 0)
+            try
             {
-                return songs.FirstOrDefault();
+                var songs = await ViewModelLocator.Echonest.Song.Search(title, artist);
+                if (songs != null && songs.Count > 0)
+                {
+                    return songs.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
             }
 
             return null;
@@ -115,23 +130,44 @@ namespace Meridian.Services
 
         public static async Task CreateArtistsSession(IEnumerable<string> artists)
         {
-            var response = await ViewModelLocator.Echonest.Playlist.DynamicCreate(EchoPlaylistType.ArtistRadio, artists: artists);
-            _sessionId = response.Item1;
-            if (response.Item2 != null)
-                _futureSongs = new List<EchoSong>() { response.Item2 };
+            try
+            {
+                var response = await ViewModelLocator.Echonest.Playlist.DynamicCreate(EchoPlaylistType.ArtistRadio, artists: artists);
+                _sessionId = response.Item1;
+                if (response.Item2 != null)
+                    _futureSongs = new List<EchoSong>() { response.Item2 };
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
         }
 
         public static async Task CreateSongsSession(IEnumerable<string> songIds)
         {
-            var response = await ViewModelLocator.Echonest.Playlist.DynamicCreate(EchoPlaylistType.SongRadio, songIds: songIds);
-            _sessionId = response.Item1;
-            if (response.Item2 != null)
-                _futureSongs = new List<EchoSong>() { response.Item2 };
+            try
+            {
+                var response = await ViewModelLocator.Echonest.Playlist.DynamicCreate(EchoPlaylistType.SongRadio, songIds: songIds);
+                _sessionId = response.Item1;
+                if (response.Item2 != null)
+                    _futureSongs = new List<EchoSong>() { response.Item2 };
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
         }
 
         public static async Task DeleteSession(string sessionId)
         {
-            await ViewModelLocator.Echonest.Playlist.DynamicDelete(_sessionId);
+            try
+            {
+                await ViewModelLocator.Echonest.Playlist.DynamicDelete(_sessionId);
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
 
             _sessionId = null;
         }
@@ -145,8 +181,16 @@ namespace Meridian.Services
         //Пропустить текущий трек и перейти к следующему. Обычно вызывается, если пользователь нажал Next
         public static async Task SkipNext()
         {
-            ViewModelLocator.Echonest.Playlist.DynamicFeedback(_sessionId, skipSongs: new[] { _currentSong.Id });
-            Next();
+            try
+            {
+                ViewModelLocator.Echonest.Playlist.DynamicFeedback(_sessionId, skipSongs: new[] { _currentSong.Id });
+                Next();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
+
         }
 
         private static async void Next()
@@ -154,8 +198,17 @@ namespace Meridian.Services
             if (_futureSongs == null || _futureSongs.Count == 0 ||
                 _futureSongs.IndexOf(_currentSong) >= _futureSongs.Count - 1)
             {
-                //получаем еще пачку треков
-                _futureSongs = await ViewModelLocator.Echonest.Playlist.DynamicNext(_sessionId, 5);
+                try
+                {
+                    //получаем еще пачку треков
+                    _futureSongs = await ViewModelLocator.Echonest.Playlist.DynamicNext(_sessionId, 5);
+                }
+                catch (Exception ex)
+                {
+                    LoggingService.Log(ex);
+
+                    return;
+                }
             }
 
             var currentIndex = _futureSongs.IndexOf(_currentSong);
@@ -166,8 +219,15 @@ namespace Meridian.Services
         //Вызывается если текущий трек не удалось воспроизвести (не найден ВКонтакте)
         public static async Task InvalidateCurrentSong()
         {
-            ViewModelLocator.Echonest.Playlist.DynamicFeedback(_sessionId, invalidateSong: new[] { _currentSong.Id });
-            Next();
+            try
+            {
+                ViewModelLocator.Echonest.Playlist.DynamicFeedback(_sessionId, invalidateSong: new[] { _currentSong.Id });
+                Next();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
         }
 
         public static async void Stop()

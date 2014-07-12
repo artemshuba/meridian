@@ -552,17 +552,17 @@ namespace Meridian.ViewModel.Main
 
         private async Task LoadArtists(CancellationToken token)
         {
-            var audio = await DataService.GetUserTracks();
-
-            if (audio.Items == null || token.IsCancellationRequested)
-            {
-                return;
-            }
-
-            var tracks = audio.Items;
-
             try
             {
+                var audio = await DataService.GetUserTracks();
+
+                if (audio.Items == null || token.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                var tracks = audio.Items;
+
                 var artists = await DataService.GetArtistsFromTracks(tracks, token);
                 if (artists != null)
                 {
