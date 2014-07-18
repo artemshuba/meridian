@@ -12,7 +12,7 @@ namespace Meridian.ViewModel.People
     {
         private List<VkProfile> _friends;
 
-        #region
+        #region Commands
 
         public RelayCommand<VkProfile> GoToFriendCommand { get; private set; }
 
@@ -21,14 +21,7 @@ namespace Meridian.ViewModel.People
         public List<VkProfile> Friends
         {
             get { return _friends; }
-            set
-            {
-                if (_friends == value)
-                    return;
-
-                _friends = value;
-                RaisePropertyChanged("Friends");
-            }
+            set { Set(ref _friends, value); }
         }
 
         public void Activate()
