@@ -226,8 +226,8 @@ namespace Meridian.Services
                 if (vkAudio != null)
                 {
                     track.Id = vkAudio.Id;
-                    //track.Artist = vkAudio.Artist;
-                    //track.Title = vkAudio.Title;
+                    track.Artist = vkAudio.Artist;
+                    track.Title = vkAudio.Title;
                     track.Url = vkAudio.Url;
                     track.OwnerId = vkAudio.OwnerId;
                     track.AlbumId = vkAudio.AlbumId;
