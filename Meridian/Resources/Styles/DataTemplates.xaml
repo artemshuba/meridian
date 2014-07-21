@@ -47,7 +47,7 @@
                 <TextBlock x:Name="Artist" Grid.Column="2" Text="{Binding Artist}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="14" Margin="0,0,0,0" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Artist}"/>
                 <TextBlock x:Name="Duration" Grid.Column="3" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{StaticResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
-                <StackPanel x:Name="ToolbarPanel"  Grid.Column="3" HorizontalAlignment="Right" Margin="0,-2,24,-2" Visibility="Collapsed" Orientation="Horizontal">
+                <StackPanel x:Name="ToolbarPanel"  Grid.Column="3" HorizontalAlignment="Right" Margin="0,-2,24,-2" Opacity="0" Orientation="Horizontal">
                     
                     <Button Style="{StaticResource LyricsButtonStyle}" Width="22" Height="20" Padding="4" Visibility="{Binding HasLyrics, Converter={StaticResource BoolToVisibilityConverter}}"
                             Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Margin="0,0,0,0"
@@ -75,8 +75,8 @@
                 <Setter Property="Opacity" Value="1" TargetName="Duration" />
             </DataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsMouseOver}" Value="True">
-                <Setter TargetName="Duration" Property="Visibility" Value="Collapsed" />
-                <Setter TargetName="ToolbarPanel" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Duration" Property="Opacity" Value="0" />
+                <Setter TargetName="ToolbarPanel" Property="Opacity" Value="1" />
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
@@ -122,7 +122,7 @@
                            ToolTip="{Binding Artist}"/>
                 <TextBlock x:Name="Duration" Grid.Column="3" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{StaticResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
 
-                <StackPanel x:Name="ToolbarPanel"  Grid.Column="3" HorizontalAlignment="Right" Margin="0,-2,24,-2" Visibility="Collapsed" Orientation="Horizontal">
+                <StackPanel x:Name="ToolbarPanel"  Grid.Column="3" HorizontalAlignment="Right" Margin="0,-2,24,-2" Opacity="0" Orientation="Horizontal">
 
                     <Button Style="{StaticResource LyricsButtonStyle}" Width="22" Height="20" Padding="4" Visibility="{Binding HasLyrics, Converter={StaticResource BoolToVisibilityConverter}}"
                             Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Margin="0,0,0,0"
@@ -150,8 +150,8 @@
                 <Setter Property="Opacity" Value="1" TargetName="Duration" />
             </DataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsMouseOver}" Value="True">
-                <Setter TargetName="Duration" Property="Visibility" Value="Collapsed" />
-                <Setter TargetName="ToolbarPanel" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Duration" Property="Opacity" Value="0" />
+                <Setter TargetName="ToolbarPanel" Property="Opacity" Value="1" />
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
