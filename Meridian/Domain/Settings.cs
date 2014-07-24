@@ -60,11 +60,16 @@ namespace Meridian.Domain
 
         public bool ShowBackgroundArt { get; set; }
 
+        public bool DownloadArtistArt { get; set; }
+
+        public bool DownloadAlbumArt { get; set; }
+
         public bool TellRequestShown { get; set; }
 
         public DateTime FirstStart { get; set; }
 
-        //Windows
+        #region Window settings
+
         public double Width { get; set; }
         public double Height { get; set; }
         public double Top { get; set; }
@@ -73,7 +78,10 @@ namespace Meridian.Domain
         public double CompactTop { get; set; }
         public double CompactLeft { get; set; }
 
-        //Hotkeys
+        #endregion
+
+        #region Hotkeys
+
         public Key NextHotKey { get; set; }
         public ModifierKeys NextHotKeyModifier { get; set; }
         public Key PrevHotKey { get; set; }
@@ -96,6 +104,8 @@ namespace Meridian.Domain
         public ModifierKeys FastForwardHotKeyModifier { get; set; }
         public Key RewindHotKey { get; set; }
         public ModifierKeys RewindHotKeyModifier { get; set; }
+
+        #endregion
 
         public Settings()
         {
@@ -121,6 +131,9 @@ namespace Meridian.Domain
             SendStats = true;
 
             FirstStart = DateTime.Now;
+
+            DownloadArtistArt = true;
+            DownloadAlbumArt = true;
         }
 
         public static void Load()

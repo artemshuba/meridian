@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.Command;
 using GongSolutions.Wpf.DragDrop;
+using Meridian.Domain;
 using Meridian.Model;
 using Meridian.Services;
 using Meridian.ViewModel.Messages;
@@ -126,19 +127,22 @@ namespace Meridian.ViewModel.Main
                     return;
                 }
 
-                var imageUri = await DataService.GetArtistImage(audio.Artist, true);
-                if (imageUri != null)
+                if (Settings.Instance.DownloadArtistArt)
                 {
-                    if (token.IsCancellationRequested)
+                    var imageUri = await DataService.GetArtistImage(audio.Artist, true);
+                    if (imageUri != null)
+                    {
+                        if (token.IsCancellationRequested)
+                            return;
+
+                        cachedImage = await CacheService.CacheImage(imageUri.OriginalString, "artists/" + CacheService.GetSafeFileName(audio.Artist + "_" + imageType + ".jpg"));
+
+                        if (token.IsCancellationRequested)
+                            return;
+
+                        ArtistImage = cachedImage;
                         return;
-
-                    cachedImage = await CacheService.CacheImage(imageUri.OriginalString, "artists/" + CacheService.GetSafeFileName(audio.Artist + "_" + imageType + ".jpg"));
-
-                    if (token.IsCancellationRequested)
-                        return;
-
-                    ArtistImage = cachedImage;
-                    return;
+                    }
                 }
 
                 ArtistImage = null;

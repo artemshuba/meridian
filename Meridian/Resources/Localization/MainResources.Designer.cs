@@ -1474,7 +1474,7 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BackgroundArt.
+        ///   Looks up a localized string similar to Artist and album art.
         /// </summary>
         public static string SettingsUIBackgroundArtTitle {
             get {
@@ -1506,6 +1506,24 @@ namespace Meridian.Resources.Localization {
         public static string SettingsUIClearCache {
             get {
                 return ResourceManager.GetString("SettingsUIClearCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download album covers.
+        /// </summary>
+        public static string SettingsUIDownloadAlbumArt {
+            get {
+                return ResourceManager.GetString("SettingsUIDownloadAlbumArt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download artist art.
+        /// </summary>
+        public static string SettingsUIDownloadArtistArt {
+            get {
+                return ResourceManager.GetString("SettingsUIDownloadArtistArt", resourceCulture);
             }
         }
         

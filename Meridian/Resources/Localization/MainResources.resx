@@ -613,7 +613,7 @@
     <value>Start radio</value>
   </data>
   <data name="SettingsUIBackgroundArtTitle" xml:space="preserve">
-    <value>BackgroundArt</value>
+    <value>Artist and album art</value>
   </data>
   <data name="SettingsUIShowBackgroundArt" xml:space="preserve">
     <value>Show current artist image on background</value>
@@ -692,5 +692,11 @@
   </data>
   <data name="ContextMenuCopyToMyAlbums" xml:space="preserve">
     <value>Copy to my albums</value>
+  </data>
+  <data name="SettingsUIDownloadAlbumArt" xml:space="preserve">
+    <value>Download album covers</value>
+  </data>
+  <data name="SettingsUIDownloadArtistArt" xml:space="preserve">
+    <value>Download artist art</value>
   </data>
 </root>

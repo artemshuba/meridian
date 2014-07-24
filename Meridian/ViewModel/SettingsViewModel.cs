@@ -64,6 +64,8 @@ namespace Meridian.ViewModel
         private bool _enableNotifications;
         private bool _enableTrayIcon;
         private bool _showBackgroundArt;
+        private bool _downloadArtistArt;
+        private bool _downloadAlbumArt;
         private SettingsLanguage _selectedLanguage;
         private string _cacheSize;
 
@@ -214,6 +216,30 @@ namespace Meridian.ViewModel
             }
         }
 
+        public bool DownloadArtistArt
+        {
+            get { return _downloadArtistArt; }
+            set
+            {
+                if (Set(ref _downloadArtistArt, value))
+                {
+                    CanSave = true;
+                }
+            }
+        }
+
+        public bool DownloadAlbumArt
+        {
+            get { return _downloadAlbumArt; }
+            set
+            {
+                if (Set(ref _downloadAlbumArt, value))
+                {
+                    CanSave = true;
+                }
+            }
+        }
+
         public string CacheSize
         {
             get { return _cacheSize; }
@@ -256,6 +282,8 @@ namespace Meridian.ViewModel
             _enableNotifications = Domain.Settings.Instance.ShowTrackNotifications;
             _enableTrayIcon = Domain.Settings.Instance.EnableTrayIcon;
             _showBackgroundArt = Domain.Settings.Instance.ShowBackgroundArt;
+            _downloadArtistArt = Domain.Settings.Instance.DownloadArtistArt;
+            _downloadAlbumArt = Domain.Settings.Instance.DownloadAlbumArt;
 
             var lang = _languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
             if (lang != null)
@@ -471,6 +499,10 @@ namespace Meridian.ViewModel
             Domain.Settings.Instance.EnableTrayIcon = EnableTrayIcon;
 
             ViewModelLocator.Main.ShowBackgroundArt = ShowBackgroundArt;
+
+            Domain.Settings.Instance.DownloadArtistArt = DownloadArtistArt;
+
+            Domain.Settings.Instance.DownloadAlbumArt = DownloadAlbumArt;
 
             ViewModelLocator.Main.EnableStatusBroadcasting = EnableStatusBroadcasting;
 

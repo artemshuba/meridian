@@ -613,7 +613,7 @@
     <value>Запустить радио</value>
   </data>
   <data name="SettingsUIBackgroundArtTitle" xml:space="preserve">
-    <value>Фоновые изображения</value>
+    <value>Обложки альбомов и изображения исполнителей</value>
   </data>
   <data name="SettingsUIShowBackgroundArt" xml:space="preserve">
     <value>Отображать изображение текущего исполнителя на фоне</value>
@@ -692,5 +692,11 @@
   </data>
   <data name="ContextMenuCopyToMyAlbums" xml:space="preserve">
     <value>Сохранить в свои альбомы</value>
+  </data>
+  <data name="SettingsUIDownloadAlbumArt" xml:space="preserve">
+    <value>Загружать обложки альбомов</value>
+  </data>
+  <data name="SettingsUIDownloadArtistArt" xml:space="preserve">
+    <value>Загружать изображения исполнителей</value>
   </data>
 </root>

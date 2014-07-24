@@ -894,19 +894,23 @@ namespace Meridian.ViewModel
                     return;
                 }
 
-                var imageUri = await DataService.GetArtistImage(CurrentAudio.Artist, Settings.Instance.ShowBackgroundArt);
-                if (imageUri != null)
+                if (Settings.Instance.DownloadArtistArt)
                 {
-                    if (token.IsCancellationRequested)
+                    var imageUri =
+                        await DataService.GetArtistImage(CurrentAudio.Artist, Settings.Instance.ShowBackgroundArt);
+                    if (imageUri != null)
+                    {
+                        if (token.IsCancellationRequested)
+                            return;
+
+                        cachedImage = await CacheService.CacheImage(imageUri.OriginalString, "artists/" + CacheService.GetSafeFileName(CurrentAudio.Artist + "_" + imageType + ".jpg"));
+
+                        if (token.IsCancellationRequested)
+                            return;
+
+                        ArtistImage = cachedImage;
                         return;
-
-                    cachedImage = await CacheService.CacheImage(imageUri.OriginalString, "artists/" + CacheService.GetSafeFileName(CurrentAudio.Artist + "_" + imageType + ".jpg"));
-
-                    if (token.IsCancellationRequested)
-                        return;
-
-                    ArtistImage = cachedImage;
-                    return;
+                    }
                 }
 
                 ArtistImage = null;
@@ -922,23 +926,29 @@ namespace Meridian.ViewModel
             if (CurrentAudio == null)
                 return;
 
-            try
+            if (Settings.Instance.DownloadAlbumArt)
             {
-                var imageUri = await DataService.GetTrackImage(CurrentAudio.Artist, CurrentAudio.Title);
-                if (imageUri == null)
+                try
                 {
-                    TrackImage = null;
-                    return;
+                    var imageUri = await DataService.GetTrackImage(CurrentAudio.Artist, CurrentAudio.Title);
+                    if (imageUri == null)
+                    {
+                        TrackImage = null;
+                        return;
+                    }
+
+                    TrackImage = new BitmapImage(imageUri);
                 }
+                catch (Exception ex)
+                {
 
-                TrackImage = new BitmapImage(imageUri);
+                    LoggingService.Log(ex);
+                }
             }
-            catch (Exception ex)
+            else
             {
-
-                LoggingService.Log(ex);
+                TrackImage = null;
             }
-
         }
 
         private async Task LikeDislikeAudio(Audio audio, bool captchaNeeded = false, string captchaSid = null, string captchaImg = null)
