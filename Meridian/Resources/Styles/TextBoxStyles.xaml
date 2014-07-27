@@ -143,7 +143,7 @@
     </Style>
 
     <Style x:Key="LocalSearchBoxStyle" TargetType="{x:Type controls:TextBoxWithHint}">
-        <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource MainBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
         <Setter Property="CaretBrush" Value="{StaticResource ForegroundBrush}" />

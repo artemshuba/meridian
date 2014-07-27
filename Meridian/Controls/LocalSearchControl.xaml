@@ -17,7 +17,7 @@
     <UserControl.RenderTransform>
         <TranslateTransform />
     </UserControl.RenderTransform>
-    <Border x:Name="LocalSearchBoxRootBorder" Background="{StaticResource BackgroundBrush}" VerticalAlignment="Top" Width="200" Margin="0,-1,20,0" BorderThickness="1,0,1,1" HorizontalAlignment="Right"
+    <Border x:Name="LocalSearchBoxRootBorder" Background="{StaticResource MainBackgroundBrush}" VerticalAlignment="Top" Width="200" Margin="0,-1,20,0" BorderThickness="1,0,1,1" HorizontalAlignment="Right"
             SnapsToDevicePixels="False">
         <Border.BorderBrush>
             <SolidColorBrush Color="{StaticResource ForegroundColor}" Opacity="0.15"/>
