@@ -59,7 +59,6 @@ namespace Meridian.ViewModel
         private ColorScheme _selectedColorScheme;
         private bool _restartRequired;
         private bool _canSave;
-        private bool _enableStatusBroadcasting;
         private bool _checkForUpdates;
         private bool _enableNotifications;
         private bool _enableTrayIcon;
@@ -155,12 +154,6 @@ namespace Meridian.ViewModel
         {
             get { return _canSave; }
             set { Set(ref _canSave, value); }
-        }
-
-        public bool EnableStatusBroadcasting
-        {
-            get { return _enableStatusBroadcasting; }
-            set { Set(ref _enableStatusBroadcasting, value); }
         }
 
         public bool CheckForUpdates
@@ -277,7 +270,6 @@ namespace Meridian.ViewModel
 
             _selectedTheme = Domain.Settings.Instance.Theme;
             _selectedColorScheme = _colors.FirstOrDefault(c => c.Name == Domain.Settings.Instance.AccentColor);
-            _enableStatusBroadcasting = ViewModelLocator.Main.EnableStatusBroadcasting;
             _checkForUpdates = Domain.Settings.Instance.CheckForUpdates;
             _enableNotifications = Domain.Settings.Instance.ShowTrackNotifications;
             _enableTrayIcon = Domain.Settings.Instance.EnableTrayIcon;
@@ -503,8 +495,6 @@ namespace Meridian.ViewModel
             Domain.Settings.Instance.DownloadArtistArt = DownloadArtistArt;
 
             Domain.Settings.Instance.DownloadAlbumArt = DownloadAlbumArt;
-
-            ViewModelLocator.Main.EnableStatusBroadcasting = EnableStatusBroadcasting;
 
             foreach (var settingsHotkey in _hotkeys)
             {
