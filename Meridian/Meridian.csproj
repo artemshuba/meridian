@@ -83,14 +83,11 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="PortableRest">
-      <HintPath>..\packages\PortableRest.2.5.4\lib\portable-net45+sl5+wp8+win8+wpa81\PortableRest.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -123,9 +120,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xbox.Music">
-      <HintPath>..\packages\Xbox.Music.1.0.0\lib\portable-net45+wp8+win8\Xbox.Music.dll</HintPath>
-    </Reference>
     <Reference Include="Yandex.Metrica, Version=1.1.5227.137, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Yandex.Metrica.1.1.5227.137\lib\net45\Yandex.Metrica.dll</HintPath>
@@ -758,6 +752,10 @@
     <ProjectReference Include="..\VkLibPortable\Trunk\VkLibPortable.csproj">
       <Project>{96824317-5143-413a-8ec6-5f92de7ab60e}</Project>
       <Name>VkLibPortable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XboxMusic\Xbox.Music.csproj">
+      <Project>{53203a30-e4ce-4b7e-ae31-a46b8c7cc142}</Project>
+      <Name>Xbox.Music</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

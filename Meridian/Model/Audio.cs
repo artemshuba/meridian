@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Newtonsoft.Json;
 using VkLib.Core.Audio;
 
 namespace Meridian.Model
@@ -37,6 +38,7 @@ namespace Meridian.Model
             }
         }
 
+        [JsonIgnore]
         public bool IsPlaying
         {
             get { return _isPlaying; }

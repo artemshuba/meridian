@@ -21,7 +21,7 @@ namespace VkLib.Core.Status
         /// <param name="audioId">Id аудиозаписи</param>
         /// <param name="targetIds">Список id пользователей и сообществ, которым транслируется аудиозапись</param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("Use VkAudioRequest.SetBroadcast instead")]
         public async Task<bool> SetBroadcast(string audioId, string targetIds = null)
         {
             if (_vkontakte.AccessToken == null || string.IsNullOrEmpty(_vkontakte.AccessToken.Token) || _vkontakte.AccessToken.HasExpired)

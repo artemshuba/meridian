@@ -578,5 +578,33 @@ namespace VkLib.Core.Audio
 
             return false;
         }
+
+        public async Task<List<long>> SetBroadcast(VkAudio audio, IList<long> targetIds = null)
+        {
+            if (_vkontakte.AccessToken == null || string.IsNullOrEmpty(_vkontakte.AccessToken.Token) || _vkontakte.AccessToken.HasExpired)
+                throw new Exception("Access token is not valid.");
+
+            var parameters = new Dictionary<string, string>();
+
+            if (audio != null)
+                parameters.Add("audio", string.Format("{0}_{1}", audio.OwnerId, audio.Id));
+
+            if (targetIds != null)
+                parameters.Add("target_ids", string.Join(",", targetIds));
+
+            _vkontakte.SignMethod(parameters);
+
+            var response = await new VkRequest(new Uri(VkConst.MethodBase + "audio.setBroadcast"), parameters).Execute();
+
+            if (VkErrorProcessor.ProcessError(response))
+                return null;
+
+            if (response["response"].HasValues)
+            {
+                return response["response"].Values<long>().ToList<long>();
+            }
+
+            return null;
+        }
     }
 }

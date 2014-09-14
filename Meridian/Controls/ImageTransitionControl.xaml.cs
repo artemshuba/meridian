@@ -39,6 +39,39 @@ namespace Meridian.Controls
             set { SetValue(SourceProperty, value); }
         }
 
+        public static readonly DependencyProperty ImageOpacityProperty =
+            DependencyProperty.Register("ImageOpacity", typeof(double), typeof(ImageTransitionControl), new PropertyMetadata(default(double), ImageOpacityPropertyChanged));
+
+        private static void ImageOpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (ImageTransitionControl)d;
+
+            if (e.NewValue != null)
+            {
+                var storyboard = (Storyboard)control.Resources["TransitionIn"];
+                var anim = (DoubleAnimationUsingKeyFrames)storyboard.Children[0];
+                var keyFrame = anim.KeyFrames[1];
+                keyFrame.Value = (double)e.NewValue;
+            }
+        }
+
+        public double ImageOpacity
+        {
+            get { return (double)GetValue(ImageOpacityProperty); }
+            set { SetValue(ImageOpacityProperty, value); }
+        }
+
+
+        public static readonly DependencyProperty ImageBackgroundProperty =
+            DependencyProperty.Register("ImageBackground", typeof(Brush), typeof(ImageTransitionControl), new PropertyMetadata(default(Brush)));
+
+
+        public Brush ImageBackground
+        {
+            get { return (Brush)GetValue(ImageBackgroundProperty); }
+            set { SetValue(ImageBackgroundProperty, value); }
+        }
+
         public ImageTransitionControl()
         {
             InitializeComponent();
@@ -59,6 +92,10 @@ namespace Meridian.Controls
             var s = (Storyboard)Resources["TransitionOut"];
 
             s.Begin(_currentImage);
+
+            s = (Storyboard)Resources["BgTransitionOut"];
+
+            s.Begin();
         }
 
         private void AnimateIn()
@@ -66,6 +103,10 @@ namespace Meridian.Controls
             var s = (Storyboard)Resources["TransitionIn"];
 
             s.Begin(_newImage);
+
+            s = (Storyboard)Resources["BgTransitionIn"];
+
+            s.Begin();
         }
     }
 }

@@ -78,4 +78,6 @@
     <SolidColorBrush x:Key="SidebarForegroundBrush" Color="Black"/>
     <SolidColorBrush x:Key="SidebarInactiveForegroundBrush" Color="Black" Opacity="0.85"/>
     <SolidColorBrush x:Key="SidebarGroupForegroundBrush" Color="Black" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="SidebarNowPlayingImageBackgroundBrush" Color="Transparent"/>
 </ResourceDictionary>

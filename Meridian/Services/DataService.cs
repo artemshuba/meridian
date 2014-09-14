@@ -692,11 +692,11 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<bool> SetMusicStatus(Audio audio)
+        public static async Task<bool> SetMusicStatus(Audio audio, List<long> targetIds = null)
         {
-            var result = await _vkontakte.Status.SetBroadcast(audio != null ? audio.OwnerId + "_" + audio.Id : null);
+            var result = await _vkontakte.Audio.SetBroadcast(audio, targetIds);
 
-            return result;
+            return result != null;
         }
 
         public static async Task<bool> AddAudio(Audio audio, string captchaSid = null, string captchaKey = null)

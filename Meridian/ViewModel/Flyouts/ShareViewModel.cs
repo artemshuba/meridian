@@ -296,7 +296,7 @@ namespace Meridian.ViewModel.Flyouts
         {
             try
             {
-                var response = await ViewModelLocator.Vkontakte.Groups.Get(0, "is_admin", null, 0, 0);
+                var response = await ViewModelLocator.Vkontakte.Groups.Get(0, fields: null, filter: "editor", count: 0, offset: 0);
                 if (response.Items != null)
                     Societies = response.Items;
             }

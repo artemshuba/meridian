@@ -119,7 +119,7 @@
             </Button>
 
             <ToggleButton Margin="7,0,0,0" Width="32" Height="32" IsChecked="{Binding Main.EnableStatusBroadcasting, Mode=TwoWay, Source={StaticResource Locator}}" Style="{StaticResource VkStatusButtonStyle}"
-                          ToolTip="{x:Static localization:MainResources.VkStatusBroadcasting}">
+                          ToolTip="{x:Static localization:MainResources.VkStatusBroadcasting}" Command="{Binding VkBroadcastCommand}">
                 <ToggleButton.RenderTransform>
                     <TranslateTransform />
                 </ToggleButton.RenderTransform>
