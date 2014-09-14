@@ -10,7 +10,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Themes/Accents/Blue.xaml" />
-                <ResourceDictionary Source="/Resources/Themes/Graphite.xaml" />
+                <ResourceDictionary Source="/Resources/Themes/Light.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Icons.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/WindowButtons.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" />

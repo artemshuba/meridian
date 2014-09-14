@@ -139,10 +139,10 @@ namespace Meridian
 
         private void SearchBox_OnKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && !string.IsNullOrWhiteSpace(SearchBox.Text))
-            {
-                ViewModelLocator.Main.SearchCommand.Execute(SearchBox.Text);
-            }
+            //if (e.Key == Key.Enter && !string.IsNullOrWhiteSpace(SearchBox.Text))
+            //{
+            //    ViewModelLocator.Main.SearchCommand.Execute(SearchBox.Text);
+            //}
         }
 
         private void MainWindow_OnKeyUp(object sender, KeyEventArgs e)

@@ -73,14 +73,13 @@ namespace Meridian
 
             switch (Settings.Instance.Theme)
             {
-                case "Accent":
                 case "Light":
                 case "Dark":
                     Resources.MergedDictionaries[1].Source = new Uri(string.Format("/Resources/Themes/{0}.xaml", Settings.Instance.Theme), UriKind.Relative);
                     break;
 
                 default:
-                    Resources.MergedDictionaries[1].Source = new Uri("/Resources/Themes/Graphite.xaml", UriKind.Relative);
+                    Resources.MergedDictionaries[1].Source = new Uri("/Resources/Themes/Light.xaml", UriKind.Relative);
                     break;
             }
 

@@ -73,7 +73,7 @@
     <SolidColorBrush x:Key="ComboBoxItemHotBackgroundBrush" Color="#FFDFDFDF" />
 
     <!-- Sidebar -->
-    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#f5f5f5"/>
+    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="White"/>
     <FontFamily x:Key="SidebarForegroundFont">Segoe UI SemiLight</FontFamily>
     <SolidColorBrush x:Key="SidebarForegroundBrush" Color="Black"/>
     <SolidColorBrush x:Key="SidebarInactiveForegroundBrush" Color="Black" Opacity="0.85"/>

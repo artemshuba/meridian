@@ -7,8 +7,8 @@
     <SolidColorBrush x:Key="SliderThumb.Pressed.Border" Color="#FF569DE5"/>
     <SolidColorBrush x:Key="SliderThumb.Disabled.Background" Color="#FFF0F0F0"/>
     <SolidColorBrush x:Key="SliderThumb.Disabled.Border" Color="#FFD9D9D9"/>
-    <SolidColorBrush x:Key="SliderThumb.Static.Background" Color="{StaticResource AccentColor}"/>
-    <SolidColorBrush x:Key="SliderThumb.Static.Border" Color="#FFACACAC"/>
+    <SolidColorBrush x:Key="SliderThumb.Static.Background" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SliderThumb.Static.Border" Color="#231f20" Opacity="0.2"/>
     <SolidColorBrush x:Key="SliderThumb.Track.Border" Color="Transparent"/>
     <SolidColorBrush x:Key="SliderThumb.Track.Background" Color="{StaticResource AccentColor}"/>
 
@@ -66,12 +66,16 @@
     </Style>
     <ControlTemplate x:Key="SliderThumbHorizontalDefault" TargetType="{x:Type Thumb}">
         <Grid HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center">
-            <Rectangle x:Name="grip" Width="8" Height="8" RadiusX="10" RadiusY="10" Margin="-15"  Fill="{StaticResource SliderThumb.Static.Background}" Stretch="Fill" SnapsToDevicePixels="False" Stroke="{StaticResource SliderThumb.Static.Border}" StrokeThickness="0" UseLayoutRounding="True" VerticalAlignment="Center"/>
+            <Rectangle x:Name="grip" Width="14" Height="14" RadiusX="12" RadiusY="12" Margin="0" Fill="{StaticResource SliderThumb.Static.Background}" Stretch="Fill" SnapsToDevicePixels="False" Stroke="{StaticResource SliderThumb.Static.Border}" StrokeThickness="0" UseLayoutRounding="True" VerticalAlignment="Center">
+                <Rectangle.Effect>
+                    <DropShadowEffect Direction="-90" BlurRadius="2.5" ShadowDepth="1" Opacity="0.35"/>
+                </Rectangle.Effect>
+            </Rectangle>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Width" TargetName="grip" Value="11"/>
-                <Setter Property="Height" TargetName="grip" Value="11"/>
+                <Setter Property="Width" TargetName="grip" Value="14"/>
+                <Setter Property="Height" TargetName="grip" Value="14"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
                 <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Background}"/>

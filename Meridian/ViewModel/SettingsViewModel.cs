@@ -32,7 +32,7 @@ namespace Meridian.ViewModel
 
         private readonly List<string> _themes = new List<string>()
         {
-            "Light", "Dark", "Graphite", "Accent"
+            "Light", "Dark"
         };
 
         private readonly List<ColorScheme> _colors = new List<ColorScheme>()

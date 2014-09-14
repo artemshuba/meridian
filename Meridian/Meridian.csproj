@@ -160,6 +160,9 @@
     <Compile Include="Controls\PlayerBarControl.xaml.cs">
       <DependentUpon>PlayerBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlayerControl.xaml.cs">
+      <DependentUpon>PlayerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ShareBarControl.xaml.cs">
       <DependentUpon>ShareBarControl.xaml</DependentUpon>
     </Compile>
@@ -379,6 +382,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\PlayerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ShareBarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -504,14 +511,6 @@
     <Page Include="Resources\Themes\Accents\Sky.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Themes\Accent.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Themes\Graphite.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Themes\Dark.xaml">
       <Generator>MSBuild:Compile</Generator>
