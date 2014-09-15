@@ -55,6 +55,9 @@
     <SolidColorBrush x:Key="AlbumsListBackgroundBrush" Color="{StaticResource ContrastColor}" Opacity="0.9"/>
     <SolidColorBrush x:Key="SplitterBrush" Color="{StaticResource ForegroundColor}"/>
 
+    <!-- Volume bar -->
+    <SolidColorBrush x:Key="VolumeBarBackgroundBrush" Color="#58595b"/>
+
     <!-- Comboboxes -->
     <!-- ComboBoxBg-->
     <SolidColorBrush x:Key="ComboBoxBackgroundBrush" Color="#2e3136" />

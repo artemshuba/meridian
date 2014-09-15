@@ -223,6 +223,24 @@
         </Setter>
     </Style>
 
+    <ControlTemplate x:Key="MuteButton" TargetType="Button">
+        <Grid Background="#00000000">
+            <Path Name="Icon" Data="{StaticResource VolumeMuteIcon}" Fill="Gray" Stretch="Uniform" Opacity="0.7"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Icon" Property="Opacity" Value="1"/>
+            </Trigger>
+            <!--<Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="Icon" Property="Data" Value="{StaticResource VolumeMuteIcon}"/>
+                <Setter TargetName="Icon" Property="Fill" Value="LightGray"/>
+            </Trigger>-->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Icon" Property="Opacity" Value="0.2"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <ControlTemplate x:Key="VolumeButton" TargetType="Button">
         <Grid Background="#00000000">
             <Path Name="Icon" Data="{StaticResource VolumeIcon}" Fill="Gray" Stretch="Uniform" Opacity="0.7"/>

@@ -56,6 +56,9 @@
     <!-- Progress bar -->
     <SolidColorBrush x:Key="ProgressBarBackgroundBrush" Color="#22000000"/>
 
+    <!-- Volume bar -->
+    <SolidColorBrush x:Key="VolumeBarBackgroundBrush" Color="#58595b"/>
+
     <!-- Comboboxes -->
     <!-- ComboBoxBg-->
     <SolidColorBrush x:Key="ComboBoxBackgroundBrush" Color="#FFEEEEEE" />

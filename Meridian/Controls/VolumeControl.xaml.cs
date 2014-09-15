@@ -35,13 +35,13 @@ namespace Meridian.Controls
 
         private void VolumeButton_OnClick(object sender, RoutedEventArgs e)
         {
-            VolumePopup.IsOpen = true;
+            Volume = 100;
         }
 
         private void VolumeControl_OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (!VolumePopup.IsOpen)
-                VolumePopup.IsOpen = true;
+            //if (!VolumePopup.IsOpen)
+            //    VolumePopup.IsOpen = true;
             
             if (e.Delta < 0)
             {
@@ -55,6 +55,11 @@ namespace Meridian.Controls
                 if (Volume > 100)
                     Volume = 100;
             }
+        }
+
+        private void MuteButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Volume = 0;
         }
     }
 }

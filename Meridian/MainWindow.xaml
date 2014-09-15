@@ -146,8 +146,6 @@
             </ListBox>
         </Grid>
 
-        <Rectangle Fill="{StaticResource SidebarForegroundBrush}" Width="1" HorizontalAlignment="Right" Opacity="0.1" Grid.RowSpan="2" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
         <Grid Grid.Column="1" Grid.Row="0" MaxWidth="800" MaxHeight="800" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ClipToBounds="True" Opacity="0.4"
               Visibility="{Binding ShowBackgroundArt, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.OpacityMask>
@@ -180,15 +178,21 @@
 
         </Frame>
 
+        <Rectangle Fill="{StaticResource SidebarForegroundBrush}" Width="1" HorizontalAlignment="Right" Opacity="0.1" Grid.RowSpan="2" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+        <Grid x:Name="SearchBoxGrid" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,30,0" Width="180" Height="28">
+            <controls:TextBoxWithHint x:Name="SearchBox" Padding="8,0,30,0" HorizontalAlignment="Stretch" Style="{StaticResource SearchBoxStyle}" FontWeight="Regular" Hint="{x:Static localization:MainResources.Search}" HintStyle="{StaticResource TextBoxHintStyle}"
+                                              KeyUp="SearchBox_OnKeyUp"/>
+            <Button x:Name="SearchButton" IsEnabled="{Binding Text, ElementName=SearchBox, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}" Width="14" Margin="5,5,7,5" HorizontalAlignment="Right" 
+                            Template="{StaticResource SearchBoxButton}"
+                            Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Text, ElementName=SearchBox}"/>
+        </Grid>
+
         <controls:NotificationControl x:Name="NotificationControl" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,0,0,0"
                                       Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-
-        <Rectangle Grid.Column="1" Grid.Row="1" Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
         <!-- Update progress bar -->
         <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}">
-            <ProgressBar Style="{StaticResource CommonProgressBarStyle}" Margin="25,5,0,0" Padding="0"               
+            <ProgressBar Style="{StaticResource CommonProgressBarStyle}" Margin="25,5,0,0" Padding="0"
                          Visibility="{Binding UpdateService.IsUpdating, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"
                          Value="{Binding UpdateService.UpdateProgress, Source={StaticResource Locator}}"/>
         </Grid>
