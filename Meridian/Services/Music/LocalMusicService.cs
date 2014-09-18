@@ -42,7 +42,7 @@ namespace Meridian.Services.Music
                             track.Title = ToUtf8(audioFile.Tag.Title);
                             track.Artist = ToUtf8(audioFile.Tag.FirstPerformer);
                             track.Duration = audioFile.Properties.Duration;
-                            track.Url = filePath;
+                            track.Source = filePath;
 
                             tracks.Add(track);
 

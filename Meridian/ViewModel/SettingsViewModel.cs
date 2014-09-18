@@ -570,8 +570,12 @@ namespace Meridian.ViewModel
                         if (key != Key.None)
                             ViewModelLocator.Main.HotKeyManager.RegisterHotkey(modifier, key, h =>
                             {
-                                AudioService.CurrentAudio.IsAddedByCurrentUser = !AudioService.CurrentAudio.IsAddedByCurrentUser;
-                                ViewModelLocator.Main.AddRemoveAudioCommand.Execute(AudioService.CurrentAudio);
+                                if (AudioService.CurrentAudio is VkAudio)
+                                {
+                                    ((VkAudio) AudioService.CurrentAudio).IsAddedByCurrentUser =
+                                        !((VkAudio) AudioService.CurrentAudio).IsAddedByCurrentUser;
+                                    ViewModelLocator.Main.AddRemoveAudioCommand.Execute(AudioService.CurrentAudio);
+                                }
                             });
                         break;
 

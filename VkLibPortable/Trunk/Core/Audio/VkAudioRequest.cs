@@ -579,15 +579,15 @@ namespace VkLib.Core.Audio
             return false;
         }
 
-        public async Task<List<long>> SetBroadcast(VkAudio audio, IList<long> targetIds = null)
+        public async Task<List<long>> SetBroadcast(long audioId, long ownerId, IList<long> targetIds = null)
         {
             if (_vkontakte.AccessToken == null || string.IsNullOrEmpty(_vkontakte.AccessToken.Token) || _vkontakte.AccessToken.HasExpired)
                 throw new Exception("Access token is not valid.");
 
             var parameters = new Dictionary<string, string>();
 
-            if (audio != null)
-                parameters.Add("audio", string.Format("{0}_{1}", audio.OwnerId, audio.Id));
+            if (audioId != 0 && ownerId != 0)
+                parameters.Add("audio", string.Format("{0}_{1}", ownerId, audioId));
 
             if (targetIds != null)
                 parameters.Add("target_ids", string.Join(",", targetIds));

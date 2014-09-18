@@ -26,7 +26,7 @@ namespace Meridian.ViewModel.Flyouts
 {
     public class ShareViewModel : ViewModelBase, IDropTarget
     {
-        private ObservableCollection<Audio> _tracks;
+        private ObservableCollection<VkAudio> _tracks;
         private bool _canGoNext;
         private int _progress;
         private int _progressMaximum;
@@ -52,7 +52,7 @@ namespace Meridian.ViewModel.Flyouts
 
         public RelayCommand GoNextCommand { get; private set; }
 
-        public RelayCommand<Audio> RemoveTrackCommand { get; private set; }
+        public RelayCommand<VkAudio> RemoveTrackCommand { get; private set; }
 
         public RelayCommand PublishCommand { get; private set; }
 
@@ -62,7 +62,7 @@ namespace Meridian.ViewModel.Flyouts
 
         #endregion
 
-        public ObservableCollection<Audio> Tracks
+        public ObservableCollection<VkAudio> Tracks
         {
             get { return _tracks; }
             set { Set(ref _tracks, value); }
@@ -165,7 +165,7 @@ namespace Meridian.ViewModel.Flyouts
 
         public ShareViewModel()
         {
-            _tracks = new ObservableCollection<Audio>();
+            _tracks = new ObservableCollection<VkAudio>();
             _tracks.CollectionChanged += Tracks_CollectionChanged;
 
             _cancellationToken = new CancellationTokenSource();
@@ -197,7 +197,7 @@ namespace Meridian.ViewModel.Flyouts
                 Activate();
             });
 
-            RemoveTrackCommand = new RelayCommand<Audio>(track => Tracks.Remove(track));
+            RemoveTrackCommand = new RelayCommand<VkAudio>(track => Tracks.Remove(track));
 
             PublishCommand = new RelayCommand(() =>
             {
@@ -249,7 +249,7 @@ namespace Meridian.ViewModel.Flyouts
         {
             if (dropInfo.Data is Audio && Tracks.Count < 15 && Tracks.All(t => t.Id != ((Audio)dropInfo.Data).Id))
             {
-                Tracks.Add((Audio)dropInfo.Data);
+                Tracks.Add((VkAudio)dropInfo.Data);
             }
         }
 
@@ -388,9 +388,9 @@ namespace Meridian.ViewModel.Flyouts
                 if (token.IsCancellationRequested)
                     return null;
 
-                if (audio.Url == null)
+                if (audio.Source == null)
                 {
-                    Audio vkAudio = null;
+                    VkAudio vkAudio = null;
                     try
                     {
                         vkAudio = await DataService.GetAudioByArtistAndTitle(audio.Artist, audio.Title);

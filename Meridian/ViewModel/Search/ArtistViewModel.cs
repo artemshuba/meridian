@@ -21,8 +21,8 @@ namespace Meridian.ViewModel.Search
         private const int MAX_TRACKS_COUNT = 100;
 
         private LastFmArtist _artist;
-        private List<Audio> _tracks;
-        private List<Audio> _allTracks;
+        private List<VkAudio> _tracks;
+        private List<VkAudio> _allTracks;
         private List<LastFmAlbum> _albums;
         private List<LastFmAlbum> _allAlbums;
         private List<LastFmArtist> _similarArtists;
@@ -51,13 +51,13 @@ namespace Meridian.ViewModel.Search
             set { Set(ref _artist, value); }
         }
 
-        public List<Audio> Tracks
+        public List<VkAudio> Tracks
         {
             get { return _tracks; }
             set { Set(ref _tracks, value); }
         }
 
-        public List<Audio> AllTracks
+        public List<VkAudio> AllTracks
         {
             get { return _allTracks; }
             set { Set(ref _allTracks, value); }

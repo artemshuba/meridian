@@ -25,6 +25,7 @@ using VkLib.Core.Users;
 using VkLib.Error;
 using Xbox.Music;
 using DateTimeConverter = Meridian.Helpers.DateTimeConverter;
+using VkAudio = Meridian.Model.VkAudio;
 
 namespace Meridian.Services
 {
@@ -79,14 +80,14 @@ namespace Meridian.Services
             return ItemsResponse<VkAudioAlbum>.Empty;
         }
 
-        public static async Task<ItemsResponse<Audio>> GetUserTracks(int count = 0, int offset = 0, long albumId = 0, long ownerId = 0)
+        public static async Task<ItemsResponse<VkAudio>> GetUserTracks(int count = 0, int offset = 0, long albumId = 0, long ownerId = 0)
         {
             try
             {
                 var response = await _vkontakte.Audio.Get(ownerId, albumId, count, offset);
                 if (response.Items != null)
                 {
-                    return new ItemsResponse<Audio>(response.Items.Select(i => i.ToAudio()).ToList(), response.TotalCount);
+                    return new ItemsResponse<VkAudio>(response.Items.Select(i => i.ToAudio()).ToList(), response.TotalCount);
                 }
             }
             catch (VkInvalidTokenException)
@@ -98,18 +99,18 @@ namespace Meridian.Services
             }
 
 
-            return ItemsResponse<Audio>.Empty;
+            return ItemsResponse<VkAudio>.Empty;
         }
 
-        public static async Task<ItemsResponse<Audio>> GetPopularTracks(int count = 0, int offset = 0)
+        public static async Task<ItemsResponse<VkAudio>> GetPopularTracks(int count = 0, int offset = 0)
         {
             var response = await _vkontakte.Audio.GetPopular(count: count, offset: offset);
             if (response.Items != null)
             {
-                return new ItemsResponse<Audio>(response.Items.Select(i => i.ToAudio()).ToList(), response.TotalCount);
+                return new ItemsResponse<VkAudio>(response.Items.Select(i => i.ToAudio()).ToList(), response.TotalCount);
             }
 
-            return ItemsResponse<Audio>.Empty;
+            return ItemsResponse<VkAudio>.Empty;
         }
 
         public static async Task<ItemsResponse<VkProfile>> GetFriends(int count = 0, int offset = 0, long userId = 0, string fields = null)
@@ -149,7 +150,7 @@ namespace Meridian.Services
             return ItemsResponse<VkGroup>.Empty;
         }
 
-        public static async Task<List<Audio>> GetRecommendations(int count = 0, int offset = 0)
+        public static async Task<List<VkAudio>> GetRecommendations(int count = 0, int offset = 0)
         {
             var vkAudios = await _vkontakte.Audio.GetRecommendations(count: count, offset: offset);
             if (vkAudios.Items != null)
@@ -223,7 +224,7 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<Audio> GetAudioByArtistAndTitle(string artist, string title)
+        public static async Task<VkAudio> GetAudioByArtistAndTitle(string artist, string title)
         {
             var audios = await SearchAudio(artist + " - " + title, 10, 0);
             if (audios != null && audios.Count > 0)
@@ -260,7 +261,7 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<List<Audio>> SearchAudio(string query, int count = 0, int offset = 0)
+        public static async Task<List<VkAudio>> SearchAudio(string query, int count = 0, int offset = 0)
         {
             var vkAudios = await _vkontakte.Audio.Search(query, count, offset, VkAudioSortType.DateAdded, false, false);
             if (vkAudios.Items != null)
@@ -308,7 +309,7 @@ namespace Meridian.Services
             return albums;
         }
 
-        public static async Task<List<Audio>> GetArtistTopTracks(string id, string artist, int count = 0)
+        public static async Task<List<VkAudio>> GetArtistTopTracks(string id, string artist, int count = 0)
         {
             var tracks = await _lastFm.Artist.GetTopTracks(id, artist, count);
             if (tracks != null)
@@ -350,7 +351,7 @@ namespace Meridian.Services
                     if (audioIds.Count == 0)
                         return null;
 
-                    var vkAudios = new List<VkAudio>();
+                    var vkAudios = new List<VkLib.Core.Audio.VkAudio>();
                     if (audioIds.Count >= 100)
                     {
                         //если аудиозаписей больше 100, разбиваем на несколько запросов по 100 аудиозаписей
@@ -475,7 +476,7 @@ namespace Meridian.Services
                         }
                     }
 
-                    var vkAudios = new List<VkAudio>();
+                    var vkAudios = new List<VkLib.Core.Audio.VkAudio>();
                     if (audioIds.Count >= 100)
                     {
                         //если аудиозаписей больше 100, разбиваем на несколько запросов по 100 аудиозаписей
@@ -601,7 +602,7 @@ namespace Meridian.Services
                         }
                     }
 
-                    var vkAudios = new List<VkAudio>();
+                    var vkAudios = new List<VkLib.Core.Audio.VkAudio>();
                     if (audioIds.Count >= 100)
                     {
                         //если аудиозаписей больше 100, разбиваем на несколько запросов по 100 аудиозаписей
@@ -692,16 +693,16 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<bool> SetMusicStatus(Audio audio, List<long> targetIds = null)
+        public static async Task<bool> SetMusicStatus(VkAudio audio, List<long> targetIds = null)
         {
-            var result = await _vkontakte.Audio.SetBroadcast(audio, targetIds);
+            var result = await _vkontakte.Audio.SetBroadcast(long.Parse(audio.Id), audio.OwnerId, targetIds);
 
             return result != null;
         }
 
-        public static async Task<bool> AddAudio(Audio audio, string captchaSid = null, string captchaKey = null)
+        public static async Task<bool> AddAudio(VkAudio audio, string captchaSid = null, string captchaKey = null)
         {
-            if (string.IsNullOrEmpty(audio.Url))
+            if (string.IsNullOrEmpty(audio.Source))
             {
                 var vkAudio = await GetAudioByArtistAndTitle(audio.Artist, audio.Title);
                 if (vkAudio != null)
@@ -709,7 +710,7 @@ namespace Meridian.Services
                     audio.Id = vkAudio.Id;
                     audio.Artist = vkAudio.Artist;
                     audio.Title = vkAudio.Title;
-                    audio.Url = vkAudio.Url;
+                    audio.Source = vkAudio.Source;
                     audio.OwnerId = vkAudio.OwnerId;
                     audio.AlbumId = vkAudio.AlbumId;
                     audio.LyricsId = vkAudio.LyricsId;
@@ -727,7 +728,7 @@ namespace Meridian.Services
             return false;
         }
 
-        public static async Task<bool> RemoveAudio(Audio audio)
+        public static async Task<bool> RemoveAudio(VkAudio audio)
         {
             var result = await _vkontakte.Audio.Delete(long.Parse(audio.Id), audio.OwnerId);
             if (result)

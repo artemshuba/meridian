@@ -12,7 +12,7 @@ namespace Meridian.View.Flyouts
     {
         private EditAudioViewModel _viewModel;
 
-        public EditAudioView(Audio audio)
+        public EditAudioView(VkAudio audio)
         {
             InitializeComponent();
 

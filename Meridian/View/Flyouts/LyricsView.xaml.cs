@@ -16,7 +16,7 @@ namespace Meridian.View.Flyouts
     {
         private LyricsViewModel _viewModel;
 
-        public LyricsView(Audio audio)
+        public LyricsView(VkAudio audio)
         {
             InitializeComponent();
 

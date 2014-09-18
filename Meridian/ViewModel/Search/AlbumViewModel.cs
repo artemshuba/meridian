@@ -17,13 +17,14 @@ using Meridian.View.Flyouts;
 using Meridian.ViewModel.Flyouts;
 using VkLib.Core.Audio;
 using VkLib.Error;
+using VkAudio = Meridian.Model.VkAudio;
 
 namespace Meridian.ViewModel.Search
 {
     public class AlbumViewModel : ViewModelBase
     {
         private LastFmAlbum _album;
-        private List<Audio> _tracks;
+        private List<VkAudio> _tracks;
         private ObservableCollection<LastFmAlbum> _artistAlbums;
         private int _selectedAlbumIndex = -1;
 
@@ -43,7 +44,7 @@ namespace Meridian.ViewModel.Search
             set { Set(ref _album, value); }
         }
 
-        public List<Audio> Tracks
+        public List<VkAudio> Tracks
         {
             get { return _tracks; }
             set { Set(ref _tracks, value); }
@@ -129,7 +130,7 @@ namespace Meridian.ViewModel.Search
                 {
                     if (info.Tracks != null)
                     {
-                        var tracks = new List<Audio>();
+                        var tracks = new List<VkAudio>();
 
                         for (var i = 0; i < info.Tracks.Count; i++)
                         {
@@ -234,7 +235,7 @@ namespace Meridian.ViewModel.Search
 
                         try
                         {
-                            var newAudioId = await ViewModelLocator.Vkontakte.Audio.Add(vkAudio.Id, vkAudio.OwnerId, captchaSid: captchaSid, captchaKey: captchaKey);
+                            var newAudioId = await ViewModelLocator.Vkontakte.Audio.Add(long.Parse(vkAudio.Id), vkAudio.OwnerId, captchaSid: captchaSid, captchaKey: captchaKey);
                             if (newAudioId != 0)
                             {
                                 audioIds.Add(newAudioId);
@@ -313,7 +314,7 @@ namespace Meridian.ViewModel.Search
                 //    return null;
 
 
-                Audio vkAudio = null;
+                VkAudio vkAudio = null;
                 try
                 {
                     vkAudio = await DataService.GetAudioByArtistAndTitle(audio.Artist, audio.Title);
@@ -331,7 +332,7 @@ namespace Meridian.ViewModel.Search
                 {
                     result.Add(new VkAudio()
                     {
-                        Id = long.Parse(vkAudio.Id),
+                        Id = vkAudio.Id,
                         OwnerId = vkAudio.OwnerId,
                         Title = vkAudio.Title,
                         Artist = vkAudio.Artist,

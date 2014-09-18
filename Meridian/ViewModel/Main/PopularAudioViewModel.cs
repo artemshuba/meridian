@@ -11,7 +11,7 @@ namespace Meridian.ViewModel.Main
 {
     public class PopularAudioViewModel : ViewModelBase
     {
-        private List<Audio> _tracks;
+        private List<VkAudio> _tracks;
 
         #region Commands
 
@@ -21,7 +21,7 @@ namespace Meridian.ViewModel.Main
 
         #endregion
 
-        public List<Audio> Tracks
+        public List<VkAudio> Tracks
         {
             get { return _tracks; }
             set { Set(ref _tracks, value); }

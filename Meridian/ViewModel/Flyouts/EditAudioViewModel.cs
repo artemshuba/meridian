@@ -12,7 +12,7 @@ namespace Meridian.ViewModel.Flyouts
 {
     public class EditAudioViewModel : ViewModelBase
     {
-        private Audio _track;
+        private VkAudio _track;
         private string _title;
         private string _artist;
         private string _lyrics;
@@ -26,7 +26,7 @@ namespace Meridian.ViewModel.Flyouts
 
         #endregion
 
-        public Audio Track
+        public VkAudio Track
         {
             get { return _track; }
             set

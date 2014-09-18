@@ -6,10 +6,10 @@ namespace Meridian.ViewModel.Flyouts
 {
     public class LyricsViewModel : ViewModelBase
     {
-        private Audio _track;
+        private VkAudio _track;
         private string _lyrics;
 
-        public Audio Track
+        public VkAudio Track
         {
             get { return _track; }
             set

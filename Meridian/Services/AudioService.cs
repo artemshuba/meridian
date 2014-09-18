@@ -211,9 +211,9 @@ namespace Meridian.Services
 
             CurrentAudio = track;
 
-            if (track.Url == null)
+            if (track.Source == null)
             {
-                Audio vkAudio = null;
+                VkAudio vkAudio = null;
                 try
                 {
                     vkAudio = await DataService.GetAudioByArtistAndTitle(track.Artist, track.Title);
@@ -225,13 +225,16 @@ namespace Meridian.Services
 
                 if (vkAudio != null)
                 {
-                    track.Id = vkAudio.Id;
-                    track.Artist = vkAudio.Artist;
-                    track.Title = vkAudio.Title;
-                    track.Url = vkAudio.Url;
-                    track.OwnerId = vkAudio.OwnerId;
-                    track.AlbumId = vkAudio.AlbumId;
-                    track.LyricsId = vkAudio.LyricsId;
+                    //TODO why not?
+                    track = vkAudio;
+
+                    //track.Id = vkAudio.Id;
+                    //track.Artist = vkAudio.Artist;
+                    //track.Title = vkAudio.Title;
+                    //track.Source = vkAudio.Source;
+                    //track.OwnerId = vkAudio.OwnerId;
+                    //track.AlbumId = vkAudio.AlbumId;
+                    //track.LyricsId = vkAudio.LyricsId;
 
                     _playFailsCount = 0;
                 }
@@ -253,15 +256,16 @@ namespace Meridian.Services
             }
 
 #if DEBUG
-            LoggingService.Log(string.Format("Playing: {0} {1} {2} {3}", track.Id + "_" + track.OwnerId, track.Artist, track.Title, track.Url));
+            LoggingService.Log(string.Format("Playing: {0} {1} {2} {3}", track.Id, track.Artist, track.Title, track.Source));
 #endif
 
             if (token.IsCancellationRequested)
                 return;
 
             track.IsPlaying = true;
-            //похоже что MediaElement не умеет https, поэтому временный хак
-            var url = track.Url;
+
+            //look like MediaElement doen't work with https, temporary hack
+            var url = track.Source;
             url = url.Replace("https://", "http://");
 
             MediaPlayer.Source = new Uri(url);
@@ -274,7 +278,7 @@ namespace Meridian.Services
         {
             if (MediaPlayer.Source == null && CurrentAudio != null)
             {
-                MediaPlayer.Source = new Uri(CurrentAudio.Url);
+                MediaPlayer.Source = new Uri(CurrentAudio.Source);
                 CurrentAudio.IsPlaying = true;
             }
 
@@ -297,17 +301,7 @@ namespace Meridian.Services
                 if (index >= 0)
                 {
                     index++;
-                    var newAudio = new Audio();
-                    newAudio.Id = audio.Id;
-                    newAudio.OwnerId = audio.OwnerId;
-                    newAudio.Title = audio.Title;
-                    newAudio.Artist = audio.Artist;
-                    newAudio.AlbumId = audio.AlbumId;
-                    newAudio.Duration = audio.Duration;
-                    newAudio.IsAddedByCurrentUser = audio.IsAddedByCurrentUser;
-                    newAudio.Url = audio.Url;
-                    newAudio.Lyrics = audio.Lyrics;
-                    newAudio.LyricsId = audio.LyricsId;
+                    var newAudio = audio.Clone();
                     Playlist.Insert(index, newAudio);
                 }
             }

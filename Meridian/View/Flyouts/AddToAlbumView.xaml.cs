@@ -11,6 +11,7 @@ using Meridian.Services;
 using Meridian.ViewModel;
 using Neptune.UI.Extensions;
 using VkLib.Core.Audio;
+using VkAudio = Meridian.Model.VkAudio;
 
 namespace Meridian.View.Flyouts
 {
@@ -20,7 +21,7 @@ namespace Meridian.View.Flyouts
     public partial class AddToAlbumView : UserControl, INotifyPropertyChanged
     {
         private List<VkAudioAlbum> _albums;
-        private Audio _track;
+        private VkAudio _track;
 
         public List<VkAudioAlbum> Albums
         {
@@ -35,7 +36,7 @@ namespace Meridian.View.Flyouts
             }
         }
 
-        public AddToAlbumView(Audio track)
+        public AddToAlbumView(VkAudio track)
         {
             _track = track;
 

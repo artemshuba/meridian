@@ -92,13 +92,13 @@ namespace Meridian.ViewModel
         public RelayCommand SwitchUIModeCommand { get; private set; }
 
 
-        public RelayCommand<Audio> AddRemoveAudioCommand { get; private set; }
+        public RelayCommand<VkAudio> AddRemoveAudioCommand { get; private set; }
 
-        public RelayCommand<Audio> EditAudioCommand { get; private set; }
+        public RelayCommand<VkAudio> EditAudioCommand { get; private set; }
 
-        public RelayCommand<Audio> ShareAudioCommand { get; private set; }
+        public RelayCommand<VkAudio> ShareAudioCommand { get; private set; }
 
-        public RelayCommand<Audio> ShowLyricsCommand { get; private set; }
+        public RelayCommand<VkAudio> ShowLyricsCommand { get; private set; }
 
         public RelayCommand<Audio> CopyInfoCommand { get; private set; }
 
@@ -112,7 +112,7 @@ namespace Meridian.ViewModel
 
         public RelayCommand<Audio> StartTrackRadioCommand { get; private set; }
 
-        public RelayCommand<Audio> AddToAlbumCommand { get; private set; }
+        public RelayCommand<VkAudio> AddToAlbumCommand { get; private set; }
 
         public RelayCommand ShowLocalSearchCommand { get; private set; }
 
@@ -570,20 +570,20 @@ namespace Meridian.ViewModel
                 Application.Current.Shutdown();
             });
 
-            AddRemoveAudioCommand = new RelayCommand<Audio>(audio =>
+            AddRemoveAudioCommand = new RelayCommand<VkAudio>(audio =>
             {
                 audio.IsAddedByCurrentUser = !audio.IsAddedByCurrentUser;
                 LikeDislikeAudio(audio);
             });
 
-            EditAudioCommand = new RelayCommand<Audio>(audio =>
+            EditAudioCommand = new RelayCommand<VkAudio>(audio =>
             {
                 var flyout = new FlyoutControl();
                 flyout.FlyoutContent = new EditAudioView(audio);
                 flyout.Show();
             });
 
-            ShowLyricsCommand = new RelayCommand<Audio>(audio =>
+            ShowLyricsCommand = new RelayCommand<VkAudio>(audio =>
             {
                 var flyout = new FlyoutControl();
                 flyout.FlyoutContent = new LyricsView(audio);
@@ -620,7 +620,7 @@ namespace Meridian.ViewModel
                 AudioService.Playlist.Remove(track);
             });
 
-            ShareAudioCommand = new RelayCommand<Audio>(audio =>
+            ShareAudioCommand = new RelayCommand<VkAudio>(audio =>
             {
                 ShowShareBar = true;
 
@@ -692,7 +692,7 @@ namespace Meridian.ViewModel
                 }
             });
 
-            AddToAlbumCommand = new RelayCommand<Audio>(track =>
+            AddToAlbumCommand = new RelayCommand<VkAudio>(track =>
             {
                 var flyout = new FlyoutControl();
                 flyout.FlyoutContent = new AddToAlbumView(track);
@@ -798,7 +798,7 @@ namespace Meridian.ViewModel
 
                         try
                         {
-                            await DataService.SetMusicStatus(CurrentAudio);
+                            await DataService.SetMusicStatus(CurrentAudio as VkAudio);
                         }
                         catch (VkAccessDeniedException ex)
                         {
@@ -952,7 +952,7 @@ namespace Meridian.ViewModel
             }
         }
 
-        private async Task LikeDislikeAudio(Audio audio, bool captchaNeeded = false, string captchaSid = null, string captchaImg = null)
+        private async Task LikeDislikeAudio(VkAudio audio, bool captchaNeeded = false, string captchaSid = null, string captchaImg = null)
         {
             if (audio == null)
                 return;
