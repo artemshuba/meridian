@@ -403,7 +403,7 @@ namespace Meridian.ViewModel.Flyouts
                     if (vkAudio != null)
                     {
                         var audioAttachment = new VkAudioAttachment();
-                        audioAttachment.Id = vkAudio.Id;
+                        audioAttachment.Id = long.Parse(vkAudio.Id);
                         audioAttachment.OwnerId = vkAudio.OwnerId;
                         result.Add(audioAttachment);
                     }
@@ -423,7 +423,7 @@ namespace Meridian.ViewModel.Flyouts
                 else
                 {
                     var audioAttachment = new VkAudioAttachment();
-                    audioAttachment.Id = audio.Id;
+                    audioAttachment.Id = long.Parse(audio.Id);
                     audioAttachment.OwnerId = audio.OwnerId;
                     result.Add(audioAttachment);
                 }

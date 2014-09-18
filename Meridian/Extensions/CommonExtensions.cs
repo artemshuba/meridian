@@ -10,5 +10,7 @@ namespace Meridian.Extensions
             else if (val.CompareTo(max) > 0) return max;
             else return val;
         }
+
+        
     }
 }

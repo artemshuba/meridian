@@ -12,7 +12,6 @@ using Meridian.Controls;
 using Meridian.Domain;
 using Meridian.Resources.Localization;
 using Meridian.Services;
-using Meridian.View;
 using Meridian.View.Flyouts;
 using Meridian.ViewModel;
 using Yandex.Metrica;
@@ -45,6 +44,7 @@ namespace Meridian
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Instance.Language);
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Threading.Thread.CurrentThread.CurrentCulture;
 
+            ServiceLocator.DataBaseService.Initialize();
 
             if (Settings.Instance.NeedClean)
             {

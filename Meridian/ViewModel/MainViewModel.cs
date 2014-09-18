@@ -41,7 +41,8 @@ namespace Meridian.ViewModel
             new MainMenuItem() {Group = MainResources.MainMenuPeopleTitle, Page = "/People.FriendsView", Title = MainResources.MainMenuFriends},
             new MainMenuItem() {Group = MainResources.MainMenuPeopleTitle, Page = "/People.SocietiesView", Title = MainResources.MainMenuSocieties},
             new MainMenuItem() {Group = MainResources.MainMenuPeopleTitle, Page = "/People.SubscriptionsView", Title = MainResources.MainMenuSubscriptions},
-
+                        
+            new MainMenuItem() {Group = "~THIS DEVICE", Page = "/Local.LocalCollectionView", Title = "~COLLECTION"},
             new MainMenuItem() {Page = "/Main.NowPlayingView", Title = MainResources.MainMenuNowPlaying, Icon = Application.Current.Resources["NowPlayingIcon"]},
         };
 

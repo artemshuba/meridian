@@ -740,7 +740,7 @@ namespace Meridian.ViewModel.Main
                     var target = (Audio)dropInfo.TargetItem;
                     if (source == target)
                         return;
-                    long afterAid, beforeAid;
+                    string afterAid, beforeAid;
 
                     int index = Tracks.IndexOf(target);
                     if (index > 0)
@@ -749,7 +749,7 @@ namespace Meridian.ViewModel.Main
                         if (Tracks[index - 1] == source)
                         {
                             afterAid = target.Id;
-                            beforeAid = index == Tracks.Count - 1 ? 0 : Tracks[index + 1].Id;
+                            beforeAid = index == Tracks.Count - 1 ? "0" : Tracks[index + 1].Id;
                         }
                         else
                         {
@@ -759,13 +759,13 @@ namespace Meridian.ViewModel.Main
                     }
                     else if (index == 0)
                     {
-                        afterAid = 0;
+                        afterAid = "0";
                         beforeAid = target.Id;
                     }
                     else
                         return;
 
-                    if (await ViewModelLocator.Vkontakte.Audio.Reorder(source.Id, afterAid, beforeAid))
+                    if (await ViewModelLocator.Vkontakte.Audio.Reorder(long.Parse(source.Id), long.Parse(afterAid), long.Parse(beforeAid)))
                     {
                         ((IList)sourceCollection).Remove(source);
                         ((IList)targetCollection).Insert(index, source);
@@ -786,7 +786,7 @@ namespace Meridian.ViewModel.Main
                             targetId = 0;
 
                         if (await ViewModelLocator.Vkontakte.Audio.MoveToAlbum(targetId,
-                            new List<long>() { source.Id }))
+                            new List<long>() { long.Parse(source.Id) }))
                         {
                             if (SelectedAlbum.Id > 0)
                                 ((ListCollectionView)dropInfo.DragInfo.SourceCollection).Remove(source);

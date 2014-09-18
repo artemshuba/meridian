@@ -104,7 +104,7 @@ namespace Meridian.View.Flyouts
             try
             {
                 var result = await ViewModelLocator.Vkontakte.Audio.MoveToAlbum(album.Id,
-                    new List<long>() { _track.Id });
+                    new List<long>() { long.Parse(_track.Id) });
                 if (!result)
                 {
                     LoggingService.Log("Unable to move audio " + _track.Id + " to album " + album.Id + ".");

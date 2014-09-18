@@ -331,7 +331,7 @@ namespace Meridian.ViewModel.Search
                 {
                     result.Add(new VkAudio()
                     {
-                        Id = vkAudio.Id,
+                        Id = long.Parse(vkAudio.Id),
                         OwnerId = vkAudio.OwnerId,
                         Title = vkAudio.Title,
                         Artist = vkAudio.Artist,

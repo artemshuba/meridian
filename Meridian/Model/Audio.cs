@@ -12,6 +12,8 @@ namespace Meridian.Model
         private bool _isAddedByCurrentUser;
         private string _artistId;
 
+        public new string Id { get; set; }
+
         public new string Title
         {
             get { return base.Title; }
@@ -103,5 +105,10 @@ namespace Meridian.Model
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    public class LocalAudio : Audio
+    {
+        
     }
 }

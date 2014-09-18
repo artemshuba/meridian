@@ -11,7 +11,7 @@ namespace Meridian.Extensions
         public static Audio ToAudio(this VkAudio audio)
         {
             var result = new Audio();
-            result.Id = audio.Id;
+            result.Id = audio.Id.ToString();
             result.Title = audio.Title;
             result.Artist = audio.Artist;
             result.AlbumId = audio.AlbumId;

@@ -399,7 +399,7 @@ namespace Meridian.Services
                         if (!audioAttachments.Any())
                             continue;
 
-                        var tracks = audioAttachments.Select(a => audios.FirstOrDefault(audio => audio.Id == a.Id)).Where(a => a != null).ToList();
+                        var tracks = audioAttachments.Select(a => audios.FirstOrDefault(audio => audio.Id == a.Id.ToString())).Where(a => a != null).ToList();
                         result.AddRange(tracks);
                         //var post = new AudioPost();
                         //post.Id = vkNewsEntry.Id;
@@ -524,7 +524,7 @@ namespace Meridian.Services
                         if (!audioAttachments.Any())
                             continue;
 
-                        var tracks = audioAttachments.Select(a => audios.FirstOrDefault(audio => audio.Id == a.Id)).Where(a => a != null).ToList();
+                        var tracks = audioAttachments.Select(a => audios.FirstOrDefault(audio => audio.Id == a.Id.ToString())).Where(a => a != null).ToList();
                         result.AddRange(tracks);
                         //var post = new AudioPost();
                         //post.Id = vkWallPost.Id.ToString();
@@ -644,7 +644,7 @@ namespace Meridian.Services
                         if (!audioAttachments.Any())
                             continue;
 
-                        var tracks = audioAttachments.Select(a => audios.FirstOrDefault(audio => audio.Id == a.Id)).Where(a => a != null).ToList();
+                        var tracks = audioAttachments.Select(a => audios.FirstOrDefault(audio => audio.Id == a.Id.ToString())).Where(a => a != null).ToList();
                         result.AddRange(tracks);
                         //var post = new AudioPost();
                         //post.Id = vkWallPost.Id.ToString();
@@ -716,10 +716,10 @@ namespace Meridian.Services
                 }
             }
 
-            var newId = await _vkontakte.Audio.Add(audio.Id, audio.OwnerId, captchaSid: captchaSid, captchaKey: captchaKey);
+            var newId = await _vkontakte.Audio.Add(long.Parse(audio.Id), audio.OwnerId, captchaSid: captchaSid, captchaKey: captchaKey);
             if (newId > 0)
             {
-                audio.Id = newId;
+                audio.Id = newId.ToString();
                 audio.OwnerId = _vkontakte.AccessToken.UserId;
                 audio.IsAddedByCurrentUser = true;
                 return true;
@@ -729,7 +729,7 @@ namespace Meridian.Services
 
         public static async Task<bool> RemoveAudio(Audio audio)
         {
-            var result = await _vkontakte.Audio.Delete(audio.Id, audio.OwnerId);
+            var result = await _vkontakte.Audio.Delete(long.Parse(audio.Id), audio.OwnerId);
             if (result)
             {
                 audio.IsAddedByCurrentUser = false;
@@ -889,7 +889,7 @@ namespace Meridian.Services
 
                     try
                     {
-                        var newAudioId = await ViewModelLocator.Vkontakte.Audio.Add(track.Id, track.OwnerId, captchaSid: captchaSid, captchaKey: captchaKey);
+                        var newAudioId = await ViewModelLocator.Vkontakte.Audio.Add(long.Parse(track.Id), track.OwnerId, captchaSid: captchaSid, captchaKey: captchaKey);
                         audioIds.Add(newAudioId);
 
                         captchaNeeded = false;
