@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Meridian.Model;
 using SQLite;
@@ -20,9 +23,12 @@ namespace Meridian.Services
 
         public async Task Initialize()
         {
-            var db = new SQLiteAsyncConnection(_dbPath);
+            var db = new SQLiteAsyncConnection(_dbPath, caseSensitive: false);
 
-            await db.CreateTablesAsync(typeof(Audio), typeof(LocalAudio)).ConfigureAwait(false);
+            await db.CreateTablesAsync(
+                typeof(Audio), 
+                typeof(LocalAudio),
+                typeof(AudioAlbum)).ConfigureAwait(false);
 
             Debug.WriteLine("Database initialized.");
         }
@@ -63,6 +69,13 @@ namespace Meridian.Services
             {
                 await db.DeleteAsync(item);
             }
+        }
+
+        public async Task<List<T>> Search<T>(Expression<Func<T, bool>> predicate) where T : new()
+        {
+            var db = new SQLiteAsyncConnection(_dbPath, caseSensitive: false);
+
+            return await db.Table<T>().Where(predicate).ToListAsync();
         }
     }
 }

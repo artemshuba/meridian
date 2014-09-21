@@ -196,6 +196,7 @@
       <DependentUpon>ShareBarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TextBoxWithHint.cs" />
+    <Compile Include="Controls\VirtualizingWrapPanel.cs" />
     <Compile Include="Controls\VolumeControl.xaml.cs">
       <DependentUpon>VolumeControl.xaml</DependentUpon>
     </Compile>
@@ -210,6 +211,7 @@
     <Compile Include="Extensions\AudioExtensions.cs" />
     <Compile Include="Extensions\CommonExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Helpers\CoversHelper.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
     <Compile Include="Helpers\HotKeyManager.cs" />
     <Compile Include="Helpers\ImageAsyncHelper.cs" />
@@ -218,6 +220,7 @@
     <Compile Include="Helpers\NativeMethods.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Model\Audio.cs" />
+    <Compile Include="Model\AudioAlbum.cs" />
     <Compile Include="Model\AudioArtist.cs" />
     <Compile Include="Model\AudioPost.cs" />
     <Compile Include="Model\ColorScheme.cs" />

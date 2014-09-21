@@ -21,7 +21,7 @@ namespace Meridian.ViewModel.Search
 
         private readonly List<string> _sections = new List<string>
         {
-            MainResources.SearchSectionTracks, MainResources.SearchSectionAlbums, MainResources.SearchSectionArtists
+            MainResources.SearchSectionTracks, MainResources.SearchSectionAlbums, MainResources.SearchSectionArtists, "~This PC"
         };
         private string _query;
         private int _selectedSectionIndex;
@@ -129,6 +129,10 @@ namespace Meridian.ViewModel.Search
 
                 case 2:
                     SearchArtists(_cancellationToken.Token);
+                    break;
+
+                case 3:
+                    SearchLocalTracks(_cancellationToken.Token);
                     break;
             }
         }
@@ -253,6 +257,42 @@ namespace Meridian.ViewModel.Search
                     string q = Query.ToLower();
                     artists = artists.OrderByDescending(a => a.Name.ToLower() == q).ThenByDescending(a => a.Name.ToLower().StartsWith(q)).ToList();
                     SearchResults = new ObservableCollection<object>(artists);
+                }
+                else
+                {
+                    OnTaskError("results", ErrorResources.LoadSearchErrorEmpty);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+
+                OnTaskError("results", ErrorResources.LoadSearchErrorCommon);
+            }
+
+            OnTaskFinished("results");
+        }
+
+        private async void SearchLocalTracks(CancellationToken token)
+        {
+            SearchResults = null;
+            OnTaskStarted("results");
+
+            SearchResults = null;
+
+            try
+            {
+                var tracks = await ServiceLocator.LocalMusicService.SearchTracks(_query);
+
+                if (token.IsCancellationRequested)
+                {
+                    Debug.WriteLine("Local tracks search cancelled");
+                    return;
+                }
+
+                if (tracks != null && tracks.Count > 0)
+                {
+                    SearchResults = new ObservableCollection<object>(tracks);
                 }
                 else
                 {

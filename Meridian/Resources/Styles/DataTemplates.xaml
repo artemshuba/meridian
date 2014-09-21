@@ -81,6 +81,58 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
+    <DataTemplate x:Key="LocalAudioItemTemplate">
+        <Button Style="{StaticResource SimpleButtonStyle}" Command="{Binding DataContext.PlayAudioCommand, ElementName=pageRoot}" CommandParameter="{Binding}"
+                Padding="0,5,0,5" MaxHeight="40">
+            <Button.RenderTransform>
+                <TranslateTransform />
+            </Button.RenderTransform>
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource AudioLoadAnim}" />
+                </EventTrigger>
+            </Button.Triggers>
+            <Button.ContextMenu>
+                <ContextMenu Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuShowArtistInfo}" Command="{Binding Main.ShowArtistInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
+                    <Separator Style="{StaticResource CommonSeparatorStyle}"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding Main.AddToNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuPlayNext}" Command="{Binding Main.PlayAudioNextCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuCopyInfo}" Command="{Binding Main.CopyInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                </ContextMenu>
+            </Button.ContextMenu>
+            <Grid Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="0.5*" MaxWidth="500"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="14" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding Title}" Margin="0,0,5,0"/>
+                <TextBlock x:Name="Artist" Grid.Column="2" Text="{Binding Artist}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="14" Margin="0,0,0,0" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding Artist}"/>
+                <TextBlock x:Name="Album" Grid.Column="3" Text="{Binding Album}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="14" Margin="10,0,10,0" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding Album}"/>
+                <TextBlock x:Name="Duration" Grid.Column="4" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{StaticResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
+            </Grid>
+        </Button>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsPlaying, Mode=OneWay}" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Title"/>
+                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Artist"/>
+                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Duration"/>
+                <Setter Property="FontWeight" Value="SemiBold" TargetName="Title"/>
+                <Setter Property="FontWeight" Value="SemiBold" TargetName="Artist"/>
+                <Setter Property="FontWeight" Value="SemiBold" TargetName="Duration"/>
+                <Setter Property="Opacity" Value="1" TargetName="Artist" />
+                <Setter Property="Opacity" Value="1" TargetName="Duration" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
 
     <DataTemplate x:Key="NowPlayingAudioItemTemplate">
         <Button Style="{StaticResource SimpleButtonStyle}" Command="{Binding DataContext.PlayAudioCommand, ElementName=pageRoot}" CommandParameter="{Binding}"

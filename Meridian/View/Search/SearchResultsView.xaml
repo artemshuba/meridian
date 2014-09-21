@@ -98,6 +98,7 @@
 
         <converters:SearchResultTemplateSelector x:Key="SearchTemplateSelector"
                                                  TrackTemplate="{StaticResource AudioItemTemplate}"
+                                                 LocalTrackTemplate="{StaticResource LocalAudioItemTemplate}"
                                                  AlbumTemplate="{StaticResource AlbumTemplate}"
                                                  ArtistTemplate="{StaticResource ArtistTemplate}"/>
 

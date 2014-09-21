@@ -36,7 +36,7 @@ namespace Meridian
 
         private void MainWindow_OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && e.GetPosition(this).Y < 50)
+            if (e.LeftButton == MouseButtonState.Pressed && e.GetPosition(this).Y < 30)
             {
                 if (WindowState == WindowState.Maximized)
                 {

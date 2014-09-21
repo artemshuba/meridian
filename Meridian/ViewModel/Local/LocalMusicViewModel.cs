@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Documents;
 using GalaSoft.MvvmLight.Command;
 using Meridian.Controls;
@@ -13,7 +14,9 @@ namespace Meridian.ViewModel.Local
     public class LocalMusicViewModel : ViewModelBase
     {
         private List<LocalAudio> _tracks;
+        private List<AudioAlbum> _albums;
         private double _progress;
+        private int _selectedTabIndex;
 
         #region Commands
 
@@ -30,19 +33,33 @@ namespace Meridian.ViewModel.Local
             set { Set(ref _tracks, value); }
         }
 
+
+        public List<AudioAlbum> Albums
+        {
+            get { return _albums; }
+            set { Set(ref _albums, value); }
+        }
+
         public double Progress
         {
             get { return _progress; }
             set { Set(ref _progress, value); }
         }
 
+        public int SelectedTabIndex
+        {
+            get { return _selectedTabIndex; }
+            set { Set(ref _selectedTabIndex, value); }
+        }
+
         public LocalMusicViewModel()
         {
             InitializeCommands();
 
-            RegisterTask("tracks");
+            RegisterTasks("tracks","albums");
 
-            Load();
+            LoadTracks();
+            LoadAlbums();
         }
 
         private void InitializeCommands()
@@ -54,24 +71,49 @@ namespace Meridian.ViewModel.Local
             });
         }
 
-        private async void Load()
+        private async void LoadTracks()
         {
-            //await ServiceLocator.LocalMusicService.ScanMusic(new Progress<double>(UpdateProgress));
-            Tracks = await ServiceLocator.LocalMusicService.GetLocalTracks();
+            OnTaskStarted("tracks");
 
-            if (Tracks == null || Tracks.Count == 0)
+            try
             {
-                var flyout = new FlyoutControl();
-                flyout.FlyoutContent = new MusicScanView();
-                flyout.Show();
+                Tracks = await ServiceLocator.LocalMusicService.GetTracks();
 
-                Tracks = await ServiceLocator.LocalMusicService.GetLocalTracks();
+                if (Tracks == null || Tracks.Count == 0)
+                {
+                    var flyout = new FlyoutControl();
+                    flyout.FlyoutContent = new MusicScanView();
+                    await flyout.ShowAsync();
+
+                    Tracks = await ServiceLocator.LocalMusicService.GetTracks();
+                }
             }
+            catch (Exception ex)
+            {
+                OnTaskError("tracks", "~Unable to load tracks");
+
+                LoggingService.Log(ex);
+            }
+
+            OnTaskFinished("tracks");
         }
 
-        private void UpdateProgress(double progress)
+        private async void LoadAlbums()
         {
-            Progress = progress;
+            OnTaskStarted("albums");
+
+            try
+            {
+                Albums = await ServiceLocator.LocalMusicService.GetAlbums();
+            }
+            catch (Exception ex)
+            {
+                OnTaskError("albums", "~Unable to load albums");
+
+                LoggingService.Log(ex);
+            }
+
+            OnTaskFinished("albums");
         }
     }
 }

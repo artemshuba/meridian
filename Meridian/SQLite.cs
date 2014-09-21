@@ -147,6 +147,8 @@ namespace SQLite
 
 		public bool StoreDateTimeAsTicks { get; private set; }
 
+        public bool CaseSensitive { get; private set; }
+
 		/// <summary>
 		/// Constructs a new SQLiteConnection and opens a SQLite database specified by databasePath.
 		/// </summary>
@@ -159,8 +161,8 @@ namespace SQLite
 		/// only here for backwards compatibility. There is a *significant* speed advantage, with no
 		/// down sides, when setting storeDateTimeAsTicks = true.
 		/// </param>
-		public SQLiteConnection (string databasePath, bool storeDateTimeAsTicks = false)
-			: this (databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, storeDateTimeAsTicks)
+		public SQLiteConnection (string databasePath, bool storeDateTimeAsTicks = false, bool caseSensitive = true)
+            : this(databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, storeDateTimeAsTicks, caseSensitive)
 		{
 		}
 
@@ -176,7 +178,7 @@ namespace SQLite
 		/// only here for backwards compatibility. There is a *significant* speed advantage, with no
 		/// down sides, when setting storeDateTimeAsTicks = true.
 		/// </param>
-		public SQLiteConnection (string databasePath, SQLiteOpenFlags openFlags, bool storeDateTimeAsTicks = false)
+        public SQLiteConnection(string databasePath, SQLiteOpenFlags openFlags, bool storeDateTimeAsTicks = false, bool caseSensitive = true)
 		{
 			if (string.IsNullOrEmpty (databasePath))
 				throw new ArgumentException ("Must be specified", "databasePath");
@@ -206,6 +208,7 @@ namespace SQLite
 			_open = true;
 
 			StoreDateTimeAsTicks = storeDateTimeAsTicks;
+            CaseSensitive = caseSensitive;
 			
 			BusyTimeout = TimeSpan.FromSeconds (0.1);
 		}
@@ -365,8 +368,8 @@ namespace SQLite
 				_tables.Add (ty.FullName, map);
 			}
 			var query = "create table if not exists \"" + map.TableName + "\"(\n";
-			
-			var decls = map.Columns.Select (p => Orm.SqlDecl (p, StoreDateTimeAsTicks));
+
+            var decls = map.Columns.Select(p => Orm.SqlDecl(p, StoreDateTimeAsTicks, CaseSensitive));
 			var decl = string.Join (",\n", decls.ToArray ());
 			query += decl;
 			query += ")";
@@ -1535,15 +1538,17 @@ namespace SQLite
 		public string ConnectionString { get; private set; }
 		public string DatabasePath { get; private set; }
 		public bool StoreDateTimeAsTicks { get; private set; }
+        public bool CaseSensitive { get; private set; }
 
 #if NETFX_CORE
 		static readonly string MetroStyleDataPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
 #endif
 
-		public SQLiteConnectionString (string databasePath, bool storeDateTimeAsTicks)
+		public SQLiteConnectionString (string databasePath, bool storeDateTimeAsTicks, bool caseSensitive = true)
 		{
 			ConnectionString = databasePath;
 			StoreDateTimeAsTicks = storeDateTimeAsTicks;
+            CaseSensitive = caseSensitive;
 
 #if NETFX_CORE
 			DatabasePath = System.IO.Path.Combine (MetroStyleDataPath, databasePath);
@@ -1876,10 +1881,11 @@ namespace SQLite
         public const int DefaultMaxStringLength = 140;
         public const string ImplicitPkName = "Id";
         public const string ImplicitIndexSuffix = "Id";
+        private const string CaseInsensitive_Sql = "collate nocase";
 
-		public static string SqlDecl (TableMapping.Column p, bool storeDateTimeAsTicks)
+        public static string SqlDecl(TableMapping.Column p, bool storeDateTimeAsTicks, bool caseSensitive = true)
 		{
-			string decl = "\"" + p.Name + "\" " + SqlType (p, storeDateTimeAsTicks) + " ";
+            string decl = "\"" + p.Name + "\" " + SqlType(p, storeDateTimeAsTicks, caseSensitive) + " ";
 			
 			if (p.IsPK) {
 				decl += "primary key ";
@@ -1897,7 +1903,7 @@ namespace SQLite
 			return decl;
 		}
 
-		public static string SqlType (TableMapping.Column p, bool storeDateTimeAsTicks)
+        public static string SqlType(TableMapping.Column p, bool storeDateTimeAsTicks, bool caseSensitive = true)
 		{
 			var clrType = p.ColumnType;
 			if (clrType == typeof(Boolean) || clrType == typeof(Byte) || clrType == typeof(UInt16) || clrType == typeof(SByte) || clrType == typeof(Int16) || clrType == typeof(Int32)) {
@@ -1910,9 +1916,9 @@ namespace SQLite
 				int? len = p.MaxStringLength;
 
 				if (len.HasValue)
-					return "varchar(" + len.Value + ")";
+                    return "varchar(" + len + ")" + (caseSensitive ? "" : " " + CaseInsensitive_Sql);//return "varchar(" + len.Value + ")";
 
-				return "varchar";
+                return "varchar" + (caseSensitive ? "" : " " + CaseInsensitive_Sql);
 			} else if (clrType == typeof(TimeSpan)) {
                 return "bigint";
 			} else if (clrType == typeof(DateTime)) {
@@ -2585,7 +2591,7 @@ namespace SQLite
 				var args = new List<object> ();
 				if (_where != null) {
 					var w = CompileExpr (_where, args);
-					cmdText += " where " + w.CommandText;
+					cmdText += " where " + w.CommandText + " collate nocase ";
 				}
 				if ((_orderBys != null) && (_orderBys.Count > 0)) {
 					var t = string.Join (", ", _orderBys.Select (o => "\"" + o.ColumnName + "\"" + (o.Ascending ? "" : " desc")).ToArray ());

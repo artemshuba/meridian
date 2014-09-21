@@ -14,6 +14,8 @@ namespace Meridian.Converters
     {
         public DataTemplate TrackTemplate { get; set; }
 
+        public DataTemplate LocalTrackTemplate { get; set; }
+
         public DataTemplate AlbumTemplate { get; set; }
 
         public DataTemplate ArtistTemplate { get; set; }
@@ -22,7 +24,9 @@ namespace Meridian.Converters
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item is Audio)
+            if (item is LocalAudio)
+                return LocalTrackTemplate;
+            else if (item is Audio)
                 return TrackTemplate;
             else if (item is LastFmAlbum)
                 return AlbumTemplate;
@@ -80,7 +84,7 @@ namespace Meridian.Converters
                 case 2:
                     return ArtistsStyle;
                 case 3:
-                    return SocietiesStyle;
+                    return TracksStyle;
             }
             return null;
         }

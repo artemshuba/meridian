@@ -35,15 +35,19 @@ namespace SQLite
 		SQLiteConnectionString _connectionString;
         SQLiteOpenFlags _openFlags;
 
-        public SQLiteAsyncConnection(string databasePath, bool storeDateTimeAsTicks = false)
-            : this(databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, storeDateTimeAsTicks)
+	    private bool _caseSensitive;
+
+        public SQLiteAsyncConnection(string databasePath, bool storeDateTimeAsTicks = false, bool caseSensitive = true)
+            : this(databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, storeDateTimeAsTicks, caseSensitive)
         {
+            _caseSensitive = caseSensitive;
         }
-        
-        public SQLiteAsyncConnection(string databasePath, SQLiteOpenFlags openFlags, bool storeDateTimeAsTicks = false)
+
+        public SQLiteAsyncConnection(string databasePath, SQLiteOpenFlags openFlags, bool storeDateTimeAsTicks = false, bool caseSensitive = true)
         {
             _openFlags = openFlags;
-            _connectionString = new SQLiteConnectionString(databasePath, storeDateTimeAsTicks);
+            _connectionString = new SQLiteConnectionString(databasePath, storeDateTimeAsTicks, caseSensitive);
+            _caseSensitive = caseSensitive;
         }
 
 		SQLiteConnectionWithLock GetConnection ()
@@ -522,7 +526,7 @@ namespace SQLite
 		readonly object _lockPoint = new object ();
 
         public SQLiteConnectionWithLock (SQLiteConnectionString connectionString, SQLiteOpenFlags openFlags)
-			: base (connectionString.DatabasePath, openFlags, connectionString.StoreDateTimeAsTicks)
+			: base (connectionString.DatabasePath, openFlags, connectionString.StoreDateTimeAsTicks, connectionString.CaseSensitive)
 		{
 		}
 

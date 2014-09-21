@@ -7,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Meridian.Helpers;
 using Meridian.Model;
+using Meridian.Extensions;
+using Xbox.Music;
 
 namespace Meridian.Services.Music
 {
@@ -33,6 +35,8 @@ namespace Meridian.Services.Music
 
                     double totalCount = musicFiles.Count;
 
+                    var albums = new Dictionary<string, AudioAlbum>();
+
                     foreach (var filePath in musicFiles)
                     {
                         using (var audioFile = TagLib.File.Create(filePath))
@@ -44,6 +48,21 @@ namespace Meridian.Services.Music
                             track.Duration = audioFile.Properties.Duration;
                             track.Source = filePath;
 
+                            if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
+                            {
+                                track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist + "_" + audioFile.Tag.Album);
+                                track.Album = ToUtf8(audioFile.Tag.Album);
+                                if (!albums.ContainsKey(track.AlbumId))
+                                    albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = ToUtf8(audioFile.Tag.Album) });
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
+                                    {
+                                        albums[track.AlbumId].CoverPath = filePath;
+                                    }
+                                }
+                            }
+
                             tracks.Add(track);
 
                             count++;
@@ -53,9 +72,10 @@ namespace Meridian.Services.Music
                     }
 
                     await ServiceLocator.DataBaseService.SaveItems(tracks);
-                }, _scanCancellationToken.Token);
+                    await ServiceLocator.DataBaseService.SaveItems(albums.Values);
 
-                LoggingService.Log("Music scan finished. Found " + count + " tracks");
+                    LoggingService.Log("Music scan finished. Found " + count + " tracks; " + albums.Count + " albums");
+                }, _scanCancellationToken.Token);
             }
             catch (Exception ex)
             {
@@ -70,15 +90,35 @@ namespace Meridian.Services.Music
             _scanCancellationToken = new CancellationTokenSource();
         }
 
-        public async Task<List<LocalAudio>> GetLocalTracks()
+        public async Task<List<LocalAudio>> GetTracks()
         {
             return await ServiceLocator.DataBaseService.GetItems<LocalAudio>();
+        }
+
+        public async Task<List<AudioAlbum>> GetAlbums()
+        {
+            return await ServiceLocator.DataBaseService.GetItems<AudioAlbum>();
+        }
+
+        public async Task<List<LocalAudio>> SearchTracks(string query)
+        {
+            //not good, but sqlite doesn't support case insensitive queries for unicode
+            var tracks = await ServiceLocator.DataBaseService.GetItems<LocalAudio>();
+
+            return await Task.Run(() =>
+            {
+                var result = tracks.Where(a => a.Title != null && a.Title.StartsWith(query, StringComparison.OrdinalIgnoreCase)).ToList();
+                result.AddRange(tracks.Where(a => a.Artist != null && a.Artist.StartsWith(query, StringComparison.OrdinalIgnoreCase)).ToList());
+                result.AddRange(tracks.Where(a => a.Album != null && a.Album.StartsWith(query, StringComparison.OrdinalIgnoreCase)).ToList());
+                return result;
+            });
         }
 
         private static string ToUtf8(string input)
         {
             if (string.IsNullOrEmpty(input))
                 return input;
+
             return new string(input.ToCharArray().
                 Select(x => ((x + 848) >= 'А' && (x + 848) <= 'ё') ? (char)(x + 848) : x).
                 ToArray());

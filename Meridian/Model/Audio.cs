@@ -226,6 +226,28 @@ namespace Meridian.Model
 
     public class LocalAudio : Audio
     {
+        private string _album;
+        private string _albumId;
 
+        /// <summary>
+        /// Album
+        /// </summary>
+        public string Album
+        {
+            get { return _album; }
+            set
+            {
+                if (_album == value)
+                    return;
+
+                _album = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Album id
+        /// </summary>
+        public string AlbumId { get; set; }
     }
 }

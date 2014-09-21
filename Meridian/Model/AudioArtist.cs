@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SQLite;
 
 namespace Meridian.Model
 {
@@ -8,6 +9,7 @@ namespace Meridian.Model
 
         public string Title { get; set; }
 
+        [Ignore]
         public List<Audio> Tracks { get; set; }
 
         public AudioArtist()
