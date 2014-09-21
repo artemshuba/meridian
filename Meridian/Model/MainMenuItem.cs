@@ -5,17 +5,28 @@ namespace Meridian.Model
     public class MainMenuItem
     {
         /// <summary>
-        /// Группа
+        /// Group title
         /// </summary>
         public string Group { get; set; }
 
         /// <summary>
-        /// Отображаемый заголовок
+        /// Group icon
+        /// </summary>
+        public object GroupIcon { get; set; }
+
+        /// <summary>
+        /// Title
         /// </summary>
         public string Title { get; set; }
 
+        /// <summary>
+        /// Page
+        /// </summary>
         public string Page { get; set; }
 
+        /// <summary>
+        /// Icon
+        /// </summary>
         public object Icon { get; set; }
     }
 

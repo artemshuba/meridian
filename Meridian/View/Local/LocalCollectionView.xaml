@@ -90,6 +90,50 @@
                     </ListBox>
                 </controls:BusyIndicator>
             </TabItem>
+            <TabItem Header="~Artists" Style="{StaticResource CommonTabItemStyle}">
+                <controls:BusyIndicator Grid.Row="2" IsBusy="{Binding Tasks[artists].IsWorking}" Error="{Binding Tasks[artists].Error}">
+                    <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Artists}"
+                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.Style>
+                            <Style TargetType="ListBox">
+                                <Setter Property="ItemsPanel">
+                                    <Setter.Value>
+                                        <ItemsPanelTemplate>
+                                            <controls:VirtualizingWrapPanel ItemWidth="120" ItemHeight="120" ScrollUnit="Pixel">
+                                                <i:Interaction.Behaviors>
+                                                    <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40"/>
+                                                </i:Interaction.Behaviors>
+                                            </controls:VirtualizingWrapPanel>
+                                        </ItemsPanelTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.Style>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="120" ToolTip="{Binding Title}">
+                                    <Grid x:Name="RootGrid">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.RowSpan="2">
+                                            <Rectangle Fill="{StaticResource AccentBrush}"/>
+                                            <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <!--<Image Source="{Binding Cover}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />-->
+                                        </Grid>
+                                        <Rectangle Grid.Row="1" Fill="Black" Opacity="0.8" />
+                                        <StackPanel Grid.Row="1">
+                                            <!--<TextBlock Text="{Binding Artist}" FontWeight="Normal" FontSize="11" Margin="5,3,5,0" TextTrimming="CharacterEllipsis" Opacity="0.8" Foreground="White"/>-->
+                                            <TextBlock Text="{Binding Title}" FontFamily="Segoe UI SemiLight"  FontSize="12" Margin="5,-2,5,7" TextTrimming="CharacterEllipsis" Foreground="White"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </controls:BusyIndicator>
+            </TabItem>
         </TabControl>
     </Grid>
 </Page>

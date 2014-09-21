@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Meridian.Helpers
 {
@@ -23,5 +24,14 @@ namespace Meridian.Helpers
             return "0 Bytes";
         }
 
+        public static string ToUtf8(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            return new string(input.ToCharArray().
+                Select(x => ((x + 848) >= 'А' && (x + 848) <= 'ё') ? (char)(x + 848) : x).
+                ToArray());
+        }
     }
 }

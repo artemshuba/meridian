@@ -12,6 +12,9 @@ namespace Meridian.Model
         private ImageSource _cover;
         private bool _coverRequested;
 
+        [PrimaryKey]
+        [Unique]
+        [NotNull]
         public string Id { get; set; }
 
         public string Title { get; set; }

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Colors -->
-    <Color x:Key="ForegroundColor">Black</Color>
+    <Color x:Key="ForegroundColor">#414042</Color>
     <Color x:Key="BackgroundColor">White</Color>
     <Color x:Key="ContrastColor">#f2f2f2</Color>
 
@@ -14,6 +14,8 @@
 
     <SolidColorBrush x:Key="MainBackgroundSplitterBrush" Color="{StaticResource ForegroundColor}" Opacity="0.15"/>
 
+    <SolidColorBrush x:Key="AudioAlternationBackgroundBrush" Color="Black" Opacity="0.03" />
+    
     <!-- Buttons -->
     <SolidColorBrush x:Key="ButtonBorderBrush" Color="Gray"/>
     <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#333333"/>

@@ -209,6 +209,8 @@ namespace Meridian.Services
                 Stop();
             }
 
+            track.IsPlaying = true;
+
             CurrentAudio = track;
 
             if (track.Source == null)
@@ -225,17 +227,7 @@ namespace Meridian.Services
 
                 if (vkAudio != null)
                 {
-                    //TODO why not?
                     track = vkAudio;
-
-                    //track.Id = vkAudio.Id;
-                    //track.Artist = vkAudio.Artist;
-                    //track.Title = vkAudio.Title;
-                    //track.Source = vkAudio.Source;
-                    //track.OwnerId = vkAudio.OwnerId;
-                    //track.AlbumId = vkAudio.AlbumId;
-                    //track.LyricsId = vkAudio.LyricsId;
-
                     _playFailsCount = 0;
                 }
                 else

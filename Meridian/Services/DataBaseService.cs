@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Meridian.Model;
@@ -28,7 +27,8 @@ namespace Meridian.Services
             await db.CreateTablesAsync(
                 typeof(Audio), 
                 typeof(LocalAudio),
-                typeof(AudioAlbum)).ConfigureAwait(false);
+                typeof(AudioAlbum), 
+                typeof(AudioArtist)).ConfigureAwait(false);
 
             Debug.WriteLine("Database initialized.");
         }

@@ -229,9 +229,9 @@ namespace Meridian.Services
             var audios = await SearchAudio(artist + " - " + title, 10, 0);
             if (audios != null && audios.Count > 0)
             {
-                var audio = audios.FirstOrDefault(x => (x.Title.ToLower() == title.ToLower() && x.Artist.ToLower() == artist.ToLower()));
+                var audio = audios.FirstOrDefault(x => (String.Equals(x.Title, title, StringComparison.OrdinalIgnoreCase) && String.Equals(x.Artist, artist, StringComparison.OrdinalIgnoreCase)));
                 if (audio == null)
-                    audio = audios.FirstOrDefault(x => x.Title.ToLower() == title.ToLower());
+                    audio = audios.FirstOrDefault(x => String.Equals(x.Title, title, StringComparison.OrdinalIgnoreCase));
                 if (audio == null)
                 {
                     audio = audios.First();

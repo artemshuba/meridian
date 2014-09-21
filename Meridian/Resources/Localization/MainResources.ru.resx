@@ -699,4 +699,13 @@
   <data name="SettingsUIDownloadArtistArt" xml:space="preserve">
     <value>Загружать изображения исполнителей</value>
   </data>
+  <data name="MainMenuLocalTitle" xml:space="preserve">
+    <value>ЭТОТ ПК</value>
+  </data>
+  <data name="MainMenuVkTitle" xml:space="preserve">
+    <value>ВКОНТАКТЕ</value>
+  </data>
+  <data name="MainMenuCollection" xml:space="preserve">
+    <value>Коллекция</value>
+  </data>
 </root>

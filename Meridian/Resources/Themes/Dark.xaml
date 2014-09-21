@@ -15,7 +15,8 @@
 
     <SolidColorBrush x:Key="MainBackgroundSplitterBrush" Color="{StaticResource ForegroundColor}" Opacity="0.15"/>
 
-    
+    <SolidColorBrush x:Key="AudioAlternationBackgroundBrush" Color="Black" Opacity="0.05" />
+
     <!-- Buttons -->
     <SolidColorBrush x:Key="ButtonBorderBrush" Color="Gray"/>
     <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#eeeeee"/>

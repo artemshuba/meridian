@@ -11,6 +11,8 @@
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="AlternationCount" Value="2" />
+        <Setter Property="Padding" Value="15,0,15,0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
@@ -205,6 +207,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                <Setter Property="Background" Value="{StaticResource AudioAlternationBackgroundBrush}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- Стиль для стандартных альбомов ("все аудиозаписи", "со стены" и т.п.) -->

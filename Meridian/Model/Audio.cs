@@ -23,6 +23,9 @@ namespace Meridian.Model
         /// <summary>
         /// Id
         /// </summary>
+        [PrimaryKey]
+        [Unique]
+        [NotNull]
         public string Id { get; set; }
 
         /// <summary>
@@ -125,6 +128,7 @@ namespace Meridian.Model
             audio.Title = this.Title;
             audio.Artist = this.Artist;
             audio.Duration = this.Duration;
+            audio.IsPlaying = this.IsPlaying;
 
             return audio;
         }
@@ -227,7 +231,6 @@ namespace Meridian.Model
     public class LocalAudio : Audio
     {
         private string _album;
-        private string _albumId;
 
         /// <summary>
         /// Album
@@ -249,5 +252,10 @@ namespace Meridian.Model
         /// Album id
         /// </summary>
         public string AlbumId { get; set; }
+
+        /// <summary>
+        /// Artist id
+        /// </summary>
+        public string ArtistId { get; set; }
     }
 }

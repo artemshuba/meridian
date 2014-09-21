@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using GalaSoft.MvvmLight.Command;
 using Meridian.Controls;
 using Meridian.Model;
 using Meridian.Services;
-using Meridian.View.Flyouts;
 using Meridian.View.Flyouts.Local;
 
 namespace Meridian.ViewModel.Local
@@ -15,6 +13,7 @@ namespace Meridian.ViewModel.Local
     {
         private List<LocalAudio> _tracks;
         private List<AudioAlbum> _albums;
+        private List<AudioArtist> _artists;
         private double _progress;
         private int _selectedTabIndex;
 
@@ -33,11 +32,16 @@ namespace Meridian.ViewModel.Local
             set { Set(ref _tracks, value); }
         }
 
-
         public List<AudioAlbum> Albums
         {
             get { return _albums; }
             set { Set(ref _albums, value); }
+        }
+
+        public List<AudioArtist> Artists
+        {
+            get { return _artists; }
+            set { Set(ref _artists, value); }
         }
 
         public double Progress
@@ -56,10 +60,9 @@ namespace Meridian.ViewModel.Local
         {
             InitializeCommands();
 
-            RegisterTasks("tracks","albums");
+            RegisterTasks("tracks", "albums", "artists");
 
-            LoadTracks();
-            LoadAlbums();
+            Load();
         }
 
         private void InitializeCommands()
@@ -71,22 +74,30 @@ namespace Meridian.ViewModel.Local
             });
         }
 
-        private async void LoadTracks()
+        private async void Load()
+        {
+            await LoadTracks();
+
+            if (Tracks == null || Tracks.Count == 0)
+            {
+                var flyout = new FlyoutControl();
+                flyout.FlyoutContent = new MusicScanView();
+                await flyout.ShowAsync();
+
+                await LoadTracks();
+            }
+
+            await LoadAlbums();
+            await LoadArtists();
+        }
+
+        private async Task LoadTracks()
         {
             OnTaskStarted("tracks");
 
             try
             {
                 Tracks = await ServiceLocator.LocalMusicService.GetTracks();
-
-                if (Tracks == null || Tracks.Count == 0)
-                {
-                    var flyout = new FlyoutControl();
-                    flyout.FlyoutContent = new MusicScanView();
-                    await flyout.ShowAsync();
-
-                    Tracks = await ServiceLocator.LocalMusicService.GetTracks();
-                }
             }
             catch (Exception ex)
             {
@@ -98,7 +109,7 @@ namespace Meridian.ViewModel.Local
             OnTaskFinished("tracks");
         }
 
-        private async void LoadAlbums()
+        private async Task LoadAlbums()
         {
             OnTaskStarted("albums");
 
@@ -114,6 +125,24 @@ namespace Meridian.ViewModel.Local
             }
 
             OnTaskFinished("albums");
+        }
+
+        private async Task LoadArtists()
+        {
+            OnTaskStarted("artists");
+
+            try
+            {
+                Artists = await ServiceLocator.LocalMusicService.GetArtists();
+            }
+            catch (Exception ex)
+            {
+                OnTaskError("artists", "~Unable to load artists");
+
+                LoggingService.Log(ex);
+            }
+
+            OnTaskFinished("artists");
         }
     }
 }

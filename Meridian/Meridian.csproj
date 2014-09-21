@@ -248,6 +248,9 @@
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\Music\LocalMusicService.cs" />
+    <Compile Include="Services\Music\Repositories\LocalAlbumsRepository.cs" />
+    <Compile Include="Services\Music\Repositories\LocalArtistsRepository.cs" />
+    <Compile Include="Services\Music\Repositories\LocalTracksRepository.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\RadioService.cs" />
     <Compile Include="Services\ServiceLocator.cs" />

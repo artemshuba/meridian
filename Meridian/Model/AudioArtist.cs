@@ -5,6 +5,9 @@ namespace Meridian.Model
 {
     public class AudioArtist
     {
+        [PrimaryKey]
+        [Unique]
+        [NotNull]
         public string Id { get; set; }
 
         public string Title { get; set; }
