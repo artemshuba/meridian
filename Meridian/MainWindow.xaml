@@ -144,7 +144,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Title}" FontFamily="{StaticResource SidebarForegroundFont}" FontWeight="Regular" FontSize="14"/>
+                            <TextBlock Text="{Binding Title}" FontWeight="Regular" FontSize="14"/>
                             <Path Grid.Column="1"  Data="{Binding Icon}" Fill="{StaticResource SidebarForegroundBrush}" Width="12" Stretch="Uniform" Margin="0,0,12,0" SnapsToDevicePixels="False"/>
                         </Grid>
                     </DataTemplate>
@@ -160,7 +160,7 @@
                     <GradientStop Offset="1" Color="Transparent"/>
                 </LinearGradientBrush>
             </Grid.OpacityMask>
-            <controls:ImageTransitionControl Source="{Binding ArtistImage}" Margin="0,0,0,0">
+            <controls:ImageTransitionControl x:Name="BackgroundArtControl" Source="{Binding ArtistImage}" Margin="0,0,0,0">
                 <controls:ImageTransitionControl.OpacityMask>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                         <GradientStop Offset="0" Color="Transparent"/>
@@ -168,6 +168,7 @@
                     </LinearGradientBrush>
                 </controls:ImageTransitionControl.OpacityMask>
             </controls:ImageTransitionControl>
+
 
             <!--<Image Name="ArtistArt" Stretch="UniformToFill" Opacity="1" Source="{Binding Main.ArtistImage, Source={StaticResource Locator}}" Margin="0,0,0,0"
                    RenderOptions.BitmapScalingMode="HighQuality">
@@ -179,7 +180,7 @@
                 </Image.OpacityMask>
             </Image>-->
         </Grid>
-
+        
         <Frame x:Name="RootFrame" NavigationUIVisibility="Hidden" Grid.Column="1">
 
         </Frame>

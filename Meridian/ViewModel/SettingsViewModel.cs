@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 using GalaSoft.MvvmLight.Command;
 using Meridian.Controls;
 using Meridian.Helpers;
@@ -63,6 +64,7 @@ namespace Meridian.ViewModel
         private bool _enableNotifications;
         private bool _enableTrayIcon;
         private bool _showBackgroundArt;
+        private bool _blurBackground;
         private bool _downloadArtistArt;
         private bool _downloadAlbumArt;
         private SettingsLanguage _selectedLanguage;
@@ -209,6 +211,18 @@ namespace Meridian.ViewModel
             }
         }
 
+        public bool BlurBackground
+        {
+            get { return _blurBackground; }
+            set
+            {
+                if (Set(ref _blurBackground, value))
+                {
+                    CanSave = true;
+                }
+            }
+        }
+
         public bool DownloadArtistArt
         {
             get { return _downloadArtistArt; }
@@ -274,6 +288,7 @@ namespace Meridian.ViewModel
             _enableNotifications = Domain.Settings.Instance.ShowTrackNotifications;
             _enableTrayIcon = Domain.Settings.Instance.EnableTrayIcon;
             _showBackgroundArt = Domain.Settings.Instance.ShowBackgroundArt;
+            _blurBackground = Domain.Settings.Instance.BlurBackground;
             _downloadArtistArt = Domain.Settings.Instance.DownloadArtistArt;
             _downloadAlbumArt = Domain.Settings.Instance.DownloadAlbumArt;
 
@@ -494,7 +509,18 @@ namespace Meridian.ViewModel
 
             Domain.Settings.Instance.DownloadArtistArt = DownloadArtistArt;
 
+            Domain.Settings.Instance.BlurBackground = BlurBackground;
+
             Domain.Settings.Instance.DownloadAlbumArt = DownloadAlbumArt;
+
+            if (BlurBackground)
+            {
+                ((MainWindow)Application.Current.MainWindow).BackgroundArtControl.Effect = new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35 };
+            }
+            else
+            {
+                ((MainWindow)Application.Current.MainWindow).BackgroundArtControl.Effect = null;
+            }
 
             foreach (var settingsHotkey in _hotkeys)
             {

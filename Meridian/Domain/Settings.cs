@@ -60,6 +60,8 @@ namespace Meridian.Domain
 
         public bool ShowBackgroundArt { get; set; }
 
+        public bool BlurBackground { get; set; }
+
         public bool DownloadArtistArt { get; set; }
 
         public bool DownloadAlbumArt { get; set; }
@@ -134,6 +136,8 @@ namespace Meridian.Domain
 
             DownloadArtistArt = true;
             DownloadAlbumArt = true;
+
+            BlurBackground = true;
         }
 
         public static void Load()
