@@ -152,10 +152,11 @@
             </ListBox>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="0" MaxWidth="800" MaxHeight="800" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ClipToBounds="True" Opacity="0.4"
+        <Grid Grid.Column="1" Grid.Row="0" MaxWidth="800" MaxHeight="800" Margin="0,90,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ClipToBounds="True" Opacity="0.4"
               Visibility="{Binding ShowBackgroundArt, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.OpacityMask>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="Transparent"/>
                     <GradientStop Offset="0.5" Color="White"/>
                     <GradientStop Offset="1" Color="Transparent"/>
                 </LinearGradientBrush>

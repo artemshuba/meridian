@@ -685,10 +685,10 @@
     <value>Play</value>
   </data>
   <data name="ArtistsTab" xml:space="preserve">
-    <value>artists</value>
+    <value>Artists</value>
   </data>
   <data name="TracksTab" xml:space="preserve">
-    <value>tracks</value>
+    <value>Songs</value>
   </data>
   <data name="ContextMenuCopyToMyAlbums" xml:space="preserve">
     <value>Copy to my albums</value>
@@ -707,5 +707,8 @@
   </data>
   <data name="MainMenuVkTitle" xml:space="preserve">
     <value>VK</value>
+  </data>
+  <data name="AlbumsTab" xml:space="preserve">
+    <value>Albums</value>
   </data>
 </root>

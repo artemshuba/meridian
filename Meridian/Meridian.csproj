@@ -257,6 +257,7 @@
     <Compile Include="Services\UpdateService.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="ViewModel\Local\LocalAlbumViewModel.cs" />
     <Compile Include="ViewModel\Local\LocalMusicViewModel.cs" />
     <Compile Include="ViewModel\Search\AlbumViewModel.cs" />
     <Compile Include="ViewModel\Search\ArtistViewModel.cs" />
@@ -290,6 +291,9 @@
     </Compile>
     <Compile Include="View\Flyouts\WebValidationView.xaml.cs">
       <DependentUpon>WebValidationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Local\LocalAlbumView.xaml.cs">
+      <DependentUpon>LocalAlbumView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Local\LocalCollectionView.xaml.cs">
       <DependentUpon>LocalCollectionView.xaml</DependentUpon>
@@ -572,6 +576,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Flyouts\WebValidationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Local\LocalAlbumView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

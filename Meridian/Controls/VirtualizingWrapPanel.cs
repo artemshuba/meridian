@@ -78,6 +78,11 @@ namespace Meridian.Controls
         {
             if (_itemsControl == null)
             {
+                _itemsControl = ItemsControl.GetItemsOwner(this);
+            }
+
+            if (_itemsControl == null)
+            {
                 return availableSize;
             }
 
@@ -91,6 +96,9 @@ namespace Meridian.Controls
             var layoutInfo = GetLayoutInfo(availableSize, ItemHeight, extentInfo);
 
             RecycleItems(layoutInfo);
+
+            if (_itemsGenerator == null)
+                Initialize();
 
             // Determine where the first item is in relation to previously realized items
             var generatorStartPosition = _itemsGenerator.GeneratorPositionFromIndex(layoutInfo.FirstRealizedItemIndex);
@@ -107,6 +115,9 @@ namespace Meridian.Controls
                     bool newlyRealized;
 
                     var child = (UIElement)_itemsGenerator.GenerateNext(out newlyRealized);
+                    if (child == null)
+                        continue;
+
                     SetVirtualItemIndex(child, itemIndex);
 
                     if (newlyRealized)
@@ -162,8 +173,8 @@ namespace Meridian.Controls
             RemoveRedundantChildren();
             UpdateScrollInfo(availableSize, extentInfo);
 
-            var desiredSize = new Size(double.IsInfinity(availableSize.Width) ? 0 : availableSize.Width,
-                                       double.IsInfinity(availableSize.Height) ? 0 : availableSize.Height);
+            var desiredSize = new Size(double.IsInfinity(availableSize.Width) ? 100 : availableSize.Width,
+                                       double.IsInfinity(availableSize.Height) ? 100 : availableSize.Height);
 
             _isInMeasure = false;
 

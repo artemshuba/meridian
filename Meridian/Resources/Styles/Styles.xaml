@@ -259,16 +259,17 @@
 
     <Style x:Key="MainBackButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
-        <Setter Property="Width" Value="56"/>
-        <Setter Property="Height" Value="56"/>
-        <Setter Property="Opacity" Value="0.7" />
-        <Setter Property="Padding" Value="20" />
-        <Setter Property="Margin" Value="20,12,0,-17" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Opacity" Value="0.5" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="3,0,-3,0" />
         <Setter Property="ToolTip" Value="{x:Static localization:MainResources.BackButton}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid Name="RootGrid" Background="Transparent">
+                    <Grid Name="RootGrid" Background="{TemplateBinding Background}">
                         <Viewbox>
                             <Path x:Name="Icon" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" Data="{StaticResource BackIcon}"/>
                         </Viewbox>

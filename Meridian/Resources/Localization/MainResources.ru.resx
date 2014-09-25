@@ -685,10 +685,10 @@
     <value>Воспроизвести</value>
   </data>
   <data name="ArtistsTab" xml:space="preserve">
-    <value>исполнители</value>
+    <value>Исполнители</value>
   </data>
   <data name="TracksTab" xml:space="preserve">
-    <value>треки</value>
+    <value>Треки</value>
   </data>
   <data name="ContextMenuCopyToMyAlbums" xml:space="preserve">
     <value>Сохранить в свои альбомы</value>
@@ -707,5 +707,8 @@
   </data>
   <data name="MainMenuCollection" xml:space="preserve">
     <value>Коллекция</value>
+  </data>
+  <data name="AlbumsTab" xml:space="preserve">
+    <value>Альбомы</value>
   </data>
 </root>

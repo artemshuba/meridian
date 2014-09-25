@@ -88,6 +88,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Albums.
+        /// </summary>
+        public static string AlbumsTab {
+            get {
+                return ResourceManager.GetString("AlbumsTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ALBUMS.
         /// </summary>
         public static string ArtistAlbums {
@@ -115,7 +124,7 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to artists.
+        ///   Looks up a localized string similar to Artists.
         /// </summary>
         public static string ArtistsTab {
             get {
@@ -1807,7 +1816,7 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tracks.
+        ///   Looks up a localized string similar to Songs.
         /// </summary>
         public static string TracksTab {
             get {

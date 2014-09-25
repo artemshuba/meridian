@@ -34,6 +34,7 @@ namespace Meridian.ViewModel
         private readonly MenuItemsCollection _mainMenuItems = new MenuItemsCollection()
         {
             new MainMenuItem() {Group = MainResources.MainMenuLocalTitle, GroupIcon = Application.Current.Resources["DeviceIcon"], Page = "/Local.LocalCollectionView", Title =  MainResources.MainMenuCollection},
+            new MainMenuItem() {Group = MainResources.MainMenuLocalTitle, GroupIcon = Application.Current.Resources["DeviceIcon"], Page = "/Main.NowPlayingView", Title = MainResources.MainMenuNowPlaying, Icon = Application.Current.Resources["NowPlayingIcon"]},
 
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.MusicView", Title = MainResources.MainMenuMyMusic},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.PopularAudioView", Title = MainResources.MainMenuPopular},
@@ -43,8 +44,6 @@ namespace Meridian.ViewModel
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.FriendsView", Title = MainResources.MainMenuFriends},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.SocietiesView", Title = MainResources.MainMenuSocieties},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.SubscriptionsView", Title = MainResources.MainMenuSubscriptions},
-                       
-            new MainMenuItem() {Page = "/Main.NowPlayingView", Title = MainResources.MainMenuNowPlaying, Icon = Application.Current.Resources["NowPlayingIcon"]},
         };
 
         private bool _showSidebar;

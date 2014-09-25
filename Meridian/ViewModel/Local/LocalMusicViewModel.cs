@@ -6,6 +6,7 @@ using Meridian.Controls;
 using Meridian.Model;
 using Meridian.Services;
 using Meridian.View.Flyouts.Local;
+using Neptune.Messages;
 
 namespace Meridian.ViewModel.Local
 {
@@ -23,6 +24,11 @@ namespace Meridian.ViewModel.Local
         /// Play audio command
         /// </summary>
         public RelayCommand<Audio> PlayAudioCommand { get; private set; }
+
+        /// <summary>
+        /// Go to album command
+        /// </summary>
+        public RelayCommand<AudioAlbum> GoToAlbumCommand { get; private set; }
 
         #endregion
 
@@ -71,6 +77,18 @@ namespace Meridian.ViewModel.Local
             {
                 AudioService.Play(audio);
                 AudioService.SetCurrentPlaylist(Tracks);
+            });
+
+            GoToAlbumCommand = new RelayCommand<AudioAlbum>(album =>
+            {
+                MessengerInstance.Send(new NavigateToPageMessage()
+                {
+                    Page = "/Local.LocalAlbumView",
+                    Parameters = new Dictionary<string, object>()
+                    {
+                        {"album", album}
+                    }
+                });
             });
         }
 

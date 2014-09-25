@@ -37,7 +37,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel>
+        <Rectangle Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                    PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
                 <Border Background="White" BorderThickness="1" BorderBrush="Black">
@@ -48,12 +53,12 @@
                 </Border>
             </Popup>
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left" Width="25" Height="25"
+                    HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <ToggleButton x:Name="HeaderButton" Content="{x:Static Properties:MainResources.MainMenuMyMusic}" Style="{StaticResource HeaderButtonStyle}"/>
-        </StackPanel>
+            <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static Properties:MainResources.MainMenuMyMusic}" Style="{StaticResource HeaderButtonStyle}"/>
+        </Grid>
 
-        <TabControl Grid.Row="1" Style="{StaticResource CommonTabControlStyle}" Margin="0,-15,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+        <TabControl Grid.Row="1" Style="{StaticResource CommonTabControlStyle}" Margin="0,-8,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
             <TabItem Header="{x:Static Properties:MainResources.TracksTab}" Style="{StaticResource CommonTabItemStyle}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -79,6 +84,7 @@
                                 ToolTip="{x:Static Properties:MainResources.MyMusicAlbumsAdd}"/>
                     </StackPanel>
 
+                    <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
                     <controls:BusyIndicator Margin="0,30,0,0" Grid.Column="1" IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
                         <controls:BusyIndicator.BusyContentStyle>
                             <Style TargetType="ContentPresenter">
@@ -158,6 +164,12 @@
 
                     <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
+            </TabItem>
+            <TabItem Header="~News" Style="{StaticResource CommonTabItemStyle}">
+            </TabItem>
+            <TabItem Header="~Wall" Style="{StaticResource CommonTabItemStyle}">
+            </TabItem>
+            <TabItem Header="~Favorites" Style="{StaticResource CommonTabItemStyle}">
             </TabItem>
         </TabControl>
     </Grid>

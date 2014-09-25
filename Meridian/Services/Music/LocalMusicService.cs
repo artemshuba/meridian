@@ -115,6 +115,11 @@ namespace Meridian.Services.Music
             return await ServiceLocator.DataBaseService.GetItems<LocalAudio>();
         }
 
+        public async Task<List<LocalAudio>> GetAlbumTracks(string albumId)
+        {
+            return await ServiceLocator.DataBaseService.GetLocalAlbumTracks(albumId);
+        }
+
         public async Task<List<AudioAlbum>> GetAlbums()
         {
             return await _albumsRepository.Get();

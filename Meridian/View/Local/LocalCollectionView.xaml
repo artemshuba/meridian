@@ -6,9 +6,24 @@
       xmlns:controls="clr-namespace:Meridian.Controls"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
+      xmlns:Properties="clr-namespace:Meridian.Resources.Localization"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="600" d:DesignWidth="800"
       x:Name="pageRoot">
+
+    <Page.Resources>
+
+    </Page.Resources>
+
+    <Page.RenderTransform>
+        <TranslateTransform />
+    </Page.RenderTransform>
+
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
+        </EventTrigger>
+    </Page.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -17,7 +32,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <!--<Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                    PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
                 <Border Background="White" BorderThickness="1" BorderBrush="Black">
@@ -28,36 +47,40 @@
                 </Border>
             </Popup>-->
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left" Width="25" Height="25"
+                    HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <ToggleButton x:Name="HeaderButton" Content="~This PC" Style="{StaticResource HeaderButtonStyle}"/>
-        </StackPanel>
+            <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static Properties:MainResources.MainMenuCollection}" Style="{StaticResource HeaderButtonStyle}"/>
+        </Grid>
 
-        <TabControl Grid.Row="2" Style="{StaticResource CommonTabControlStyle}" Margin="0,-15,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
-            <TabItem Header="~Tracks" Style="{StaticResource CommonTabItemStyle}">
-                <controls:BusyIndicator Grid.Row="2" IsBusy="{Binding Tasks[tracks].IsWorking}" Error="{Binding Tasks[tracks].Error}">
-                    <ListBox x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Tracks}" Style="{StaticResource CommonListBoxStyle}" 
+        <TabControl Grid.Row="2" Style="{StaticResource CommonTabControlStyle}" Margin="0,-8,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+            <TabItem Header="{x:Static Properties:MainResources.TracksTab}" Style="{StaticResource CommonTabItemStyle}">
+                <Grid>
+                    <controls:BusyIndicator Grid.Row="2" IsBusy="{Binding Tasks[tracks].IsWorking}" Error="{Binding Tasks[tracks].Error}">
+                        <ListBox x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Tracks}" Style="{StaticResource CommonListBoxStyle}" 
                                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                                  ItemTemplate="{StaticResource LocalAudioItemTemplate}">
-                        <i:Interaction.Behaviors>
-                            <behaviours:AutoScrollToCurrentItemBehaviour />
-                        </i:Interaction.Behaviors>
-                    </ListBox>
-                </controls:BusyIndicator>
+                            <i:Interaction.Behaviors>
+                                <behaviours:AutoScrollToCurrentItemBehaviour />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                    </controls:BusyIndicator>
+
+                    <Rectangle Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                </Grid>
             </TabItem>
-            <TabItem Header="~Albums" Style="{StaticResource CommonTabItemStyle}">
+            <TabItem Header="{x:Static Properties:MainResources.AlbumsTab}" Style="{StaticResource CommonTabItemStyle}">
                 <controls:BusyIndicator Grid.Row="2" IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
-                    <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Albums}"
+                    <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Albums}" ItemContainerStyle="{StaticResource FriendListBoxItemStyle}"
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListBox.Style>
-                            <Style TargetType="ListBox">
+                            <Style TargetType="ListBox" BasedOn="{StaticResource CommonListBoxStyle}">
                                 <Setter Property="ItemsPanel">
                                     <Setter.Value>
                                         <ItemsPanelTemplate>
-                                            <controls:VirtualizingWrapPanel ItemWidth="120" ItemHeight="120" ScrollUnit="Pixel">
+                                            <controls:VirtualizingWrapPanel ItemWidth="120" ItemHeight="160" ScrollUnit="Pixel">
                                                 <i:Interaction.Behaviors>
-                                                    <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40"/>
+                                                    <behaviours:TransitionBehaviour Transition="{StaticResource LocalAlbumLoadAnim}" TransitionDelay="20"/>
                                                 </i:Interaction.Behaviors>
                                             </controls:VirtualizingWrapPanel>
                                         </ItemsPanelTemplate>
@@ -67,21 +90,21 @@
                         </ListBox.Style>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="120" ToolTip="{Binding Title}">
+                                <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="160" ToolTip="{Binding Title}" Command="{Binding ElementName=pageRoot, Path=DataContext.GoToAlbumCommand}"
+                                        CommandParameter="{Binding}">
                                     <Grid x:Name="RootGrid">
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.RowSpan="2">
+                                        <Grid Height="120">
                                             <Rectangle Fill="{StaticResource AccentBrush}"/>
                                             <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
                                             <Image Source="{Binding Cover}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
                                         </Grid>
-                                        <Rectangle Grid.Row="1" Fill="Black" Opacity="0.8" />
                                         <StackPanel Grid.Row="1">
-                                            <TextBlock Text="{Binding Artist}" FontWeight="Normal" FontSize="11" Margin="5,3,5,0" TextTrimming="CharacterEllipsis" Opacity="0.8" Foreground="White"/>
-                                            <TextBlock Text="{Binding Title}" FontFamily="Segoe UI SemiLight"  FontSize="12" Margin="5,-2,5,7" TextTrimming="CharacterEllipsis" Foreground="White"/>
+                                            <TextBlock Text="{Binding Artist}" FontWeight="Normal" FontSize="11" Margin="5,3,5,0" TextTrimming="CharacterEllipsis" Opacity="0.8" Foreground="{StaticResource ForegroundBrush}"/>
+                                            <TextBlock Text="{Binding Title}" FontFamily="Segoe UI SemiLight"  FontSize="12" Margin="5,-2,5,7" TextTrimming="CharacterEllipsis" Foreground="{StaticResource ForegroundBrush}"/>
                                         </StackPanel>
                                     </Grid>
                                 </Button>
@@ -90,18 +113,18 @@
                     </ListBox>
                 </controls:BusyIndicator>
             </TabItem>
-            <TabItem Header="~Artists" Style="{StaticResource CommonTabItemStyle}">
+            <TabItem Header="{x:Static Properties:MainResources.ArtistsTab}" Style="{StaticResource CommonTabItemStyle}">
                 <controls:BusyIndicator Grid.Row="2" IsBusy="{Binding Tasks[artists].IsWorking}" Error="{Binding Tasks[artists].Error}">
-                    <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Artists}"
+                    <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Artists}" ItemContainerStyle="{StaticResource FriendListBoxItemStyle}"
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListBox.Style>
-                            <Style TargetType="ListBox">
+                            <Style TargetType="ListBox" BasedOn="{StaticResource CommonListBoxStyle}">
                                 <Setter Property="ItemsPanel">
                                     <Setter.Value>
                                         <ItemsPanelTemplate>
                                             <controls:VirtualizingWrapPanel ItemWidth="120" ItemHeight="120" ScrollUnit="Pixel">
                                                 <i:Interaction.Behaviors>
-                                                    <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40"/>
+                                                    <behaviours:TransitionBehaviour Transition="{StaticResource LocalAlbumLoadAnim}" TransitionDelay="20"/>
                                                 </i:Interaction.Behaviors>
                                             </controls:VirtualizingWrapPanel>
                                         </ItemsPanelTemplate>
