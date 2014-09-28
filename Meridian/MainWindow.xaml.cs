@@ -1,10 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Effects;
@@ -12,9 +9,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Meridian.Controls;
 using Meridian.Domain;
 using Meridian.Helpers;
-using Meridian.Model;
 using Meridian.Services;
-using Meridian.View;
 using Meridian.View.Flyouts;
 using Meridian.View.Main;
 using Meridian.ViewModel;
@@ -99,14 +94,7 @@ namespace Meridian
             ViewModelLocator.Main.Initialize();
             NotificationService.Initialize(NotificationControl);
 
-            if (Settings.Instance.BlurBackground)
-            {
-                BackgroundArtControl.Effect = new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35};
-            }
-            else
-            {
-                BackgroundArtControl.Effect = null;
-            }
+            BackgroundArtControl.Effect = Settings.Instance.BlurBackground ? new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35} : null;
         }
 
         void RootFrame_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)

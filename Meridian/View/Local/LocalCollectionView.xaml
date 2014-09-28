@@ -71,43 +71,56 @@
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.AlbumsTab}" Style="{StaticResource CommonTabItemStyle}">
                 <controls:BusyIndicator Grid.Row="2" IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
-                    <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Albums}" ItemContainerStyle="{StaticResource FriendListBoxItemStyle}"
-                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListBox.Style>
-                            <Style TargetType="ListBox" BasedOn="{StaticResource CommonListBoxStyle}">
-                                <Setter Property="ItemsPanel">
-                                    <Setter.Value>
-                                        <ItemsPanelTemplate>
-                                            <controls:VirtualizingWrapPanel ItemWidth="120" ItemHeight="160" ScrollUnit="Pixel">
-                                                <i:Interaction.Behaviors>
-                                                    <behaviours:TransitionBehaviour Transition="{StaticResource LocalAlbumLoadAnim}" TransitionDelay="20"/>
-                                                </i:Interaction.Behaviors>
-                                            </controls:VirtualizingWrapPanel>
-                                        </ItemsPanelTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListBox.Style>
+                    <ListBox Margin="0,0,0,0" Padding="24,5,0,0" ItemsSource="{Binding AlbumGroups}" ItemContainerStyle="{StaticResource GroupListBoxItemStyle}"
+                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             Style="{StaticResource CommonListBoxStyle}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="160" ToolTip="{Binding Title}" Command="{Binding ElementName=pageRoot, Path=DataContext.GoToAlbumCommand}"
-                                        CommandParameter="{Binding}">
-                                    <Grid x:Name="RootGrid">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid Height="120">
-                                            <Rectangle Fill="{StaticResource AccentBrush}"/>
-                                            <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                            <Image Source="{Binding Cover}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
-                                        </Grid>
-                                        <StackPanel Grid.Row="1">
-                                            <TextBlock Text="{Binding Artist}" FontWeight="Normal" FontSize="11" Margin="5,3,5,0" TextTrimming="CharacterEllipsis" Opacity="0.8" Foreground="{StaticResource ForegroundBrush}"/>
-                                            <TextBlock Text="{Binding Title}" FontFamily="Segoe UI SemiLight"  FontSize="12" Margin="5,-2,5,7" TextTrimming="CharacterEllipsis" Foreground="{StaticResource ForegroundBrush}"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
+                                <Grid x:Name="RootGrid">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.7" Margin="0,0,0,5" Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Albums}" Margin="0,0,0,0"
+                                           ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" ItemHeight="170" ItemWidth="130"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button Style="{StaticResource SimpleButtonStyle}" ToolTip="{Binding Title}" Command="{Binding ElementName=pageRoot, Path=DataContext.GoToAlbumCommand}"
+                                                        CommandParameter="{Binding}" Margin="0,0,10,10" VerticalAlignment="Top">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition />
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid Height="120">
+                                                            <Rectangle Fill="{StaticResource ForegroundBrush}" Opacity="0.3"/>
+                                                            <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                            <Image Source="{Binding Cover}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                            <Border x:Name="Border" Opacity="0.8"/>
+                                                        </Grid>
+                                                        <StackPanel Grid.Row="1">
+                                                            <TextBlock Text="{Binding Title}" FontSize="12" Margin="0,0,0,0" TextTrimming="CharacterEllipsis" Foreground="{StaticResource ForegroundBrush}"/>
+                                                            <TextBlock Text="{Binding Year}" FontSize="12" Margin="0,-2,0,0" TextTrimming="CharacterEllipsis" Foreground="{StaticResource ForegroundBrush}"
+                                                                       Visibility="{Binding Year, Converter={StaticResource NullToVisibilityConverter}}" Opacity="0.7"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </Button>
+                                                <DataTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=IsMouseOver}" Value="True">
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="4" />
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                                    </DataTrigger>
+                                                </DataTemplate.Triggers>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

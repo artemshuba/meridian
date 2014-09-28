@@ -50,8 +50,8 @@
     <Grid>
         <Rectangle x:Name="BackgroundRectangle" Fill="{Binding ElementName=rootElement, Path=ImageBackground}" Opacity="0"/>
         <Grid x:Name="LayoutRoot">
-            <Image x:Name="Image1" Stretch="UniformToFill" Opacity="0"/>
-            <Image x:Name="Image2" Stretch="UniformToFill"/>
+            <Image x:Name="Image1" Stretch="UniformToFill" Opacity="0" HorizontalAlignment="{Binding ElementName=rootElement, Path=HorizontalContentAlignment}"/>
+            <Image x:Name="Image2" Stretch="UniformToFill" HorizontalAlignment="{Binding ElementName=rootElement, Path=HorizontalContentAlignment}"/>
         </Grid>
     </Grid>
 </UserControl>

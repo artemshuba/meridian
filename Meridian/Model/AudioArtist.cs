@@ -15,9 +15,13 @@ namespace Meridian.Model
         [Ignore]
         public List<Audio> Tracks { get; set; }
 
+        [Ignore]
+        public List<AudioAlbum> Albums { get; set; } 
+
         public AudioArtist()
         {
             Tracks = new List<Audio>();
+            Albums = new List<AudioAlbum>();
         }
     }
 }

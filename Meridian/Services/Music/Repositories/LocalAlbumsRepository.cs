@@ -47,6 +47,8 @@ namespace Meridian.Services.Music.Repositories
                 var associatedAlbum = localAlbums.FirstOrDefault(t => t.Id == cachedAlbum.Id);
                 if (associatedAlbum == null) //if album is cached but doesn't exists in file system it supposed to be deleted
                 {
+                    //TODO remove album mappings
+
                     deleted.Add(cachedAlbum);
                     continue;
                 }
@@ -93,7 +95,7 @@ namespace Meridian.Services.Music.Repositories
                             track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? audioFile.Tag.FirstAlbumArtist.ToLower() + "_" + audioFile.Tag.Album : audioFile.Tag.Album);
                             track.Album = StringHelper.ToUtf8(audioFile.Tag.Album);
                             if (!albums.ContainsKey(track.AlbumId))
-                                albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = StringHelper.ToUtf8(audioFile.Tag.Album) });
+                                albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year});
                             else
                             {
                                 if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
@@ -132,6 +134,12 @@ namespace Meridian.Services.Music.Repositories
             if (cachedAlbum.CoverPath != updatedAlbum.CoverPath)
             {
                 cachedAlbum.CoverPath = updatedAlbum.CoverPath;
+                changed = true;
+            }
+
+            if (cachedAlbum.Year != updatedAlbum.Year)
+            {
+                cachedAlbum.Year = updatedAlbum.Year;
                 changed = true;
             }
 

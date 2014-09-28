@@ -166,6 +166,14 @@ namespace Meridian.Services
 
         public static async Task<Uri> GetArtistImage(string artist, bool big)
         {
+            if (artist.Contains(", ") || artist.Contains(" feat ", StringComparison.OrdinalIgnoreCase))
+            {
+                //if there are more then 1 artist, get first
+                var artists = artist.Split(new[] {", ", " feat. ", " feat "}, StringSplitOptions.RemoveEmptyEntries);
+                if (artists.Length > 0)
+                    artist = artists.First();
+            }
+
             if (big)
             {
                 try

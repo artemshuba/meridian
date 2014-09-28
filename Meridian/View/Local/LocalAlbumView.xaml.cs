@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Effects;
 using Meridian.Controls;
 using Meridian.Model;
 using Meridian.ViewModel.Local;
@@ -27,6 +29,11 @@ namespace Meridian.View.Local
             _viewModel.Album = album;
 
             _viewModel.Activate();
+        }
+
+        private void LocalAlbumView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            BackgroundArtControl.Effect = Domain.Settings.Instance.BlurBackground ? new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 80 } : null;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
 using Meridian.Controls;
@@ -7,6 +8,7 @@ using Meridian.Model;
 using Meridian.Services;
 using Meridian.View.Flyouts.Local;
 using Neptune.Messages;
+using Xbox.Music;
 
 namespace Meridian.ViewModel.Local
 {
@@ -14,6 +16,7 @@ namespace Meridian.ViewModel.Local
     {
         private List<LocalAudio> _tracks;
         private List<AudioAlbum> _albums;
+        private List<AudioArtist> _albumGroups;
         private List<AudioArtist> _artists;
         private double _progress;
         private int _selectedTabIndex;
@@ -42,6 +45,12 @@ namespace Meridian.ViewModel.Local
         {
             get { return _albums; }
             set { Set(ref _albums, value); }
+        }
+
+        public List<AudioArtist> AlbumGroups
+        {
+            get { return _albumGroups; }
+            set { Set(ref _albumGroups, value); }
         }
 
         public List<AudioArtist> Artists
@@ -133,7 +142,9 @@ namespace Meridian.ViewModel.Local
 
             try
             {
-                Albums = await ServiceLocator.LocalMusicService.GetAlbums();
+                var albums = await ServiceLocator.LocalMusicService.GetAlbums();
+                AlbumGroups = albums.GroupBy(a => a.Artist).Select(g => new AudioArtist() { Title = g.Key, Albums = g.OrderBy(a => a.Year).ToList() }).OrderBy(a => a.Title).ToList();
+                //Albums = await ServiceLocator.LocalMusicService.GetAlbums();
             }
             catch (Exception ex)
             {

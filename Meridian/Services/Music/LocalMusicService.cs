@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -49,7 +50,10 @@ namespace Meridian.Services.Music
                         {
                             var track = new LocalAudio();
                             track.Id = Md5Helper.Md5(filePath);
-                            track.Title = StringHelper.ToUtf8(audioFile.Tag.Title);
+                            if (!string.IsNullOrEmpty(audioFile.Tag.Title))
+                                track.Title = StringHelper.ToUtf8(audioFile.Tag.Title);
+                            else
+                                track.Title = Path.GetFileNameWithoutExtension(filePath);
                             track.Artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer);
                             track.Duration = audioFile.Properties.Duration;
                             track.Source = filePath;
@@ -59,7 +63,7 @@ namespace Meridian.Services.Music
                                 track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? audioFile.Tag.FirstAlbumArtist.ToLower() + "_" + audioFile.Tag.Album : audioFile.Tag.Album);
                                 track.Album = StringHelper.ToUtf8(audioFile.Tag.Album);
                                 if (!albums.ContainsKey(track.AlbumId))
-                                    albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = StringHelper.ToUtf8(audioFile.Tag.Album) });
+                                    albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year});
                                 else
                                 {
                                     if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
@@ -76,7 +80,7 @@ namespace Meridian.Services.Music
                                 if (!artists.ContainsKey(track.ArtistId))
                                     artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer) });
                             }
-
+             
                             tracks.Add(track);
 
                             count++;
