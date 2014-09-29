@@ -55,13 +55,15 @@ namespace Meridian.Services.Music
                             else
                                 track.Title = Path.GetFileNameWithoutExtension(filePath);
                             track.Artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer);
+                            if (!string.IsNullOrEmpty(track.Artist))
+                                track.Artist = track.Artist.Trim();
                             track.Duration = audioFile.Properties.Duration;
                             track.Source = filePath;
 
                             if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
                             {
-                                track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? audioFile.Tag.FirstAlbumArtist.ToLower() + "_" + audioFile.Tag.Album : audioFile.Tag.Album);
-                                track.Album = StringHelper.ToUtf8(audioFile.Tag.Album);
+                                track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim() : StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
+                                track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
                                 if (!albums.ContainsKey(track.AlbumId))
                                     albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year});
                                 else
@@ -75,10 +77,10 @@ namespace Meridian.Services.Music
 
                             if (!string.IsNullOrWhiteSpace(audioFile.Tag.FirstPerformer))
                             {
-                                track.ArtistId = Md5Helper.Md5(audioFile.Tag.FirstPerformer.ToLower());
-                                track.Artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer);
+                                track.ArtistId = Md5Helper.Md5(StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim().ToLower());
+                                track.Artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim();
                                 if (!artists.ContainsKey(track.ArtistId))
-                                    artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer) });
+                                    artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = track.Artist });
                             }
              
                             tracks.Add(track);

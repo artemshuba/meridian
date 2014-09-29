@@ -90,10 +90,10 @@ namespace Meridian.Services.Music.Repositories
 
                         if (!string.IsNullOrWhiteSpace(audioFile.Tag.FirstPerformer))
                         {
-                            track.ArtistId = Md5Helper.Md5(audioFile.Tag.FirstPerformer.ToLower());
-                            track.Artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer);
+                            track.ArtistId = Md5Helper.Md5(StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim().ToLower());
+                            track.Artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim();
                             if (!artists.ContainsKey(track.ArtistId))
-                                artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer) });
+                                artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = track.Artist });
                         }
                     }
                 }

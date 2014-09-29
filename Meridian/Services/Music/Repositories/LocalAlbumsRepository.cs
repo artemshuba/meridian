@@ -92,10 +92,10 @@ namespace Meridian.Services.Music.Repositories
 
                         if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
                         {
-                            track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? audioFile.Tag.FirstAlbumArtist.ToLower() + "_" + audioFile.Tag.Album : audioFile.Tag.Album);
-                            track.Album = StringHelper.ToUtf8(audioFile.Tag.Album);
+                            track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim() : StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
+                            track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
                             if (!albums.ContainsKey(track.AlbumId))
-                                albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year});
+                                albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim() : null, Title = StringHelper.ToUtf8(audioFile.Tag.Album).Trim(), Year = (int)audioFile.Tag.Year});
                             else
                             {
                                 if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)

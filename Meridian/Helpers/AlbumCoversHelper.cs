@@ -12,7 +12,7 @@ using Meridian.Model;
 
 namespace Meridian.Helpers
 {
-    public static class CoversHelper
+    public static class AlbumCoversHelper
     {
         private const int MAX_PARALLEL_ITEMS = 3;
 

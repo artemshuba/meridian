@@ -211,7 +211,8 @@
     <Compile Include="Extensions\AudioExtensions.cs" />
     <Compile Include="Extensions\CommonExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="Helpers\CoversHelper.cs" />
+    <Compile Include="Helpers\ArtistImageHelper.cs" />
+    <Compile Include="Helpers\AlbumCoversHelper.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
     <Compile Include="Helpers\HotKeyManager.cs" />
     <Compile Include="Helpers\ImageAsyncHelper.cs" />

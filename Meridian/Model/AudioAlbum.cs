@@ -49,7 +49,7 @@ namespace Meridian.Model
                 return;
             _coverRequested = true;
 
-            CoversHelper.RequestCover(this);
+            AlbumCoversHelper.RequestCover(this);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

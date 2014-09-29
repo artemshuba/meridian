@@ -26,7 +26,6 @@ namespace Meridian.Services
                     ms.Seek(0, SeekOrigin.Begin);
 
                     var bi = new BitmapImage();
-
                     bi.BeginInit();
                     bi.StreamSource = ms;
                     bi.EndInit();

@@ -21,7 +21,7 @@ namespace Neptune.Desktop.Storage
 
         public async Task<Stream> OpenFile(string path)
         {
-            return await Task.Run(() => File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite));
+            return await Task.Run(() => File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite));
         }
 
         public Task<string> GetText(string path)

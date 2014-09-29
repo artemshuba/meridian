@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Effects;
 using Meridian.Controls;
 using Meridian.Model;
