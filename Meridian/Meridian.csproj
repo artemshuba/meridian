@@ -30,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -298,6 +299,9 @@
     </Compile>
     <Compile Include="View\Local\LocalCollectionView.xaml.cs">
       <DependentUpon>LocalCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\FeedView.xaml.cs">
+      <DependentUpon>FeedView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Search\AlbumView.xaml.cs">
       <DependentUpon>AlbumView.xaml</DependentUpon>
@@ -585,6 +589,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Local\LocalCollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\FeedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

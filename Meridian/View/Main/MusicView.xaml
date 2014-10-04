@@ -79,13 +79,13 @@
                     </controls:BusyIndicator>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="12,10,0,0">
-                        <TextBlock Text="{x:Static Properties:MainResources.MyMusicAlbums}" FontSize="12" Opacity="0.3" Foreground="{StaticResource ForegroundBrush}"/>
+                        <TextBlock Text="{x:Static Properties:MainResources.MyMusicAlbums}" FontSize="11" Opacity="1" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
                         <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddAlbumCommand}"
                                 ToolTip="{x:Static Properties:MainResources.MyMusicAlbumsAdd}"/>
                     </StackPanel>
 
                     <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
-                    <controls:BusyIndicator Margin="0,30,0,0" Grid.Column="1" IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
+                    <controls:BusyIndicator Margin="0,35,0,0" Grid.Column="1" IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
                         <controls:BusyIndicator.BusyContentStyle>
                             <Style TargetType="ContentPresenter">
                                 <Setter Property="Margin" Value="12,5,5,0"/>
@@ -94,14 +94,14 @@
                         <controls:ExtendedListBox ItemsSource="{Binding Albums}" Style="{StaticResource CommonListBoxStyle}" 
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              SelectedItem="{Binding SelectedAlbum, Mode=TwoWay}" ItemContainerStyleSelector="{StaticResource AlbumItemStyleSelector}"
-                             LoadMoreCommand="{Binding LoadMoreAlbumsCommand}"
+                             LoadMoreCommand="{Binding LoadMoreAlbumsCommand}" Padding="0"
                              dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DropHandler="{Binding}">
                             <i:Interaction.Behaviors>
                                 <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
                             </i:Interaction.Behaviors>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
+                                    <TextBlock Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" VerticalAlignment="Center"  TextTrimming="CharacterEllipsis">
                                         <TextBlock.ContextMenu>
                                             <ContextMenu Visibility="{Binding Converter={StaticResource AlbumContextMenuVisibilityConverter}}" Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
                                                 <MenuItem Header="{x:Static Properties:MainResources.ContextMenuPlay}" Command="{Binding PlacementTarget.Tag.PlayAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
@@ -165,11 +165,11 @@
                     <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="~News" Style="{StaticResource CommonTabItemStyle}">
+            <TabItem Header="{x:Static Properties:MainResources.NewsTab}" Style="{StaticResource CommonTabItemStyle}">
             </TabItem>
-            <TabItem Header="~Wall" Style="{StaticResource CommonTabItemStyle}">
+            <TabItem Header="{x:Static Properties:MainResources.WallTab}" Style="{StaticResource CommonTabItemStyle}">
             </TabItem>
-            <TabItem Header="~Favorites" Style="{StaticResource CommonTabItemStyle}">
+            <TabItem Header="{x:Static Properties:MainResources.FavoritesTab}" Style="{StaticResource CommonTabItemStyle}">
             </TabItem>
         </TabControl>
     </Grid>

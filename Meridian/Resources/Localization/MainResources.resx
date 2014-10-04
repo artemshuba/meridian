@@ -349,7 +349,7 @@
     <value>Add album</value>
   </data>
   <data name="MyMusicAllTracks" xml:space="preserve">
-    <value>all tracks</value>
+    <value>All songs</value>
   </data>
   <data name="MyMusicFavorites" xml:space="preserve">
     <value>favorites</value>
@@ -710,5 +710,26 @@
   </data>
   <data name="AlbumsTab" xml:space="preserve">
     <value>Albums</value>
+  </data>
+  <data name="MainMenuFeed" xml:space="preserve">
+    <value>Feed</value>
+  </data>
+  <data name="MusicScanDescription" xml:space="preserve">
+    <value>Please wait, we are looking for music on your PC</value>
+  </data>
+  <data name="MusicScanTitle" xml:space="preserve">
+    <value>Looking for music</value>
+  </data>
+  <data name="SettingsUIEnabledBlur" xml:space="preserve">
+    <value>Blur background</value>
+  </data>
+  <data name="FavoritesTab" xml:space="preserve">
+    <value>Favorites</value>
+  </data>
+  <data name="NewsTab" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="WallTab" xml:space="preserve">
+    <value>Wall</value>
   </data>
 </root>

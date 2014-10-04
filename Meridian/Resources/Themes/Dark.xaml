@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Colors -->
     <Color x:Key="ForegroundColor">White</Color>
-    <Color x:Key="BackgroundColor">#181818</Color>
+    <Color x:Key="BackgroundColor">#282b2f</Color>
     <Color x:Key="ContrastColor">#2d2d2d</Color>
 
     <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}" />
@@ -36,7 +36,7 @@
     <SolidColorBrush x:Key="PlaylistItemForegroundBrush" Color="#ededed"/>
     <SolidColorBrush x:Key="HotPlaylistItemBackgroundBrush" Color="{StaticResource ForegroundColor}" Opacity="0.1"/>
     <SolidColorBrush x:Key="SelectedPlaylistItemForegroundBrush" Color="White"/>
-    <SolidColorBrush x:Key="SelectedPlaylistItemBackgroundBrush" Color="White" Opacity="0.2"/>
+    <SolidColorBrush x:Key="SelectedPlaylistItemBackgroundBrush" Color="{StaticResource AccentColor}" Opacity="0.08"/>
 
     <!-- Current track -->
     <SolidColorBrush x:Key="HotCurrentTrackBackgroundBrush" Color="{StaticResource ForegroundColor}" Opacity="0.2"/>
@@ -79,7 +79,7 @@
     <SolidColorBrush x:Key="ProgressBarBackgroundBrush" Color="#2e3136"/>
 
     <!-- Sidebar -->
-    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#2e3136"/>
+    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#282b2f"/>
     <FontFamily x:Key="SidebarForegroundFont">Segoe UI SemiLight</FontFamily>
     <SolidColorBrush x:Key="SidebarForegroundBrush" Color="White"/>
     <SolidColorBrush x:Key="SidebarInactiveForegroundBrush" Color="White" Opacity="0.7"/>

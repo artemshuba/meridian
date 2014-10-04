@@ -44,6 +44,8 @@ namespace Meridian.ViewModel
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.FriendsView", Title = MainResources.MainMenuFriends},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.SocietiesView", Title = MainResources.MainMenuSocieties},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.SubscriptionsView", Title = MainResources.MainMenuSubscriptions},
+            new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.FeedView", Title = MainResources.MainMenuFeed},
+
         };
 
         private bool _showSidebar;

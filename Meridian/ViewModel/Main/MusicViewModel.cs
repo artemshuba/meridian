@@ -269,10 +269,10 @@ namespace Meridian.ViewModel.Main
                     albums = new List<VkAudioAlbum>();
 
                 albums.Insert(0, new VkAudioAlbum() { Id = -1, Title = MainResources.MyMusicAllTracks });
-                albums.Insert(1, new VkAudioAlbum() { Id = -100, Title = MainResources.MyMusicNews });
-                albums.Insert(2, new VkAudioAlbum() { Id = -101, Title = MainResources.MyMusicWall });
-                albums.Insert(3, new VkAudioAlbum() { Id = -102, Title = MainResources.MyMusicFavorites });
-                albums.Insert(4, new VkAudioAlbum() { Id = int.MinValue }); //separator
+                //albums.Insert(1, new VkAudioAlbum() { Id = -100, Title = MainResources.MyMusicNews });
+                //albums.Insert(2, new VkAudioAlbum() { Id = -101, Title = MainResources.MyMusicWall });
+                //albums.Insert(3, new VkAudioAlbum() { Id = -102, Title = MainResources.MyMusicFavorites });
+                //albums.Insert(4, new VkAudioAlbum() { Id = int.MinValue }); //separator
 
                 Albums = new ObservableCollection<VkAudioAlbum>(albums);
 

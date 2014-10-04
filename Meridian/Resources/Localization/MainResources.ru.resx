@@ -349,7 +349,7 @@
     <value>Добавить альбом</value>
   </data>
   <data name="MyMusicAllTracks" xml:space="preserve">
-    <value>все треки</value>
+    <value>Все треки</value>
   </data>
   <data name="MyMusicFavorites" xml:space="preserve">
     <value>закладки</value>
@@ -710,5 +710,26 @@
   </data>
   <data name="AlbumsTab" xml:space="preserve">
     <value>Альбомы</value>
+  </data>
+  <data name="MainMenuFeed" xml:space="preserve">
+    <value>Лента</value>
+  </data>
+  <data name="MusicScanDescription" xml:space="preserve">
+    <value>Пожалуйста подождите, мы ищем музыку на вашем ПК</value>
+  </data>
+  <data name="MusicScanTitle" xml:space="preserve">
+    <value>Поиск музыки</value>
+  </data>
+  <data name="SettingsUIEnabledBlur" xml:space="preserve">
+    <value>Включить размытие фона</value>
+  </data>
+  <data name="FavoritesTab" xml:space="preserve">
+    <value>Закладки</value>
+  </data>
+  <data name="NewsTab" xml:space="preserve">
+    <value>Новости</value>
+  </data>
+  <data name="WallTab" xml:space="preserve">
+    <value>Стена</value>
   </data>
 </root>

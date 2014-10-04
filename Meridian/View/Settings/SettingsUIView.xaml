@@ -112,7 +112,7 @@
 
                 <TextBlock Text="{x:Static localization:MainResources.SettingsUIBackgroundArtTitle}" FontSize="12" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}" Margin="0,15,0,0"/>
                 <CheckBox Foreground="{StaticResource ForegroundBrush}" Content="{x:Static localization:MainResources.SettingsUIShowBackgroundArt}" Margin="0,5,0,0" Style="{StaticResource CommonCheckBoxStyle}" IsChecked="{Binding ShowBackgroundArt, Mode=TwoWay}"/>
-                <CheckBox Foreground="{StaticResource ForegroundBrush}" Content="~Blur background" Margin="0,5,0,0" Style="{StaticResource CommonCheckBoxStyle}" IsChecked="{Binding BlurBackground, Mode=TwoWay}"/>
+                <CheckBox Foreground="{StaticResource ForegroundBrush}" Content="{x:Static localization:MainResources.SettingsUIEnabledBlur}" Margin="0,5,0,0" Style="{StaticResource CommonCheckBoxStyle}" IsChecked="{Binding BlurBackground, Mode=TwoWay}"/>
                 <CheckBox Foreground="{StaticResource ForegroundBrush}" Content="{x:Static localization:MainResources.SettingsUIDownloadArtistArt}" Margin="0,5,0,0" Style="{StaticResource CommonCheckBoxStyle}" IsChecked="{Binding DownloadArtistArt, Mode=TwoWay}"/>
                 <CheckBox Foreground="{StaticResource ForegroundBrush}" Content="{x:Static localization:MainResources.SettingsUIDownloadAlbumArt}" Margin="0,5,0,0" Style="{StaticResource CommonCheckBoxStyle}" IsChecked="{Binding DownloadAlbumArt, Mode=TwoWay}"/>
 
