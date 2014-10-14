@@ -221,6 +221,7 @@
     <Compile Include="Helpers\Md5Helper.cs" />
     <Compile Include="Helpers\NativeMethods.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Audio.cs" />
     <Compile Include="Model\AudioAlbum.cs" />
     <Compile Include="Model\AudioArtist.cs" />
@@ -839,6 +840,7 @@
   <PropertyGroup>
     <PostBuildEvent>
       if $(ConfigurationName) == Debug goto Exit
+      if not exist "C:\Program Files\7-Zip\7z.exe" goto Exit
       if exist "ready" rd /s /q "ready"
       mkdir "ready"
       mkdir "ready\libs"

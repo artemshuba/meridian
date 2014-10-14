@@ -14,8 +14,8 @@ namespace Meridian.Services
     public class UpdateService : INotifyPropertyChanged
     {
         private const string BASE_URL = "http://store.meridianvk.com/update/";
-        private const string MANIFEST_PATH = "update-v4.js";
-        private const string MANIFEST_PATH_DEV = "update-v4-dev.js";
+        private const string MANIFEST_PATH = "update-v5.js";
+        private const string MANIFEST_PATH_DEV = "update-v5-dev.js";
 
         private bool _isCheckingUpdates;
         private bool _isUpdating;

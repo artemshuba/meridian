@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using Meridian.Model;
+using Meridian.Resources.Localization;
 using Meridian.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,6 +24,8 @@ namespace Meridian.Domain
         {
             get { return _instance; }
         }
+
+        public List<Account> Accounts { get; set; } 
 
         public AccessToken AccessToken { get; set; }
 
@@ -138,6 +143,8 @@ namespace Meridian.Domain
             DownloadAlbumArt = true;
 
             BlurBackground = true;
+
+            Accounts = new List<Account>();
         }
 
         public static void Load()
@@ -150,7 +157,6 @@ namespace Meridian.Domain
                 var json = File.ReadAllText(SETTINGS_FILE);
                 if (string.IsNullOrEmpty(json))
                     return;
-
 
                 var serializer = new JsonSerializer();
                 var o = (JObject)JsonConvert.DeserializeObject(json);

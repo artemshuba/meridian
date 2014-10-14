@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
 using Meridian.Controls;
 using Meridian.Domain;
+using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.View.Flyouts;
@@ -43,6 +44,12 @@ namespace Meridian
 
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Instance.Language);
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Threading.Thread.CurrentThread.CurrentCulture;
+
+            if (Settings.Instance.Accounts.Count == 0)
+            {
+                Settings.Instance.Accounts.Add(new Account() { Id = "vk", Title = MainResources.SettingsAccountsVk });
+                Settings.Instance.Accounts.Add(new Account() { Id = "lasfm", Title = MainResources.SettingsAccountsLastFm });
+            }
 
             ServiceLocator.DataBaseService.Initialize();
 

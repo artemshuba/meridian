@@ -33,20 +33,24 @@
                 <componentModel:SortDescription PropertyName="Title"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        
+
         <CollectionViewSource x:Key="TracksCollection" Source="{Binding Tracks}" />
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="71"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="180"/>
         </Grid.ColumnDefinitions>
-        <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                    PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
                 <Border Background="White" BorderThickness="1" BorderBrush="Black">
@@ -57,15 +61,15 @@
                 </Border>
             </Popup>
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left" Width="25" Height="25"
+                    HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <ToggleButton x:Name="HeaderButton" Content="{x:Static localization:MainResources.MainMenuRecommendations}" Style="{StaticResource HeaderButtonStyle}"/>
-        </StackPanel>
+            <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static localization:MainResources.MainMenuRecommendations}" Style="{StaticResource HeaderButtonStyle}"/>
+        </Grid>
         <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
         <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
-            <ListBox x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            <ListBox x:Name="AudioList" Margin="0,0,0,0.2" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                  ItemTemplate="{StaticResource AudioItemTemplate}">
                 <i:Interaction.Behaviors>
@@ -74,8 +78,10 @@
             </ListBox>
         </controls:BusyIndicator>
 
-        <ListBox Grid.Column="1" Grid.Row="1" Margin="0,10,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Source={StaticResource RecommendationsCollection}}"
-                 Foreground="Black" Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource RecommendationsListBoxItemStyle}"
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+
+        <ListBox Grid.Column="1" Grid.Row="1" Padding="0" Margin="0,10,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Source={StaticResource RecommendationsCollection}}"
+                 Foreground="Black" Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}"
                  SelectedItem="{Binding SelectedRecommendation}" SelectedIndex="{Binding SelectedRecommendationIndex, Mode=TwoWay}">
             <i:Interaction.Behaviors>
                 <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="40"/>

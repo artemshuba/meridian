@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using LastFmLib;
 using Meridian.Domain;
+using Meridian.Model;
 using Meridian.ViewModel;
 using Meridian.ViewModel.Messages;
 using Neptune.Messages;
@@ -19,11 +22,26 @@ namespace Meridian.Services
         private const VkScopeSettings ScopeSettings = VkScopeSettings.CanAccessAudios | VkScopeSettings.CanAccessVideos | VkScopeSettings.CanAccessFriends |
                       VkScopeSettings.CanAccessGroups | VkScopeSettings.CanAccessWall | VkScopeSettings.CanAccessStatus | VkScopeSettings.CanAccessPhotos;
 
+        public static List<Account> Accounts
+        {
+            get { return Settings.Instance.Accounts; }
+        }
 
         static AccountManager()
         {
             _vkontakte = ViewModelLocator.Vkontakte;
             _lastFm = ViewModelLocator.LastFm;
+
+            Initialize();
+        }
+
+        private static void Initialize()
+        {
+            if (!Accounts.Any(a => a is VkAccount))
+                Accounts.Add(new VkAccount());
+
+            if (!Accounts.Any(a => a is LastFmAccount))
+                Accounts.Add(new LastFmAccount());
         }
 
         public static async Task LoginVk(string login, string password, string captchaSid, string captchaKey)

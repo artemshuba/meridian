@@ -274,6 +274,7 @@ namespace Meridian.ViewModel.Main
                 //albums.Insert(3, new VkAudioAlbum() { Id = -102, Title = MainResources.MyMusicFavorites });
                 //albums.Insert(4, new VkAudioAlbum() { Id = int.MinValue }); //separator
 
+
                 Albums = new ObservableCollection<VkAudioAlbum>(albums);
 
                 SelectedAlbum = albums.First();
