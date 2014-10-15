@@ -289,6 +289,9 @@
     <Compile Include="ViewModel\People\SubscriptionsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Compact\CompactLandscapeView.xaml.cs">
+      <DependentUpon>CompactLandscapeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Flyouts\Local\MusicScanView.xaml.cs">
       <DependentUpon>MusicScanView.xaml</DependentUpon>
     </Compile>
@@ -322,7 +325,7 @@
     <Compile Include="View\Flyouts\CommonErrorView.xaml.cs">
       <DependentUpon>CommonErrorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CompactView.xaml.cs">
+    <Compile Include="View\Compact\CompactView.xaml.cs">
       <DependentUpon>CompactView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Flyouts\CreateRadioStationView.xaml.cs">
@@ -577,6 +580,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Compact\CompactLandscapeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Flyouts\Local\MusicScanView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -621,7 +628,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CompactView.xaml">
+    <Page Include="View\Compact\CompactView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

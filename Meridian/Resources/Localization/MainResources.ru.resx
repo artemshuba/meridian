@@ -732,4 +732,10 @@
   <data name="WallTab" xml:space="preserve">
     <value>Стена</value>
   </data>
+  <data name="LandscapeMode" xml:space="preserve">
+    <value>Горизонтальный режим</value>
+  </data>
+  <data name="PortraitMode" xml:space="preserve">
+    <value>Вертикальный режим</value>
+  </data>
 </root>

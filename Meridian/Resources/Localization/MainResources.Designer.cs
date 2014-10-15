@@ -583,6 +583,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Landscape mode.
+        /// </summary>
+        public static string LandscapeMode {
+            get {
+                return ResourceManager.GetString("LandscapeMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string LastFmLoginTitle {
@@ -1164,6 +1173,15 @@ namespace Meridian.Resources.Localization {
         public static string PlayPause {
             get {
                 return ResourceManager.GetString("PlayPause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portrait mode.
+        /// </summary>
+        public static string PortraitMode {
+            get {
+                return ResourceManager.GetString("PortraitMode", resourceCulture);
             }
         }
         

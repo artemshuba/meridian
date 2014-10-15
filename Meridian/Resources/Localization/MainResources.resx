@@ -732,4 +732,10 @@
   <data name="WallTab" xml:space="preserve">
     <value>Wall</value>
   </data>
+  <data name="LandscapeMode" xml:space="preserve">
+    <value>Landscape mode</value>
+  </data>
+  <data name="PortraitMode" xml:space="preserve">
+    <value>Portrait mode</value>
+  </data>
 </root>

@@ -18,6 +18,7 @@ using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.View;
+using Meridian.View.Compact;
 using Meridian.View.Flyouts;
 using Meridian.ViewModel.Flyouts;
 using Meridian.ViewModel.Messages;
@@ -93,6 +94,7 @@ namespace Meridian.ViewModel
 
         public RelayCommand SwitchUIModeCommand { get; private set; }
 
+        public RelayCommand<string> SwitchToUIModeCommand { get; private set; }
 
         public RelayCommand<VkAudio> AddRemoveAudioCommand { get; private set; }
 
@@ -638,9 +640,16 @@ namespace Meridian.ViewModel
             SwitchUIModeCommand = new RelayCommand(() =>
             {
                 if (CurrentUIMode == UIMode.Normal)
-                    SwitchUIMode(UIMode.Compact);
+                    SwitchUIMode(Settings.Instance.LastCompactMode == UIMode.CompactLandscape ? UIMode.CompactLandscape : UIMode.Compact);
                 else
                     SwitchUIMode(UIMode.Normal);
+            });
+
+            SwitchToUIModeCommand = new RelayCommand<string>(s =>
+            {
+                UIMode mode;
+                if (Enum.TryParse(s, true, out mode))
+                    SwitchUIMode(mode);
             });
 
             StartTrackRadioCommand = new RelayCommand<Audio>(track =>
@@ -1018,9 +1027,17 @@ namespace Meridian.ViewModel
             if (track == null)
                 return;
 
-            var w = CurrentUIMode == UIMode.Normal
-                ? Application.Current.MainWindow
-                : Application.Current.Windows.OfType<CompactView>().FirstOrDefault();
+            Window w;
+
+            if (CurrentUIMode == UIMode.Normal)
+                w = Application.Current.MainWindow;
+            else
+            {
+                var t = CurrentUIMode == UIMode.CompactLandscape ? typeof(CompactLandscapeView) : typeof(CompactView);
+                w = CurrentUIMode == UIMode.CompactLandscape
+                    ? (Window)Application.Current.Windows.OfType<CompactLandscapeView>().FirstOrDefault()
+                    : (Window)Application.Current.Windows.OfType<CompactView>().FirstOrDefault();
+            }
 
             if (w == null)
                 return;
@@ -1043,24 +1060,54 @@ namespace Meridian.ViewModel
 
         private void SwitchUIMode(UIMode mode)
         {
-            if (mode == UIMode.Compact)
+            switch (mode)
             {
-                Application.Current.MainWindow.Hide();
-
-                var compactView = new CompactView();
-                compactView.Show();
-            }
-            else
-            {
-                foreach (var window in Application.Current.Windows)
-                {
-                    if (window is CompactView)
+                case UIMode.Compact:
+                    foreach (var window in Application.Current.Windows)
                     {
-                        ((Window)window).Close();
+                        if (window is CompactLandscapeView)
+                        {
+                            ((Window)window).Close();
+                        }
                     }
-                }
 
-                Application.Current.MainWindow.Show();
+                    Application.Current.MainWindow.Hide();
+
+                    var compactView = new CompactView();
+                    compactView.Show();
+
+                    Settings.Instance.LastCompactMode = UIMode.Compact;
+                    Settings.Instance.Save();
+                    break;
+
+                case UIMode.CompactLandscape:
+                    foreach (var window in Application.Current.Windows)
+                    {
+                        if (window is CompactView)
+                        {
+                            ((Window)window).Close();
+                        }
+                    }
+
+                    Application.Current.MainWindow.Hide();
+
+                    var compactLandscapeView = new CompactLandscapeView();
+                    compactLandscapeView.Show();
+                    Settings.Instance.LastCompactMode = UIMode.CompactLandscape;
+                    Settings.Instance.Save();
+                    break;
+
+                default:
+                    foreach (var window in Application.Current.Windows)
+                    {
+                        if (window is CompactLandscapeView || window is CompactView)
+                        {
+                            ((Window)window).Close();
+                        }
+                    }
+
+                    Application.Current.MainWindow.Show();
+                    break;
             }
 
             CurrentUIMode = mode;

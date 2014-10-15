@@ -3,6 +3,7 @@
     public enum UIMode
     {
         Normal,
-        Compact
+        Compact,
+        CompactLandscape
     }
 }

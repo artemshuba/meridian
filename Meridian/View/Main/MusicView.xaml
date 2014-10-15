@@ -78,13 +78,14 @@
                         </ListBox>
                     </controls:BusyIndicator>
 
+                    <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+                    
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="12,10,0,0">
-                        <TextBlock Text="{x:Static Properties:MainResources.MyMusicAlbums}" FontSize="11" Opacity="1" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{x:Static Properties:MainResources.MyMusicAlbums}" FontSize="11" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
                         <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddAlbumCommand}"
                                 ToolTip="{x:Static Properties:MainResources.MyMusicAlbumsAdd}"/>
                     </StackPanel>
 
-                    <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
                     <controls:BusyIndicator Margin="0,35,0,0" Grid.Column="1" IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
                         <controls:BusyIndicator.BusyContentStyle>
                             <Style TargetType="ContentPresenter">

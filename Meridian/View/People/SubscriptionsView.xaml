@@ -26,15 +26,19 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="71"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left" Width="25" Height="25"
+                    HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="{x:Static localization:MainResources.MainMenuSubscriptions}" FontSize="28" FontWeight="Thin" Margin="24,10,0,15" Foreground="{StaticResource ForegroundBrush}"/>
-            </StackPanel>
+                <TextBlock Grid.Column="1" Text="{x:Static localization:MainResources.MainMenuSubscriptions}" FontSize="28" FontWeight="Thin" Margin="5,15,0,15" Foreground="{StaticResource ForegroundBrush}"/>
+            </Grid>
 
             <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 

@@ -28,14 +28,18 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="71"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="180"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2">
+        <Grid Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                    PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
                 <Border Background="White" BorderThickness="1" BorderBrush="Black">
@@ -47,17 +51,17 @@
             </Popup>
 
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left" Width="25" Height="25"
+                    HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-            <ToggleButton x:Name="HeaderButton" Content="{Binding SelectedSociety.Name}" Style="{StaticResource HeaderButtonStyle}"/>
-        </StackPanel>
+            <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{Binding SelectedSociety.Name}" Style="{StaticResource HeaderButtonStyle}"/>
+        </Grid>
 
         <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
         <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
-            <ListBox x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            <ListBox x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                  ItemTemplate="{StaticResource AudioItemTemplate}">
                 <i:Interaction.Behaviors>
@@ -66,8 +70,9 @@
             </ListBox>
         </controls:BusyIndicator>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.MyMusicAlbums}" FontSize="12" Opacity="0.3" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
-        <controls:ExtendedListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" ItemsSource="{Binding Albums}" Style="{StaticResource CommonListBoxStyle}" 
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.MyMusicAlbums}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+        <controls:ExtendedListBox Grid.Row="1" Grid.Column="1" Padding="0" Margin="0,30,0,0" ItemsSource="{Binding Albums}" Style="{StaticResource CommonListBoxStyle}" 
                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyleSelector="{StaticResource AlbumItemStyleSelector}"
                  SelectedItem="{Binding SelectedAlbum, Mode=TwoWay}"

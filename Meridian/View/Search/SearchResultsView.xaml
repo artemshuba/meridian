@@ -125,21 +125,25 @@
             <ColumnDefinition />
             <ColumnDefinition Width="180"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2">
+        <Grid Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left" Width="25" Height="25"
+                    HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <TextBlock FontSize="28" FontWeight="Thin" Margin="24,10,0,15" Foreground="{StaticResource ForegroundBrush}">
+            <TextBlock Grid.Column="1" FontSize="28" FontWeight="Thin" Margin="10,12,0,15" Foreground="{StaticResource ForegroundBrush}">
                 <Run Text="{x:Static localization:MainResources.SearchResultsTitle}" />
                 "<Run Text="{Binding Query}" />"
             </TextBlock>
-        </StackPanel>
+        </Grid>
 
         <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
         <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <controls:BusyIndicator Grid.Row="1" BusyContent="{x:Static localization:MainResources.Searching}" IsBusy="{Binding Tasks[results].IsWorking}" Error="{Binding Tasks[results].Error}">
-            <ListBox x:Name="SearchResultsList" Padding="0,5,0,0" ItemsSource="{Binding SearchResults}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            <ListBox x:Name="SearchResultsList" ItemsSource="{Binding SearchResults}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyleSelector="{StaticResource SearchStyleSelector}"
                  ItemTemplateSelector="{StaticResource SearchTemplateSelector}"
                  Style="{Binding SelectedSectionIndex, Converter={StaticResource SearchListBoxStyleSelector}}">
@@ -149,8 +153,9 @@
             </ListBox>
         </controls:BusyIndicator>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.SearchSection}" FontSize="12" Opacity="0.3" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
-        <ListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" ItemsSource="{Binding Sections}" Style="{StaticResource CommonListBoxStyle}" 
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.SearchSection}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+        <ListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" Padding="0" ItemsSource="{Binding Sections}" Style="{StaticResource CommonListBoxStyle}" 
                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  SelectedIndex="{Binding SelectedSectionIndex, Mode=TwoWay}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}">
             <ListBox.ItemTemplate>

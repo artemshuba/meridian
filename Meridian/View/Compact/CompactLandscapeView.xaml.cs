@@ -4,12 +4,12 @@ using System.Windows.Input;
 using Meridian.ViewModel;
 using Meridian.ViewModel.Main;
 
-namespace Meridian.View
+namespace Meridian.View.Compact
 {
     /// <summary>
-    /// Interaction logic for CompactView.xaml
+    /// Interaction logic for CompactLandscapeView.xaml
     /// </summary>
-    public partial class CompactView : Window, INotifyPropertyChanged
+    public partial class CompactLandscapeView : Window, INotifyPropertyChanged
     {
         private NowPlayingViewModel _viewModel;
         private bool _showTracklist;
@@ -27,7 +27,7 @@ namespace Meridian.View
             }
         }
 
-        public CompactView()
+        public CompactLandscapeView()
         {
             InitializeComponent();
 
@@ -65,7 +65,7 @@ namespace Meridian.View
         }
 
         private void UIElement_OnMouseWheel(object sender, MouseWheelEventArgs e)
-        {            
+        {
             if (e.Delta < 0)
             {
                 ViewModelLocator.Main.Volume -= 5;

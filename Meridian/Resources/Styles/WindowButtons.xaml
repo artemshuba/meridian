@@ -63,6 +63,52 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="LandscapeModeButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="10"/>
+        <Setter Property="Background" Value="#00000000"/>
+        <Setter Property="Foreground" Value="{StaticResource ControlButtonForeground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Path Name="Icon" Data="{StaticResource LandscapeModeIcon}" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Opacity="0.5"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Icon" Property="Opacity" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Icon" Property="Opacity" Value="0.2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PortraitModeButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="10"/>
+        <Setter Property="Background" Value="#00000000"/>
+        <Setter Property="Foreground" Value="{StaticResource ControlButtonForeground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Path Name="Icon" Data="{StaticResource PortraitModeIcon}" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Opacity="0.5"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Icon" Property="Opacity" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Icon" Property="Opacity" Value="0.2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="MaximizeButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Width" Value="10"/>
         <Setter Property="Height" Value="10"/>

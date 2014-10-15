@@ -84,6 +84,7 @@ namespace Meridian.Domain
         public bool IsWindowMaximized { get; set; }
         public double CompactTop { get; set; }
         public double CompactLeft { get; set; }
+        public UIMode LastCompactMode { get; set; }
 
         #endregion
 
