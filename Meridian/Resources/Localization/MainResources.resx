@@ -738,4 +738,7 @@
   <data name="PortraitMode" xml:space="preserve">
     <value>Portrait mode</value>
   </data>
+  <data name="SettingsUIPlayUsing" xml:space="preserve">
+    <value>Play using</value>
+  </data>
 </root>

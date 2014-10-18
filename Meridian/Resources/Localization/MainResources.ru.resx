@@ -738,4 +738,7 @@
   <data name="PortraitMode" xml:space="preserve">
     <value>Вертикальный режим</value>
   </data>
+  <data name="SettingsUIPlayUsing" xml:space="preserve">
+    <value>Воспроизводить с помощью</value>
+  </data>
 </root>

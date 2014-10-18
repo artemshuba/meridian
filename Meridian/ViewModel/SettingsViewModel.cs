@@ -13,6 +13,7 @@ using GalaSoft.MvvmLight.Command;
 using Meridian.Controls;
 using Meridian.Helpers;
 using Meridian.Model;
+using Meridian.Model.Settings;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.Services.Media.Core;
@@ -56,6 +57,12 @@ namespace Meridian.ViewModel
             new SettingsLanguage() {LanguageCode = "ru", Title = CultureInfo.GetCultureInfo("ru").NativeName}
         };
 
+        private readonly List<SettingsEngine> _engines = new List<SettingsEngine>()
+                {
+                    new SettingsEngine() { Title = "Windows Media Player", Engine = MediaEngine.Wmp },
+                    new SettingsEngine() { Title = "NAudio (experimental)", Engine = MediaEngine.NAudio }
+                };
+
         private readonly List<SettingsHotkey> _hotkeys = new List<SettingsHotkey>();
         private string _selectedTheme;
         private ColorScheme _selectedColorScheme;
@@ -70,7 +77,7 @@ namespace Meridian.ViewModel
         private bool _downloadAlbumArt;
         private SettingsLanguage _selectedLanguage;
         private string _cacheSize;
-        private MediaEngine _selectedEngine;
+        private SettingsEngine _selectedEngine;
 
         #region Commands
 
@@ -280,12 +287,12 @@ namespace Meridian.ViewModel
             }
         }
 
-        public List<MediaEngine> Engines
+        public List<SettingsEngine> Engines
         {
-            get { return new List<MediaEngine>() { MediaEngine.Wmp, MediaEngine.NAudio };}
+            get { return _engines; }
         }
 
-        public MediaEngine SelectedEngine
+        public SettingsEngine SelectedEngine
         {
             get { return _selectedEngine; }
             set
@@ -294,7 +301,7 @@ namespace Meridian.ViewModel
                 {
                     CanSave = true;
 
-                    if (value != Domain.Settings.Instance.MediaEngine)
+                    if (value.Engine != Domain.Settings.Instance.MediaEngine)
                         RestartRequired = true;
                 }
             }
@@ -313,7 +320,7 @@ namespace Meridian.ViewModel
             _blurBackground = Domain.Settings.Instance.BlurBackground;
             _downloadArtistArt = Domain.Settings.Instance.DownloadArtistArt;
             _downloadAlbumArt = Domain.Settings.Instance.DownloadAlbumArt;
-            _selectedEngine = Domain.Settings.Instance.MediaEngine;
+            _selectedEngine = Engines.FirstOrDefault(e => e.Engine == Domain.Settings.Instance.MediaEngine);
 
             var lang = _languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
             if (lang != null)
@@ -536,7 +543,7 @@ namespace Meridian.ViewModel
 
             Domain.Settings.Instance.DownloadAlbumArt = DownloadAlbumArt;
 
-            Domain.Settings.Instance.MediaEngine = SelectedEngine;
+            Domain.Settings.Instance.MediaEngine = SelectedEngine.Engine;
 
             if (BlurBackground)
             {
@@ -623,8 +630,8 @@ namespace Meridian.ViewModel
                             {
                                 if (AudioService.CurrentAudio is VkAudio)
                                 {
-                                    ((VkAudio) AudioService.CurrentAudio).IsAddedByCurrentUser =
-                                        !((VkAudio) AudioService.CurrentAudio).IsAddedByCurrentUser;
+                                    ((VkAudio)AudioService.CurrentAudio).IsAddedByCurrentUser =
+                                        !((VkAudio)AudioService.CurrentAudio).IsAddedByCurrentUser;
                                     ViewModelLocator.Main.AddRemoveAudioCommand.Execute(AudioService.CurrentAudio);
                                 }
                             });

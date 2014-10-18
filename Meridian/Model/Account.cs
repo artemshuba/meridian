@@ -89,8 +89,8 @@ namespace Meridian.Model
             }
             else
             {
-                Settings.Instance.AccessToken = token;
-                Settings.Instance.Save();
+                Domain.Settings.Instance.AccessToken = token;
+                Domain.Settings.Instance.Save();
                 Messenger.Default.Send(new LoginMessage() { Type = LoginType.LogIn, Service = "vk" });
             }
         }
@@ -110,9 +110,9 @@ namespace Meridian.Model
             else
             {
                 lastFm.SessionKey = result.Key;
-                Settings.Instance.LastFmUsername = result.Username;
-                Settings.Instance.LastFmSession = result.Key;
-                Settings.Instance.Save();
+                Domain.Settings.Instance.LastFmUsername = result.Username;
+                Domain.Settings.Instance.LastFmSession = result.Key;
+                Domain.Settings.Instance.Save();
 
                 Messenger.Default.Send(new LoginMessage() { Type = LoginType.LogIn, Service = "lastfm" });
             }

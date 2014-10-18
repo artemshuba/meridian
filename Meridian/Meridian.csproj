@@ -234,8 +234,9 @@
     <Compile Include="Model\MainMenuItem.cs" />
     <Compile Include="Model\RadioStation.cs" />
     <Compile Include="Model\Recommendation.cs" />
-    <Compile Include="Model\SettingsHotKey.cs" />
-    <Compile Include="Model\SettingsLanguage.cs" />
+    <Compile Include="Model\Settings\SettingsEngine.cs" />
+    <Compile Include="Model\Settings\SettingsHotKey.cs" />
+    <Compile Include="Model\Settings\SettingsLanguage.cs" />
     <Compile Include="Model\UIMode.cs" />
     <Compile Include="Resources\Localization\ErrorResources.Designer.cs">
       <AutoGen>True</AutoGen>

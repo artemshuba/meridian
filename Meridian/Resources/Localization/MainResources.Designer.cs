@@ -1663,6 +1663,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Play using.
+        /// </summary>
+        public static string SettingsUIPlayUsing {
+            get {
+                return ResourceManager.GetString("SettingsUIPlayUsing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show current artist image on background.
         /// </summary>
         public static string SettingsUIShowBackgroundArt {

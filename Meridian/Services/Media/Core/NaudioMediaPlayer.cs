@@ -17,6 +17,7 @@ namespace Meridian.Services.Media.Core
         private bool _initialized;
         private Uri _source;
         private TimeSpan _duration;
+        private double _volume;
 
         public override TimeSpan Position
         {
@@ -26,7 +27,7 @@ namespace Meridian.Services.Media.Core
                     return TimeSpan.Zero;
 
                 var currentPos = _outputStream.CurrentTime;
-                if (Math.Round(currentPos.TotalSeconds, 2) >= Math.Round(_duration.TotalSeconds, 2))
+                if (Math.Round(currentPos.TotalSeconds, 1) >= Math.Round(_duration.TotalSeconds, 1))
                     SwitchNext();
 
                 return TimeSpan.FromSeconds(Math.Min(Duration.TotalSeconds, currentPos.TotalSeconds));
@@ -61,13 +62,15 @@ namespace Meridian.Services.Media.Core
         {
             get
             {
-                if (_volumeStream != null)
-                    return _volumeStream.Volume;
-
-                return 0f;
+                return _volume;
             }
             set
             {
+                if (_volume == value)
+                    return;
+
+                _volume = value;
+
                 if (_volumeStream != null)
                     _volumeStream.Volume = (float)value;
             }
@@ -124,10 +127,9 @@ namespace Meridian.Services.Media.Core
             try
             {
                 _outputStream = new MediaFoundationReader(_source.OriginalString);
-                _volumeStream = new WaveChannel32(_outputStream);
+                _volumeStream = new WaveChannel32(_outputStream, (float)Volume, 0);
                 _wavePlayer.Init(_volumeStream);
                 _duration = _outputStream.TotalTime;
-
                 _initialized = true;
 
                 if (MediaOpened != null)
