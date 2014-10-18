@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
+using Meridian.Services.Media.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -74,6 +75,8 @@ namespace Meridian.Domain
         public bool TellRequestShown { get; set; }
 
         public DateTime FirstStart { get; set; }
+
+        public MediaEngine MediaEngine { get; set; }
 
         #region Window settings
 
@@ -146,6 +149,8 @@ namespace Meridian.Domain
             BlurBackground = true;
 
             Accounts = new List<Account>();
+
+            MediaEngine = MediaEngine.Wmp;
         }
 
         public static void Load()

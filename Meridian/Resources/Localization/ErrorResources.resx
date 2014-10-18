@@ -120,6 +120,9 @@
   <data name="AudioFailedErrorHeaderCommon" xml:space="preserve">
     <value>Unable to play audio</value>
   </data>
+  <data name="ConnectionError" xml:space="preserve">
+    <value>Please check your internet connection and try again. Error code: 0xC00D0035</value>
+  </data>
   <data name="LoadAlbumsErrorCommon" xml:space="preserve">
     <value>Unable to load albums</value>
   </data>

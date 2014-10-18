@@ -15,6 +15,7 @@ using Meridian.Helpers;
 using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
+using Meridian.Services.Media.Core;
 using Meridian.View.Flyouts;
 using VkLib.Core.Attachments;
 
@@ -69,6 +70,7 @@ namespace Meridian.ViewModel
         private bool _downloadAlbumArt;
         private SettingsLanguage _selectedLanguage;
         private string _cacheSize;
+        private MediaEngine _selectedEngine;
 
         #region Commands
 
@@ -102,7 +104,7 @@ namespace Meridian.ViewModel
             get
             {
                 if (IsInDesignMode)
-                    return "4.0.400.0";
+                    return "5.0.700.0";
                 else
                     return Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
@@ -278,6 +280,26 @@ namespace Meridian.ViewModel
             }
         }
 
+        public List<MediaEngine> Engines
+        {
+            get { return new List<MediaEngine>() { MediaEngine.Wmp, MediaEngine.NAudio };}
+        }
+
+        public MediaEngine SelectedEngine
+        {
+            get { return _selectedEngine; }
+            set
+            {
+                if (Set(ref _selectedEngine, value))
+                {
+                    CanSave = true;
+
+                    if (value != Domain.Settings.Instance.MediaEngine)
+                        RestartRequired = true;
+                }
+            }
+        }
+
         public SettingsViewModel()
         {
             InitializeCommands();
@@ -291,6 +313,7 @@ namespace Meridian.ViewModel
             _blurBackground = Domain.Settings.Instance.BlurBackground;
             _downloadArtistArt = Domain.Settings.Instance.DownloadArtistArt;
             _downloadAlbumArt = Domain.Settings.Instance.DownloadAlbumArt;
+            _selectedEngine = Domain.Settings.Instance.MediaEngine;
 
             var lang = _languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
             if (lang != null)
@@ -512,6 +535,8 @@ namespace Meridian.ViewModel
             Domain.Settings.Instance.BlurBackground = BlurBackground;
 
             Domain.Settings.Instance.DownloadAlbumArt = DownloadAlbumArt;
+
+            Domain.Settings.Instance.MediaEngine = SelectedEngine;
 
             if (BlurBackground)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +16,7 @@ using Meridian.Domain;
 using Meridian.Extensions;
 using Meridian.Model;
 using Meridian.Resources.Localization;
+using Meridian.Services.Media.Core;
 using Meridian.View.Flyouts;
 using Meridian.ViewModel.Messages;
 using Newtonsoft.Json;
@@ -24,7 +26,8 @@ namespace Meridian.Services
 {
     public static class AudioService
     {
-        private static MediaElement _mediaPlayer;
+        //private static MediaElement _mediaPlayerBase;
+        private static MediaPlayerBase _mediaPlayer;
         private static IList<Audio> _originalPlaylist;
         private static ObservableCollection<Audio> _playlist;
         private static Audio _currentAudio;
@@ -33,14 +36,17 @@ namespace Meridian.Services
         private static int _playFailsCount;
         private static CancellationTokenSource _cancellationToken = new CancellationTokenSource();
 
-        private static MediaElement MediaPlayer
+        private static MediaPlayerBase MediaPlayer
         {
             get
             {
                 if (_mediaPlayer == null)
                 {
-                    _mediaPlayer = (MediaElement)VisualTreeHelper.GetChild((DependencyObject)Application.Current.MainWindow.Content, 0);
-                    _mediaPlayer.UpdateLayout();
+                    _mediaPlayer = Settings.Instance.MediaEngine == MediaEngine.NAudio
+                        ? (MediaPlayerBase)new NaudioMediaPlayer()
+                        : new WmpMediaPlayer();
+
+                    _mediaPlayer.Initialize();
                     _mediaPlayer.MediaEnded += MediaPlayerOnMediaEnded;
                     _mediaPlayer.MediaFailed += MediaPlayerOnMediaFailed;
                     _mediaPlayer.MediaOpened += MediaPlayerOnMediaOpened;
@@ -165,8 +171,8 @@ namespace Meridian.Services
         {
             get
             {
-                if (MediaPlayer != null && MediaPlayer.NaturalDuration.HasTimeSpan)
-                    return MediaPlayer.NaturalDuration.TimeSpan;
+                if (MediaPlayer != null)
+                    return MediaPlayer.Duration;
 
                 return TimeSpan.Zero;
             }
@@ -181,7 +187,7 @@ namespace Meridian.Services
                     return;
 
                 Settings.Instance.Volume = value.Clamp(0f, 1f);
-                _mediaPlayer.Volume = Settings.Instance.Volume;
+                MediaPlayer.Volume = Settings.Instance.Volume;
             }
         }
 
@@ -278,7 +284,7 @@ namespace Meridian.Services
 
             State = PlayerPlayState.Playing;
 
-            //MediaPlayer.Position = CurrentAudioPosition;
+            //MediaPlayerBase.Position = CurrentAudioPosition;
         }
 
         public static void PlayNext(Audio audio)
@@ -534,15 +540,18 @@ namespace Meridian.Services
             _cancellationToken = new CancellationTokenSource();
         }
 
-        private static void MediaPlayerOnMediaOpened(object sender, RoutedEventArgs e)
+        private static void MediaPlayerOnMediaOpened(object sender, EventArgs e)
         {
             _playFailsCount = 0;
             State = PlayerPlayState.Playing;
         }
 
-        private static void MediaPlayerOnMediaFailed(object sender, ExceptionRoutedEventArgs e)
+        private static void MediaPlayerOnMediaFailed(object sender, Exception e)
         {
-            if (e.ErrorException is InvalidWmpVersionException)
+            if (CurrentAudio != null)
+                LoggingService.Log("Media failed " + CurrentAudio.Artist + " - " + CurrentAudio.Title + ". " + e);
+
+            if (e is InvalidWmpVersionException)
             {
                 var flyout = new FlyoutControl();
                 flyout.FlyoutContent = new CommonMessageView() { Header = ErrorResources.AudioFailedErrorHeaderCommon, Message = ErrorResources.WmpMissingError };
@@ -550,8 +559,18 @@ namespace Meridian.Services
                 return;
             }
 
-            if (CurrentAudio != null)
-                LoggingService.Log("Media failed " + CurrentAudio.Artist + " - " + CurrentAudio.Title + ". " + e.ErrorException);
+            if (e is COMException)
+            {
+                var com = (COMException) e;
+                if ((uint)com.ErrorCode == 0xC00D0035) //not found or connection problem
+                {
+                    var flyout = new FlyoutControl();
+                    flyout.FlyoutContent = new CommonMessageView() { Header = ErrorResources.AudioFailedErrorHeaderCommon, Message = ErrorResources.WmpMissingError };
+                    flyout.Show();
+
+                    return;
+                }
+            }
 
             _playFailsCount++;
             if (_playFailsCount < 5)
@@ -563,7 +582,7 @@ namespace Meridian.Services
             }
         }
 
-        private static void MediaPlayerOnMediaEnded(object sender, RoutedEventArgs e)
+        private static void MediaPlayerOnMediaEnded(object sender, EventArgs e)
         {
             SwitchNext();
         }

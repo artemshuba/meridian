@@ -131,6 +131,9 @@
                 <TextBlock Text="{x:Static localization:MainResources.SettingsUITaskBarTitle}" FontSize="12" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}" Margin="0,15,0,0"/>
                 <CheckBox Foreground="{StaticResource ForegroundBrush}" Content="{x:Static localization:MainResources.SettingsUIShowTrayIcon}" Margin="0,5,0,0" Style="{StaticResource CommonCheckBoxStyle}" IsChecked="{Binding EnableTrayIcon, Mode=TwoWay}"/>
 
+                <TextBlock Text="~Play using" FontSize="12" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}" Margin="0,15,0,0"/>
+                <ComboBox Width="200" Style="{StaticResource CommonComboBoxStyle}" Margin="0,3,0,0" HorizontalAlignment="Left" ItemsSource="{Binding Engines}" 
+                      SelectedValue="{Binding SelectedEngine, Mode=TwoWay}"/>
             </StackPanel>
         </ScrollViewer>
         
