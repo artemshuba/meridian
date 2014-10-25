@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using VkLib.Core.Auth;
+using VkLib.Core.Groups;
 
 namespace Meridian.Domain
 {
@@ -77,6 +78,8 @@ namespace Meridian.Domain
         public DateTime FirstStart { get; set; }
 
         public MediaEngine MediaEngine { get; set; }
+
+        public List<VkGroup> FeedSocieties { get; set; } 
 
         #region Window settings
 
@@ -151,6 +154,8 @@ namespace Meridian.Domain
             Accounts = new List<Account>();
 
             MediaEngine = MediaEngine.Wmp;
+
+            FeedSocieties = new List<VkGroup>();
         }
 
         public static void Load()

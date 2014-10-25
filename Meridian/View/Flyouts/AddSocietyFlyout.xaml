@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Meridian.Flyouts.AddSocietyFlyout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:Meridian.Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600" Margin="0,50,0,50"
+             Background="{StaticResource MainBackgroundBrush}" VerticalAlignment="Center"
+             x:Name="rootElement">
+    <Grid Margin="0,20,0,20" HorizontalAlignment="Center" Width="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock x:Name="Title" Text="~Add society" FontSize="24" FontWeight="Light" Foreground="{StaticResource AccentBrush}"/>
+        </StackPanel>
+
+        <ListBox Style="{StaticResource CommonListBoxStyle}" Grid.Row="1" ItemsSource="{Binding ElementName=rootElement, Path=Societies}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button Style="{StaticResource SimpleButtonStyle}" ToolTip="{Binding Name}" Height="50" Command="{Binding ElementName=rootElement, Path=SelectSocietyCommand}" CommandParameter="{Binding}">
+                        <Grid x:Name="RootGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid Width="50">
+                                <Image helpers:ImageAsyncHelper.SourceUri="{Binding PhotoMedium}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" FontWeight="Normal" FontSize="12" Margin="10,0,0,0" TextTrimming="CharacterEllipsis" Opacity="0.8"/>
+                        </Grid>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Cancel" Padding="23,3" Style="{StaticResource CommonButtonStyle}" Click="CloseButtonClick"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

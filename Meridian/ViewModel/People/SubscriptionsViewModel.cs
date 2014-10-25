@@ -39,7 +39,7 @@ namespace Meridian.ViewModel.People
 
         public SubscriptionsViewModel()
         {
-            RegisterTask("subscriptions");
+            RegisterTasks("subscriptions");
 
             InitializeCommands();
         }

@@ -741,4 +741,10 @@
   <data name="SettingsUIPlayUsing" xml:space="preserve">
     <value>Play using</value>
   </data>
+  <data name="FeedAdd" xml:space="preserve">
+    <value>Add society</value>
+  </data>
+  <data name="FeedSocieties" xml:space="preserve">
+    <value>SOCIETIES</value>
+  </data>
 </root>

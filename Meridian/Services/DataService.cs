@@ -329,11 +329,11 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<List<Audio>> GetNewsAudio(int count, int offset, CancellationToken token)
+        public static async Task<List<Audio>> GetNewsAudio(int count, int offset, CancellationToken token, List<long> sourceIds = null)
         {
             try
             {
-                var vkNews = await _vkontakte.News.Get(null, "post", count, offset);
+                var vkNews = await _vkontakte.News.Get(sourceIds != null ? string.Join(",", sourceIds) : null, "post", count, offset);
                 if (vkNews.Items != null)
                 {
                     var audioIds = new List<string>();

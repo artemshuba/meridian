@@ -140,7 +140,7 @@ namespace Meridian.ViewModel.Main
         {
             _cancellationToken = new CancellationTokenSource();
 
-            RegisterTask("audio");
+            RegisterTasks("audio");
 
             InitializeCommands();
         }

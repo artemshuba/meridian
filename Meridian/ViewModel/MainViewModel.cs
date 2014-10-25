@@ -38,6 +38,7 @@ namespace Meridian.ViewModel
             new MainMenuItem() {Group = MainResources.MainMenuLocalTitle, GroupIcon = Application.Current.Resources["DeviceIcon"], Page = "/Main.NowPlayingView", Title = MainResources.MainMenuNowPlaying, Icon = Application.Current.Resources["NowPlayingIcon"]},
 
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.MusicView", Title = MainResources.MainMenuMyMusic},
+            new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.FeedView", Title = MainResources.MainMenuFeed},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.PopularAudioView", Title = MainResources.MainMenuPopular},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.RecommendationsView", Title = MainResources.MainMenuRecommendations},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.RadioView", Title = MainResources.MainMenuRadio},
@@ -45,8 +46,6 @@ namespace Meridian.ViewModel
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.FriendsView", Title = MainResources.MainMenuFriends},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.SocietiesView", Title = MainResources.MainMenuSocieties},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.SubscriptionsView", Title = MainResources.MainMenuSubscriptions},
-            //new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.FeedView", Title = MainResources.MainMenuFeed},
-
         };
 
         private bool _showSidebar;
@@ -943,6 +942,14 @@ namespace Meridian.ViewModel
                 try
                 {
                     var imageUri = await DataService.GetTrackImage(CurrentAudio.Artist, CurrentAudio.Title);
+                    if (imageUri == null)
+                    {
+                        if (Settings.Instance.DownloadArtistArt)
+                        {
+                            imageUri = await DataService.GetArtistImage(CurrentAudio.Artist, Settings.Instance.ShowBackgroundArt);
+                        }
+                    }
+
                     if (imageUri == null)
                     {
                         TrackImage = null;

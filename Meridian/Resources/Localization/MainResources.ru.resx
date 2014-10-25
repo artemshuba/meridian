@@ -741,4 +741,10 @@
   <data name="SettingsUIPlayUsing" xml:space="preserve">
     <value>Воспроизводить с помощью</value>
   </data>
+  <data name="FeedAdd" xml:space="preserve">
+    <value>Добавить сообщество</value>
+  </data>
+  <data name="FeedSocieties" xml:space="preserve">
+    <value>СООБЩЕСТВА</value>
+  </data>
 </root>

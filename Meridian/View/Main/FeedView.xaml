@@ -8,7 +8,8 @@
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300">
+      d:DesignHeight="1024" d:DesignWidth="1024"
+      x:Name="pageRoot">
 
     <Page.RenderTransform>
         <TranslateTransform />
@@ -29,7 +30,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel x:Name="HeaderPanel">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <!--<Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                    PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
                 <Border Background="White" BorderThickness="1" BorderBrush="Black">
@@ -40,22 +45,55 @@
             </Popup>-->
 
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left" Width="25" Height="25"
+                    HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <ToggleButton x:Name="HeaderButton" Content="{x:Static localization:MainResources.MainMenuFeed}" Style="{StaticResource HeaderButtonStyle}"/>
-        </StackPanel>
+            <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static localization:MainResources.MainMenuFeed}" Style="{StaticResource HeaderButtonStyle}"/>
+        </Grid>
 
         <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
-        <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
-            <ListBox x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" 
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="180" />
+            </Grid.ColumnDefinitions>
+
+            <controls:BusyIndicator IsBusy="{Binding Tasks[feed].IsWorking}" Error="{Binding Tasks[feed].Error}">
+                <ListBox x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" 
                      Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                      ItemTemplate="{StaticResource AudioItemTemplate}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:AutoScrollToCurrentItemBehaviour />
+                    </i:Interaction.Behaviors>
+                </ListBox>
+            </controls:BusyIndicator>
+
+            <!-- Societies list -->
+
+            <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="12,10,0,0">
+                <TextBlock Text="{x:Static localization:MainResources.FeedSocieties}" FontSize="11" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddSocietyCommand}"
+                        ToolTip="{x:Static localization:MainResources.FeedAdd}"/>
+            </StackPanel>
+
+            <ListBox Grid.Column="1" ItemsSource="{Binding Societies}" Style="{StaticResource CommonListBoxStyle}" Margin="0,35,0,0"
+                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}"
+                 Padding="0">
                 <i:Interaction.Behaviors>
-                    <behaviours:AutoScrollToCurrentItemBehaviour />
+                    <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
                 </i:Interaction.Behaviors>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" ToolTip="{Binding Name}" VerticalAlignment="Center"  TextTrimming="CharacterEllipsis"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
-        </controls:BusyIndicator>
+
+            <Rectangle Width="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+        </Grid>
     </Grid>
 </Page>

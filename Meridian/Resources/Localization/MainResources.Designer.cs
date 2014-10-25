@@ -529,6 +529,24 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add society.
+        /// </summary>
+        public static string FeedAdd {
+            get {
+                return ResourceManager.GetString("FeedAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SOCIETIES.
+        /// </summary>
+        public static string FeedSocieties {
+            get {
+                return ResourceManager.GetString("FeedSocieties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Normal mode.
         /// </summary>
         public static string FullMode {

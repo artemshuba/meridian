@@ -32,7 +32,7 @@ namespace Meridian.ViewModel.People
 
         public FriendsViewModel()
         {
-            RegisterTask("friends");
+            RegisterTasks("friends");
 
             InitializeCommands();
         }

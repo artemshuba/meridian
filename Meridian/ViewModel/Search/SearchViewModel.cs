@@ -75,7 +75,7 @@ namespace Meridian.ViewModel.Search
         {
             _cancellationToken = new CancellationTokenSource();
 
-            RegisterTask("results");
+            RegisterTasks("results");
 
             InitializeCommands();
         }

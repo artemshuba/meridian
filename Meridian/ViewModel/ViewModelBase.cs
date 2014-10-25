@@ -24,7 +24,7 @@ namespace Meridian.ViewModel
 
         #region Long Running Operations helpers
 
-        protected void RegisterTask(string id)
+        private void RegisterTask(string id)
         {
             _tasks.Add(id, new LongRunningOperation());
         }

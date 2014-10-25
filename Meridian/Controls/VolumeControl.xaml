@@ -13,10 +13,10 @@
             <ColumnDefinition />
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" x:Name="MinVolumeButton" Template="{StaticResource MuteButton}" Width="14" Margin="0,-4,10,0" Click="MuteButton_OnClick" HorizontalAlignment="Center" Opacity="0.7"/>
+        <Button Grid.Column="0" x:Name="MinVolumeButton" Template="{StaticResource MuteButton}" Width="14" Margin="0,-4,10,0" Click="MuteButton_OnClick" HorizontalAlignment="Center" Opacity="0.5"/>
         <Slider IsMoveToPointEnabled="True" Grid.Column="1" VerticalAlignment="Center"
                 Maximum="100"
                 Style="{StaticResource VolumeSliderStyle}" Value="{Binding Volume, Mode=TwoWay, ElementName=rootElement}"/>
-        <Button Grid.Column="2" x:Name="MaxVolumeButton" Template="{StaticResource VolumeButton}" Width="14" Margin="10,-3,0,0" Click="VolumeButton_OnClick" HorizontalAlignment="Center"/>
+        <Button Grid.Column="2" x:Name="MaxVolumeButton" Template="{StaticResource VolumeButton}" Width="14" Margin="10,-3,0,0" Click="VolumeButton_OnClick" HorizontalAlignment="Center" Opacity="0.5"/>
     </Grid>
 </UserControl>

@@ -35,7 +35,7 @@ namespace Meridian.ViewModel.Main
 
         public PopularAudioViewModel()
         {
-            RegisterTask("audio");
+            RegisterTasks("audio");
 
             InitializeCommands();
         }

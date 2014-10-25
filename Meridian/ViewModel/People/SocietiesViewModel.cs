@@ -39,7 +39,7 @@ namespace Meridian.ViewModel.People
 
         public SocietiesViewModel()
         {
-            RegisterTask("groups");
+            RegisterTasks("groups");
 
             InitializeCommands();
         }

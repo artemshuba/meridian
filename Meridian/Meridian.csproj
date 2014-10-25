@@ -190,9 +190,6 @@
       <DependentUpon>NotificationControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PageBase.cs" />
-    <Compile Include="Controls\PlayerBarControl.xaml.cs">
-      <DependentUpon>PlayerBarControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\PlayerControl.xaml.cs">
       <DependentUpon>PlayerControl.xaml</DependentUpon>
     </Compile>
@@ -269,6 +266,7 @@
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="ViewModel\Local\LocalAlbumViewModel.cs" />
     <Compile Include="ViewModel\Local\LocalMusicViewModel.cs" />
+    <Compile Include="ViewModel\Main\FeedViewModel.cs" />
     <Compile Include="ViewModel\Search\AlbumViewModel.cs" />
     <Compile Include="ViewModel\Search\ArtistViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\EditAudioViewModel.cs" />
@@ -296,6 +294,9 @@
     <Compile Include="ViewModel\People\SubscriptionsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Flyouts\AddSocietyFlyout.xaml.cs">
+      <DependentUpon>AddSocietyFlyout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Compact\CompactLandscapeView.xaml.cs">
       <DependentUpon>CompactLandscapeView.xaml</DependentUpon>
     </Compile>
@@ -445,10 +446,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\PlayerBarControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\PlayerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -584,6 +581,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Themes\Light.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\AddSocietyFlyout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -865,10 +866,11 @@
       move /y "*.dll" "libs"
       del *.pdb
       del *.xml
-	  del *.pri
+      del *.pri
       del ver.txt
       del *.settings
       del *.js
+      del *.library
       move /y "App.config" "Meridian.exe.config"
       "C:\Program Files\7-Zip\7z.exe" a -tzip "meridian-release.zip"
       :Exit

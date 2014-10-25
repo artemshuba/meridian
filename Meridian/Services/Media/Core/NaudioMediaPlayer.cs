@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing.Printing;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using NAudio.Wave;
@@ -18,6 +19,7 @@ namespace Meridian.Services.Media.Core
         private Uri _source;
         private TimeSpan _duration;
         private double _volume;
+        private AutoResetEvent _initSourceEvent = new AutoResetEvent(false);
 
         public override TimeSpan Position
         {
@@ -50,7 +52,7 @@ namespace Meridian.Services.Media.Core
             set
             {
                 if (_source == value)
-                    return;
+                    Stop();
 
                 _source = value;
 
@@ -87,8 +89,12 @@ namespace Meridian.Services.Media.Core
                 MediaEnded(this, EventArgs.Empty);
         }
 
-        public override void Play()
+        public async override void Play()
         {
+            if (!_initialized)
+            {
+                await Task.Run(() => _initSourceEvent.WaitOne());
+            }
             if (!_initialized)
                 return;
 
@@ -105,7 +111,7 @@ namespace Meridian.Services.Media.Core
             _wavePlayer.Stop();
         }
 
-        private void InitSource()
+        private async Task InitSource()
         {
             if (_outputStream != null)
             {
@@ -124,22 +130,26 @@ namespace Meridian.Services.Media.Core
             if (_source == null)
                 return;
 
-            try
+            await Task.Run(() =>
             {
-                _outputStream = new MediaFoundationReader(_source.OriginalString);
-                _volumeStream = new WaveChannel32(_outputStream, (float)Volume, 0);
-                _wavePlayer.Init(_volumeStream);
-                _duration = _outputStream.TotalTime;
-                _initialized = true;
+                try
+                {
+                    _outputStream = new MediaFoundationReader(_source.OriginalString);
+                    _volumeStream = new WaveChannel32(_outputStream, (float)Volume, 0);
+                    _wavePlayer.Init(_volumeStream);
+                    _duration = _outputStream.TotalTime;
+                    _initialized = true;
+                    _initSourceEvent.Set();
 
-                if (MediaOpened != null)
-                    MediaOpened(this, EventArgs.Empty);
-            }
-            catch (Exception ex)
-            {
-                if (MediaFailed != null)
-                    MediaFailed(this, ex);
-            }
+                    if (MediaOpened != null)
+                        MediaOpened(this, EventArgs.Empty);
+                }
+                catch (Exception ex)
+                {
+                    if (MediaFailed != null)
+                        MediaFailed(this, ex);
+                }
+            });
         }
     }
 }

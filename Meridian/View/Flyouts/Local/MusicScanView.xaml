@@ -11,7 +11,7 @@
              x:Name="rootElement">
     <Grid HorizontalAlignment="Center" Width="320">
         <StackPanel Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-            <StackPanel Visibility="{Binding IsFinished, ElementName=rootElement, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+            <StackPanel>
                 <TextBlock Text="{x:Static localization:MainResources.MusicScanTitle}" Foreground="{StaticResource AccentBrush}" FontSize="24" FontWeight="Light"/>
                 <TextBlock Text="{x:Static localization:MainResources.MusicScanDescription}" FontSize="12" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}"/>
                 <ProgressBar Style="{StaticResource CommonProgressBarStyle}" Value="{Binding ElementName=rootElement, Path=Progress}" VerticalAlignment="Center" Margin="-12,0,-12,0"/>
