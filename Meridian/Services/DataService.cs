@@ -169,7 +169,7 @@ namespace Meridian.Services
             if (artist.Contains(", ") || artist.Contains(" feat ", StringComparison.OrdinalIgnoreCase) || artist.Contains(" ft. ", StringComparison.OrdinalIgnoreCase))
             {
                 //if there are more then 1 artist, get first
-                var artists = artist.Split(new[] {", ", " feat. ", " feat ", " ft. "}, StringSplitOptions.RemoveEmptyEntries);
+                var artists = artist.Split(new[] { ", ", " feat. ", " feat ", " ft. " }, StringSplitOptions.RemoveEmptyEntries);
                 if (artists.Length > 0)
                     artist = artists.First();
             }
@@ -369,7 +369,11 @@ namespace Meridian.Services
                             if (token.IsCancellationRequested)
                                 return null;
 
-                            vkAudios.AddRange(await _vkontakte.Audio.GetById(audioIds.GetRange(i, j)));
+                            var x = await _vkontakte.Audio.GetById(audioIds.GetRange(i, j));
+                            if (x != null)
+                                vkAudios.AddRange(x);
+                            else
+                                break;
 
                             i += 100;
                             if (j >= audioIds.Count)

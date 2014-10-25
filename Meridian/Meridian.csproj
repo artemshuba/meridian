@@ -872,7 +872,7 @@
       del *.js
       del *.library
       move /y "App.config" "Meridian.exe.config"
-      move /y "./libs/sqlite3.dll" "sqlite3.dll"
+      move /y ".\libs\sqlite3.dll" "sqlite3.dll"
       "C:\Program Files\7-Zip\7z.exe" a -tzip "meridian-release.zip"
       :Exit
 </PostBuildEvent>

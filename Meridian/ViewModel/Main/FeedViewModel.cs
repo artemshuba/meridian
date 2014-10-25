@@ -95,8 +95,11 @@ namespace Meridian.ViewModel.Main
 
                     Societies.Add((VkGroup)result);
                     SaveSocieties();
-                    SelectedSociety = _societies.First();
-                    //LoadFeed(_cancellationToken.Token);
+
+                    if (SelectedSociety == null)
+                        SelectedSociety = _societies.First();
+                    else if (SelectedSociety.Id == 0)
+                        LoadFeed(_cancellationToken.Token);
                 }
             });
 
@@ -114,10 +117,28 @@ namespace Meridian.ViewModel.Main
 
                 SaveSocieties();
 
-                if (isActiveSociety && Societies.Any())
-                    SelectedSociety = Societies.First();
-                else if (isActiveSociety)
+                if (!isActiveSociety && (SelectedSociety != null && SelectedSociety.Id != 0))
+                {
+                    return;
+                }
+
+                if (isActiveSociety)
+                {
+                    if (Societies.Any())
+                        SelectedSociety = Societies.First();
+                }
+
+                //if (SelectedSociety != null && SelectedSociety.Id == 0)
+                //{
+                    CancelAsync();
+
                     LoadFeed(_cancellationToken.Token);
+                //}
+
+                //if (isActiveSociety && Societies.Any())
+                //    SelectedSociety = Societies.First();
+                //else if (isActiveSociety)
+                //    LoadFeed(_cancellationToken.Token);
             });
 
             PlayAudioCommand = new RelayCommand<Audio>(audio =>
