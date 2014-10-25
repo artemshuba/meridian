@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Threading;
 using System.Threading.Tasks;
@@ -81,6 +82,27 @@ namespace Meridian.Services.Media.Core
         public override void Initialize()
         {
             _wavePlayer = new WaveOutEvent();
+        }
+
+        public override void Dispose()
+        {
+            try
+            {
+                _wavePlayer.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
+            _initSourceEvent.Dispose();
+
+            if (_volumeStream != null)
+                _volumeStream.Dispose();
+
+            if (_outputStream != null)
+                _outputStream.Dispose();
+
         }
 
         private void SwitchNext()

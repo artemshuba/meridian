@@ -104,6 +104,7 @@ namespace Meridian
             RemoveTrayIcon();
 
             AudioService.Save();
+            AudioService.Dispose();
 
             if (Settings.Instance.SendStats)
             {

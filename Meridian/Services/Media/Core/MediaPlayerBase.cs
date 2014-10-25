@@ -18,7 +18,7 @@ namespace Meridian.Services.Media.Core
         NAudio
     }
 
-    public abstract class MediaPlayerBase
+    public abstract class MediaPlayerBase : IDisposable
     {
         //fields
         public abstract TimeSpan Position { get; set; }
@@ -36,5 +36,7 @@ namespace Meridian.Services.Media.Core
         public abstract void Play();
         public abstract void Pause();
         public abstract void Stop();
+
+        public abstract void Dispose();
     }
 }

@@ -67,6 +67,15 @@ namespace Meridian.Services.Media.Core
             _mediaPlayer.Stop();
         }
 
+        public override void Dispose()
+        {
+            _mediaPlayer.MediaEnded -= MediaPlayerOnMediaEnded;
+            _mediaPlayer.MediaFailed -= MediaPlayerOnMediaFailed;
+            _mediaPlayer.MediaOpened -= MediaPlayerOnMediaOpened;
+
+            _mediaPlayer = null;
+        }
+
         private void MediaPlayerOnMediaOpened(object sender, RoutedEventArgs e)
         {
             if (MediaOpened != null)

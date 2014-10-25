@@ -512,6 +512,12 @@ namespace Meridian.Services
             }
         }
 
+        public static void Dispose()
+        {
+            _positionTimer.Stop();
+            _mediaPlayer.Dispose();
+        }
+
         private static void NotifyAudioChanged(Audio oldAudio = null)
         {
             Messenger.Default.Send(new CurrentAudioChangedMessage
