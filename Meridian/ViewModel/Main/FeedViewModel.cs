@@ -91,17 +91,21 @@ namespace Meridian.ViewModel.Main
                     if (Societies.Count == 0)
                     {
                         _societies.Add(new VkGroup() { Name = MainResources.AllSocieties });
-                        SelectedSociety = _societies.First();
                     }
 
                     Societies.Add((VkGroup)result);
                     SaveSocieties();
-                    LoadFeed(_cancellationToken.Token);
+                    SelectedSociety = _societies.First();
+                    //LoadFeed(_cancellationToken.Token);
                 }
             });
 
             RemoveSocietyCommand = new RelayCommand<VkGroup>(society =>
             {
+                bool isActiveSociety = false;
+                if (society == SelectedSociety)
+                    isActiveSociety = true;
+
                 CancelAsync();
                 Societies.Remove(society);
 
@@ -109,7 +113,11 @@ namespace Meridian.ViewModel.Main
                     Societies.Clear();
 
                 SaveSocieties();
-                LoadFeed(_cancellationToken.Token);
+
+                if (isActiveSociety && Societies.Any())
+                    SelectedSociety = Societies.First();
+                else if (isActiveSociety)
+                    LoadFeed(_cancellationToken.Token);
             });
 
             PlayAudioCommand = new RelayCommand<Audio>(audio =>
@@ -150,6 +158,9 @@ namespace Meridian.ViewModel.Main
                 return;
             }
 
+            if (SelectedSociety == null)
+                return;
+
             OnTaskStarted("feed");
 
             Tracks = new ObservableCollection<Audio>();
@@ -170,7 +181,7 @@ namespace Meridian.ViewModel.Main
 
                     var sourceIds = SelectedSociety.Id != 0
                         ? new List<long>() { -SelectedSociety.Id }
-                        : Societies.Select(s => -s.Id).ToList();
+                        : Societies.Skip(1).Select(s => -s.Id).ToList();
 
                     var a = await DataService.GetNewsAudio(count, offset, token, sourceIds);
                     if (a == null || a.Count == 0)

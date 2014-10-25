@@ -79,7 +79,7 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can add your favorites societies to feed and easily get new music.
+        ///   Looks up a localized string similar to You can add your favorite societies to feed and easily get new music.
         /// </summary>
         public static string FeedSocietiesEmpty {
             get {
