@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -20,13 +21,22 @@ namespace Meridian.ViewModel.Main
         private ObservableCollection<Audio> _tracks;
         private const int MAX_NEWS_AUDIOS = 100;
         private CancellationTokenSource _cancellationToken = new CancellationTokenSource();
+        private VkGroup _selectedSociety;
 
         #region Commands
 
+        /// <summary>
+        /// Add society to feed command
+        /// </summary>
         public RelayCommand AddSocietyCommand { get; private set; }
 
         /// <summary>
-        /// Команда воспроизведения аудиозаписи
+        /// Remove society from feed command
+        /// </summary>
+        public RelayCommand<VkGroup> RemoveSocietyCommand { get; private set; }
+
+        /// <summary>
+        /// Play audio command
         /// </summary>
         public RelayCommand<Audio> PlayAudioCommand { get; private set; }
 
@@ -42,6 +52,20 @@ namespace Meridian.ViewModel.Main
         {
             get { return _tracks; }
             set { Set(ref _tracks, value); }
+        }
+
+        public VkGroup SelectedSociety
+        {
+            get { return _selectedSociety; }
+            set
+            {
+                if (Set(ref _selectedSociety, value))
+                {
+                    CancelAsync();
+
+                    LoadFeed(_cancellationToken.Token);
+                }
+            }
         }
 
         public FeedViewModel()
@@ -64,10 +88,28 @@ namespace Meridian.ViewModel.Main
                 {
                     CancelAsync();
 
+                    if (Societies.Count == 0)
+                    {
+                        _societies.Add(new VkGroup() { Name = MainResources.AllSocieties });
+                        SelectedSociety = _societies.First();
+                    }
+
                     Societies.Add((VkGroup)result);
                     SaveSocieties();
                     LoadFeed(_cancellationToken.Token);
                 }
+            });
+
+            RemoveSocietyCommand = new RelayCommand<VkGroup>(society =>
+            {
+                CancelAsync();
+                Societies.Remove(society);
+
+                if (Societies.Count == 1)
+                    Societies.Clear();
+
+                SaveSocieties();
+                LoadFeed(_cancellationToken.Token);
             });
 
             PlayAudioCommand = new RelayCommand<Audio>(audio =>
@@ -83,18 +125,31 @@ namespace Meridian.ViewModel.Main
             {
                 _societies = new ObservableCollection<VkGroup>(Domain.Settings.Instance.FeedSocieties);
 
-                if (_societies.Any())
-                    LoadFeed(_cancellationToken.Token);
+                if (_societies.Count > 0)
+                {
+                    _societies.Insert(0, new VkGroup() { Name = MainResources.AllSocieties });
+                    SelectedSociety = _societies.First();
+                }
+
+                LoadFeed(_cancellationToken.Token);
             }
         }
 
         private void SaveSocieties()
         {
-            Domain.Settings.Instance.FeedSocieties = _societies.ToList();
+            Domain.Settings.Instance.FeedSocieties = _societies.Skip(1).ToList();
         }
 
         private async void LoadFeed(CancellationToken token)
         {
+            if (Societies.Count == 0)
+            {
+                Tracks = null;
+
+                OnTaskError("feed", ErrorResources.FeedSocietiesEmpty);
+                return;
+            }
+
             OnTaskStarted("feed");
 
             Tracks = new ObservableCollection<Audio>();
@@ -113,7 +168,11 @@ namespace Meridian.ViewModel.Main
                         break;
                     }
 
-                    var a = await DataService.GetNewsAudio(count, offset, token, Societies.Select(s => -s.Id).ToList());
+                    var sourceIds = SelectedSociety.Id != 0
+                        ? new List<long>() { -SelectedSociety.Id }
+                        : Societies.Select(s => -s.Id).ToList();
+
+                    var a = await DataService.GetNewsAudio(count, offset, token, sourceIds);
                     if (a == null || a.Count == 0)
                         break;
                     else if (a.Count > 0)

@@ -747,4 +747,13 @@
   <data name="FeedSocieties" xml:space="preserve">
     <value>СООБЩЕСТВА</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="FeedAddSocietyTitle" xml:space="preserve">
+    <value>Добавить сообщество</value>
+  </data>
+  <data name="AllSocieties" xml:space="preserve">
+    <value>Все сообщества</value>
+  </data>
 </root>

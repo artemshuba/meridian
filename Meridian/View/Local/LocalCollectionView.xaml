@@ -55,8 +55,8 @@
         <TabControl Grid.Row="2" Style="{StaticResource CommonTabControlStyle}" Margin="0,-8,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
             <TabItem Header="{x:Static Properties:MainResources.TracksTab}" Style="{StaticResource CommonTabItemStyle}">
                 <Grid>
-                    <controls:BusyIndicator Grid.Row="2" IsBusy="{Binding Tasks[tracks].IsWorking}" Error="{Binding Tasks[tracks].Error}">
-                        <ListBox x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Tracks}" Style="{StaticResource CommonListBoxStyle}" 
+                    <controls:BusyIndicator IsBusy="{Binding Tasks[tracks].IsWorking}" Error="{Binding Tasks[tracks].Error}">
+                        <ListBox x:Name="AudioList" Margin="0" ItemsSource="{Binding Tracks}" Style="{StaticResource CommonListBoxStyle}" 
                                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                                  ItemTemplate="{StaticResource LocalAudioItemTemplate}">

@@ -84,7 +84,7 @@
 
     <DataTemplate x:Key="LocalAudioItemTemplate">
         <Button Style="{StaticResource SimpleButtonStyle}" Command="{Binding DataContext.PlayAudioCommand, ElementName=pageRoot}" CommandParameter="{Binding}"
-                Padding="0,5,0,5" MaxHeight="40">
+                Padding="0,5,0,5" MaxHeight="32">
             <Button.RenderTransform>
                 <TranslateTransform />
             </Button.RenderTransform>
@@ -106,7 +106,7 @@
             </Button.ContextMenu>
             <Grid Background="Transparent">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="12"/>
                     <ColumnDefinition Width="0.5*" MaxWidth="500"/>
                     <ColumnDefinition Width="0.2*"/>
                     <ColumnDefinition Width="0.2*"/>

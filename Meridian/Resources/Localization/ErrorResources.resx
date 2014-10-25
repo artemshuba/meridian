@@ -123,6 +123,9 @@
   <data name="ConnectionError" xml:space="preserve">
     <value>Please check your internet connection and try again. Error code: 0xC00D0035</value>
   </data>
+  <data name="FeedSocietiesEmpty" xml:space="preserve">
+    <value>You can add your favorites societies to feed and easily get new music</value>
+  </data>
   <data name="LoadAlbumsErrorCommon" xml:space="preserve">
     <value>Unable to load albums</value>
   </data>

@@ -747,4 +747,13 @@
   <data name="FeedSocieties" xml:space="preserve">
     <value>SOCIETIES</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="FeedAddSocietyTitle" xml:space="preserve">
+    <value>Add society</value>
+  </data>
+  <data name="AllSocieties" xml:space="preserve">
+    <value>All societies</value>
+  </data>
 </root>

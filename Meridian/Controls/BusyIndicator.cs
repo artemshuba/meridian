@@ -113,7 +113,12 @@ namespace Meridian.Controls
         }
 
         public static readonly DependencyProperty ErrorProperty = DependencyProperty.Register(
-            "Error", typeof(string), typeof(BusyIndicator), new PropertyMetadata(default(string)));
+            "Error", typeof(string), typeof(BusyIndicator), new PropertyMetadata(default(string), OnErrorPropertyChanged));
+
+        private static void OnErrorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((BusyIndicator)d).ChangeVisualState(true);
+        }
 
         public string Error
         {

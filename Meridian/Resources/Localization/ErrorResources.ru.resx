@@ -123,6 +123,9 @@
   <data name="ConnectionError" xml:space="preserve">
     <value>Пожалуйста, проверьте соединение с Интернетом и попробуйте снова. Код ошибки: 0xC00D0035</value>
   </data>
+  <data name="FeedSocietiesEmpty" xml:space="preserve">
+    <value>Вы можете добавить сообщества в ленту и легко получать новую музыку</value>
+  </data>
   <data name="LoadAlbumsErrorCommon" xml:space="preserve">
     <value>Не удалось загрузить список альбомов</value>
   </data>

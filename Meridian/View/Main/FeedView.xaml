@@ -27,7 +27,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="71"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid>
@@ -73,7 +73,7 @@
 
             <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="12,10,0,0">
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="12,10,0,0">
                 <TextBlock Text="{x:Static localization:MainResources.FeedSocieties}" FontSize="11" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
                 <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddSocietyCommand}"
                         ToolTip="{x:Static localization:MainResources.FeedAdd}"/>
@@ -81,14 +81,28 @@
 
             <ListBox Grid.Column="1" ItemsSource="{Binding Societies}" Style="{StaticResource CommonListBoxStyle}" Margin="0,35,0,0"
                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}"
+                 HorizontalContentAlignment="Stretch"
+                 ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}" SelectedItem="{Binding SelectedSociety, Mode=TwoWay}"
                  Padding="0">
                 <i:Interaction.Behaviors>
                     <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
                 </i:Interaction.Behaviors>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" ToolTip="{Binding Name}" VerticalAlignment="Center"  TextTrimming="CharacterEllipsis"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" ToolTip="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            <Button x:Name="DeleteButton" Grid.Column="1" Style="{StaticResource CloseButtonStyle}" Command="{Binding ElementName=pageRoot, Path=DataContext.RemoveSocietyCommand}" CommandParameter="{Binding}" 
+                                    Opacity="0" ToolTip="{x:Static localization:MainResources.Delete}" Margin="5,0,0,0" Visibility="{Binding Id, Converter={StaticResource NullToVisibilityConverter}}"/>
+                        </Grid>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsMouseOver}" Value="True">
+                                <Setter TargetName="DeleteButton" Property="Opacity" Value="1" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
