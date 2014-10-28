@@ -469,8 +469,8 @@ namespace Meridian.Services
 
                     if (o["currentPlaylist"] != null)
                     {
-                        var playlist = JsonConvert.DeserializeObject<List<Audio>>(o["currentPlaylist"].ToString());
-                        Application.Current.Dispatcher.Invoke(() => SetCurrentPlaylist(playlist));
+                        var playlist = JsonConvert.DeserializeObject<List<object>>(o["currentPlaylist"].ToString(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects});
+                        Application.Current.Dispatcher.Invoke(() => SetCurrentPlaylist(playlist.OfType<Audio>()));
                     }
                 }
                 catch (Exception ex)
@@ -490,7 +490,7 @@ namespace Meridian.Services
                     currentPlaylist = Playlist
                 };
 
-                var json = JsonConvert.SerializeObject(o);
+                var json = JsonConvert.SerializeObject(o, new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.Objects});
                 File.WriteAllText("currentPlaylist.js", json);
             }
             catch (Exception ex)

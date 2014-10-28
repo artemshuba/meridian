@@ -8,6 +8,7 @@
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       xmlns:controls="clr-namespace:Meridian.Controls"
       xmlns:dragDrop="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+      xmlns:converters="clr-namespace:Meridian.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
       x:Name="pageRoot" KeepAlive="False"
@@ -26,6 +27,10 @@
 
     <Page.Resources>
         <CollectionViewSource x:Key="TracksCollection" Source="{Binding Main.CurrentPlaylist, Source={StaticResource Locator}}" />
+        
+        <converters:AudioTemplateSelector x:Key="NowPlayingAudioTemplateSelector" 
+                                          AudioTemplate="{StaticResource NowPlayingAudioItemTemplate}"
+                                          LocalAudioTemplate="{StaticResource LocalAudioItemTemplate}"/>
     </Page.Resources>
     
     <Grid>
@@ -87,11 +92,11 @@
                    Visibility="{Binding Main.CurrentRadio, Source={StaticResource Locator}, Converter={StaticResource NullToVisibilityConverter}}"
                    Margin="24,7,12,2" FontSize="14" VerticalAlignment="Top" TextWrapping="Wrap" Opacity="0.5" Foreground="{StaticResource ForegroundBrush}"/>
         
-        <ListBox Grid.Row="2" x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0"  
+        <ListBox Grid.Row="2" x:Name="AudioList" Margin="0,0,0,0"
                  ItemsSource="{Binding Source={StaticResource TracksCollection}}" 
                  Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
-                 ItemTemplate="{StaticResource NowPlayingAudioItemTemplate}"
+                 ItemTemplateSelector="{StaticResource NowPlayingAudioTemplateSelector}"
                  dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}">
             <i:Interaction.Behaviors>
                 <behaviours:AutoScrollToCurrentItemBehaviour />

@@ -8,16 +8,20 @@ namespace Meridian.Converters
     {
         public DataTemplate AudioTemplate { get; set; }
 
+        public DataTemplate LocalAudioTemplate { get; set; }
+
         public DataTemplate PostTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var audio = item as Audio;
-            if (audio == null)
-                return null;
-
-            if (audio is AudioPost)
+            if (item is AudioPost)
                 return PostTemplate;
+
+            if (item is LocalAudio)
+                return LocalAudioTemplate;
+
+            if (item is Audio)
+                return AudioTemplate;
 
             return AudioTemplate;
         }

@@ -15,10 +15,7 @@ namespace Meridian.Model
         private TimeSpan _duration;
 
         private bool _isPlaying;
-        private string _lyrics;
         private int _order;
-        private bool _isAddedByCurrentUser;
-        private string _artistId;
 
         /// <summary>
         /// Id
