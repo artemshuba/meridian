@@ -73,6 +73,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviours\IgnoreMouseWheelBehavior.cs" />
     <Compile Include="Behaviours\TriggerTransitionBehaviour.cs" />
     <Compile Include="Behaviours\UpdateTextBindingOnPropertyChanged.cs" />
     <Compile Include="Behaviours\VisiblityTransitionBehaviour.cs" />

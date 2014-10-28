@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
@@ -21,9 +22,14 @@ namespace Meridian.Model
 
         public string Artist { get; set; }
 
+        public string ArtistId { get; set; }
+
         public string CoverPath { get; set; }
 
         public int Year { get; set; }
+
+        [Ignore]
+        public List<Audio> Tracks { get; set; }
 
         [Ignore]
         public ImageSource Cover

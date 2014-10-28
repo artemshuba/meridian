@@ -136,6 +136,11 @@ namespace Meridian.Services.Music
             return await _artistsRepository.Get();
         }
 
+        public async Task<List<AudioAlbum>> GetArtistAlbums(string artistId)
+        {
+            return await ServiceLocator.DataBaseService.GetLocalArtistAlbums(artistId);
+        }
+
         public async Task<List<LocalAudio>> SearchTracks(string query)
         {
             //not good, but sqlite doesn't support case insensitive queries for unicode

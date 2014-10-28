@@ -95,7 +95,14 @@ namespace Meridian.Services.Music.Repositories
                             track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim() : StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
                             track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
                             if (!albums.ContainsKey(track.AlbumId))
-                                albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim() : null, Title = StringHelper.ToUtf8(audioFile.Tag.Album).Trim(), Year = (int)audioFile.Tag.Year});
+                                albums.Add(track.AlbumId, new AudioAlbum()
+                                {
+                                    Id = track.AlbumId,
+                                    Artist = audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim() : null,
+                                    Title = StringHelper.ToUtf8(audioFile.Tag.Album).Trim(),
+                                    Year = (int)audioFile.Tag.Year,
+                                    ArtistId = audioFile.Tag.FirstPerformer != null ? Md5Helper.Md5(StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim().ToLower()) : null
+                                });
                             else
                             {
                                 if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
@@ -128,6 +135,12 @@ namespace Meridian.Services.Music.Repositories
             if (cachedAlbum.Artist != updatedAlbum.Artist)
             {
                 cachedAlbum.Artist = updatedAlbum.Artist;
+                changed = true;
+            }
+
+            if (cachedAlbum.ArtistId != updatedAlbum.ArtistId)
+            {
+                cachedAlbum.ArtistId = updatedAlbum.ArtistId;
                 changed = true;
             }
 

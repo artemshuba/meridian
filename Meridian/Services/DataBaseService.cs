@@ -87,5 +87,14 @@ namespace Meridian.Services
 
             return tracks;
         }
+
+        public async Task<List<AudioAlbum>> GetLocalArtistAlbums(string artistId)
+        {
+            var db = new SQLiteAsyncConnection(_dbPath);
+
+            var tracks = await db.Table<AudioAlbum>().Where(album => album.ArtistId == artistId).ToListAsync();
+
+            return tracks;
+        }
     }
 }

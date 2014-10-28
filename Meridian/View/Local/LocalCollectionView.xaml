@@ -7,6 +7,7 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
       xmlns:Properties="clr-namespace:Meridian.Resources.Localization"
+      xmlns:behaviours1="clr-namespace:Neptune.UI.Desktop.Behaviours;assembly=Neptune.UI.Desktop"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
       x:Name="pageRoot">
@@ -71,7 +72,7 @@
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.AlbumsTab}" Style="{StaticResource CommonTabItemStyle}">
                 <Grid>
-                    <controls:BusyIndicator Grid.Row="2" IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
+                    <controls:BusyIndicator IsBusy="{Binding Tasks[albums].IsWorking}" Error="{Binding Tasks[albums].Error}">
                         <ListBox Margin="0,0,0,0" Padding="24,5,0,0" ItemsSource="{Binding AlbumGroups}" ItemContainerStyle="{StaticResource GroupListBoxItemStyle}"
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              Style="{StaticResource CommonListBoxStyle}">
@@ -82,7 +83,7 @@
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.7" Margin="0,0,0,5" 
+                                        <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.85" Margin="0,0,0,5" 
                                                    Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"
                                                    Foreground="{StaticResource ForegroundBrush}"/>
                                         <ItemsControl Grid.Row="1" ItemsSource="{Binding Albums}" Margin="0,0,0,0"
@@ -145,48 +146,70 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.ArtistsTab}" Style="{StaticResource CommonTabItemStyle}">
-                <controls:BusyIndicator Grid.Row="2" IsBusy="{Binding Tasks[artists].IsWorking}" Error="{Binding Tasks[artists].Error}">
-                    <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Artists}" ItemContainerStyle="{StaticResource FriendListBoxItemStyle}"
-                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListBox.Style>
-                            <Style TargetType="ListBox" BasedOn="{StaticResource CommonListBoxStyle}">
-                                <Setter Property="ItemsPanel">
-                                    <Setter.Value>
-                                        <ItemsPanelTemplate>
-                                            <controls:VirtualizingWrapPanel ItemWidth="120" ItemHeight="120" ScrollUnit="Pixel">
-                                                <i:Interaction.Behaviors>
-                                                    <behaviours:TransitionBehaviour Transition="{StaticResource LocalAlbumLoadAnim}" TransitionDelay="20"/>
-                                                </i:Interaction.Behaviors>
-                                            </controls:VirtualizingWrapPanel>
-                                        </ItemsPanelTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListBox.Style>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="120" ToolTip="{Binding Title}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="180"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:BusyIndicator IsBusy="{Binding Tasks[artists].IsWorking}" Error="{Binding Tasks[artists].Error}">
+                        <ListBox Margin="0,0,0,0" Padding="24,5,0,0" ItemsSource="{Binding SelectedArtistAlbums}" ItemContainerStyle="{StaticResource GroupListBoxItemStyle}"
+                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             HorizontalContentAlignment="Stretch"
+                             Style="{StaticResource CommonListBoxStyle}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
                                     <Grid x:Name="RootGrid">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition />
                                             <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.RowSpan="2">
-                                            <Rectangle Fill="{StaticResource AccentBrush}"/>
-                                            <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                            <!--<Image Source="{Binding Image}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                                        </Grid>
-                                        <Rectangle Grid.Row="1" Fill="Black" Opacity="0.8" />
-                                        <StackPanel Grid.Row="1">
-                                            <!--<TextBlock Text="{Binding Artist}" FontWeight="Normal" FontSize="11" Margin="5,3,5,0" TextTrimming="CharacterEllipsis" Opacity="0.8" Foreground="White"/>-->
-                                            <TextBlock Text="{Binding Title}" FontFamily="Segoe UI SemiLight"  FontSize="12" Margin="5,-2,5,7" TextTrimming="CharacterEllipsis" Foreground="White"/>
-                                        </StackPanel>
+                                        <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.85" Margin="0,0,0,5" 
+                                                   Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"
+                                                   Foreground="{StaticResource ForegroundBrush}"/>
+                                        <ListBox Grid.Row="1" ItemsSource="{Binding Tracks}" Margin="-24,0,0,10"
+                                                 Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                                 ItemTemplate="{StaticResource LocalAudioItemTemplate}"
+                                                 HorizontalContentAlignment="Stretch"
+                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                            <i:Interaction.Behaviors>
+                                                <behaviours1:IgnoreMouseWheelBehavior/>
+                                            </i:Interaction.Behaviors>
+                                        </ListBox>
                                     </Grid>
-                                </Button>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </controls:BusyIndicator>
+
+                    <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+
+                    <ListBox Grid.Column="1" ItemsSource="{Binding Artists}" Style="{StaticResource CommonListBoxStyle}" Margin="0,10,0,0"
+                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             SelectedItem="{Binding SelectedArtist, Mode=TwoWay}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}"
+                             Padding="0">
+                        <i:Interaction.Behaviors>
+                            <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
+                        </i:Interaction.Behaviors>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis">
+                                    <!--<TextBlock.ContextMenu>
+                                        <ContextMenu Visibility="{Binding Converter={StaticResource AlbumContextMenuVisibilityConverter}}" Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
+                                            <MenuItem Header="{x:Static Properties:MainResources.ContextMenuPlay}" Command="{Binding PlacementTarget.Tag.PlayAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                            <MenuItem Header="{x:Static Properties:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding PlacementTarget.Tag.AddAlbumToNowPlayingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                            <Separator />
+                                            <MenuItem Header="{x:Static Properties:MainResources.ContextMenuEdit}" Command="{Binding PlacementTarget.Tag.EditAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                            <MenuItem Header="{x:Static Properties:MainResources.ContextMenuRemoveRadio}" Command="{Binding PlacementTarget.Tag.RemoveAlbumCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                        </ContextMenu>
+                                    </TextBlock.ContextMenu>-->
+                                </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                </controls:BusyIndicator>
+
+                    <Rectangle Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

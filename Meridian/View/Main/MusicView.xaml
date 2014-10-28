@@ -141,7 +141,7 @@
                         </ListBox>
                     </controls:BusyIndicator>
 
-                    <ListBox x:Name="ArtistList" Grid.Column="1" ItemsSource="{Binding Artists}" Style="{StaticResource CommonListBoxStyle}" 
+                    <ListBox x:Name="ArtistList" Grid.Column="1" ItemsSource="{Binding Artists}" Style="{StaticResource CommonListBoxStyle}"
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}" SelectedItem="{Binding SelectedArtist, Mode=TwoWay}">
                         <i:Interaction.Behaviors>

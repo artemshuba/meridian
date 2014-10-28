@@ -7,6 +7,7 @@ using Meridian.Controls;
 using Meridian.Model;
 using Meridian.Services;
 using Meridian.View.Flyouts.Local;
+using Neptune.Extensions;
 using Neptune.Messages;
 using Xbox.Music;
 
@@ -18,6 +19,8 @@ namespace Meridian.ViewModel.Local
         private List<AudioAlbum> _albums;
         private List<AudioArtist> _albumGroups;
         private List<AudioArtist> _artists;
+        private AudioArtist _selectedArtist;
+        private List<AudioAlbum> _selectedArtistAlbums;
         private double _progress;
         private int _selectedTabIndex;
 
@@ -59,6 +62,22 @@ namespace Meridian.ViewModel.Local
             set { Set(ref _artists, value); }
         }
 
+        public AudioArtist SelectedArtist
+        {
+            get { return _selectedArtist; }
+            set
+            {
+                if (Set(ref _selectedArtist, value))
+                    LoadSelectedArtist();
+            }
+        }
+
+        public List<AudioAlbum> SelectedArtistAlbums
+        {
+            get { return _selectedArtistAlbums; }
+            set { Set(ref _selectedArtistAlbums, value); }
+        }
+
         public double Progress
         {
             get { return _progress; }
@@ -68,7 +87,24 @@ namespace Meridian.ViewModel.Local
         public int SelectedTabIndex
         {
             get { return _selectedTabIndex; }
-            set { Set(ref _selectedTabIndex, value); }
+            set
+            {
+                if (Set(ref _selectedTabIndex, value))
+                {
+                    switch (value)
+                    {
+                        case 1:
+                            if (Albums.IsNullOrEmpty())
+                                LoadAlbums();
+                            break;
+
+                        case 2:
+                            if (Artists.IsNullOrEmpty())
+                                LoadArtists();
+                            break;
+                    }
+                }
+            }
         }
 
         public LocalMusicViewModel()
@@ -85,7 +121,15 @@ namespace Meridian.ViewModel.Local
             PlayAudioCommand = new RelayCommand<Audio>(audio =>
             {
                 AudioService.Play(audio);
-                AudioService.SetCurrentPlaylist(Tracks);
+
+                if (SelectedTabIndex == 0)
+                {
+                    AudioService.SetCurrentPlaylist(Tracks);
+                }
+                else if (SelectedArtistAlbums != null)
+                {
+                    AudioService.SetCurrentPlaylist(SelectedArtistAlbums.Where(a => !a.Tracks.IsNullOrEmpty()).SelectMany(a => a.Tracks).ToList());
+                }
             });
 
             GoToAlbumCommand = new RelayCommand<AudioAlbum>(album =>
@@ -113,9 +157,6 @@ namespace Meridian.ViewModel.Local
 
                 await LoadTracks();
             }
-
-            await LoadAlbums();
-            await LoadArtists();
         }
 
         private async Task LoadTracks()
@@ -163,6 +204,39 @@ namespace Meridian.ViewModel.Local
             try
             {
                 Artists = await ServiceLocator.LocalMusicService.GetArtists();
+
+                if (!Artists.IsNullOrEmpty())
+                    SelectedArtist = Artists.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                OnTaskError("artists", "~Unable to load artists");
+
+                LoggingService.Log(ex);
+            }
+
+            OnTaskFinished("artists");
+        }
+
+        private async Task LoadSelectedArtist()
+        {
+            OnTaskStarted("artists");
+
+            try
+            {
+                var albums = await ServiceLocator.LocalMusicService.GetArtistAlbums(SelectedArtist.Id);
+
+                if (!albums.IsNullOrEmpty())
+                {
+                    foreach (var album in albums)
+                    {
+                        var tracks = await ServiceLocator.LocalMusicService.GetAlbumTracks(album.Id);
+                        if (!tracks.IsNullOrEmpty())
+                            album.Tracks = tracks.Cast<Audio>().ToList();
+                    }
+                }
+
+                SelectedArtistAlbums = albums;
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Neptune.Extensions
@@ -16,6 +17,11 @@ namespace Neptune.Extensions
             {
                 action(item);
             }
+        }
+
+        public static bool IsNullOrEmpty(this IList source)
+        {
+            return source == null || source.Count == 0;
         }
     }
 }

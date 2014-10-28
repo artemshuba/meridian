@@ -149,7 +149,8 @@ namespace Meridian.Domain
             DownloadArtistArt = true;
             DownloadAlbumArt = true;
 
-            BlurBackground = true;
+            BlurBackground = false;
+            ShowBackgroundArt = true;
 
             Accounts = new List<Account>();
 
