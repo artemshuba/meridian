@@ -30,7 +30,7 @@
         </Style>
 
         <Style x:Key="AlbumsListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource CommonListBoxStyle}">
-            <Setter Property="Margin" Value="24,0,0,0" />
+            <Setter Property="Margin" Value="10,0,0,0" />
             <Setter Property="ItemsPanel">
                 <Setter.Value>
                     <ItemsPanelTemplate>
@@ -133,7 +133,7 @@
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
                     HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <TextBlock Grid.Column="1" FontSize="28" FontWeight="Thin" Margin="10,12,0,15" Foreground="{StaticResource ForegroundBrush}">
+            <TextBlock Grid.Column="1" FontSize="28" FontWeight="Thin" Margin="5,12,0,15" Foreground="{StaticResource ForegroundBrush}">
                 <Run Text="{x:Static localization:MainResources.SearchResultsTitle}" />
                 "<Run Text="{Binding Query}" />"
             </TextBlock>

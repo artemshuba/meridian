@@ -21,7 +21,7 @@ namespace Meridian.ViewModel.Search
 
         private readonly List<string> _sections = new List<string>
         {
-            MainResources.SearchSectionTracks, MainResources.SearchSectionAlbums, MainResources.SearchSectionArtists, "~This PC"
+            MainResources.SearchSectionTracks, MainResources.SearchSectionAlbums, MainResources.SearchSectionArtists
         };
         private string _query;
         private int _selectedSectionIndex;
@@ -131,9 +131,9 @@ namespace Meridian.ViewModel.Search
                     SearchArtists(_cancellationToken.Token);
                     break;
 
-                case 3:
-                    SearchLocalTracks(_cancellationToken.Token);
-                    break;
+                //case 3:
+                //    SearchLocalTracks(_cancellationToken.Token);
+                //    break;
             }
         }
 

@@ -183,8 +183,8 @@
                     <Slider IsMoveToPointEnabled="True"
                         Value="{Binding Main.CurrentAudioPositionSeconds, Source={StaticResource Locator}, Mode=TwoWay}" Maximum="{Binding Main.CurrentAudioDuration.TotalSeconds, Source={StaticResource Locator}, Mode=OneWay}"
                         Style="{StaticResource CommonSliderStyle}" />
-                    <TextBlock Text="{Binding Main.CurrentAudioPosition, Source={StaticResource Locator}, Converter={StaticResource AudioTimeSpanConverter}}" FontSize="12" Opacity="0.5" Margin="0,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
-                    <TextBlock Text="{Binding Main.CurrentAudioDuration, Source={StaticResource Locator}, Converter={StaticResource AudioTimeSpanConverter}}" FontSize="12" Opacity="0.5" Margin="0,10,0,0" HorizontalAlignment="Right" Foreground="{StaticResource ForegroundBrush}"/>
+                    <TextBlock Text="{Binding Main.CurrentAudioPosition, Source={StaticResource Locator}, Converter={StaticResource AudioTimeSpanConverter}}" FontSize="11" Opacity="0.5" Margin="0,15,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+                    <TextBlock Text="{Binding Main.CurrentAudioDuration, Source={StaticResource Locator}, Converter={StaticResource AudioTimeSpanConverter}}" FontSize="11" Opacity="0.5" Margin="0,15,0,0" HorizontalAlignment="Right" Foreground="{StaticResource ForegroundBrush}"/>
                 </Grid>
 
                 <ToggleButton Name="TracklistButton" Cursor="Hand" IsChecked="{Binding ShowTracklist, ElementName=pageRoot, Mode=TwoWay}" Content="{x:Static localization:MainResources.CompactModeTracklist}">
@@ -213,7 +213,7 @@
             </i:Interaction.Behaviors>
 
             <ToggleButton IsChecked="{Binding ShowTracklist, ElementName=pageRoot, Mode=TwoWay}" Style="{StaticResource CompactBackButtonStyle}"
-                          VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" Height="24" Margin="11,3,0,0"/>
+                          VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" Height="24" Margin="8,3,0,0"/>
 
             <ListBox x:Name="AudioList" Margin="0,30,0,0" Padding="0,0,0,0" ItemsSource="{Binding Main.CurrentPlaylist, Source={StaticResource Locator}}" Style="{StaticResource CommonListBoxStyle}" 
                      VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"

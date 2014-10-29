@@ -25,14 +25,18 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="71"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="180"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2">
+        <Grid Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="160" StaysOpen="False" VerticalOffset="10"
                    PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
                 <Border Background="White" BorderThickness="1" BorderBrush="Black">
@@ -43,26 +47,26 @@
                 </Border>
             </Popup>
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left" Width="25" Height="25"
+                    HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <Grid Margin="24,20,0,15">
+            <Grid Margin="5,15,0,15" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Image Source="{Binding Album.ImageLarge}" Width="45" Height="45"/>
+                <Image Source="{Binding Album.ImageLarge}" Width="45" Height="45" Stretch="UniformToFill" HorizontalAlignment="Center"/>
                 <StackPanel Grid.Column="1" Margin="10,-7,0,0">
-                    <ToggleButton x:Name="HeaderButton" Content="{Binding Album.Name}" Style="{StaticResource HeaderButtonStyle}" Margin="-2,0,0,0"/>
-                    <TextBlock Text="{Binding Album.Artist}" FontSize="14" Margin="0,0,0,0" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}"/>
+                    <ToggleButton x:Name="HeaderButton" Content="{Binding Album.Name}" Style="{StaticResource HeaderButtonStyle}" Margin="-2,0,0,0" FontSize="24"/>
+                    <TextBlock Text="{Binding Album.Artist}" FontSize="13" Margin="0,-2,0,0" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}"/>
                 </StackPanel>
             </Grid>
-        </StackPanel>
+        </Grid>
         <ProgressBar IsIndeterminate="{Binding IsWorking}" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource HeaderProgressBarStyle}"/>
 
         <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
         <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
-        <ListBox Grid.Row="1" x:Name="AudioList" Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Tracks}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        <ListBox Grid.Row="1" x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Tracks}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                  ItemTemplate="{StaticResource OrderedAudioItemTemplate}">
             <i:Interaction.Behaviors>
@@ -70,8 +74,9 @@
             </i:Interaction.Behaviors>
         </ListBox>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.MyMusicAlbums}" FontSize="12" Opacity="0.3" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
-        <ListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" ItemsSource="{Binding ArtistAlbums}" Style="{StaticResource CommonListBoxStyle}" 
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.MyMusicAlbums}" FontSize="11" Opacity="0.7" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"
+                   FontWeight="SemiBold"/>
+        <ListBox Grid.Row="1" Grid.Column="1" Padding="0" Margin="0,35,0,0" ItemsSource="{Binding ArtistAlbums}" Style="{StaticResource CommonListBoxStyle}" 
                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  SelectedIndex="{Binding SelectedAlbumIndex, Mode=TwoWay}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}">
             <i:Interaction.Behaviors>
