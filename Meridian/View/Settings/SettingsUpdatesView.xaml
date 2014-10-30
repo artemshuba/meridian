@@ -33,6 +33,7 @@
             <Button Content="{x:Static localization:MainResources.SettingsUpdatesRestart}" Style="{StaticResource CommonButtonStyle}" HorizontalAlignment="Left" Margin="0,5,0,0" Command="{Binding Main.RestartCommand, Source={StaticResource Locator}}" Visibility="{Binding UpdateService.IsUpdateInstalled, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <ProgressBar Value="{Binding UpdateService.UpdateProgress, Source={StaticResource Locator}}" IsIndeterminate="{Binding UpdateService.IsCheckingUpdates, Source={StaticResource Locator}}" Style="{StaticResource CommonProgressBarStyle}" HorizontalAlignment="Left" Width="150" Padding="0" Margin="0,5,0,0" Background="Transparent"/>
             <TextBlock Text="{x:Static localization:MainResources.SettingsUpdatesUpdated}" FontWeight="Regular" Opacity="0.6" TextWrapping="Wrap" Visibility="{Binding UpdateService.IsUpdateInstalled, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBlock Text="{Binding UpdateService.UpdateDescription, Source={StaticResource Locator}}" FontWeight="Regular" Opacity="0.6" TextWrapping="Wrap" Foreground="{StaticResource ForegroundBrush}" Margin="0,10,0,0"/>
 
         </StackPanel>
     </Grid>

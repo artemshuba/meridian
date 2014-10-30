@@ -21,6 +21,7 @@ namespace Meridian.Services
         private bool _isUpdating;
         private int _updateProgress;
         private bool _isUpdateInstalled;
+        private string _updateDescription;
 
         public bool IsCheckingUpdates
         {
@@ -74,6 +75,19 @@ namespace Meridian.Services
             }
         }
 
+        public string UpdateDescription
+        {
+            get { return _updateDescription; }
+            private set
+            {
+                if (_updateDescription == value)
+                    return;
+
+                _updateDescription = value;
+                OnPropertyChanged("UpdateDescription");
+            }
+        }
+
         public async void CheckUpdates()
         {
             IsCheckingUpdates = true;
@@ -105,6 +119,7 @@ namespace Meridian.Services
             if (lastestBuild > Assembly.GetExecutingAssembly().GetName().Version.Build)
             {
                 var path = json["path"].Value<string>();
+                UpdateDescription = json["description"].Value<string>();
                 UpdateInternal(path);
             }
         }
