@@ -232,7 +232,7 @@ namespace Meridian.ViewModel.Local
             {
                 var albums = await ServiceLocator.LocalMusicService.GetAlbums();
                 AlbumGroups = albums.GroupBy(a => a.Artist).Select(g => new AudioArtist() { Title = g.Key, Albums = g.OrderBy(a => a.Year).ToList() }).OrderBy(a => a.Title).ToList();
-                //Albums = await ServiceLocator.LocalMusicService.GetAlbums();
+                Albums = albums;
             }
             catch (Exception ex)
             {

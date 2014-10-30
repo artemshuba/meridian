@@ -56,6 +56,8 @@
     <SolidColorBrush x:Key="AlbumsListBackgroundBrush" Color="{StaticResource ContrastColor}" Opacity="0.9"/>
     <SolidColorBrush x:Key="SplitterBrush" Color="{StaticResource ForegroundColor}"/>
 
+    <SolidColorBrush x:Key="SearchBarBackgroundBrush" Color="#3e4144" Opacity="0.7"/>
+
     <!-- Volume bar -->
     <SolidColorBrush x:Key="VolumeBarBackgroundBrush" Color="#58595b"/>
 

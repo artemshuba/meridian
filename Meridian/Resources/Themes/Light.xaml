@@ -61,6 +61,8 @@
     <!-- Volume bar -->
     <SolidColorBrush x:Key="VolumeBarBackgroundBrush" Color="#58595b"/>
 
+    <SolidColorBrush x:Key="SearchBarBackgroundBrush" Color="#ecebec" Opacity="0.7"/>
+
     <!-- Comboboxes -->
     <!-- ComboBoxBg-->
     <SolidColorBrush x:Key="ComboBoxBackgroundBrush" Color="#FFEEEEEE" />

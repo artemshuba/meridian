@@ -10,10 +10,10 @@
       xmlns:behaviours1="clr-namespace:Neptune.UI.Desktop.Behaviours;assembly=Neptune.UI.Desktop"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
-      x:Name="pageRoot">
+      x:Name="pageRoot" Loaded="LocalCollectionView_OnLoaded">
 
     <Page.Resources>
-
+        <CollectionViewSource x:Key="TracksCollection" Source="{Binding Tracks}" />
     </Page.Resources>
 
     <Page.RenderTransform>
@@ -43,7 +43,7 @@
                 <Border Background="White" BorderThickness="1" BorderBrush="Black">
                     <ItemsControl>
                         <MenuItem Header="{x:Static Properties:MainResources.HeaderMenuRefresh}" Command="{Binding RefreshCommand}" CommandParameter="{Binding}" Click="MenuItem_OnClick"/>
-                        <!--<MenuItem x:Name="LocalSearchItem" Header="{x:Static Properties:MainResources.HeaderMenuLocalSearch}" Click="LocalSearchItem_OnClick"/>-->
+                        <MenuItem x:Name="LocalSearchItem" Header="{x:Static Properties:MainResources.HeaderMenuLocalSearch}" Click="LocalSearchItem_OnClick"/>
                     </ItemsControl>
                 </Border>
             </Popup>
@@ -57,7 +57,7 @@
             <TabItem Header="{x:Static Properties:MainResources.TracksTab}" Style="{StaticResource CommonTabItemStyle}">
                 <Grid>
                     <controls:BusyIndicator IsBusy="{Binding Tasks[tracks].IsWorking}" Error="{Binding Tasks[tracks].Error}">
-                        <ListBox x:Name="AudioList" Margin="0" ItemsSource="{Binding Tracks}" Style="{StaticResource CommonListBoxStyle}" 
+                        <ListBox x:Name="AudioList" Margin="0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" 
                                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                                  ItemTemplate="{StaticResource LocalAudioItemTemplate}">
@@ -68,6 +68,8 @@
                     </controls:BusyIndicator>
 
                     <Rectangle Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+
+                    <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Source="{StaticResource TracksCollection}" FontSize="12" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.AlbumsTab}" Style="{StaticResource CommonTabItemStyle}">
