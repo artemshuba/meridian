@@ -137,7 +137,7 @@ namespace Meridian.Domain
             CheckForUpdates = true;
 
             AccentColor = "Blue";
-            Theme = "Graphite";
+            Theme = "Light";
             Language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
             ShowTrackNotifications = true;
