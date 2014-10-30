@@ -131,7 +131,7 @@
                     </Grid.ColumnDefinitions>
 
                     <controls:BusyIndicator IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
-                        <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding ElementName=ArtistList, Path=SelectedItem.Tracks}" Style="{StaticResource CommonListBoxStyle}" 
+                        <ListBox Margin="0,0,0,0" ItemsSource="{Binding ElementName=ArtistList, Path=SelectedItem.Tracks}" Style="{StaticResource CommonListBoxStyle}" 
                                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                                  ItemTemplateSelector="{StaticResource AudioTemplateSelector}">
@@ -163,14 +163,56 @@
 
                     <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
 
-                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Width="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.NewsTab}" Style="{StaticResource CommonTabItemStyle}">
+                <Grid>
+                    <controls:BusyIndicator IsBusy="{Binding Tasks[news].IsWorking}" Error="{Binding Tasks[news].Error}">
+                        <ListBox Margin="0,0,0,0" ItemsSource="{Binding NewsTracks}" Style="{StaticResource CommonListBoxStyle}" 
+                                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplateSelector="{StaticResource AudioTemplateSelector}">
+                            <i:Interaction.Behaviors>
+                                <behaviours:AutoScrollToCurrentItemBehaviour />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                    </controls:BusyIndicator>
+
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.WallTab}" Style="{StaticResource CommonTabItemStyle}">
+                <Grid>
+                    <controls:BusyIndicator IsBusy="{Binding Tasks[wall].IsWorking}" Error="{Binding Tasks[wall].Error}">
+                        <ListBox Margin="0,0,0,0" ItemsSource="{Binding WallTracks}" Style="{StaticResource CommonListBoxStyle}" 
+                                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplateSelector="{StaticResource AudioTemplateSelector}">
+                            <i:Interaction.Behaviors>
+                                <behaviours:AutoScrollToCurrentItemBehaviour />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                    </controls:BusyIndicator>
+
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.FavoritesTab}" Style="{StaticResource CommonTabItemStyle}">
+                <Grid>
+                    <controls:BusyIndicator IsBusy="{Binding Tasks[favorites].IsWorking}" Error="{Binding Tasks[favorites].Error}">
+                        <ListBox Margin="0,0,0,0" ItemsSource="{Binding FavoritesTracks}" Style="{StaticResource CommonListBoxStyle}" 
+                                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplateSelector="{StaticResource AudioTemplateSelector}">
+                            <i:Interaction.Behaviors>
+                                <behaviours:AutoScrollToCurrentItemBehaviour />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                    </controls:BusyIndicator>
+
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

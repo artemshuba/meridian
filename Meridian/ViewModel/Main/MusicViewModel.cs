@@ -16,6 +16,7 @@ using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.View.Flyouts;
 using Meridian.ViewModel.Messages;
+using Neptune.Extensions;
 using VkLib.Core.Audio;
 
 namespace Meridian.ViewModel.Main
@@ -28,6 +29,9 @@ namespace Meridian.ViewModel.Main
         private ObservableCollection<VkAudioAlbum> _albums;
         private ObservableCollection<Audio> _tracks;
         private ObservableCollection<AudioArtist> _artists;
+        private ObservableCollection<Audio> _newsTracks;
+        private ObservableCollection<Audio> _wallTracks;
+        private ObservableCollection<Audio> _favoritesTracks;
         private VkAudioAlbum _selectedAlbum;
         private CancellationTokenSource _cancellationToken;
         private int _totalAlbumsCount;
@@ -89,7 +93,7 @@ namespace Meridian.ViewModel.Main
         #endregion
 
         /// <summary>
-        /// Список альбомов
+        /// Albums list
         /// </summary>
         public ObservableCollection<VkAudioAlbum> Albums
         {
@@ -98,7 +102,7 @@ namespace Meridian.ViewModel.Main
         }
 
         /// <summary>
-        /// Список аудиозаписей
+        /// Tracks list
         /// </summary>
         public ObservableCollection<Audio> Tracks
         {
@@ -107,7 +111,7 @@ namespace Meridian.ViewModel.Main
         }
 
         /// <summary>
-        /// Список исполнителей
+        /// Artists list
         /// </summary>
         public ObservableCollection<AudioArtist> Artists
         {
@@ -117,7 +121,7 @@ namespace Meridian.ViewModel.Main
 
 
         /// <summary>
-        /// Выбранный альбом
+        /// Selected album
         /// </summary>
         public VkAudioAlbum SelectedAlbum
         {
@@ -153,13 +157,52 @@ namespace Meridian.ViewModel.Main
         public int SelectedTabIndex
         {
             get { return _selectedTabIndex; }
-            set { Set(ref _selectedTabIndex, value); }
+            set
+            {
+                if (Set(ref _selectedTabIndex, value))
+                {
+                    CancelAsync();
+
+                    switch (_selectedTabIndex)
+                    {
+                        case 2:
+                            LoadNewsAudios(_cancellationToken.Token);
+                            break;
+
+                        case 3:
+                            LoadWallAudios(_cancellationToken.Token);
+                            break;
+
+                        case 4:
+                            LoadFavoritesAudios(_cancellationToken.Token);
+                            break;
+                    }
+                }
+            }
         }
 
         public AudioArtist SelectedArtist
         {
             get { return _selectedArtist; }
             set { Set(ref _selectedArtist, value); }
+        }
+
+        public ObservableCollection<Audio> NewsTracks
+        {
+            get { return _newsTracks; }
+            set { Set(ref _newsTracks, value); }
+        }
+
+        public ObservableCollection<Audio> WallTracks
+        {
+            get { return _wallTracks; }
+            set { Set(ref _wallTracks, value); }
+        }
+
+        public ObservableCollection<Audio> FavoritesTracks
+        {
+            get { return _favoritesTracks; }
+            set { Set(ref _favoritesTracks, value); }
         }
 
         public MusicViewModel()
@@ -169,7 +212,7 @@ namespace Meridian.ViewModel.Main
             InitializeCommands();
             InitializeMessageInterception();
 
-            RegisterTasks("audio", "albums");
+            RegisterTasks("audio", "albums", "news", "wall", "favorites");
         }
 
         public async void Activate()
@@ -194,13 +237,28 @@ namespace Meridian.ViewModel.Main
             {
                 AudioService.Play(audio);
 
-                if (SelectedTabIndex == 1 && SelectedArtist != null)
+                switch (SelectedTabIndex)
                 {
-                    AudioService.SetCurrentPlaylist(SelectedArtist.Tracks);
-                }
-                else
-                {
-                    AudioService.SetCurrentPlaylist(Tracks);
+                    case 0:
+                        AudioService.SetCurrentPlaylist(Tracks);
+                        break;
+
+                    case 1:
+                        if (SelectedArtist != null)
+                            AudioService.SetCurrentPlaylist(SelectedArtist.Tracks);
+                        break;
+
+                    case 2:
+                        AudioService.SetCurrentPlaylist(NewsTracks);
+                        break;
+
+                    case 3:
+                        AudioService.SetCurrentPlaylist(WallTracks);
+                        break;
+
+                    case 4:
+                        AudioService.SetCurrentPlaylist(FavoritesTracks);
+                        break;
                 }
             });
 
@@ -366,9 +424,9 @@ namespace Meridian.ViewModel.Main
         private async void LoadNewsAudios(CancellationToken token)
         {
             IsWorking = true;
-            OnTaskStarted("audio");
+            OnTaskStarted("news");
 
-            Tracks = new ObservableCollection<Audio>();
+            NewsTracks = new ObservableCollection<Audio>();
 
             try
             {
@@ -376,7 +434,7 @@ namespace Meridian.ViewModel.Main
                 int count = 50;
                 int requestsCount = 0;
 
-                while (Tracks != null && Tracks.Count < MAX_NEWS_AUDIOS)
+                while (NewsTracks != null && NewsTracks.Count < MAX_NEWS_AUDIOS)
                 {
                     if (token.IsCancellationRequested)
                     {
@@ -389,7 +447,7 @@ namespace Meridian.ViewModel.Main
                         break;
                     else if (a.Count > 0)
                     {
-                        OnTaskFinished("audio");
+                        OnTaskFinished("news");
                     }
 
                     if (token.IsCancellationRequested)
@@ -402,7 +460,7 @@ namespace Meridian.ViewModel.Main
 
                     foreach (var audio in a)
                     {
-                        Tracks.Add(audio);
+                        NewsTracks.Add(audio);
                     }
 
                     requestsCount++;
@@ -416,25 +474,25 @@ namespace Meridian.ViewModel.Main
                     Debug.WriteLine("Loading more audios from news");
                 }
 
-                if ((Tracks == null || Tracks.Count == 0) && !token.IsCancellationRequested)
-                    OnTaskError("audio", ErrorResources.LoadAudiosErrorEmpty);
+                if (NewsTracks.IsNullOrEmpty() && !token.IsCancellationRequested)
+                    OnTaskError("news", ErrorResources.LoadAudiosErrorEmpty);
             }
             catch (Exception ex)
             {
                 LoggingService.Log(ex);
-                OnTaskError("audio", ErrorResources.LoadAudiosErrorCommon);
+                OnTaskError("news", ErrorResources.LoadAudiosErrorCommon);
             }
 
             IsWorking = false;
-            OnTaskFinished("audio");
+            OnTaskFinished("news");
         }
 
         private async void LoadWallAudios(CancellationToken token)
         {
             IsWorking = true;
-            OnTaskStarted("audio");
+            OnTaskStarted("wall");
 
-            Tracks = new ObservableCollection<Audio>();
+            WallTracks = new ObservableCollection<Audio>();
 
             try
             {
@@ -442,14 +500,14 @@ namespace Meridian.ViewModel.Main
                 int count = 50;
                 int requestsCount = 0;
 
-                while (Tracks != null && Tracks.Count < MAX_WALL_AUDIOS)
+                while (WallTracks != null && WallTracks.Count < MAX_WALL_AUDIOS)
                 {
                     var a = await DataService.GetWallAudio(count, offset, 0, token);
                     if (a == null || a.Count == 0)
                         break;
                     else if (a.Count > 0)
                     {
-                        OnTaskFinished("audio");
+                        OnTaskFinished("wall");
                     }
 
                     if (token.IsCancellationRequested)
@@ -462,7 +520,7 @@ namespace Meridian.ViewModel.Main
 
                     foreach (var audio in a)
                     {
-                        Tracks.Add(audio);
+                        WallTracks.Add(audio);
                     }
 
                     requestsCount++;
@@ -476,26 +534,26 @@ namespace Meridian.ViewModel.Main
                     Debug.WriteLine("Loading more audios from wall");
                 }
 
-                if ((Tracks == null || Tracks.Count == 0) && !token.IsCancellationRequested)
-                    OnTaskError("audio", ErrorResources.LoadAudiosErrorEmpty);
+                if (WallTracks.IsNullOrEmpty() && !token.IsCancellationRequested)
+                    OnTaskError("wall", ErrorResources.LoadAudiosErrorEmpty);
             }
             catch (Exception ex)
             {
-                OnTaskError("audio", ErrorResources.LoadAudiosErrorCommon);
+                OnTaskError("wall", ErrorResources.LoadAudiosErrorCommon);
 
                 LoggingService.Log(ex);
             }
 
             IsWorking = false;
-            OnTaskFinished("audio");
+            OnTaskFinished("wall");
         }
 
         private async void LoadFavoritesAudios(CancellationToken token)
         {
             IsWorking = true;
-            OnTaskStarted("audio");
+            OnTaskStarted("favorites");
 
-            Tracks = new ObservableCollection<Audio>();
+            FavoritesTracks = new ObservableCollection<Audio>();
 
             try
             {
@@ -503,14 +561,14 @@ namespace Meridian.ViewModel.Main
                 int count = 50;
                 int requestsCount = 0;
 
-                while (Tracks != null && Tracks.Count < MAX_WALL_AUDIOS)
+                while (FavoritesTracks != null && FavoritesTracks.Count < MAX_WALL_AUDIOS)
                 {
                     var a = await DataService.GetFavoritesAudio(count, offset, 0, token);
                     if (a == null || a.Count == 0)
                         break;
                     else if (a.Count > 0)
                     {
-                        OnTaskFinished("audio");
+                        OnTaskFinished("favorites");
                     }
 
                     if (token.IsCancellationRequested)
@@ -523,7 +581,7 @@ namespace Meridian.ViewModel.Main
 
                     foreach (var audio in a)
                     {
-                        Tracks.Add(audio);
+                        FavoritesTracks.Add(audio);
                     }
 
                     requestsCount++;
@@ -537,18 +595,18 @@ namespace Meridian.ViewModel.Main
                     Debug.WriteLine("Loading more audios from favorites");
                 }
 
-                if ((Tracks == null || Tracks.Count == 0) && !token.IsCancellationRequested)
-                    OnTaskError("audio", ErrorResources.LoadAudiosErrorEmpty);
+                if (FavoritesTracks.IsNullOrEmpty() && !token.IsCancellationRequested)
+                    OnTaskError("favorites", ErrorResources.LoadAudiosErrorEmpty);
             }
             catch (Exception ex)
             {
                 LoggingService.Log(ex);
 
-                OnTaskError("audio", ErrorResources.LoadAudiosErrorCommon);
+                OnTaskError("favorites", ErrorResources.LoadAudiosErrorCommon);
             }
 
             IsWorking = false;
-            OnTaskFinished("audio");
+            OnTaskFinished("favorites");
         }
 
         private async Task LoadArtists(CancellationToken token)
