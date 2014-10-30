@@ -39,7 +39,7 @@ namespace Meridian
 
             if (Settings.Instance.SendStats)
             {
-                Counter.Start(19168); //Yandex Metrica
+                YandexMetrica.Start(19168); //Yandex Metrica
             }
 
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Instance.Language);
@@ -108,7 +108,7 @@ namespace Meridian
 
             if (Settings.Instance.SendStats)
             {
-                Counter.ReportExit();
+                YandexMetrica.ReportExit();
             }
         }
 

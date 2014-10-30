@@ -156,5 +156,12 @@ namespace Meridian.Services.Music
                 return result;
             });
         }
+
+        public async Task Clear()
+        {
+            await ServiceLocator.DataBaseService.Clear<Audio>();
+            await ServiceLocator.DataBaseService.Clear<AudioAlbum>();
+            await ServiceLocator.DataBaseService.Clear<AudioArtist>();
+        }
     }
 }

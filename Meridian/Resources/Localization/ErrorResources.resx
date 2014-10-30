@@ -129,6 +129,9 @@
   <data name="LoadAlbumsErrorCommon" xml:space="preserve">
     <value>Unable to load albums</value>
   </data>
+  <data name="LoadArtistsErrorCommon" xml:space="preserve">
+    <value>Unable to load artists</value>
+  </data>
   <data name="LoadAudiosErrorAccessDenied" xml:space="preserve">
     <value>Access to audio list is denied</value>
   </data>

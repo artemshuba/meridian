@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
 using Meridian.Controls;
 using Meridian.Model;
+using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.View.Flyouts.Local;
 using Neptune.Extensions;
@@ -35,6 +36,11 @@ namespace Meridian.ViewModel.Local
         /// Go to album command
         /// </summary>
         public RelayCommand<AudioAlbum> GoToAlbumCommand { get; private set; }
+
+        /// <summary>
+        /// Refresh command
+        /// </summary>
+        public RelayCommand RefreshCommand { get; private set; }
 
         #endregion
 
@@ -100,7 +106,9 @@ namespace Meridian.ViewModel.Local
 
                         case 2:
                             if (Artists.IsNullOrEmpty())
+                            {
                                 LoadArtists();
+                            }
                             break;
                     }
                 }
@@ -143,6 +151,11 @@ namespace Meridian.ViewModel.Local
                     }
                 });
             });
+
+            RefreshCommand = new RelayCommand(() =>
+            {
+                Refresh();
+            });
         }
 
         private async void Load()
@@ -151,11 +164,45 @@ namespace Meridian.ViewModel.Local
 
             if (Tracks == null || Tracks.Count == 0)
             {
-                var flyout = new FlyoutControl();
-                flyout.FlyoutContent = new MusicScanView();
-                await flyout.ShowAsync();
+                Refresh();
+            }
+        }
 
-                await LoadTracks();
+        private async void Refresh()
+        {
+            await ServiceLocator.LocalMusicService.Clear();
+
+            if (Tracks != null)
+                Tracks.Clear();
+
+            if (Artists != null)
+                Artists.Clear();
+
+            if (Albums != null)
+                Albums.Clear();
+
+            if (AlbumGroups != null)
+                AlbumGroups.Clear();
+
+            if (SelectedArtistAlbums != null)
+                SelectedArtistAlbums.Clear();
+
+            var flyout = new FlyoutControl();
+            flyout.FlyoutContent = new MusicScanView();
+            await flyout.ShowAsync();
+
+            switch (SelectedTabIndex)
+            {
+                case 0:
+                    LoadTracks();
+                    break;
+                case 1:
+                    LoadAlbums();
+                    break;
+
+                case 2:
+                    LoadArtists();
+                    break;
             }
         }
 
@@ -189,7 +236,7 @@ namespace Meridian.ViewModel.Local
             }
             catch (Exception ex)
             {
-                OnTaskError("albums", "~Unable to load albums");
+                OnTaskError("albums", ErrorResources.LoadAlbumsErrorCommon);
 
                 LoggingService.Log(ex);
             }
@@ -210,7 +257,7 @@ namespace Meridian.ViewModel.Local
             }
             catch (Exception ex)
             {
-                OnTaskError("artists", "~Unable to load artists");
+                OnTaskError("artists", ErrorResources.LoadArtistsErrorCommon);
 
                 LoggingService.Log(ex);
             }
@@ -224,6 +271,9 @@ namespace Meridian.ViewModel.Local
 
             try
             {
+                if (Albums.IsNullOrEmpty())
+                    await LoadAlbums();
+
                 var albums = await ServiceLocator.LocalMusicService.GetArtistAlbums(SelectedArtist.Id);
 
                 if (!albums.IsNullOrEmpty())
@@ -240,7 +290,7 @@ namespace Meridian.ViewModel.Local
             }
             catch (Exception ex)
             {
-                OnTaskError("artists", "~Unable to load artists");
+                OnTaskError("artists", ErrorResources.LoadArtistsErrorCommon);
 
                 LoggingService.Log(ex);
             }

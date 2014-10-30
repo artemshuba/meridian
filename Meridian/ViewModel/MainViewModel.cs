@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -734,7 +735,7 @@ namespace Meridian.ViewModel
                 return;
 
             if (Settings.Instance.SendStats)
-                Counter.ReportEvent("page" + message.Page);
+                YandexMetrica.ReportEvent("page" + message.Page);
 
             if (typeof(PageBase).IsAssignableFrom(type))
             {
@@ -936,6 +937,28 @@ namespace Meridian.ViewModel
         {
             if (CurrentAudio == null)
                 return;
+
+            if (CurrentAudio is LocalAudio)
+            {
+                using (var audioFile = TagLib.File.Create(CurrentAudio.Source))
+                {
+                    var image = audioFile.Tag.Pictures.FirstOrDefault();
+                    if (image != null)
+                    {
+                        var ms = new MemoryStream();
+                        await ms.WriteAsync(image.Data.Data, 0, image.Data.Data.Length);
+                        ms.Seek(0, SeekOrigin.Begin);
+
+                        BitmapImage bi = null;
+                        bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.StreamSource = ms;
+                        bi.EndInit();
+                        TrackImage = bi;
+                        return;
+                    }
+                }
+            }
 
             if (Settings.Instance.DownloadAlbumArt)
             {

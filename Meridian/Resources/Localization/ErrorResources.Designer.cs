@@ -97,6 +97,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to load artists.
+        /// </summary>
+        public static string LoadArtistsErrorCommon {
+            get {
+                return ResourceManager.GetString("LoadArtistsErrorCommon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Access to audio list is denied.
         /// </summary>
         public static string LoadAudiosErrorAccessDenied {

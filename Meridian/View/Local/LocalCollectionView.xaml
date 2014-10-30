@@ -38,15 +38,15 @@
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <!--<Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
+            <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                    PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
                 <Border Background="White" BorderThickness="1" BorderBrush="Black">
                     <ItemsControl>
                         <MenuItem Header="{x:Static Properties:MainResources.HeaderMenuRefresh}" Command="{Binding RefreshCommand}" CommandParameter="{Binding}" Click="MenuItem_OnClick"/>
-                        <MenuItem x:Name="LocalSearchItem" Header="{x:Static Properties:MainResources.HeaderMenuLocalSearch}" Click="LocalSearchItem_OnClick"/>
+                        <!--<MenuItem x:Name="LocalSearchItem" Header="{x:Static Properties:MainResources.HeaderMenuLocalSearch}" Click="LocalSearchItem_OnClick"/>-->
                     </ItemsControl>
                 </Border>
-            </Popup>-->
+            </Popup>
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
                     HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>

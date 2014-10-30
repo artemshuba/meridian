@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using Meridian.ViewModel.Local;
 
 namespace Meridian.View.Local
@@ -16,6 +18,11 @@ namespace Meridian.View.Local
 
             _viewModel = new LocalMusicViewModel();
             this.DataContext = _viewModel;
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            HeaderMenuPopup.SetCurrentValue(Popup.IsOpenProperty, false);
         }
     }
 }

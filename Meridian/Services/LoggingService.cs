@@ -22,7 +22,7 @@ namespace Meridian.Services
 
             _logger.Error(ex);
 
-            Counter.ReportError("Exception", ex);
+            YandexMetrica.ReportError("Exception", ex);
         }
     }
 }

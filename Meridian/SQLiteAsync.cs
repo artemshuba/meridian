@@ -277,6 +277,19 @@ namespace SQLite
 			});
 		}
 
+        public Task<int> DeleteAllAsync<T>()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                var conn = GetConnection();
+                using (conn.Lock())
+                {
+                    return conn.DeleteAll<T>();
+                }
+            });
+        }
+
+
         [Obsolete("Will cause a deadlock if any call in action ends up in a different thread. Use RunInTransactionAsync(Action<SQLiteConnection>) instead.")]
 		public Task RunInTransactionAsync (Action<SQLiteAsyncConnection> action)
 		{

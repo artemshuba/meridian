@@ -33,6 +33,13 @@ namespace Meridian.Services
             Debug.WriteLine("Database initialized.");
         }
 
+        public async Task Clear<T>() where T : new()
+        {
+            var db = new SQLiteAsyncConnection(_dbPath);
+
+            await db.DeleteAllAsync<T>();
+        }
+
         public async Task SaveItems<T>(IEnumerable<T> items) where T : new()
         {
             var db = new SQLiteAsyncConnection(_dbPath);
