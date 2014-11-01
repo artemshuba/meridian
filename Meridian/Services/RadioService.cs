@@ -241,7 +241,7 @@ namespace Meridian.Services
 
         private static void PlaySong(EchoSong song)
         {
-            var audio = new Audio()
+            var audio = new VkAudio()
             {
                 Title = song.Title,
                 Artist = song.ArtistName
