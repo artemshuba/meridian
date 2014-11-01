@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -102,6 +103,7 @@ namespace Meridian.Helpers
                             KeyValuePair<string, ImageSource> pair = keyValuePair;
                             DispatcherHelper.RunAsync(() =>
                             {
+
                                 target.Cover = pair.Value;
                             });
                         }
@@ -121,7 +123,15 @@ namespace Meridian.Helpers
 
         private static async Task<KeyValuePair<string, ImageSource>> ProcessQueueItem(string albumId, string coverPath)
         {
-            ImageSource source = await GetImage(coverPath);
+            ImageSource source = null;
+            try
+            {
+                source = await GetImage(coverPath);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
 
             return new KeyValuePair<string, ImageSource>(albumId, source);
         }
@@ -138,13 +148,24 @@ namespace Meridian.Helpers
                     ms.Seek(0, SeekOrigin.Begin);
 
                     BitmapImage bi = null;
-                    await DispatcherHelper.RunAsync(() =>
-                    {
+
+                    //await DispatcherHelper.RunAsync(() =>
+                    //{
                         bi = new BitmapImage();
+                    //});
+
+                    try
+                    {
                         bi.BeginInit();
                         bi.StreamSource = ms;
                         bi.EndInit();
-                    });
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                        return null;
+                    }
+                    bi.Freeze();
                     return bi;
                 }
             }

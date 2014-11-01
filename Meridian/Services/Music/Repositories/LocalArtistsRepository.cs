@@ -10,12 +10,11 @@ namespace Meridian.Services.Music.Repositories
 {
     public class LocalArtistsRepository
     {
-        private readonly string _libraryPath;
         private bool _refreshed;
 
-        public LocalArtistsRepository(string libraryPath)
+        public LocalArtistsRepository()
         {
-            _libraryPath = libraryPath;
+
         }
 
         public async Task<List<AudioArtist>> Get()
@@ -75,8 +74,7 @@ namespace Meridian.Services.Music.Repositories
         {
             return Task.Run(async () =>
             {
-                var musicFiles = Directory.EnumerateFiles(_libraryPath, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase)
-                                || s.EndsWith(".wma", StringComparison.OrdinalIgnoreCase)).ToList();
+                var musicFiles = FilesHelper.GetMusicFiles();
 
                 double totalCount = musicFiles.Count;
 

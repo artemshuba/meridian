@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 using Meridian.Helpers;
 using Meridian.Model;
 using Meridian.Services.Music.Repositories;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace Meridian.Services.Music
 {
     public class LocalMusicService
     {
         private CancellationTokenSource _scanCancellationToken = new CancellationTokenSource();
-        private readonly string _libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
         private readonly LocalArtistsRepository _artistsRepository;
         private readonly LocalAlbumsRepository _albumsRepository;
 
         public LocalMusicService()
         {
-            _artistsRepository = new LocalArtistsRepository(_libraryPath);
-            _albumsRepository = new LocalAlbumsRepository(_libraryPath);
+            _artistsRepository = new LocalArtistsRepository();
+            _albumsRepository = new LocalAlbumsRepository();
         }
 
         public async Task ScanMusic(IProgress<double> progress)
@@ -36,8 +36,7 @@ namespace Meridian.Services.Music
 
                 await Task.Run(async () =>
                 {
-                    var musicFiles = Directory.EnumerateFiles(_libraryPath, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase)
-                                    || s.EndsWith(".wma", StringComparison.OrdinalIgnoreCase)).ToList();
+                    var musicFiles = FilesHelper.GetMusicFiles();
 
                     double totalCount = musicFiles.Count;
 
@@ -65,7 +64,7 @@ namespace Meridian.Services.Music
                                 track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim() : StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
                                 track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
                                 if (!albums.ContainsKey(track.AlbumId))
-                                    albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year});
+                                    albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year });
                                 else
                                 {
                                     if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
@@ -82,7 +81,7 @@ namespace Meridian.Services.Music
                                 if (!artists.ContainsKey(track.ArtistId))
                                     artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = track.Artist });
                             }
-             
+
                             tracks.Add(track);
 
                             count++;
