@@ -119,7 +119,13 @@ namespace Meridian.Services
             if (lastestBuild > Assembly.GetExecutingAssembly().GetName().Version.Build)
             {
                 var path = json["path"].Value<string>();
-                UpdateDescription = json["description"].Value<string>();
+                var details = json["details"];
+                if (details != null)
+                {
+                    var lang = Domain.Settings.Instance.Language == "ru" ? "ru" : "en";
+                    if (details[lang] != null)
+                        UpdateDescription = details[lang].Value<string>();
+                }
                 UpdateInternal(path);
             }
         }
