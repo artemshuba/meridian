@@ -11,8 +11,8 @@
     <Grid>
         <Grid HorizontalAlignment="Center" Width="350">
             <StackPanel Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-                <TextBlock Text="{x:Static localization:MainResources.CommonErrorViewTitle}" Foreground="{StaticResource AccentBrush}" FontSize="24" FontWeight="Light"/>
-                <TextBlock Text="{x:Static localization:MainResources.CommonErrorViewContent}" FontSize="12" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}" TextWrapping="Wrap"/>
+                <TextBlock x:Name="TitleTextBlock"  Text="{x:Static localization:MainResources.CommonErrorViewTitle}" Foreground="{StaticResource AccentBrush}" FontSize="24" FontWeight="Light"/>
+                <TextBlock x:Name="DescriptionTextBlock"  Text="{x:Static localization:MainResources.CommonErrorViewContent}" FontSize="12" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}" TextWrapping="Wrap"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
                     <Button x:Name="RestartButton" Content="{x:Static localization:MainResources.CommonErrorViewRestart}" Padding="23,3" Margin="0,0,10,0" Style="{StaticResource HighlightedButtonStyle}"

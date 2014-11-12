@@ -61,6 +61,24 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meridian doesn&apos;t have rights to write content in the current folder. Please restart application with administrative privilegies..
+        /// </summary>
+        public static string AccessDeniedErrorDescription {
+            get {
+                return ResourceManager.GetString("AccessDeniedErrorDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to save settings.
+        /// </summary>
+        public static string AccessDeniedErrorTitle {
+            get {
+                return ResourceManager.GetString("AccessDeniedErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to play audio.
         /// </summary>
         public static string AudioFailedErrorHeaderCommon {

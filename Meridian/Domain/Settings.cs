@@ -13,6 +13,9 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using VkLib.Core.Auth;
 using VkLib.Core.Groups;
+using Meridian.Controls;
+using Meridian.View.Flyouts;
+using System.Diagnostics;
 
 namespace Meridian.Domain
 {
@@ -181,16 +184,43 @@ namespace Meridian.Domain
             }
         }
 
-        public void Save()
+        public async void Save()
         {
-            var settings = new JsonSerializerSettings()
+            try
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
+                var settings = new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
 
-            var json = JsonConvert.SerializeObject(this, settings);
+                var json = JsonConvert.SerializeObject(this, settings);
 
-            File.WriteAllText(SETTINGS_FILE, json);
+                File.WriteAllText(SETTINGS_FILE, json);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                var flyout = new FlyoutControl();
+                flyout.FlyoutContent = new CommonErrorView(ErrorResources.AccessDeniedErrorTitle, ErrorResources.AccessDeniedErrorDescription);
+                var restart = (bool)await flyout.ShowAsync();
+                if (restart)
+                {
+                    var info = new ProcessStartInfo();
+                    info.UseShellExecute = true;
+                    info.FileName = Application.ResourceAssembly.Location;
+                    info.WorkingDirectory = Environment.CurrentDirectory;
+                    info.Verb = "runas";
+
+                    Process.Start(info);
+                }
+
+                Application.Current.Shutdown();
+
+                LoggingService.Log(ex);
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+            }
         }
     }
 }

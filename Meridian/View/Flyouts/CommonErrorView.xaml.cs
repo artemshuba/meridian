@@ -16,6 +16,12 @@ namespace Meridian.View.Flyouts
             InitializeComponent();
         }
 
+        public CommonErrorView(string title, string description) : this()
+        {
+            TitleTextBlock.Text = title;
+            DescriptionTextBlock.Text = description;
+        }
+
         private void RestartButton_OnClick(object sender, RoutedEventArgs e)
         {
             Close(true, true);
