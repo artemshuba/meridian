@@ -8,7 +8,7 @@
         xmlns:behaviours="clr-namespace:Meridian.Behaviours"
         xmlns:controls="clr-namespace:Meridian.Controls"
         x:Name="pageRoot"
-        Title="{Binding Main.WindowTitle, Source={StaticResource Locator}}" Height="170" Width="375"
+        Title="{Binding Main.WindowTitle, Source={StaticResource Locator}}" Height="140" Width="355"
         Background="{StaticResource MainBackgroundBrush}" ShowInTaskbar="{Binding Main.ShowTrayIcon, Source={StaticResource Locator}, Converter={StaticResource InvertBoolConverter}}"
         DataContext="{Binding Main, Source={StaticResource Locator}}" Topmost="{Binding IsChecked, ElementName=pinButton}"
         ResizeMode="NoResize"
@@ -117,12 +117,12 @@
             <ToggleButton x:Name="pinButton" Style="{StaticResource PinButtonStyle}" ToolTip="{x:Static localization:MainResources.CompactModePin}"
                           VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" Height="24" Margin="11,3,0,0"/>
 
-            <Grid Grid.Row="2" Margin="15,30,0,0" HorizontalAlignment="Left" Height="120" VerticalAlignment="Top">
+            <Grid Grid.Row="2" Margin="15,30,0,0" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Border Margin="0,0,0,0" Width="120">
+                <Border Margin="0,0,0,0" Width="100">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -194,7 +194,7 @@
                 </Grid>
 
                 <Border Background="Transparent" MouseWheel="UIElement_OnMouseWheel" ToolTip="{Binding Main.Volume, Source={StaticResource Locator}}">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Margin="0,0,0,5" DataContext="{Binding Main, Source={StaticResource Locator}}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,-10,0,5" DataContext="{Binding Main, Source={StaticResource Locator}}">
                         <Button Margin="0,0,7,0" Command="{Binding Main.PrevAudioCommand, Source={StaticResource Locator}}" Width="26" Height="26" Style="{StaticResource PrevButtonStyle}" Foreground="{StaticResource ForegroundBrush}"
                                 ToolTip="{x:Static localization:MainResources.PrevTrack}">
                             <Button.RenderTransform>
@@ -216,7 +216,7 @@
                     </StackPanel>
                 </Border>
 
-                <ToggleButton Name="TracklistButton" HorizontalAlignment="Center" Cursor="Hand" Margin="0,-3,0,0" IsChecked="{Binding ShowTracklist, ElementName=pageRoot, Mode=TwoWay}" Content="{x:Static localization:MainResources.CompactModeTracklist}">
+                <ToggleButton Name="TracklistButton" HorizontalAlignment="Center" Cursor="Hand" Margin="0,-8,0,0" IsChecked="{Binding ShowTracklist, ElementName=pageRoot, Mode=TwoWay}" Content="{x:Static localization:MainResources.CompactModeTracklist}">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="ToggleButton">
                             <TextBlock Name="Title" Text="{TemplateBinding Content}" Foreground="{StaticResource ForegroundBrush}" Opacity="0.7"/>
