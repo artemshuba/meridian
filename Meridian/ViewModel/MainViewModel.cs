@@ -616,6 +616,7 @@ namespace Meridian.ViewModel
 
             AddToNowPlayingCommand = new RelayCommand<Audio>(track =>
             {
+                NotificationService.Notify(MainResources.NotificationAddedToNowPlaying);
                 AudioService.Playlist.Add(track);
             });
 

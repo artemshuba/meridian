@@ -201,21 +201,23 @@ namespace Meridian.Domain
             {
                 var flyout = new FlyoutControl();
                 flyout.FlyoutContent = new CommonErrorView(ErrorResources.AccessDeniedErrorTitle, ErrorResources.AccessDeniedErrorDescription);
-                var restart = (bool)await flyout.ShowAsync();
-                if (restart)
+                flyout.ShowAsync().ContinueWith(t =>
                 {
-                    var info = new ProcessStartInfo();
-                    info.UseShellExecute = true;
-                    info.FileName = Application.ResourceAssembly.Location;
-                    info.WorkingDirectory = Environment.CurrentDirectory;
-                    info.Verb = "runas";
+                    if ((bool)t.Result == true)
+                    {
+                        var info = new ProcessStartInfo();
+                        info.UseShellExecute = true;
+                        info.FileName = Application.ResourceAssembly.Location;
+                        info.WorkingDirectory = Environment.CurrentDirectory;
+                        info.Verb = "runas";
 
-                    Process.Start(info);
-                }
+                        Process.Start(info);
+                    }
 
-                Application.Current.Shutdown();
+                    Application.Current.Shutdown();
 
-                LoggingService.Log(ex);
+                    LoggingService.Log(ex);
+                });
             }
             catch (Exception ex)
             {

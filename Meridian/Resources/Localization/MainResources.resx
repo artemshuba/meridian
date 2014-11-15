@@ -756,4 +756,7 @@
   <data name="AllSocieties" xml:space="preserve">
     <value>All societies</value>
   </data>
+  <data name="NotificationAddedToNowPlaying" xml:space="preserve">
+    <value>Track added to now playing</value>
+  </data>
 </root>

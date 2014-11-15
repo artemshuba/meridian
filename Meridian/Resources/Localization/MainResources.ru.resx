@@ -756,4 +756,7 @@
   <data name="AllSocieties" xml:space="preserve">
     <value>Все сообщества</value>
   </data>
+  <data name="NotificationAddedToNowPlaying" xml:space="preserve">
+    <value>Трек добавлен в очередь</value>
+  </data>
 </root>

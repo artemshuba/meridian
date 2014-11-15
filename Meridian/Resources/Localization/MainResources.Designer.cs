@@ -1159,6 +1159,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Track added to now playing.
+        /// </summary>
+        public static string NotificationAddedToNowPlaying {
+            get {
+                return ResourceManager.GetString("NotificationAddedToNowPlaying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to load info about artist.
         /// </summary>
         public static string NotificationArtistNotFound {

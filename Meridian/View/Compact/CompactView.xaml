@@ -10,7 +10,7 @@
         x:Name="pageRoot"
         Title="{Binding Main.WindowTitle, Source={StaticResource Locator}}" Height="268" Width="160"
         Background="{StaticResource MainBackgroundBrush}" ShowInTaskbar="{Binding Main.ShowTrayIcon, Source={StaticResource Locator}, Converter={StaticResource InvertBoolConverter}}"
-        DataContext="{Binding Main, Source={StaticResource Locator}}" Topmost="{Binding IsChecked, ElementName=pinButton}"
+        DataContext="{Binding Main, Source={StaticResource Locator}}" Topmost="{Binding IsChecked, ElementName=pinButton}" ResizeMode="NoResize"
         MouseMove="CompactView_OnMouseMove" Loaded="CompactView_OnLoaded">
     <i:Interaction.Behaviors>
         <chromeWindow:ChromeWindowBehaviour/>

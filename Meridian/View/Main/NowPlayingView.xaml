@@ -30,7 +30,7 @@
         
         <converters:AudioTemplateSelector x:Key="NowPlayingAudioTemplateSelector" 
                                           AudioTemplate="{StaticResource NowPlayingAudioItemTemplate}"
-                                          LocalAudioTemplate="{StaticResource LocalAudioItemTemplate}"/>
+                                          LocalAudioTemplate="{StaticResource NowPlayingLocalAudioItemTemplate}"/>
     </Page.Resources>
     
     <Grid>
