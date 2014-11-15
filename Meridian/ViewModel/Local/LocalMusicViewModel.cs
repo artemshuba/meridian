@@ -132,7 +132,13 @@ namespace Meridian.ViewModel.Local
 
                 if (SelectedTabIndex == 0)
                 {
-                    AudioService.SetCurrentPlaylist(Tracks);
+                    var searchControl = LocalSearchControl.GetForCurrentView();
+                    if (searchControl != null && searchControl.IsFiltering)
+                    {
+                        AudioService.SetCurrentPlaylist((searchControl.Source.View).Cast<Audio>());
+                    }
+                    else
+                        AudioService.SetCurrentPlaylist(Tracks);
                 }
                 else if (SelectedArtistAlbums != null)
                 {

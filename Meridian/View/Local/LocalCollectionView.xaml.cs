@@ -36,7 +36,7 @@ namespace Meridian.View.Local
         {
             var track = (Audio)o;
             var query = LocalSearchBox.Query.ToLower();
-            return track.Title.ToLower().StartsWith(query) || (track.Artist != null && track.Artist.ToLower().StartsWith(query));
+            return track.Title.ToLower().Contains(query) || (track.Artist != null && track.Artist.ToLower().Contains(query));
         }
 
         private void LocalCollectionView_OnLoaded(object sender, RoutedEventArgs e)

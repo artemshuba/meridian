@@ -240,7 +240,13 @@ namespace Meridian.ViewModel.Main
                 switch (SelectedTabIndex)
                 {
                     case 0:
-                        AudioService.SetCurrentPlaylist(Tracks);
+                        var searchControl = LocalSearchControl.GetForCurrentView();
+                        if (searchControl != null && searchControl.IsFiltering)
+                        {
+                            AudioService.SetCurrentPlaylist((searchControl.Source.View).Cast<Audio>());
+                        }
+                        else
+                            AudioService.SetCurrentPlaylist(Tracks);
                         break;
 
                     case 1:

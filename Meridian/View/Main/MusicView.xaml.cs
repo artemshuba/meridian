@@ -49,7 +49,7 @@ namespace Meridian.View.Main
         {
             var track = (Audio)o;
             var query = LocalSearchBox.Query.ToLower();
-            return track.Title.ToLower().StartsWith(query) || track.Artist.ToLower().StartsWith(query);
+            return track.Title.ToLower().Contains(query) || track.Artist.ToLower().Contains(query);
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Neptune.UI.Extensions;
 
 namespace Meridian.Controls
 {
@@ -78,9 +80,16 @@ namespace Meridian.Controls
 
         #endregion
 
+        public bool IsFiltering { get; set; }
+
         public LocalSearchControl()
         {
             InitializeComponent();
+        }
+
+        public static LocalSearchControl GetForCurrentView()
+        {
+            return (Application.Current.MainWindow.GetVisualDescendents().FirstOrDefault(c => c is LocalSearchControl) as LocalSearchControl);
         }
 
         private void LocalSearchControl_OnLoaded(object sender, RoutedEventArgs e)
@@ -95,7 +104,7 @@ namespace Meridian.Controls
             if (Source != null && Source.View != null)
             {
                 Source.IsLiveFilteringRequested = !string.IsNullOrEmpty(Query);
-
+                IsFiltering = !string.IsNullOrEmpty(Query);
                 if (Source.View.Filter == null)
                     Source.View.Filter = Filter;
                 else
