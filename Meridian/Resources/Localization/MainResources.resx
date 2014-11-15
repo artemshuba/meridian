@@ -721,7 +721,7 @@
     <value>Looking for music</value>
   </data>
   <data name="SettingsUIEnabledBlur" xml:space="preserve">
-    <value>Blur background</value>
+    <value>Blur background (reduces performance)</value>
   </data>
   <data name="FavoritesTab" xml:space="preserve">
     <value>Favorites</value>
@@ -758,5 +758,8 @@
   </data>
   <data name="NotificationAddedToNowPlaying" xml:space="preserve">
     <value>Track added to now playing</value>
+  </data>
+  <data name="SettingsUIShowBackgroundArtCompactMode" xml:space="preserve">
+    <value>Show current artist image in compact mode</value>
   </data>
 </root>

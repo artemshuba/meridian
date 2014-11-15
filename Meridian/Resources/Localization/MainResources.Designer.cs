@@ -1681,7 +1681,7 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blur background.
+        ///   Looks up a localized string similar to Blur background (reduces performance).
         /// </summary>
         public static string SettingsUIEnabledBlur {
             get {
@@ -1731,6 +1731,15 @@ namespace Meridian.Resources.Localization {
         public static string SettingsUIShowBackgroundArt {
             get {
                 return ResourceManager.GetString("SettingsUIShowBackgroundArt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show current artist image in compact mode.
+        /// </summary>
+        public static string SettingsUIShowBackgroundArtCompactMode {
+            get {
+                return ResourceManager.GetString("SettingsUIShowBackgroundArtCompactMode", resourceCulture);
             }
         }
         

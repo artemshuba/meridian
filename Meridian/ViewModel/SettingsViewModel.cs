@@ -72,6 +72,7 @@ namespace Meridian.ViewModel
         private bool _enableNotifications;
         private bool _enableTrayIcon;
         private bool _showBackgroundArt;
+        private bool _showBackgroundArtCompactMode;
         private bool _blurBackground;
         private bool _downloadArtistArt;
         private bool _downloadAlbumArt;
@@ -220,6 +221,18 @@ namespace Meridian.ViewModel
             }
         }
 
+        public bool ShowBackgroundArtCompactMode
+        {
+            get { return _showBackgroundArtCompactMode; }
+            set
+            {
+                if (Set(ref _showBackgroundArtCompactMode, value))
+                {
+                    CanSave = true;
+                }
+            }
+        }
+
         public bool BlurBackground
         {
             get { return _blurBackground; }
@@ -317,6 +330,7 @@ namespace Meridian.ViewModel
             _enableNotifications = Domain.Settings.Instance.ShowTrackNotifications;
             _enableTrayIcon = Domain.Settings.Instance.EnableTrayIcon;
             _showBackgroundArt = Domain.Settings.Instance.ShowBackgroundArt;
+            _showBackgroundArtCompactMode = Domain.Settings.Instance.ShowBackgroundArtCompactMode;
             _blurBackground = Domain.Settings.Instance.BlurBackground;
             _downloadArtistArt = Domain.Settings.Instance.DownloadArtistArt;
             _downloadAlbumArt = Domain.Settings.Instance.DownloadAlbumArt;
@@ -536,6 +550,8 @@ namespace Meridian.ViewModel
             Domain.Settings.Instance.EnableTrayIcon = EnableTrayIcon;
 
             ViewModelLocator.Main.ShowBackgroundArt = ShowBackgroundArt;
+
+            ViewModelLocator.Main.ShowBackgroundArtCompactMode = ShowBackgroundArtCompactMode;
 
             Domain.Settings.Instance.DownloadArtistArt = DownloadArtistArt;
 

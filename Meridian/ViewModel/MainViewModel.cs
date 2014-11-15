@@ -484,6 +484,20 @@ namespace Meridian.ViewModel
             }
         }
 
+        public bool ShowBackgroundArtCompactMode
+        {
+            get { return Settings.Instance.ShowBackgroundArtCompactMode; }
+            set
+            {
+                if (Settings.Instance.ShowBackgroundArtCompactMode == value)
+                    return;
+
+                Settings.Instance.ShowBackgroundArtCompactMode = value;
+                RaisePropertyChanged("ShowBackgroundArtCompactMode");
+            }
+        }
+
+
         public MainViewModel()
         {
             InitializeCommands();

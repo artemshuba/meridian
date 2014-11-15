@@ -97,7 +97,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <controls:ImageTransitionControl x:Name="BackgroundArtControl" Source="{Binding Main.ArtistImage, Source={StaticResource Locator}}" Grid.RowSpan="2" ImageOpacity="0.2" />
+        <controls:ImageTransitionControl x:Name="BackgroundArtControl" Source="{Binding Main.ArtistImage, Source={StaticResource Locator}}" Grid.RowSpan="2" ImageOpacity="0.2" 
+                                         Visibility="{Binding Main.ShowBackgroundArtCompactMode, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
         
         <!-- Player view -->
         <Grid Margin="0,0,0,0">

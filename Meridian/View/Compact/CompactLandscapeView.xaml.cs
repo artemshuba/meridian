@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 using Meridian.ViewModel;
 using Meridian.ViewModel.Main;
 
@@ -57,6 +58,8 @@ namespace Meridian.View.Compact
         {
             Top = Domain.Settings.Instance.CompactTop;
             Left = Domain.Settings.Instance.CompactLeft;
+
+            BackgroundArtControl.Effect = Domain.Settings.Instance.BlurBackground ? new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35 } : null;
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

@@ -70,6 +70,8 @@ namespace Meridian.Domain
 
         public bool ShowBackgroundArt { get; set; }
 
+        public bool ShowBackgroundArtCompactMode { get; set; }
+
         public bool BlurBackground { get; set; }
 
         public bool DownloadArtistArt { get; set; }
@@ -154,6 +156,7 @@ namespace Meridian.Domain
 
             BlurBackground = false;
             ShowBackgroundArt = true;
+            ShowBackgroundArtCompactMode = true;
 
             Accounts = new List<Account>();
 
