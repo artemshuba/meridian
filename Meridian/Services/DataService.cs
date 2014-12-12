@@ -215,18 +215,13 @@ namespace Meridian.Services
             return new Uri(info.ImageExtraLarge);
         }
 
-        public static async Task<List<Audio>> GetTagTopTracks(string tag, int count = 50)
+        public static async Task<List<VkAudio>> GetTagTopTracks(string tag, int count = 50)
         {
             var tracks = await _lastFm.Tag.GetTopTracks(tag, count);
             if (tracks != null)
             {
                 return (from track in tracks
-                        select new Audio()
-                        {
-                            Title = track.Title,
-                            Artist = track.Artist,
-                            Duration = TimeSpan.FromSeconds(track.Duration)
-                        }).ToList();
+                        select track.ToAudio()).ToList();
             }
 
             return null;
