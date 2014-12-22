@@ -17,7 +17,6 @@
         KeyUp="MainWindow_OnKeyUp"
         MouseMove="MainWindow_OnMouseMove" Loaded="MainWindow_OnLoaded" Closing="MainWindow_OnClosing">
     <Window.Resources>
-        <converters:BooleanToObjectConverter x:Key="PlayIconConverter" TrueObject="/Meridian;component/Resources/Images/pause_thumb.png" FalseObject="/Meridian;component/Resources/Images/play_thumb.png"/>
         <converters:BooleanToObjectConverter x:Key="WindowMarginConverter" TrueObject="6,6,6,0" FalseObject="0"/>
 
         <CollectionViewSource x:Key="MainMenuGroups" Source="{Binding MainMenuItems}">

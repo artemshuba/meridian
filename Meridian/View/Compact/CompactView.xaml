@@ -15,6 +15,18 @@
     <i:Interaction.Behaviors>
         <chromeWindow:ChromeWindowBehaviour/>
     </i:Interaction.Behaviors>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo x:Name="Taskbar">
+            <TaskbarItemInfo.ThumbButtonInfos>
+                <ThumbButtonInfo ImageSource="/Meridian;component/Resources/Images/prev_thumb.png" 
+                                 Command="{Binding Main.PrevAudioCommand, Source={StaticResource Locator}}"/>
+                <ThumbButtonInfo ImageSource="{Binding Main.IsPlaying, Source={StaticResource Locator}, Converter={StaticResource PlayIconConverter}}"
+                                 Command="{Binding Main.PlayPauseCommand, Source={StaticResource Locator}}"/>
+                <ThumbButtonInfo ImageSource="/Meridian;component/Resources/Images/next_thumb.png"
+                                 Command="{Binding Main.NextAudioCommand, Source={StaticResource Locator}}"/>
+            </TaskbarItemInfo.ThumbButtonInfos>
+        </TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
     <Window.Resources>
         <converters:BooleanToValueConverter x:Key="LikeDislikeTooltipConverter" FalseValue="{x:Static localization:MainResources.ContextMenuAdd}" TrueValue="{x:Static localization:MainResources.ContextMenuRemove}"/>
 

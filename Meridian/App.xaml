@@ -37,6 +37,7 @@
                     <converters:InvertBooleanConverter x:Key="InvertBoolConverter" />
                     <converters1:AudioTimeSpanConverter x:Key="AudioTimeSpanConverter"/>
                     <converters1:AlbumContextMenuVisibilityConverter x:Key="AlbumContextMenuVisibilityConverter"/>
+                    <converters:BooleanToObjectConverter x:Key="PlayIconConverter" TrueObject="/Meridian;component/Resources/Images/pause_thumb.png" FalseObject="/Meridian;component/Resources/Images/play_thumb.png"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="/Resources/Styles/DataTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>

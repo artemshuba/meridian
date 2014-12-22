@@ -13,10 +13,22 @@
         DataContext="{Binding Main, Source={StaticResource Locator}}" Topmost="{Binding IsChecked, ElementName=pinButton}"
         ResizeMode="NoResize"
         MouseMove="CompactView_OnMouseMove" Loaded="CompactView_OnLoaded">
-    
+
     <i:Interaction.Behaviors>
         <chromeWindow:ChromeWindowBehaviour/>
     </i:Interaction.Behaviors>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo x:Name="Taskbar">
+            <TaskbarItemInfo.ThumbButtonInfos>
+                <ThumbButtonInfo ImageSource="/Meridian;component/Resources/Images/prev_thumb.png" 
+                                 Command="{Binding Main.PrevAudioCommand, Source={StaticResource Locator}}"/>
+                <ThumbButtonInfo ImageSource="{Binding Main.IsPlaying, Source={StaticResource Locator}, Converter={StaticResource PlayIconConverter}}"
+                                 Command="{Binding Main.PlayPauseCommand, Source={StaticResource Locator}}"/>
+                <ThumbButtonInfo ImageSource="/Meridian;component/Resources/Images/next_thumb.png"
+                                 Command="{Binding Main.NextAudioCommand, Source={StaticResource Locator}}"/>
+            </TaskbarItemInfo.ThumbButtonInfos>
+        </TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
     <Window.Resources>
         <converters:BooleanToValueConverter x:Key="LikeDislikeTooltipConverter" FalseValue="{x:Static localization:MainResources.ContextMenuAdd}" TrueValue="{x:Static localization:MainResources.ContextMenuRemove}"/>
 
@@ -90,7 +102,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
-    
+
     <Grid Background="{StaticResource BackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -99,7 +111,7 @@
 
         <controls:ImageTransitionControl x:Name="BackgroundArtControl" Source="{Binding Main.ArtistImage, Source={StaticResource Locator}}" Grid.RowSpan="2" ImageOpacity="0.2" 
                                          Visibility="{Binding Main.ShowBackgroundArtCompactMode, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-        
+
         <!-- Player view -->
         <Grid Margin="0,0,0,0">
             <Grid.RenderTransform>
@@ -114,7 +126,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
+
             <ToggleButton x:Name="pinButton" Style="{StaticResource PinButtonStyle}" ToolTip="{x:Static localization:MainResources.CompactModePin}"
                           VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" Height="24" Margin="11,3,0,0"/>
 
@@ -181,7 +193,7 @@
                         </DataTemplate>
                     </controls:ContentTransitionControl.ContentTemplate>
                 </controls:ContentTransitionControl>
-                
+
                 <Grid VerticalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition />
