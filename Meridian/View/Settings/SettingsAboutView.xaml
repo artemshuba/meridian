@@ -32,7 +32,7 @@
                 <Run Text="{Binding Version, Mode=OneWay}" />
                 <Run Text="preview" />
             </TextBlock>
-            <TextBlock Text="Copyright © Stealth 2014" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBlock Text="Copyright © Stealth 2015" Foreground="{StaticResource ForegroundBrush}"/>
             <TextBlock x:Name="SiteLink" FontWeight="Normal" TextWrapping="Wrap" Text="http://meridianvk.com" HorizontalAlignment="Left" FontSize="12"
                        MouseLeftButtonUp="SiteLink_OnMouseLeftButtonUp">
                 <TextBlock.Style>

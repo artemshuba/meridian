@@ -115,7 +115,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -838,10 +838,6 @@
     <ProjectReference Include="..\Neptune\Trunk\Neptune.Desktop\Neptune.Desktop.csproj">
       <Project>{4aa2609b-b5e4-4f3e-95fd-47c1a27929b2}</Project>
       <Name>Neptune.Desktop</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Neptune\Trunk\Neptune.UI.Desktop\Neptune.UI.Desktop.csproj">
-      <Project>{2097b5fe-54ab-4347-9b7c-b895f3657be6}</Project>
-      <Name>Neptune.UI.Desktop</Name>
     </ProjectReference>
     <ProjectReference Include="..\VkLibPortable\Trunk\VkLibPortable.csproj">
       <Project>{96824317-5143-413a-8ec6-5f92de7ab60e}</Project>

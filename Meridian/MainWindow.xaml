@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:chromeWindow="clr-namespace:Meridian.ChromeWindow"
-        xmlns:converters="clr-namespace:Neptune.UI.Converters;assembly=Neptune.UI.Desktop"
+        xmlns:converters="clr-namespace:Neptune.UI.Converters;assembly=Neptune.Desktop"
         xmlns:controls="clr-namespace:Meridian.Controls"
         xmlns:behaviours="clr-namespace:Meridian.Behaviours"
         xmlns:localization="clr-namespace:Meridian.Resources.Localization"
@@ -143,7 +143,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding Title}" FontWeight="Regular" FontSize="14"/>
-                            <Path Grid.Column="1"  Data="{Binding Icon}" Fill="{StaticResource SidebarForegroundBrush}" Width="12" Stretch="Uniform" Margin="0,0,12,0" SnapsToDevicePixels="False"/>
+                            <Path Grid.Column="1"  Data="{Binding Icon}" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=Foreground}" Width="12" Stretch="Uniform" Margin="0,0,12,0" SnapsToDevicePixels="False"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
