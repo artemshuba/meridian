@@ -82,7 +82,7 @@
     
     <Style x:Key="CommonTabItemStyle" TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -264,7 +264,7 @@
                             <Setter Property="Panel.ZIndex" Value="1"/>
                             <Setter Property="Opacity" TargetName="contentPresenter" Value="1"/>
                             <Setter Property="FontWeight"  Value="Normal"/>
-                            <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource AccentBrush}"/>
+                            <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource AccentBrush}"/>
                             <Setter Property="Foreground" Value="White"/>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>

@@ -345,9 +345,9 @@ namespace Meridian.Services
                 SwitchNext();
             else
                 if (RadioService.CurrentRadio == null)
-                    Next(true);
-                else
-                    RadioService.SkipNext();
+                Next(true);
+            else
+                RadioService.SkipNext();
         }
 
         /// <summary>
@@ -469,8 +469,9 @@ namespace Meridian.Services
 
                     if (o["currentPlaylist"] != null)
                     {
-                        var playlist = JsonConvert.DeserializeObject<List<object>>(o["currentPlaylist"].ToString(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects});
-                        Application.Current.Dispatcher.Invoke(() => SetCurrentPlaylist(playlist.OfType<Audio>()));
+                        var playlist = JsonConvert.DeserializeObject<List<object>>(o["currentPlaylist"].ToString(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
+                        if (playlist != null)
+                            Application.Current.Dispatcher.Invoke(() => SetCurrentPlaylist(playlist.OfType<Audio>()));
                     }
                 }
                 catch (Exception ex)
@@ -490,7 +491,7 @@ namespace Meridian.Services
                     currentPlaylist = Playlist
                 };
 
-                var json = JsonConvert.SerializeObject(o, new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.Objects});
+                var json = JsonConvert.SerializeObject(o, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
                 File.WriteAllText("currentPlaylist.js", json);
             }
             catch (Exception ex)
@@ -567,7 +568,7 @@ namespace Meridian.Services
 
             if (e is COMException)
             {
-                var com = (COMException) e;
+                var com = (COMException)e;
                 if ((uint)com.ErrorCode == 0xC00D0035) //not found or connection problem
                 {
                     var flyout = new FlyoutControl();

@@ -131,8 +131,8 @@ namespace Meridian.ViewModel
                 if (Set(ref _selectedTheme, value))
                 {
                     CanSave = true;
-                    if (value != Domain.Settings.Instance.AccentColor)
-                        RestartRequired = true;
+                    //if (value != Domain.Settings.Instance.AccentColor)
+                    //    RestartRequired = true;
                 }
             }
         }
@@ -150,8 +150,6 @@ namespace Meridian.ViewModel
                 if (Set(ref _selectedColorScheme, value))
                 {
                     CanSave = true;
-                    if (value.Name != Domain.Settings.Instance.AccentColor)
-                        RestartRequired = true;
                 }
             }
         }
@@ -537,6 +535,36 @@ namespace Meridian.ViewModel
 
         private void SaveSettings()
         {
+            switch (SelectedTheme)
+            {
+                case "Light":
+                case "Dark":
+                    Application.Current.Resources.MergedDictionaries[1].Source = new Uri(string.Format("/Resources/Themes/{0}.xaml", SelectedTheme), UriKind.Relative);
+                    break;
+
+                default:
+                    Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Resources/Themes/Light.xaml", UriKind.Relative);
+                    break;
+            }
+
+            switch (SelectedColorScheme.Name)
+            {
+                case "Red":
+                case "Emerald":
+                case "Magenta":
+                case "Mango":
+                case "Sea":
+                case "Sky":
+                case "Purple":
+                case "Pink":
+                    Application.Current.Resources.MergedDictionaries[0].Source = new Uri(string.Format("/Resources/Themes/Accents/{0}.xaml", SelectedColorScheme.Name), UriKind.Relative);
+                    break;
+
+                default:
+                    Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Resources/Themes/Accents/Blue.xaml", UriKind.Relative);
+                    break;
+            }
+
             Domain.Settings.Instance.AccentColor = SelectedColorScheme.Name;
 
             Domain.Settings.Instance.Theme = SelectedTheme;

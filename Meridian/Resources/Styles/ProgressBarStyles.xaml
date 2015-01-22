@@ -35,7 +35,7 @@
         </Setter>
     </Style>
     <Style x:Key="CommonProgressBarStyle" TargetType="{x:Type ProgressBar}">
-        <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
         <Setter Property="IsHitTestVisible" Value="False"/>
         <Setter Property="Padding" Value="12"/>
         <Setter Property="Template">

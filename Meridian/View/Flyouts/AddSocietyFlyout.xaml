@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:Meridian.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600" Margin="0,50,0,50"
-             Background="{StaticResource MainBackgroundBrush}" VerticalAlignment="Center"
+             Background="{DynamicResource MainBackgroundBrush}" VerticalAlignment="Center"
              x:Name="rootElement">
     <Grid Margin="0,20,0,20" HorizontalAlignment="Center" Width="400">
         <Grid.RowDefinitions>
@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel>
-            <TextBlock x:Name="Title" Text="{x:Static Properties:MainResources.FeedAddSocietyTitle}" FontSize="24" FontWeight="Light" Foreground="{StaticResource AccentBrush}"/>
+            <TextBlock x:Name="Title" Text="{x:Static Properties:MainResources.FeedAddSocietyTitle}" FontSize="24" FontWeight="Light" Foreground="{DynamicResource AccentBrush}"/>
         </StackPanel>
 
 
@@ -49,7 +49,7 @@
                                     <Image helpers:ImageAsyncHelper.SourceUri="{Binding PhotoMedium}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
                                 </Grid>
                                 <TextBlock Grid.Column="1" Text="{Binding Name}" FontWeight="Normal" FontSize="16" Margin="10,0,0,0" TextTrimming="CharacterEllipsis" Opacity="0.8"
-                                       Foreground="{StaticResource ForegroundBrush}" VerticalAlignment="Center"/>
+                                       Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center"/>
                             </Grid>
                         </Button>
                     </DataTemplate>

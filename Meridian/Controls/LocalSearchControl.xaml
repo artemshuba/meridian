@@ -17,10 +17,10 @@
     <UserControl.RenderTransform>
         <TranslateTransform />
     </UserControl.RenderTransform>
-    <Border x:Name="LocalSearchBoxRootBorder" Background="{StaticResource MainBackgroundBrush}" VerticalAlignment="Top" Width="200" Margin="0,-1,20,0" BorderThickness="1,0,1,1" HorizontalAlignment="Right"
+    <Border x:Name="LocalSearchBoxRootBorder" Background="{DynamicResource MainBackgroundBrush}" VerticalAlignment="Top" Width="200" Margin="0,-1,20,0" BorderThickness="1,0,1,1" HorizontalAlignment="Right"
             SnapsToDevicePixels="False">
         <Border.BorderBrush>
-            <SolidColorBrush Color="{StaticResource ForegroundColor}" Opacity="0.15"/>
+            <SolidColorBrush Color="{DynamicResource ForegroundColor}" Opacity="0.15"/>
         </Border.BorderBrush>
         <Grid>
             <controls:TextBoxWithHint x:Name="LocalSearchBox" Style="{StaticResource LocalSearchBoxStyle}" Padding="0,0,20,0" Margin="10,10,5,10" Hint="Start typing" Height="24" 

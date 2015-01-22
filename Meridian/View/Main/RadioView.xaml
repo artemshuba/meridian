@@ -32,16 +32,16 @@
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <StackPanel Grid.Column="1">
-                <TextBlock Text="{x:Static localization:MainResources.MainMenuRadio}" FontSize="28" FontWeight="Thin" Margin="5,0,0,0" Foreground="{StaticResource ForegroundBrush}"/>
-                <TextBlock Text="{x:Static localization:MainResources.RadioSubheader}" FontSize="14" Margin="5,0,0,15" Foreground="{StaticResource ForegroundBrush}" Opacity="0.4"/>
+                <TextBlock Text="{x:Static localization:MainResources.MainMenuRadio}" FontSize="28" FontWeight="Thin" Margin="5,0,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
+                <TextBlock Text="{x:Static localization:MainResources.RadioSubheader}" FontSize="14" Margin="5,0,0,15" Foreground="{DynamicResource ForegroundBrush}" Opacity="0.4"/>
             </StackPanel>
         </Grid>
         <ProgressBar IsIndeterminate="{Binding IsWorking}" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource HeaderProgressBarStyle}"/>
 
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="26,10,0,0">
-            <TextBlock Text="{x:Static localization:MainResources.RadioStationsTitle}" FontSize="12" Opacity="0.3" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBlock Text="{x:Static localization:MainResources.RadioStationsTitle}" FontSize="12" Opacity="0.3" Foreground="{DynamicResource ForegroundBrush}"/>
             <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding CreateStationCommand}" ToolTip="{x:Static localization:MainResources.RadioAddStationButton}"/>
         </StackPanel>
         <ListBox Grid.Row="1" x:Name="RadioList" Margin="0,25,10,0" Padding="24,5,0,0" ItemsSource="{Binding Stations}"
@@ -77,7 +77,7 @@
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.RowSpan="2">
-                                <Rectangle Fill="{StaticResource AccentBrush}"/>
+                                <Rectangle Fill="{DynamicResource AccentBrush}"/>
                                 <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
                                 <Image Source="{Binding ImageUrl}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
                             </Grid>

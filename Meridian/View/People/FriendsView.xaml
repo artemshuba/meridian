@@ -9,7 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
       x:Name="pageRoot"
-      KeepAlive="False" Background="{StaticResource MainBackgroundBrush}"
+      KeepAlive="False" Background="{DynamicResource MainBackgroundBrush}"
       Loaded="FriendsView_OnLoaded">
 
     <Page.RenderTransform>
@@ -53,7 +53,7 @@
                 <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static localization:MainResources.MainMenuFriends}" Style="{StaticResource HeaderButtonStyle}"/>
             </Grid>
 
-            <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+            <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
             <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[friends].IsWorking}" Error="{Binding Tasks[friends].Error}">
                 <ListBox Margin="24,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Source={StaticResource FriendsCollection}}" Style="{StaticResource CommonListBoxStyle}" 

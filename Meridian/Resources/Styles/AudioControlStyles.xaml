@@ -29,7 +29,7 @@
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="RootGrid" Property="Opacity" Value="0.2" />
@@ -66,7 +66,7 @@
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="RootGrid" Property="Opacity" Value="0.2" />
@@ -104,7 +104,7 @@
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="RootGrid" Property="Opacity" Value="0.2" />
@@ -128,7 +128,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
@@ -155,7 +155,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
@@ -182,7 +182,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
@@ -266,7 +266,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="{StaticResource AccentBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource LikeIcon}"/>
+                        <Path x:Name="Icon" Fill="{DynamicResource AccentBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource LikeIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -291,7 +291,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="{StaticResource AccentBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource LyricsIcon}"/>
+                        <Path x:Name="Icon" Fill="{DynamicResource AccentBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource LyricsIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -313,7 +313,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="{StaticResource AccentBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource EditIcon}"/>
+                        <Path x:Name="Icon" Fill="{DynamicResource AccentBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource EditIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -335,7 +335,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="{StaticResource AccentBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource ShareIcon}"/>
+                        <Path x:Name="Icon" Fill="{DynamicResource AccentBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource ShareIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -369,15 +369,15 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsPressed" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource ControlButtonBackground}"/>
-                            <Setter TargetName="Base" Property="Fill" Value="{StaticResource ControlButtonForeground}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource ControlButtonBackground}"/>
+                            <Setter TargetName="Base" Property="Fill" Value="{DynamicResource ControlButtonForeground}"/>
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Base" Property="Fill" Value="{StaticResource ControlButtonOverBackground}"/>
+                            <Setter TargetName="Base" Property="Fill" Value="{DynamicResource ControlButtonOverBackground}"/>
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="RootGrid" Property="Opacity" Value="0.2" />

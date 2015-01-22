@@ -65,8 +65,8 @@
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static localization:MainResources.MainMenuRecommendations}" Style="{StaticResource HeaderButtonStyle}"/>
         </Grid>
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
             <ListBox x:Name="AudioList" Margin="0,0,0,0.2" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -78,7 +78,7 @@
             </ListBox>
         </controls:BusyIndicator>
 
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
 
         <ListBox Grid.Column="1" Grid.Row="1" Padding="0" Margin="0,10,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Source={StaticResource RecommendationsCollection}}"
                  Foreground="Black" Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}"
@@ -96,7 +96,7 @@
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
                                         <Expander IsExpanded="True" BorderThickness="0" Style="{StaticResource MainMenuGroupExpanderStyle}">
                                             <Expander.Header>
-                                                <TextBlock Text="{Binding Path=Name}" Margin="11,0,0,0" FontSize="12" Foreground="{StaticResource ForegroundBrush}" Opacity="0.3"/>
+                                                <TextBlock Text="{Binding Path=Name}" Margin="11,0,0,0" FontSize="12" Foreground="{DynamicResource ForegroundBrush}" Opacity="0.3"/>
                                             </Expander.Header>
                                             <Expander.Content>
                                                 <ItemsPresenter />

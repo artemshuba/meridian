@@ -51,7 +51,7 @@
             <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static localization:MainResources.MainMenuPopular}" Style="{StaticResource HeaderButtonStyle}"/>
         </Grid>
 
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
             <ListBox x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" 

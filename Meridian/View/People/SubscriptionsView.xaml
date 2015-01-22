@@ -10,7 +10,7 @@
       xmlns:controls="clr-namespace:Meridian.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
-      x:Name="pageRoot" Background="{StaticResource MainBackgroundBrush}"
+      x:Name="pageRoot" Background="{DynamicResource MainBackgroundBrush}"
       Loaded="SubscriptionsView_OnLoaded">
 
     <Page.RenderTransform>
@@ -34,13 +34,13 @@
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
+                <Button Style="{DynamicResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
                     HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Grid.Column="1" Text="{x:Static localization:MainResources.MainMenuSubscriptions}" FontSize="28" FontWeight="Thin" Margin="5,15,0,15" Foreground="{StaticResource ForegroundBrush}"/>
+                <TextBlock Grid.Column="1" Text="{x:Static localization:MainResources.MainMenuSubscriptions}" FontSize="28" FontWeight="Thin" Margin="5,15,0,15" Foreground="{DynamicResource ForegroundBrush}"/>
             </Grid>
 
-            <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+            <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
             <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[subscriptions].IsWorking}" Error="{Binding Tasks[subscriptions].Error}">
                 <ListBox Margin="24,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Subscriptions}" Style="{StaticResource CommonListBoxStyle}" 

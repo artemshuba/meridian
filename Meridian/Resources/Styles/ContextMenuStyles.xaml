@@ -134,7 +134,7 @@
                 <Setter Property="Padding" Value="0,2"/>
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter Property="Background" Value="{StaticResource HotContextMenuItemBackgroundBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource HotContextMenuItemBackgroundBrush}"/>
             </Trigger>
             <!--<Trigger Property="IsEnabled" Value="False">
                         <Setter Property="Foreground" Value="{DynamicResource ListItemDisabledForegroundBrush}"/>

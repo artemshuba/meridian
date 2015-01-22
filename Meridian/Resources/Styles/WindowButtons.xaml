@@ -4,7 +4,7 @@
         <Setter Property="Width" Value="10"/>
         <Setter Property="Height" Value="10"/>
         <Setter Property="Background" Value="#00000000"/>
-        <Setter Property="Foreground" Value="{StaticResource ControlButtonForeground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ControlButtonForeground}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -24,7 +24,7 @@
         <Setter Property="Width" Value="10"/>
         <Setter Property="Height" Value="10"/>
         <Setter Property="Background" Value="#00000000"/>
-        <Setter Property="Foreground" Value="{StaticResource ControlButtonForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlButtonForeground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -44,7 +44,7 @@
         <Setter Property="Width" Value="10"/>
         <Setter Property="Height" Value="10"/>
         <Setter Property="Background" Value="#00000000"/>
-        <Setter Property="Foreground" Value="{StaticResource ControlButtonForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlButtonForeground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -90,7 +90,7 @@
         <Setter Property="Width" Value="10"/>
         <Setter Property="Height" Value="10"/>
         <Setter Property="Background" Value="#00000000"/>
-        <Setter Property="Foreground" Value="{StaticResource ControlButtonForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlButtonForeground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">

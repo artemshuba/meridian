@@ -37,7 +37,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Rectangle Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25"/>
+        <Rectangle Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -78,10 +78,10 @@
                         </ListBox>
                     </controls:BusyIndicator>
 
-                    <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+                    <Rectangle Grid.Column="1" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
                     
                     <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="12,10,0,0">
-                        <TextBlock Text="{x:Static Properties:MainResources.MyMusicAlbums}" FontSize="11" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{x:Static Properties:MainResources.MyMusicAlbums}" FontSize="11" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}" FontWeight="SemiBold"/>
                         <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddAlbumCommand}"
                                 ToolTip="{x:Static Properties:MainResources.MyMusicAlbumsAdd}"/>
                     </StackPanel>
@@ -117,8 +117,8 @@
                             </ListBox.ItemTemplate>
                         </controls:ExtendedListBox>
                     </controls:BusyIndicator>
-                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
-                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
 
                     <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Grid.Row="1" Source="{StaticResource TracksCollection}" FontSize="12" VerticalAlignment="Top"/>
                 </Grid>
@@ -143,13 +143,14 @@
 
                     <ListBox x:Name="ArtistList" Grid.Column="1" ItemsSource="{Binding Artists}" Style="{StaticResource CommonListBoxStyle}"
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             Padding="0"
                              ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}" SelectedItem="{Binding SelectedArtist, Mode=TwoWay}">
                         <i:Interaction.Behaviors>
                             <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
                         </i:Interaction.Behaviors>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock  Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
+                                <TextBlock Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
                                     <TextBlock.ContextMenu>
                                         <ContextMenu Visibility="{Binding Converter={StaticResource AlbumContextMenuVisibilityConverter}}" Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
                                             <MenuItem Header="{x:Static Properties:MainResources.ContextMenuPlay}" Command="{Binding PlacementTarget.Tag.PlayArtistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
@@ -161,9 +162,9 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
 
-                    <Rectangle Width="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Width="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.NewsTab}" Style="{StaticResource CommonTabItemStyle}">
@@ -179,7 +180,7 @@
                         </ListBox>
                     </controls:BusyIndicator>
 
-                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.WallTab}" Style="{StaticResource CommonTabItemStyle}">
@@ -195,7 +196,7 @@
                         </ListBox>
                     </controls:BusyIndicator>
 
-                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.FavoritesTab}" Style="{StaticResource CommonTabItemStyle}">
@@ -211,7 +212,7 @@
                         </ListBox>
                     </controls:BusyIndicator>
 
-                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
         </TabControl>

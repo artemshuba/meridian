@@ -6,7 +6,7 @@
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
-      Background="{StaticResource MainBackgroundBrush}">
+      Background="{DynamicResource MainBackgroundBrush}">
 
     <Page.RenderTransform>
         <TranslateTransform />
@@ -23,22 +23,22 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Text="{x:Static localization:MainResources.SettingsMenuAbout}" FontSize="28" FontWeight="Thin" Margin="24,10,0,15" Foreground="{StaticResource ForegroundBrush}"/>
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <TextBlock Text="{x:Static localization:MainResources.SettingsMenuAbout}" FontSize="28" FontWeight="Thin" Margin="24,10,0,15" Foreground="{DynamicResource ForegroundBrush}"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
         <StackPanel Grid.Row="1" Margin="24,20,0,0" >
-            <TextBlock Text="Meridian Desktop" Foreground="{StaticResource ForegroundBrush}"/>
-            <TextBlock Foreground="{StaticResource ForegroundBrush}">
+            <TextBlock Text="Meridian Desktop" Foreground="{DynamicResource ForegroundBrush}"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">
                 <Run Text="Version:" />
                 <Run Text="{Binding Version, Mode=OneWay}" />
                 <Run Text="preview" />
             </TextBlock>
-            <TextBlock Text="Copyright © Stealth 2015" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBlock Text="Copyright © Stealth 2015" Foreground="{DynamicResource ForegroundBrush}"/>
             <TextBlock x:Name="SiteLink" FontWeight="Normal" TextWrapping="Wrap" Text="http://meridianvk.com" HorizontalAlignment="Left" FontSize="12"
                        MouseLeftButtonUp="SiteLink_OnMouseLeftButtonUp">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="Cursor" Value="Hand"/>
-                        <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="TextDecorations" Value="Underline"/>
@@ -49,12 +49,12 @@
             </TextBlock>
             
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                <TextBlock TextWrapping="Wrap" Text="Recommendations and radio are powered by the" HorizontalAlignment="Left" Foreground="{StaticResource ForegroundBrush}"/>
+                <TextBlock TextWrapping="Wrap" Text="Recommendations and radio are powered by the" HorizontalAlignment="Left" Foreground="{DynamicResource ForegroundBrush}"/>
                 <TextBlock Name="EchonestLink" Margin="4,0,0,0" TextWrapping="Wrap" Text="www.echonest.com" HorizontalAlignment="Left" ToolTip="http://www.echonest.com" MouseLeftButtonUp="EchonestLink_OnMouseLeftButtonUp">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Cursor" Value="Hand"/>
-                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="TextDecorations" Value="Underline"/>
@@ -66,12 +66,12 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                <TextBlock TextWrapping="Wrap" Text="The information about artists and albums is provided by the" HorizontalAlignment="Left" Foreground="{StaticResource ForegroundBrush}"/>
+                <TextBlock TextWrapping="Wrap" Text="The information about artists and albums is provided by the" HorizontalAlignment="Left" Foreground="{DynamicResource ForegroundBrush}"/>
                 <TextBlock Name="LastFmLink" Margin="4,0,0,0" TextWrapping="Wrap" Text="Last.FM" HorizontalAlignment="Left" ToolTip="http://last.fm" MouseLeftButtonUp="LastFmLink_OnMouseLeftButtonUp">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Cursor" Value="Hand"/>
-                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="TextDecorations" Value="Underline"/>
@@ -86,7 +86,7 @@
                 <Image Source="/Resources/Images/lastfm_logo.gif" Stretch="UniformToFill" Width="60" HorizontalAlignment="Left" Margin="10,5,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
             </StackPanel>
 
-            <TextBlock Text="{x:Static localization:MainResources.AboutTellFriendsTitle}" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBlock Text="{x:Static localization:MainResources.AboutTellFriendsTitle}" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
             <Button Style="{StaticResource CommonButtonStyle}" HorizontalAlignment="Left" Content="{x:Static localization:MainResources.AboutTellFriends}" Margin="0,5,0,0"
                     Command="{Binding TellCommand}"/>
         </StackPanel>

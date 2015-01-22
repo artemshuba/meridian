@@ -43,7 +43,7 @@
         <ProgressBar x:Name="ProgressBar" Style="{StaticResource CommonProgressBarStyle}" VerticalAlignment="Center" Margin="3,2,10,0" Visibility="Collapsed" Padding="0" Width="150" Height="5" Value="{Binding Progress, ElementName=rootElement}"/>
  
         <TextBlock Grid.Column="1"  Name="StatusTextBlock" FontSize="11" Margin="0,0,0,0" Text="{Binding Status, ElementName=rootElement}"
-                   TextTrimming="CharacterEllipsis" Foreground="{StaticResource ForegroundBrush}" Opacity="0.6">
+                   TextTrimming="CharacterEllipsis" Foreground="{DynamicResource ForegroundBrush}" Opacity="0.6">
             <TextBlock.RenderTransform>
                 <TranslateTransform x:Name="StatusTextBlockRenderTransform"/>
             </TextBlock.RenderTransform>

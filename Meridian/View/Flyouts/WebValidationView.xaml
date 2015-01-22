@@ -6,7 +6,7 @@
              xmlns:localization="clr-namespace:Meridian.Resources.Localization"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600"
-             Background="{StaticResource MainBackgroundBrush}"
+             Background="{DynamicResource MainBackgroundBrush}"
              Loaded="WebValidationView_OnLoaded" Margin="0,100,0,100">
     <Grid Margin="0,5,0,5" HorizontalAlignment="Center" Width="400" MaxHeight="500">
         <Grid.RowDefinitions>

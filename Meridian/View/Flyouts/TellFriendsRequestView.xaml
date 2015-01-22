@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:localization="clr-namespace:Meridian.Resources.Localization"
              mc:Ignorable="d" 
-             Background="{StaticResource MainBackgroundBrush}" 
+             Background="{DynamicResource MainBackgroundBrush}" 
              VerticalAlignment="Center">
     <Grid>
         <Grid HorizontalAlignment="Center" Width="350">
             <StackPanel Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
                 <TextBlock Text="{x:Static localization:MainResources.TellFriendsRequestTitle}" Foreground="{StaticResource AccentBrush}" FontSize="24" FontWeight="Light"/>
-                <TextBlock Text="{x:Static localization:MainResources.TellFriendsRequestContent}" FontSize="12" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}" TextWrapping="Wrap"/>
+                <TextBlock Text="{x:Static localization:MainResources.TellFriendsRequestContent}" FontSize="12" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}" TextWrapping="Wrap"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
                     <Button x:Name="TellButton" Content="{x:Static localization:MainResources.TellFriendsRequestTellButton}" Padding="23,3" Margin="0,0,10,0" Style="{StaticResource HighlightedButtonStyle}"

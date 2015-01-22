@@ -67,7 +67,7 @@
                         </ListBox>
                     </controls:BusyIndicator>
 
-                    <Rectangle Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Height="1" VerticalAlignment="Top" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
 
                     <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Source="{StaticResource TracksCollection}" FontSize="12" VerticalAlignment="Top"/>
                 </Grid>
@@ -87,7 +87,7 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.85" Margin="0,0,0,5" 
                                                    Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"
-                                                   Foreground="{StaticResource ForegroundBrush}"/>
+                                                   Foreground="{DynamicResource ForegroundBrush}"/>
                                         <ItemsControl Grid.Row="1" ItemsSource="{Binding Albums}" Margin="0,0,0,0"
                                            ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                                             <ItemsControl.ItemsPanel>
@@ -118,14 +118,14 @@
                                                                 <RowDefinition Height="Auto"/>
                                                             </Grid.RowDefinitions>
                                                             <Grid Height="120">
-                                                                <Rectangle Fill="{StaticResource ForegroundBrush}" Opacity="0.3"/>
+                                                                <Rectangle Fill="{DynamicResource ForegroundBrush}" Opacity="0.3"/>
                                                                 <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
                                                                 <Image Source="{Binding Cover}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
                                                                 <Border x:Name="Border" Opacity="0.8"/>
                                                             </Grid>
                                                             <StackPanel Grid.Row="1">
-                                                                <TextBlock Text="{Binding Title}" FontSize="12" Margin="0,0,0,0" TextTrimming="CharacterEllipsis" Foreground="{StaticResource ForegroundBrush}"/>
-                                                                <TextBlock Text="{Binding Year}" FontSize="12" Margin="0,-2,0,0" TextTrimming="CharacterEllipsis" Foreground="{StaticResource ForegroundBrush}"
+                                                                <TextBlock Text="{Binding Title}" FontSize="12" Margin="0,0,0,0" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource ForegroundBrush}"/>
+                                                                <TextBlock Text="{Binding Year}" FontSize="12" Margin="0,-2,0,0" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource ForegroundBrush}"
                                                                        Visibility="{Binding Year, Converter={StaticResource NullToVisibilityConverter}}" Opacity="0.7"/>
                                                             </StackPanel>
                                                         </Grid>
@@ -133,7 +133,7 @@
                                                     <DataTemplate.Triggers>
                                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=IsMouseOver}" Value="True">
                                                             <Setter TargetName="Border" Property="BorderThickness" Value="4" />
-                                                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
                                                         </DataTrigger>
                                                     </DataTemplate.Triggers>
                                                 </DataTemplate>
@@ -144,7 +144,7 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </controls:BusyIndicator>
-                    <Rectangle Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Height="1" VerticalAlignment="Top" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.ArtistsTab}" Style="{StaticResource CommonTabItemStyle}">
@@ -167,7 +167,7 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.85" Margin="0,0,0,5" 
                                                    Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"
-                                                   Foreground="{StaticResource ForegroundBrush}"/>
+                                                   Foreground="{DynamicResource ForegroundBrush}"/>
                                         <ListBox Grid.Row="1" ItemsSource="{Binding Tracks}" Margin="-24,0,0,10"
                                                  Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                                                  ItemTemplate="{StaticResource LocalAudioItemTemplate}"
@@ -183,7 +183,7 @@
                         </ListBox>
                     </controls:BusyIndicator>
 
-                    <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+                    <Rectangle Grid.Column="1" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
 
                     <ListBox Grid.Column="1" ItemsSource="{Binding Artists}" Style="{StaticResource CommonListBoxStyle}" Margin="0,10,0,0"
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -209,8 +209,8 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Rectangle Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
-                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
         </TabControl>

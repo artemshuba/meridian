@@ -56,7 +56,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <Rectangle Fill="{StaticResource AccentBrush}"/>
+                        <Rectangle Fill="{DynamicResource AccentBrush}"/>
                         <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <Image helpers:ImageAsyncHelper.SourceUri="{Binding ImageLarge}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Grid>
@@ -85,7 +85,7 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <Rectangle Fill="{StaticResource AccentBrush}"/>
+                        <Rectangle Fill="{DynamicResource AccentBrush}"/>
                         <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <Image helpers:ImageAsyncHelper.SourceUri="{Binding ImageLarge}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Grid>
@@ -133,14 +133,14 @@
             <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
                     HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <TextBlock Grid.Column="1" FontSize="28" FontWeight="Thin" Margin="5,12,0,15" Foreground="{StaticResource ForegroundBrush}">
+            <TextBlock Grid.Column="1" FontSize="28" FontWeight="Thin" Margin="5,12,0,15" Foreground="{DynamicResource ForegroundBrush}">
                 <Run Text="{x:Static localization:MainResources.SearchResultsTitle}" />
                 "<Run Text="{Binding Query}" />"
             </TextBlock>
         </Grid>
 
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <controls:BusyIndicator Grid.Row="1" BusyContent="{x:Static localization:MainResources.Searching}" IsBusy="{Binding Tasks[results].IsWorking}" Error="{Binding Tasks[results].Error}">
             <ListBox x:Name="SearchResultsList" ItemsSource="{Binding SearchResults}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -153,8 +153,8 @@
             </ListBox>
         </controls:BusyIndicator>
 
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.SearchSection}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.SearchSection}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
         <ListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" Padding="0" ItemsSource="{Binding Sections}" Style="{StaticResource CommonListBoxStyle}" 
                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  SelectedIndex="{Binding SelectedSectionIndex, Mode=TwoWay}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}">

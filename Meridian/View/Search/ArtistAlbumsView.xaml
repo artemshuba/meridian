@@ -8,7 +8,7 @@
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
-      Background="{StaticResource MainBackgroundBrush}"
+      Background="{DynamicResource MainBackgroundBrush}"
       x:Name="pageRoot" KeepAlive="False">
 
     <Page.RenderTransform>
@@ -54,7 +54,7 @@
             </Grid>
         </Grid>
 
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <ListBox Grid.Row="1" Margin="20,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding AllAlbums}" Style="{StaticResource CommonListBoxStyle}" 
                          VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -82,7 +82,7 @@
                             </Grid.RowDefinitions>
                             <Image helpers:ImageAsyncHelper.SourceUri="{Binding ImageMedium}" Width="80" Height="80"/>
                             <TextBlock Grid.Row="1" Text="{Binding Name}" Margin="0,0,0,0" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
-                                           FontSize="11" Height="30" Foreground="{StaticResource ForegroundBrush}"/>
+                                           FontSize="11" Height="30" Foreground="{DynamicResource ForegroundBrush}"/>
                         </Grid>
                     </Button>
                 </DataTemplate>

@@ -12,13 +12,13 @@
         </Setter>
     </Style>
     <SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF"/>
-    <SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="{DynamicResource AccentColor}"/>
     <SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121"/>
     <SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFE6E6E6"/>
     <SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="#FFBCBCBC"/>
     <SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#FF707070"/>
     <SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF"/>
-    <SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="{DynamicResource AccentColor}"/>
     <SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121"/>
     <SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="#FF212121"/>
 

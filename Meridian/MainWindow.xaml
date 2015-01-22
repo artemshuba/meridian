@@ -10,7 +10,7 @@
         xmlns:converters1="clr-namespace:Meridian.Converters"
         MinWidth="750" MinHeight="570"
         WindowStartupLocation="Manual" ShowInTaskbar="{Binding ShowTrayIcon, Converter={StaticResource InvertBoolConverter}}"
-        Background="{StaticResource MainBackgroundBrush}"
+        Background="{DynamicResource MainBackgroundBrush}"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         WindowState="{Binding WindowState}" Left="{Binding WindowLeft}" Top="{Binding WindowTop}"
         Width="{Binding WindowWidth}" Height="{Binding WindowHeight}" Title="{Binding WindowTitle}"
@@ -39,9 +39,9 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <Path Data="{Binding Items[0].GroupIcon}" Stretch="Uniform" Fill="{StaticResource SidebarForegroundBrush}" Height="8" Margin="17,1,-10,0" Opacity="0.4" VerticalAlignment="Center"
+                            <Path Data="{Binding Items[0].GroupIcon}" Stretch="Uniform" Fill="{DynamicResource SidebarForegroundBrush}" Height="8" Margin="17,1,-10,0" Opacity="0.4" VerticalAlignment="Center"
                                   Visibility="{Binding Items[0].GroupIcon, Converter={StaticResource NullToVisibilityConverter}}"/>
-                            <TextBlock Grid.Column="1" FontWeight="SemiBold" Text="{Binding Path=Name}" Margin="17,0,0,0" FontSize="12" Foreground="{StaticResource SidebarGroupForegroundBrush}"/>
+                            <TextBlock Grid.Column="1" FontWeight="SemiBold" Text="{Binding Path=Name}" Margin="17,0,0,0" FontSize="12" Foreground="{DynamicResource SidebarGroupForegroundBrush}"/>
                             <ItemsPresenter Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0"/>
                         </Grid>
                     </ControlTemplate>
@@ -82,7 +82,7 @@
     <Window.InputBindings>
         <KeyBinding Gesture="CTRL+F" Command="{Binding ShowLocalSearchCommand}" />
     </Window.InputBindings>
-    <Grid x:Name="RootGrid" Background="{StaticResource MainBackgroundBrush}" Margin="{Binding IsWindowMaximized, Converter={StaticResource WindowMarginConverter}}">
+    <Grid x:Name="RootGrid" Background="{DynamicResource MainBackgroundBrush}" Margin="{Binding IsWindowMaximized, Converter={StaticResource WindowMarginConverter}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition />
@@ -94,7 +94,7 @@
         <MediaElement LoadedBehavior="Manual" Volume="1"/>
         <Rectangle Fill="Black" Grid.RowSpan="2" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <!-- Menu -->
-        <Grid Width="220" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}" Background="{StaticResource SidebarBackgroundBrush}" Grid.RowSpan="2">
+        <Grid Width="220" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}" Background="{DynamicResource SidebarBackgroundBrush}" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition />
@@ -102,7 +102,7 @@
             </Grid.RowDefinitions>
             <StackPanel>
                 <Button x:Name="MeridianButton" HorizontalAlignment="Left" Margin="0,5,0,0"
-                        Foreground="{StaticResource SidebarForegroundBrush}"
+                        Foreground="{DynamicResource SidebarForegroundBrush}"
                         Command="{Binding GoToSettingsCommand}" ToolTip="{x:Static localization:MainResources.Settings}">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -174,7 +174,7 @@
 
         </Frame>
 
-        <Rectangle Fill="{StaticResource SidebarForegroundBrush}" Width="1" HorizontalAlignment="Right" Opacity="0.1" Grid.RowSpan="2" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <Rectangle Fill="{DynamicResource SidebarForegroundBrush}" Width="1" HorizontalAlignment="Right" Opacity="0.1" Grid.RowSpan="2" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
         <Grid x:Name="SearchBoxGrid" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,35,10,0" Width="170" Height="24" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}">
             <controls:TextBoxWithHint x:Name="SearchBox" Padding="8,0,30,0" HorizontalAlignment="Stretch" Style="{StaticResource SearchBoxStyle}" FontWeight="Regular" Hint="{x:Static localization:MainResources.Search}" HintStyle="{StaticResource TextBoxHintStyle}"

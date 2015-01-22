@@ -6,14 +6,14 @@
              xmlns:localization="clr-namespace:Meridian.Resources.Localization"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
-             Background="{StaticResource MainBackgroundBrush}" 
+             Background="{DynamicResource MainBackgroundBrush}" 
              VerticalAlignment="Center"
              x:Name="rootElement">
     
     <Grid HorizontalAlignment="Center" Width="350">
         <StackPanel Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
             <TextBlock Text="{Binding Header, ElementName=rootElement}" Foreground="{StaticResource AccentBrush}" FontSize="24" FontWeight="Light"/>
-            <TextBlock Text="{Binding Message, ElementName=rootElement}" FontSize="12" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}" TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding Message, ElementName=rootElement}" FontSize="12" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}" TextWrapping="Wrap"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
                 <Button x:Name="OkButton" Content="{x:Static localization:MainResources.OkButton}" Padding="32,3" Margin="0,0,10,0" Style="{StaticResource HighlightedButtonStyle}"

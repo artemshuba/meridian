@@ -12,7 +12,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
       x:Name="pageRoot" KeepAlive="False"
-      Background="{StaticResource MainBackgroundBrush}"
+      Background="{DynamicResource MainBackgroundBrush}"
       Loaded="NowPlayingView_OnLoaded" Unloaded="NowPlayingView_OnUnloaded">
 
     <Page.RenderTransform>
@@ -90,11 +90,11 @@
             </StackPanel>
 
         </Grid>
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <TextBlock Grid.Row="1" Text="{x:Static localization:MainResources.NowPlayingRadioHint}"
                    Visibility="{Binding Main.CurrentRadio, Source={StaticResource Locator}, Converter={StaticResource NullToVisibilityConverter}}"
-                   Margin="24,7,12,2" FontSize="14" VerticalAlignment="Top" TextWrapping="Wrap" Opacity="0.5" Foreground="{StaticResource ForegroundBrush}"/>
+                   Margin="24,7,12,2" FontSize="14" VerticalAlignment="Top" TextWrapping="Wrap" Opacity="0.5" Foreground="{DynamicResource ForegroundBrush}"/>
         
         <ListBox Grid.Row="2" x:Name="AudioList" Margin="0,0,0,0"
                  ItemsSource="{Binding Source={StaticResource TracksCollection}}" 

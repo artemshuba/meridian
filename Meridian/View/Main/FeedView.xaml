@@ -44,13 +44,13 @@
                 </Border>
             </Popup>-->
 
-            <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
+            <Button Style="{DynamicResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
                     HorizontalAlignment="Left"
                     Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static localization:MainResources.MainMenuFeed}" Style="{StaticResource HeaderButtonStyle}"/>
         </Grid>
 
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -71,7 +71,7 @@
 
             <!-- Societies list -->
 
-            <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+            <Rectangle Grid.Column="1" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="12,10,0,0">
                 <TextBlock Text="{x:Static localization:MainResources.FeedSocieties}" FontSize="11" Opacity="0.7" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
@@ -107,7 +107,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Rectangle Width="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+            <Rectangle Width="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
         </Grid>
     </Grid>
 </Page>

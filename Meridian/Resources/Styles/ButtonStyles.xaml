@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:localization="clr-namespace:Meridian.Resources.Localization">
     <Style x:Key="CommonButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource ButtonForegroundBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="25,3,25,3"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -20,13 +20,13 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ButtonHotBackgroundBrush}"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource AccentBrush}"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource ButtonHotBackgroundBrush}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource AccentBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ButtonPressBackgroundBrush}"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource ButtonPressBackgroundBrush}"/>
                             <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
-                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ButtonPressForegroundBrush}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{DynamicResource ButtonPressForegroundBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -34,7 +34,7 @@
         </Setter>
     </Style>
     <Style x:Key="HighlightedButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="25,3,25,3"/>
@@ -51,16 +51,16 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ButtonHighlightedDisabledBackgroundBrush}"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource ButtonHighlightedDisabledBackgroundBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ButtonHighlightedHotBackgroundBrush}"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource AccentBrush}"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource ButtonHighlightedHotBackgroundBrush}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource AccentBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ButtonPressBackgroundBrush}"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ButtonPressBackgroundBrush}"/>
-                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ButtonPressForegroundBrush}"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource ButtonPressBackgroundBrush}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource ButtonPressBackgroundBrush}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{DynamicResource ButtonPressForegroundBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -93,9 +93,9 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="#e51400"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ButtonPressBackgroundBrush}"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ButtonPressBackgroundBrush}"/>
-                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ButtonPressForegroundBrush}"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource ButtonPressBackgroundBrush}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource ButtonPressBackgroundBrush}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{DynamicResource ButtonPressForegroundBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -110,7 +110,7 @@
         <Setter Property="FontWeight" Value="Thin" />
         <Setter Property="Margin" Value="5,10,0,15"/>
         <Setter Property="Opacity" Value="1" />
-        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Template">
             <Setter.Value>
@@ -123,7 +123,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
