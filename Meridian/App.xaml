@@ -27,6 +27,7 @@
                 <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Animations.xaml" />
+
                 <ResourceDictionary>
                     <viewModel:ViewModelLocator x:Key="Locator"/>
                     <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -40,6 +41,9 @@
                     <converters:BooleanToObjectConverter x:Key="PlayIconConverter" TrueObject="/Meridian;component/Resources/Images/pause_thumb.png" FalseObject="/Meridian;component/Resources/Images/play_thumb.png"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="/Resources/Styles/DataTemplates.xaml" />
+                <ResourceDictionary Source="/Layout/Templates/PageBaseTemplate.xaml" />
+                <ResourceDictionary Source="/Layout/Templates/TwoColumnPageLayoutTemplate.xaml" />
+                <ResourceDictionary Source="/Layout/Templates/MultiTabPageLayoutTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

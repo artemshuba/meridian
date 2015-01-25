@@ -8,6 +8,7 @@ using VkLib.Core.Groups;
 using VkLib.Core.Messages;
 using VkLib.Core.News;
 using VkLib.Core.Photos;
+using VkLib.Core.Stats;
 using VkLib.Core.Status;
 using VkLib.Core.Subscriptions;
 using VkLib.Core.Users;
@@ -223,6 +224,17 @@ namespace VkLib
             get
             {
                 return new VkDirectAuthRequest(this);
+            }
+        }
+
+        /// <summary>
+        /// Statistics
+        /// </summary>
+        public VkStatsRequest Stats
+        {
+            get
+            {
+                return new VkStatsRequest(this);
             }
         }
 

@@ -228,6 +228,13 @@
     <Compile Include="Helpers\Md5Helper.cs" />
     <Compile Include="Helpers\NativeMethods.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Layout\Controls\HeaderControl.xaml.cs">
+      <DependentUpon>HeaderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Layout\LayoutBase.cs" />
+    <Compile Include="Layout\MultiTabPageLayout.cs" />
+    <Compile Include="Layout\PageBase.cs" />
+    <Compile Include="Layout\TwoColumnPageLayout.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Audio.cs" />
     <Compile Include="Model\AudioAlbum.cs" />
@@ -430,6 +437,9 @@
     <Compile Include="View\People\SubscriptionsView.xaml.cs">
       <DependentUpon>SubscriptionsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TrackNotifcationView.xaml.cs">
       <DependentUpon>TrackNotifcationView.xaml</DependentUpon>
     </Compile>
@@ -462,6 +472,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\VolumeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Controls\HeaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Templates\MultiTabPageLayoutTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Layout\Templates\PageBaseTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Layout\Templates\TwoColumnPageLayoutTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -762,6 +788,10 @@
     <Page Include="View\People\SubscriptionsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TrackNotifcationView.xaml">
       <Generator>MSBuild:Compile</Generator>

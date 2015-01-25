@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:layout="clr-namespace:Meridian.Layout"
+                    xmlns:controls="clr-namespace:Meridian.Layout.Controls">
+    <Style x:Key="PageBaseStyle" TargetType="layout:PageBase" x:Shared="False">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="layout:PageBase">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="{Binding Layout.HeaderHeight, RelativeSource={RelativeSource AncestorType=layout:PageBase}}" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <controls:HeaderControl Grid.Row="0" Header="{TemplateBinding Header}" MenuItems="{TemplateBinding HeaderMenuItems}"
+                                                />
+                        <Rectangle Grid.Row="0" Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                        <ContentPresenter Grid.Row="1" Content="{TemplateBinding Layout}">
+
+                        </ContentPresenter>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

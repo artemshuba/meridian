@@ -118,12 +118,15 @@
                     <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
                         <StackPanel Orientation="Horizontal">
                             <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            <Path Data="{StaticResource ChevronDown}" Height="8" Width="14" Fill="{TemplateBinding Foreground}" Stretch="Fill" VerticalAlignment="Center" Margin="7,8,5,0" SnapsToDevicePixels="False"/>
+                            <Path x:Name="DropDownIcon" Data="{StaticResource ChevronDown}" Height="8" Width="14" Fill="{TemplateBinding Foreground}" Stretch="Fill" VerticalAlignment="Center" Margin="7,8,5,0" SnapsToDevicePixels="False"/>
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
+                        <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="DropDownIcon" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -1,0 +1,28 @@
+﻿<layout:PageBase x:Class="Meridian.View.TestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:layout="clr-namespace:Meridian.Layout"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Header="Test page">
+    <layout:PageBase.HeaderMenuItems>
+        <MenuItem Header="Refresh"/>
+        <MenuItem Header="Test"/>
+    </layout:PageBase.HeaderMenuItems>
+    <layout:PageBase.Layout>
+        <layout:MultiTabPageLayout/>
+    </layout:PageBase.Layout>
+    <TabItem Header="Content">
+        <layout:TwoColumnPageLayout>
+            <layout:TwoColumnPageLayout.MainContent>
+                <TextBlock Text="Tab1" />
+            </layout:TwoColumnPageLayout.MainContent>
+            <layout:TwoColumnPageLayout.RightContent>
+                <TextBlock Text="Tab2" />
+            </layout:TwoColumnPageLayout.RightContent>
+        </layout:TwoColumnPageLayout>
+    </TabItem>
+    <TabItem Header="RightContent"></TabItem>
+</layout:PageBase>

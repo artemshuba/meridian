@@ -108,6 +108,7 @@
     <Compile Include="Core\Photos\VkPhoto.cs" />
     <Compile Include="Core\Photos\VkPhotosRequest.cs" />
     <Compile Include="Core\Photos\VkUploadPhotoResponse.cs" />
+    <Compile Include="Core\Stats\VkStatsRequest.cs" />
     <Compile Include="Core\Status\VkStatusRequest.cs" />
     <Compile Include="Core\Subscriptions\VkSubscriptionsRequest.cs" />
     <Compile Include="Core\Users\VkProfile.cs" />
