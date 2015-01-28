@@ -17,6 +17,22 @@ namespace Meridian.ViewModel
             }
         }
 
+        /// <summary>
+        /// Calls when viewmodel is activated
+        /// </summary>
+        public virtual void Activate()
+        {
+            
+        }
+
+        /// <summary>
+        /// Calls when viewmodel is deactivated
+        /// </summary>
+        public virtual void Deactivate()
+        {
+
+        }
+
         public Dictionary<string, LongRunningOperation> Tasks
         {
             get { return _tasks; }

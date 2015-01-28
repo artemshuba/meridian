@@ -215,16 +215,16 @@ namespace Meridian.ViewModel.Main
             RegisterTasks("audio", "albums", "news", "wall", "favorites");
         }
 
-        public async void Activate()
+        public override async void Activate()
         {
-            if (Albums == null || Albums.Count == 0)
+            if (Albums.IsNullOrEmpty())
                 await LoadAlbums();
 
-            if (Artists == null || Artists.Count == 0)
+            if (Artists.IsNullOrEmpty())
                 await LoadArtists(_cancellationToken.Token);
         }
 
-        public void Deactivate()
+        public override void Deactivate()
         {
             CancelAsync();
 

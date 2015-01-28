@@ -43,7 +43,6 @@
                 <ResourceDictionary Source="/Resources/Styles/DataTemplates.xaml" />
                 <ResourceDictionary Source="/Layout/Templates/PageBaseTemplate.xaml" />
                 <ResourceDictionary Source="/Layout/Templates/TwoColumnPageLayoutTemplate.xaml" />
-                <ResourceDictionary Source="/Layout/Templates/MultiTabPageLayoutTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

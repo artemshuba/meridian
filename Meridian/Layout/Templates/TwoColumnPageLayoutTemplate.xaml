@@ -4,6 +4,7 @@
     <Style x:Key="TwoColumnPageLayoutStyle" TargetType="layout:TwoColumnPageLayout" x:Shared="False">
         <Setter Property="MainContent" Value="{Binding Content[0], RelativeSource={RelativeSource AncestorType=layout:PageBase}}" />
         <Setter Property="RightContent" Value="{Binding Content[1], RelativeSource={RelativeSource AncestorType=layout:PageBase}}" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="layout:TwoColumnPageLayout">
@@ -13,7 +14,10 @@
                             <ColumnDefinition Width="180"/>
                         </Grid.ColumnDefinitions>
                         <ContentPresenter Content="{TemplateBinding MainContent}" />
+                        
+                        <Rectangle Grid.Column="1" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
                         <ContentPresenter Content="{TemplateBinding RightContent}" Grid.Column="1"/>
+                        <Rectangle Width="1" Grid.Column="1" HorizontalAlignment="Left" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="-1,0,0,0"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

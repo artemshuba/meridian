@@ -4,25 +4,23 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:layout="clr-namespace:Meridian.Layout"
+      xmlns:Properties="clr-namespace:Meridian.Resources.Localization"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
-      Header="Test page">
+      Header="Test">
     <layout:PageBase.HeaderMenuItems>
         <MenuItem Header="Refresh"/>
         <MenuItem Header="Test"/>
     </layout:PageBase.HeaderMenuItems>
-    <layout:PageBase.Layout>
-        <layout:MultiTabPageLayout/>
-    </layout:PageBase.Layout>
-    <TabItem Header="Content">
+    <TabItem Header="Tab1">
         <layout:TwoColumnPageLayout>
             <layout:TwoColumnPageLayout.MainContent>
-                <TextBlock Text="Tab1" />
+                <TextBlock Text="MainContent" />
             </layout:TwoColumnPageLayout.MainContent>
             <layout:TwoColumnPageLayout.RightContent>
-                <TextBlock Text="Tab2" />
+                <TextBlock Text="RightContent" />
             </layout:TwoColumnPageLayout.RightContent>
         </layout:TwoColumnPageLayout>
     </TabItem>
-    <TabItem Header="RightContent"></TabItem>
+    <!--<TabItem Header="Tab2"></TabItem>-->
 </layout:PageBase>

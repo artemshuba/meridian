@@ -231,8 +231,8 @@
     <Compile Include="Layout\Controls\HeaderControl.xaml.cs">
       <DependentUpon>HeaderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Controls\PageTabControl.cs" />
     <Compile Include="Layout\LayoutBase.cs" />
-    <Compile Include="Layout\MultiTabPageLayout.cs" />
     <Compile Include="Layout\PageBase.cs" />
     <Compile Include="Layout\TwoColumnPageLayout.cs" />
     <Compile Include="Model\Account.cs" />
@@ -329,6 +329,9 @@
     <Compile Include="View\Main\FeedView.xaml.cs">
       <DependentUpon>FeedView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Main\MusicView.xaml.cs">
+      <DependentUpon>MusicView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Search\AlbumView.xaml.cs">
       <DependentUpon>AlbumView.xaml</DependentUpon>
     </Compile>
@@ -383,8 +386,8 @@
     <Compile Include="View\Flyouts\LyricsView.xaml.cs">
       <DependentUpon>LyricsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Main\MusicView.xaml.cs">
-      <DependentUpon>MusicView.xaml</DependentUpon>
+    <Compile Include="View\Main\MusicView.old.xaml.cs">
+      <DependentUpon>MusicView.old.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main\NowPlayingView.xaml.cs">
       <DependentUpon>NowPlayingView.xaml</DependentUpon>
@@ -478,10 +481,6 @@
     <Page Include="Layout\Controls\HeaderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Layout\Templates\MultiTabPageLayoutTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Layout\Templates\PageBaseTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -645,6 +644,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Main\MusicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Search\AlbumView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -717,7 +720,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Main\MusicView.xaml">
+    <Page Include="View\Main\MusicView.old.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
