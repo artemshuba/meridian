@@ -436,8 +436,8 @@ namespace Meridian.ViewModel.Main
 
             try
             {
-                int offset = 0;
-                int count = 50;
+                var nextFrom = string.Empty;
+                int count = 150;
                 int requestsCount = 0;
 
                 while (NewsTracks != null && NewsTracks.Count < MAX_NEWS_AUDIOS)
@@ -448,10 +448,10 @@ namespace Meridian.ViewModel.Main
                         break;
                     }
 
-                    var a = await DataService.GetNewsAudio(count, offset, token);
-                    if (a == null || a.Count == 0)
+                    var a = await DataService.GetNewsAudio(count, nextFrom, token);
+                    if (a.Items.IsNullOrEmpty())
                         break;
-                    else if (a.Count > 0)
+                    else if (a.Items.Count > 0)
                     {
                         OnTaskFinished("news");
                     }
@@ -462,9 +462,9 @@ namespace Meridian.ViewModel.Main
                         break;
                     }
 
-                    offset += count;
+                    nextFrom = a.NextFrom;
 
-                    foreach (var audio in a)
+                    foreach (var audio in a.Items)
                     {
                         NewsTracks.Add(audio);
                     }

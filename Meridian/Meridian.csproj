@@ -110,16 +110,17 @@
     <Reference Include="Microsoft.WindowsAPICodePack.Shell">
       <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio">
-      <HintPath>..\packages\NAudio.1.7.1\lib\net35\NAudio.dll</HintPath>
+    <Reference Include="NAudio, Version=1.7.2.19, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NAudio.1.7.2\lib\net35\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+    <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
@@ -243,6 +244,7 @@
     <Compile Include="Model\ColorScheme.cs" />
     <Compile Include="Model\ItemsResponse.cs" />
     <Compile Include="Model\MainMenuItem.cs" />
+    <Compile Include="Model\NewsItemsResponse.cs" />
     <Compile Include="Model\RadioStation.cs" />
     <Compile Include="Model\Recommendation.cs" />
     <Compile Include="Model\Settings\SettingsEngine.cs" />
@@ -386,9 +388,6 @@
     <Compile Include="View\Flyouts\LyricsView.xaml.cs">
       <DependentUpon>LyricsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Main\MusicView.old.xaml.cs">
-      <DependentUpon>MusicView.old.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Main\NowPlayingView.xaml.cs">
       <DependentUpon>NowPlayingView.xaml</DependentUpon>
     </Compile>
@@ -439,9 +438,6 @@
     </Compile>
     <Compile Include="View\People\SubscriptionsView.xaml.cs">
       <DependentUpon>SubscriptionsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TestPage.xaml.cs">
-      <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TrackNotifcationView.xaml.cs">
       <DependentUpon>TrackNotifcationView.xaml</DependentUpon>
@@ -720,10 +716,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Main\MusicView.old.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Main\NowPlayingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -791,10 +783,6 @@
     <Page Include="View\People\SubscriptionsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\TestPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TrackNotifcationView.xaml">
       <Generator>MSBuild:Compile</Generator>

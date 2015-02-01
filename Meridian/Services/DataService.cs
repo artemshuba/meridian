@@ -324,11 +324,11 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<List<Audio>> GetNewsAudio(int count, int offset, CancellationToken token, List<long> sourceIds = null)
+        public static async Task<NewsItemsResponse<Audio>> GetNewsAudio(int count, string nextFrom, CancellationToken token, List<long> sourceIds = null)
         {
             try
             {
-                var vkNews = await _vkontakte.News.Get(sourceIds != null ? string.Join(",", sourceIds) : null, "post", count, offset);
+                var vkNews = await _vkontakte.News.Get(sourceIds != null ? string.Join(",", sourceIds) : null, "post", count, nextFrom);
                 if (vkNews.Items != null)
                 {
                     var audioIds = new List<string>();
@@ -437,7 +437,7 @@ namespace Meridian.Services
                         //result.Add(post);
                     }
 
-                    return result;
+                    return new NewsItemsResponse<Audio>(result) { NextFrom = vkNews.NextFrom};
                 }
             }
             catch (VkAccessDeniedException ex)

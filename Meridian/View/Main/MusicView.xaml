@@ -14,7 +14,8 @@
       d:DesignHeight="1024" d:DesignWidth="1024"
       x:Name="pageRoot"
       KeepAlive="False"
-      Header="{x:Static Properties:MainResources.MainMenuMyMusic}">
+      Header="{x:Static Properties:MainResources.MainMenuMyMusic}"
+      SelectedTabIndex="{Binding SelectedTabIndex}">
 
     <layout:PageBase.Resources>
         <converters:AudioTemplateSelector x:Key="AudioTemplateSelector" AudioTemplate="{StaticResource AudioItemTemplate}" PostTemplate="{StaticResource PostItemDataTemplate}"/>
@@ -23,25 +24,30 @@
     </layout:PageBase.Resources>
 
     <layout:PageBase.HeaderMenuItems>
-        <MenuItem Header="Refresh"/>
-        <MenuItem Header="Test"/>
+        <MenuItem Header="{x:Static Properties:MainResources.HeaderMenuRefresh}" Command="{Binding RefreshCommand}"/>
+        <MenuItem x:Name="LocalSearchItem" Header="{x:Static Properties:MainResources.HeaderMenuLocalSearch}"
+                  Click="LocalSearchItem_OnClick"/>
     </layout:PageBase.HeaderMenuItems>
 
     <TabItem Header="{x:Static Properties:MainResources.TracksTab}">
         <layout:TwoColumnPageLayout>
             <layout:TwoColumnPageLayout.MainContent>
-                <controls:BusyIndicator IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
-                    <ListBox x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" 
+                <Grid>
+                    <controls:BusyIndicator IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
+                        <ListBox x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" 
                                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                                  ItemTemplateSelector="{StaticResource AudioTemplateSelector}"
                                  dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}" dragDrop:DragDrop.DropHandler="{Binding}"
                                  dragDrop:DragDrop.ScrollOnDrag="{Binding Main.ShowShareBar, Source={StaticResource Locator}, Converter={StaticResource InvertBoolConverter}}">
-                        <i:Interaction.Behaviors>
-                            <behaviours:AutoScrollToCurrentItemBehaviour />
-                        </i:Interaction.Behaviors>
-                    </ListBox>
-                </controls:BusyIndicator>
+                            <i:Interaction.Behaviors>
+                                <behaviours:AutoScrollToCurrentItemBehaviour />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                    </controls:BusyIndicator>
+
+                    <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Source="{StaticResource TracksCollection}" FontSize="12" VerticalAlignment="Top"/>
+                </Grid>
             </layout:TwoColumnPageLayout.MainContent>
             <layout:TwoColumnPageLayout.RightContent>
                 <Grid>
@@ -87,12 +93,77 @@
         </layout:TwoColumnPageLayout>
     </TabItem>
     <TabItem Header="{x:Static Properties:MainResources.ArtistsTab}">
-
+        <layout:TwoColumnPageLayout>
+            <layout:TwoColumnPageLayout.MainContent>
+                <controls:BusyIndicator IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
+                    <ListBox Margin="0,0,0,0" ItemsSource="{Binding SelectedArtist.Tracks}" Style="{StaticResource CommonListBoxStyle}" 
+                                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplateSelector="{StaticResource AudioTemplateSelector}">
+                        <i:Interaction.Behaviors>
+                            <behaviours:AutoScrollToCurrentItemBehaviour />
+                        </i:Interaction.Behaviors>
+                    </ListBox>
+                </controls:BusyIndicator>
+            </layout:TwoColumnPageLayout.MainContent>
+            <layout:TwoColumnPageLayout.RightContent>
+                <ListBox x:Name="ArtistList" Grid.Column="1" ItemsSource="{Binding Artists}" Style="{StaticResource CommonListBoxStyle}"
+                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             Padding="0"
+                             ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}" SelectedItem="{Binding SelectedArtist, Mode=TwoWay}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
+                    </i:Interaction.Behaviors>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" TextTrimming="CharacterEllipsis">
+                                <TextBlock.ContextMenu>
+                                    <ContextMenu Visibility="{Binding Converter={StaticResource AlbumContextMenuVisibilityConverter}}" Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
+                                        <MenuItem Header="{x:Static Properties:MainResources.ContextMenuPlay}" Command="{Binding PlacementTarget.Tag.PlayArtistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                        <MenuItem Header="{x:Static Properties:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding PlacementTarget.Tag.AddArtistToNowPlayingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                    </ContextMenu>
+                                </TextBlock.ContextMenu>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </layout:TwoColumnPageLayout.RightContent>
+        </layout:TwoColumnPageLayout>
     </TabItem>
     <TabItem Header="{x:Static Properties:MainResources.NewsTab}">
+        <controls:BusyIndicator IsBusy="{Binding Tasks[news].IsWorking}" Error="{Binding Tasks[news].Error}">
+            <ListBox Margin="0,0,0,0" ItemsSource="{Binding NewsTracks}" Style="{StaticResource CommonListBoxStyle}" 
+                                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplateSelector="{StaticResource AudioTemplateSelector}">
+                <i:Interaction.Behaviors>
+                    <behaviours:AutoScrollToCurrentItemBehaviour />
+                </i:Interaction.Behaviors>
+            </ListBox>
+        </controls:BusyIndicator>
     </TabItem>
     <TabItem Header="{x:Static Properties:MainResources.WallTab}">
+        <controls:BusyIndicator IsBusy="{Binding Tasks[wall].IsWorking}" Error="{Binding Tasks[wall].Error}">
+            <ListBox Margin="0,0,0,0" ItemsSource="{Binding WallTracks}" Style="{StaticResource CommonListBoxStyle}" 
+                                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplateSelector="{StaticResource AudioTemplateSelector}">
+                <i:Interaction.Behaviors>
+                    <behaviours:AutoScrollToCurrentItemBehaviour />
+                </i:Interaction.Behaviors>
+            </ListBox>
+        </controls:BusyIndicator>
     </TabItem>
     <TabItem Header="{x:Static Properties:MainResources.FavoritesTab}">
+        <controls:BusyIndicator IsBusy="{Binding Tasks[favorites].IsWorking}" Error="{Binding Tasks[favorites].Error}">
+            <ListBox Margin="0,0,0,0" ItemsSource="{Binding FavoritesTracks}" Style="{StaticResource CommonListBoxStyle}" 
+                                 VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplateSelector="{StaticResource AudioTemplateSelector}">
+                <i:Interaction.Behaviors>
+                    <behaviours:AutoScrollToCurrentItemBehaviour />
+                </i:Interaction.Behaviors>
+            </ListBox>
+        </controls:BusyIndicator>
     </TabItem>
 </layout:PageBase>

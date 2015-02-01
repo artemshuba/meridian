@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Meridian.Layout.Controls;
 using Meridian.ViewModel;
 
 namespace Meridian.Layout
@@ -42,6 +43,18 @@ namespace Meridian.Layout
         {
             get { return (List<MenuItem>)GetValue(HeaderMenuItemsProperty); }
             set { SetValue(HeaderMenuItemsProperty, value); }
+        }
+
+        /// <summary>
+        /// Selected tab index property
+        /// </summary>
+        public static readonly DependencyProperty SelectedTabIndexProperty = DependencyProperty.Register(
+            "SelectedTabIndex", typeof (int), typeof (PageBase), new PropertyMetadata(default(int)));
+
+        public int SelectedTabIndex
+        {
+            get { return (int) GetValue(SelectedTabIndexProperty); }
+            set { SetValue(SelectedTabIndexProperty, value); }
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace Meridian.Layout.Controls
 {
@@ -40,6 +41,30 @@ namespace Meridian.Layout.Controls
         public HeaderControl()
         {
             InitializeComponent();
+
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            foreach (var menuItem in MenuItems)
+            {
+                menuItem.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler(MenuItemClicked));
+            }
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            foreach (var menuItem in MenuItems)
+            {
+                menuItem.RemoveHandler(MenuItem.ClickEvent, new RoutedEventHandler(MenuItemClicked));
+            }
+        }
+
+        private void MenuItemClicked(object sender, RoutedEventArgs e)
+        {
+            HeaderMenuPopup.SetValue(Popup.IsOpenProperty, false);
         }
     }
 }
