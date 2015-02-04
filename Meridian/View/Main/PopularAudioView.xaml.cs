@@ -1,8 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+using Meridian.Layout;
 using Meridian.Model;
-using Meridian.ViewModel;
 using Meridian.ViewModel.Main;
 
 namespace Meridian.View.Main
@@ -10,7 +8,7 @@ namespace Meridian.View.Main
     /// <summary>
     /// Interaction logic for PopularAudioView.xaml
     /// </summary>
-    public partial class PopularAudioView : Page
+    public partial class PopularAudioView : PageBase
     {
         private PopularAudioViewModel _viewModel;
 
@@ -22,17 +20,11 @@ namespace Meridian.View.Main
             this.DataContext = _viewModel;
         }
 
-        private void PopularAudioView_OnLoaded(object sender, RoutedEventArgs e)
+        public override void OnNavigatedTo()
         {
-            _viewModel.Activate();
+            base.OnNavigatedTo();
 
             LocalSearchBox.Filter = Filter;
-        }
-
-        private void LocalSearchItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            HeaderMenuPopup.SetCurrentValue(Popup.IsOpenProperty, false);
-            LocalSearchBox.IsActive = true;
         }
 
         private bool Filter(object o)
@@ -40,6 +32,11 @@ namespace Meridian.View.Main
             var track = (Audio)o;
             var query = LocalSearchBox.Query.ToLower();
             return track.Title.ToLower().StartsWith(query) || track.Artist.ToLower().StartsWith(query);
+        }
+
+        private void LocalSearchItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            LocalSearchBox.IsActive = true;
         }
     }
 }

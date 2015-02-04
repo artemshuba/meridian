@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Meridian.Layout;
 using Meridian.Model;
 using Meridian.ViewModel;
 using Meridian.ViewModel.Main;
@@ -11,11 +10,11 @@ namespace Meridian.View.Main
     /// <summary>
     /// Interaction logic for RecommendationsView.xaml
     /// </summary>
-    public partial class RecommendationsView : PageBase
+    public partial class RecommendationsViewOld : Page
     {
         private RecommendationsViewModel _viewModel;
 
-        public RecommendationsView()
+        public RecommendationsViewOld()
         {
             InitializeComponent();
 
@@ -25,11 +24,24 @@ namespace Meridian.View.Main
 
         private void RecommendationsView_OnLoaded(object sender, RoutedEventArgs e)
         {
+            _viewModel.Activate();
+
             LocalSearchBox.Filter = Filter;
+        }
+
+        private void RecommendationsView_OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Deactivate();
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            HeaderMenuPopup.SetCurrentValue(Popup.IsOpenProperty, false);
         }
 
         private void LocalSearchItem_OnClick(object sender, RoutedEventArgs e)
         {
+            HeaderMenuPopup.SetCurrentValue(Popup.IsOpenProperty, false);
             LocalSearchBox.IsActive = true;
         }
 

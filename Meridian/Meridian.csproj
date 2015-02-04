@@ -334,6 +334,12 @@
     <Compile Include="View\Main\MusicView.xaml.cs">
       <DependentUpon>MusicView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Main\PopularAudioView.xaml.cs">
+      <DependentUpon>PopularAudioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\RecommendationsViewOld.xaml.cs">
+      <DependentUpon>RecommendationsViewOld.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Search\AlbumView.xaml.cs">
       <DependentUpon>AlbumView.xaml</DependentUpon>
     </Compile>
@@ -390,9 +396,6 @@
     </Compile>
     <Compile Include="View\Main\NowPlayingView.xaml.cs">
       <DependentUpon>NowPlayingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Main\PopularAudioView.xaml.cs">
-      <DependentUpon>PopularAudioView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main\RadioView.xaml.cs">
       <DependentUpon>RadioView.xaml</DependentUpon>
@@ -644,6 +647,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Main\PopularAudioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\RecommendationsViewOld.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Search\AlbumView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -717,10 +728,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Main\NowPlayingView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Main\PopularAudioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

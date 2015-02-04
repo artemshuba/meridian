@@ -1,4 +1,4 @@
-﻿using System.Windows.Controls;
+﻿using Meridian.Layout;
 using Meridian.ViewModel.Main;
 
 namespace Meridian.View.Main
@@ -6,7 +6,7 @@ namespace Meridian.View.Main
     /// <summary>
     /// Interaction logic for FeedView.xaml
     /// </summary>
-    public partial class FeedView : Page
+    public partial class FeedView : PageBase
     {
         private FeedViewModel _viewModel;
 

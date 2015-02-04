@@ -27,17 +27,17 @@ namespace Meridian.ViewModel.Main
             set { Set(ref _tracks, value); }
         }
 
-        public async void Activate()
-        {
-            if (Tracks == null || Tracks.Count == 0)
-                await LoadTracks();
-        }
-
         public PopularAudioViewModel()
         {
             RegisterTasks("audio");
 
             InitializeCommands();
+        }
+
+        public override async void Activate()
+        {
+            if (Tracks == null || Tracks.Count == 0)
+                await LoadTracks();
         }
 
         private void InitializeCommands()
