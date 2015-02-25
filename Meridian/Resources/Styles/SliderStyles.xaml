@@ -66,9 +66,9 @@
     </Style>
     <ControlTemplate x:Key="SliderThumbHorizontalDefault" TargetType="{x:Type Thumb}">
         <Grid HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center">
-            <Rectangle x:Name="grip" Width="14" Height="14" RadiusX="12" RadiusY="12" Margin="0" Fill="{StaticResource SliderThumb.Static.Background}" Stretch="Fill" SnapsToDevicePixels="False" Stroke="{StaticResource SliderThumb.Static.Border}" StrokeThickness="0" UseLayoutRounding="True" VerticalAlignment="Center">
+            <Rectangle x:Name="grip" Width="14" Height="14" RadiusX="12" RadiusY="12" Margin="0" Fill="{StaticResource SliderThumb.Static.Background}" Stretch="Fill" SnapsToDevicePixels="True" Stroke="#22000000" StrokeThickness="1" UseLayoutRounding="True" VerticalAlignment="Center">
                 <Rectangle.Effect>
-                    <DropShadowEffect Direction="-90" BlurRadius="2.5" ShadowDepth="1" Opacity="0.35"/>
+                    <DropShadowEffect Direction="-90" BlurRadius="2" ShadowDepth="2" Opacity="0.2"/>
                 </Rectangle.Effect>
             </Rectangle>
         </Grid>

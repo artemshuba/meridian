@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,6 +55,11 @@ namespace Neptune.Desktop.Storage
                     throw new FileNotFoundException();
                 File.Delete(path);
             });
+        }
+
+        public static DateTime GetFileUpdateTime(string path)
+        {
+            return File.GetLastWriteTime(path);
         }
 
         public static Task<bool> FolderExists(string path)
