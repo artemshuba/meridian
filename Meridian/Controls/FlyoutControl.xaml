@@ -22,9 +22,9 @@
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard>
                 <Storyboard>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="content" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
-                        <DiscreteDoubleKeyFrame KeyTime="0" Value="15"/>
-                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="content" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
+                        <DiscreteDoubleKeyFrame KeyTime="0" Value="1.07"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1">
                             <EasingDoubleKeyFrame.EasingFunction>
                                 <ExponentialEase EasingMode="EaseOut" Exponent="4"/>
                             </EasingDoubleKeyFrame.EasingFunction>
@@ -32,7 +32,7 @@
                     </DoubleAnimationUsingKeyFrames>
                     <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
                         <DiscreteDoubleKeyFrame KeyTime="0" Value="0"/>
-                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.35" Value="1">
                             <EasingDoubleKeyFrame.EasingFunction>
                                 <ExponentialEase EasingMode="EaseOut" Exponent="6"/>
                             </EasingDoubleKeyFrame.EasingFunction>
@@ -44,9 +44,10 @@
     </UserControl.Triggers>
     <Grid>
         <Rectangle Fill="Black" Opacity="0.4"/>
-        <ContentControl x:Name="content" Content="{Binding FlyoutContent, ElementName=rootElement}" ContentTemplate="{Binding FlyoutContentTemplate, ElementName=rootElement}">
+        <ContentControl x:Name="content" Content="{Binding FlyoutContent, ElementName=rootElement}" ContentTemplate="{Binding FlyoutContentTemplate, ElementName=rootElement}"
+                        RenderTransformOrigin="0.5,0.5">
             <ContentControl.RenderTransform>
-                <TranslateTransform />
+                <ScaleTransform ScaleY="{Binding RelativeSource={RelativeSource Self}, Path=ScaleX}"/>
             </ContentControl.RenderTransform>
         </ContentControl>
     </Grid>

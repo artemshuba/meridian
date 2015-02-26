@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="/Resources/Themes/Accents/Blue.xaml" />
                 <ResourceDictionary Source="/Resources/Themes/Light.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Icons.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Animations.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/WindowButtons.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ListBoxStyles.xaml" />
@@ -26,7 +27,6 @@
                 <ResourceDictionary Source="/Resources/Styles/ContextMenuStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Styles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/Animations.xaml" />
 
                 <ResourceDictionary>
                     <viewModel:ViewModelLocator x:Key="Locator"/>

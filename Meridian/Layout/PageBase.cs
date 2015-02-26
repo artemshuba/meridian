@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Meridian.Layout.Controls;
 using Meridian.ViewModel;
 
 namespace Meridian.Layout

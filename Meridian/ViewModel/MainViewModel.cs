@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -83,6 +84,8 @@ namespace Meridian.ViewModel
         public RelayCommand GoToSettingsCommand { get; private set; }
 
         public RelayCommand<string> SearchCommand { get; private set; }
+
+        public RelayCommand<KeyEventArgs> SearchKeyUpCommand { get; private set; }
 
         public RelayCommand NextAudioCommand { get; private set; }
 
@@ -582,6 +585,16 @@ namespace Meridian.ViewModel
                                     {"query", query}
                                 }
                     });
+                }
+            });
+
+            SearchKeyUpCommand = new RelayCommand<KeyEventArgs>(args =>
+            {
+                if (args.Key == Key.Enter)
+                {
+                    var textBox = args.Source as TextBox;
+                    if (textBox != null && !string.IsNullOrWhiteSpace(textBox.Text))
+                        SearchCommand.Execute(textBox.Text);
                 }
             });
 
