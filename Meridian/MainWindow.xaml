@@ -193,13 +193,13 @@
                          Value="{Binding UpdateService.UpdateProgress, Source={StaticResource Locator}}"/>
         </Grid>
 
-        <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10,3,180,10">
-            <Border x:Name="photoMask" CornerRadius="50" Background="White" />
+        <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10,7,183,10">
+            <Border x:Name="photoMask" CornerRadius="20" Background="{StaticResource MainBackgroundBrush}" Width="28" Height="28" HorizontalAlignment="Right"/>
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding User.FirstName}" VerticalAlignment="Center" Margin="0,0,10,0"
-                           FontSize="14" Opacity="0.5"/>
-                <Image Source="{Binding User.Photo}" Width="32" Height="32">
+                           FontSize="12" Opacity="0.5" Foreground="{StaticResource ForegroundBrush}"/>
+                <Image Source="{Binding User.Photo}" Width="28" Height="28">
                     <Image.OpacityMask>
                         <VisualBrush Visual="{Binding ElementName=photoMask}"/>
                     </Image.OpacityMask>
