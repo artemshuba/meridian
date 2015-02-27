@@ -762,4 +762,13 @@
   <data name="SettingsUIShowBackgroundArtCompactMode" xml:space="preserve">
     <value>Show current artist image in compact mode</value>
   </data>
+  <data name="FeedSubHeader" xml:space="preserve">
+    <value>New music from your favorite societies</value>
+  </data>
+  <data name="PopularSubHeader" xml:space="preserve">
+    <value>Popular music from VK</value>
+  </data>
+  <data name="RecommendationsSubHeader" xml:space="preserve">
+    <value>Discover new music by artists, genres, moods and more</value>
+  </data>
 </root>

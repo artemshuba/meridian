@@ -13,6 +13,7 @@
       d:DesignHeight="768" d:DesignWidth="1024"
       x:Name="pageRoot"
       Header="{x:Static localization:MainResources.MainMenuRecommendations}"
+      SubHeader="{x:Static localization:MainResources.RecommendationsSubHeader}"
       Loaded="RecommendationsView_OnLoaded">
 
     <layout:PageBase.Resources>

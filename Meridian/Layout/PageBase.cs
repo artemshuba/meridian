@@ -32,6 +32,18 @@ namespace Meridian.Layout
         }
 
         /// <summary>
+        /// SubHeader property
+        /// </summary>
+        public static readonly DependencyProperty SubHeaderProperty = DependencyProperty.Register(
+            "SubHeader", typeof (string), typeof (PageBase), new PropertyMetadata(default(string)));
+
+        public string SubHeader
+        {
+            get { return (string) GetValue(SubHeaderProperty); }
+            set { SetValue(SubHeaderProperty, value); }
+        }
+
+        /// <summary>
         /// Header menu items property
         /// </summary>
         public static readonly DependencyProperty HeaderMenuItemsProperty = DependencyProperty.Register(

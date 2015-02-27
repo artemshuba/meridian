@@ -762,4 +762,13 @@
   <data name="SettingsUIShowBackgroundArtCompactMode" xml:space="preserve">
     <value>Отображать изображение текущего исполнителя в компактном режиме</value>
   </data>
+  <data name="FeedSubHeader" xml:space="preserve">
+    <value>Новая музыка из ваших любимых сообществ</value>
+  </data>
+  <data name="PopularSubHeader" xml:space="preserve">
+    <value>Популярная музыка ВКонтакте</value>
+  </data>
+  <data name="RecommendationsSubHeader" xml:space="preserve">
+    <value>Откройте для себя новую музыку с рекомендациями</value>
+  </data>
 </root>

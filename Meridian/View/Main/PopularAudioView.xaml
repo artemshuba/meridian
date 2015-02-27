@@ -12,6 +12,7 @@
       d:DesignHeight="768" d:DesignWidth="1024"
       KeepAlive="False"
       Header="{x:Static localization:MainResources.MainMenuPopular}"
+      SubHeader="{x:Static localization:MainResources.PopularSubHeader}"
       x:Name="pageRoot">
     
     <layout:PageBase.HeaderMenuItems>

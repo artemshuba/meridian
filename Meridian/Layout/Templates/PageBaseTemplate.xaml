@@ -7,16 +7,6 @@
                     xmlns:command="http://www.galasoft.ch/mvvmlight"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
     <Style x:Key="PageBaseStyle" TargetType="layout:PageBase" x:Shared="False">
-        <!--<Style.Triggers>
-            <EventTrigger RoutedEvent="Page.Loaded">
-                <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
-            </EventTrigger>
-        </Style.Triggers>-->
-        <Setter Property="RenderTransform">
-            <Setter.Value>
-                <TranslateTransform />
-            </Setter.Value>
-        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="layout:PageBase">
@@ -27,7 +17,7 @@
                         </Grid.RowDefinitions>
 
                         <controls:HeaderControl Grid.Row="0" Header="{TemplateBinding Header}" MenuItems="{TemplateBinding HeaderMenuItems}"
-                                                >
+                                                SubHeader="{TemplateBinding SubHeader}">
                             <controls:HeaderControl.RenderTransform>
                                 <TranslateTransform />
                             </controls:HeaderControl.RenderTransform>
@@ -38,7 +28,7 @@
                             </controls:HeaderControl.Triggers>
                         </controls:HeaderControl>
 
-                        <Grid x:Name="SearchBoxGrid" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,45,10,0" Width="170" Height="24" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid x:Name="SearchBoxGrid" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,45,10,0" Width="170" Height="24">
                             <controls1:TextBoxWithHint x:Name="SearchBox" Padding="8,0,30,0" HorizontalAlignment="Stretch" Style="{StaticResource SearchBoxStyle}" FontWeight="Regular" 
                                                        Hint="{x:Static localization:MainResources.Search}" HintStyle="{StaticResource TextBoxHintStyle}">
                                 <i:Interaction.Triggers>
@@ -53,7 +43,7 @@
                         </Grid>
 
                         <controls:PageTabControl Grid.Row="1" ItemsSource="{TemplateBinding Content}" Style="{StaticResource CommonTabControlStyle}"
-                                    ItemContainerStyle="{StaticResource CommonTabItemStyle}" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+                                    ItemContainerStyle="{StaticResource CommonTabItemStyle}" SelectedIndex="{Binding SelectedTabIndex, RelativeSource={RelativeSource FindAncestor, AncestorType=layout:PageBase}, Mode=TwoWay}">
                             <controls:PageTabControl.RenderTransform>
                                 <TranslateTransform />
                             </controls:PageTabControl.RenderTransform>
@@ -63,7 +53,6 @@
                                 </EventTrigger>
                             </controls:PageTabControl.Triggers>
                         </controls:PageTabControl>
-
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

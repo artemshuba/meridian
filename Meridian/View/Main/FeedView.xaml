@@ -11,6 +11,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="1024" d:DesignWidth="1024"
 	  Header="{x:Static Properties:MainResources.MainMenuFeed}"
+      SubHeader="{x:Static Properties:MainResources.FeedSubHeader}"
       x:Name="pageRoot">
     <layout:PageBase.Resources>
         <CollectionViewSource x:Key="TracksCollection" Source="{Binding Tracks}" />

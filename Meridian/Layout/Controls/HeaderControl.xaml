@@ -11,6 +11,10 @@
             <ColumnDefinition Width="20"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
             <Border Background="White" BorderThickness="1" BorderBrush="Black">
@@ -21,5 +25,9 @@
                 HorizontalAlignment="Left"
                 Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{Binding Header, ElementName=rootElement}" Style="{StaticResource HeaderButtonStyle}"/>
+        
+        <TextBlock Text="{Binding SubHeader, ElementName=rootElement}" Foreground="{DynamicResource ForegroundBrush}" Opacity="0.6" Grid.Column="1"
+                   Grid.Row="1" Margin="6,-10,0,0" FontSize="14"
+                   Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource NullToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

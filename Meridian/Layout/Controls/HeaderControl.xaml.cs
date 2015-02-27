@@ -20,6 +20,15 @@ namespace Meridian.Layout.Controls
             set { SetValue(HeaderProperty, value); }
         }
 
+        public static readonly DependencyProperty SubHeaderProperty = DependencyProperty.Register(
+            "SubHeader", typeof (string), typeof (HeaderControl), new PropertyMetadata(default(string)));
+
+        public string SubHeader
+        {
+            get { return (string) GetValue(SubHeaderProperty); }
+            set { SetValue(SubHeaderProperty, value); }
+        }
+
         public static readonly DependencyProperty MenuItemsProperty = DependencyProperty.Register(
             "MenuItems", typeof(List<MenuItem>), typeof(HeaderControl), new PropertyMetadata(new List<MenuItem>(), OnMenuItemsPropertyChanged));
 

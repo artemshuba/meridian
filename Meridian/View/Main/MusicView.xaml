@@ -15,7 +15,7 @@
       x:Name="pageRoot"
       KeepAlive="False"
       Header="{x:Static Properties:MainResources.MainMenuMyMusic}"
-      SelectedTabIndex="{Binding SelectedTabIndex}">
+      SelectedTabIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
 
     <layout:PageBase.Resources>
         <converters:AudioTemplateSelector x:Key="AudioTemplateSelector" AudioTemplate="{StaticResource AudioItemTemplate}" PostTemplate="{StaticResource PostItemDataTemplate}"/>
