@@ -1,4 +1,4 @@
-﻿<Page x:Class="Meridian.View.People.SubscriptionsView"
+﻿<layout:PageBase x:Class="Meridian.View.People.SubscriptionsView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,83 +8,56 @@
       xmlns:helpers="clr-namespace:Meridian.Helpers"
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       xmlns:controls="clr-namespace:Meridian.Controls"
+      xmlns:layout="clr-namespace:Meridian.Layout"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
       x:Name="pageRoot" Background="{DynamicResource MainBackgroundBrush}"
+      Header="{x:Static localization:MainResources.MainMenuSubscriptions}"
       Loaded="SubscriptionsView_OnLoaded">
 
-    <Page.RenderTransform>
-        <TranslateTransform />
-    </Page.RenderTransform>
-
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="Page.Loaded">
-            <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
-        </EventTrigger>
-    </Page.Triggers>
-
     <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="71"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20"/>
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Button Style="{DynamicResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left"
-                    Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Grid.Column="1" Text="{x:Static localization:MainResources.MainMenuSubscriptions}" FontSize="28" FontWeight="Thin" Margin="5,15,0,15" Foreground="{DynamicResource ForegroundBrush}"/>
-            </Grid>
-
-            <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-
-            <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[subscriptions].IsWorking}" Error="{Binding Tasks[subscriptions].Error}">
-                <ListBox Margin="24,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Subscriptions}" Style="{StaticResource CommonListBoxStyle}" 
+        <controls:BusyIndicator IsBusy="{Binding Tasks[subscriptions].IsWorking}" Error="{Binding Tasks[subscriptions].Error}">
+            <ListBox Margin="24,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Subscriptions}" Style="{StaticResource CommonListBoxStyle}" 
                          VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          ItemContainerStyle="{StaticResource FriendListBoxItemStyle}">
-                    <i:Interaction.Behaviors>
-                        <behaviours:TransitionBehaviour Transition="{StaticResource FriendLoadAnim}" TransitionDelay="25"/>
-                    </i:Interaction.Behaviors>
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Button Style="{StaticResource SimpleButtonStyle}" Command="{Binding DataContext.GoToSubscriptionCommand, ElementName=pageRoot}" CommandParameter="{Binding}"
+                <i:Interaction.Behaviors>
+                    <behaviours:TransitionBehaviour Transition="{StaticResource FriendLoadAnim}" TransitionDelay="25"/>
+                </i:Interaction.Behaviors>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource SimpleButtonStyle}" Command="{Binding DataContext.GoToSubscriptionCommand, ElementName=pageRoot}" CommandParameter="{Binding}"
                                  Width="120" Height="120" ToolTip="{Binding Name}">
-                                <Button.RenderTransform>
-                                    <TranslateTransform />
-                                </Button.RenderTransform>
-                                <Button.Triggers>
-                                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                                        <BeginStoryboard Storyboard="{StaticResource FriendLoadAnim}" />
-                                    </EventTrigger>
-                                </Button.Triggers>
-                                <Grid x:Name="RootGrid">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.RowSpan="2">
-                                        <Image helpers:ImageAsyncHelper.SourceUri="{Binding PhotoMedium}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                    </Grid>
-                                    <Rectangle Grid.Row="1" Fill="Black" Opacity="0.8" />
-                                    <StackPanel Grid.Row="1">
-                                        <TextBlock Text="{Binding FirstName}" FontWeight="Normal" FontSize="11" Margin="5,3,5,0" TextTrimming="CharacterEllipsis" Opacity="0.8" Foreground="White"/>
-                                        <TextBlock Text="{Binding LastName}" FontFamily="Segoe UI SemiLight" FontSize="12" Margin="5,-2,5,7" TextTrimming="CharacterEllipsis" Foreground="White"/>
-                                    </StackPanel>
+                            <Button.RenderTransform>
+                                <TranslateTransform />
+                            </Button.RenderTransform>
+                            <Button.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard Storyboard="{StaticResource FriendLoadAnim}" />
+                                </EventTrigger>
+                            </Button.Triggers>
+                            <Grid x:Name="RootGrid">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.RowSpan="2">
+                                    <Image helpers:ImageAsyncHelper.SourceUri="{Binding PhotoMedium}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
                                 </Grid>
-                            </Button>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </controls:BusyIndicator>
-        </Grid>
+                                <Rectangle Grid.Row="1" Fill="Black" Opacity="0.8" />
+                                <StackPanel Grid.Row="1">
+                                    <TextBlock Text="{Binding FirstName}" FontWeight="Normal" FontSize="11" Margin="5,3,5,0" TextTrimming="CharacterEllipsis" Opacity="0.8" Foreground="White"/>
+                                    <TextBlock Text="{Binding LastName}" FontFamily="Segoe UI SemiLight" FontSize="12" Margin="5,-2,5,7" TextTrimming="CharacterEllipsis" Foreground="White"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </controls:BusyIndicator>
     </Grid>
-</Page>
+</layout:PageBase>

@@ -381,7 +381,7 @@
   <data name="RadioStationsTitle" xml:space="preserve">
     <value>STATIONS</value>
   </data>
-  <data name="RadioSubheader" xml:space="preserve">
+  <data name="RadioSubHeader" xml:space="preserve">
     <value>Create stations with artists you like</value>
   </data>
   <data name="RecommendationsGenresGroup" xml:space="preserve">

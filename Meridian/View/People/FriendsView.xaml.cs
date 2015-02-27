@@ -1,7 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Meridian.ViewModel;
+using Meridian.Layout;
 using Meridian.ViewModel.People;
 using VkLib.Core.Users;
 
@@ -10,7 +9,7 @@ namespace Meridian.View.People
     /// <summary>
     /// Interaction logic for FriendsView.xaml
     /// </summary>
-    public partial class FriendsView : Page
+    public partial class FriendsView : PageBase
     {
         private FriendsViewModel _viewModel;
 
@@ -31,7 +30,6 @@ namespace Meridian.View.People
 
         private void LocalSearchItem_OnClick(object sender, RoutedEventArgs e)
         {
-            HeaderMenuPopup.SetCurrentValue(Popup.IsOpenProperty, false);
             LocalSearchBox.IsActive = true;
         }
 

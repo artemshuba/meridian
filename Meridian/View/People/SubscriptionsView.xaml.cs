@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
+using Meridian.Layout;
 using Meridian.ViewModel.People;
 
 namespace Meridian.View.People
@@ -7,7 +7,7 @@ namespace Meridian.View.People
     /// <summary>
     /// Interaction logic for SubscriptionsView.xaml
     /// </summary>
-    public partial class SubscriptionsView : Page
+    public partial class SubscriptionsView : PageBase
     {
         private SubscriptionsViewModel _viewModel;
 

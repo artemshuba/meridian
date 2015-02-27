@@ -1287,9 +1287,9 @@ namespace Meridian.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Create stations with artists you like.
         /// </summary>
-        public static string RadioSubheader {
+        public static string RadioSubHeader {
             get {
-                return ResourceManager.GetString("RadioSubheader", resourceCulture);
+                return ResourceManager.GetString("RadioSubHeader", resourceCulture);
             }
         }
         

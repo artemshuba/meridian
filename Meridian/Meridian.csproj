@@ -337,9 +337,6 @@
     <Compile Include="View\Main\PopularAudioView.xaml.cs">
       <DependentUpon>PopularAudioView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Main\RecommendationsViewOld.xaml.cs">
-      <DependentUpon>RecommendationsViewOld.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Search\AlbumView.xaml.cs">
       <DependentUpon>AlbumView.xaml</DependentUpon>
     </Compile>
@@ -650,10 +647,6 @@
     <Page Include="View\Main\PopularAudioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Main\RecommendationsViewOld.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Search\AlbumView.xaml">
       <SubType>Designer</SubType>
