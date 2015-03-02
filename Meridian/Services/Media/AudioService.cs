@@ -276,8 +276,9 @@ namespace Meridian.Services
         {
             if (MediaPlayer.Source == null && CurrentAudio != null)
             {
-                MediaPlayer.Source = new Uri(CurrentAudio.Source);
-                CurrentAudio.IsPlaying = true;
+                Play(CurrentAudio);
+                //MediaPlayer.Source = new Uri(CurrentAudio.Source);
+                //CurrentAudio.IsPlaying = true;
             }
 
             MediaPlayer.Play();
@@ -345,9 +346,9 @@ namespace Meridian.Services
                 SwitchNext();
             else
                 if (RadioService.CurrentRadio == null)
-                Next(true);
-            else
-                RadioService.SkipNext();
+                    Next(true);
+                else
+                    RadioService.SkipNext();
         }
 
         /// <summary>
@@ -473,6 +474,13 @@ namespace Meridian.Services
                         if (playlist != null)
                             Application.Current.Dispatcher.Invoke(() => SetCurrentPlaylist(playlist.OfType<Audio>()));
                     }
+
+                    if (o["currentRadio"] != null && o["currentRadio"]["session"] != null)
+                    {
+                        var session = o["currentRadio"]["session"].Value<string>();
+                        var radio = JsonConvert.DeserializeObject<RadioStation>(o["currentRadio"]["radio"].ToString());
+                        RadioService.RestoreSession(session, radio);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -488,7 +496,12 @@ namespace Meridian.Services
                 var o = new
                 {
                     currentAudio = CurrentAudio,
-                    currentPlaylist = Playlist
+                    currentPlaylist = Playlist,
+                    currentRadio = new
+                    {
+                        session = RadioService.SessionId,
+                        radio = RadioService.CurrentRadio
+                    }
                 };
 
                 var json = JsonConvert.SerializeObject(o, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
