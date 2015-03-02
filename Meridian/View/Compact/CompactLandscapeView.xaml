@@ -267,7 +267,7 @@
             </ListBox>
         </Grid>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,5,5" DataContext="{Binding Main, Source={StaticResource Locator}}">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,5" DataContext="{Binding Main, Source={StaticResource Locator}}">
             <Button Style="{StaticResource PortraitModeButtonStyle}" Margin="0,0,15,0" SnapsToDevicePixels="True" Command="{Binding SwitchToUIModeCommand}" CommandParameter="Compact"
                     ToolTip="{x:Static localization:MainResources.PortraitMode}"/>
             <Button Style="{StaticResource MiniModeButtonStyle}" Margin="0,0,15,0" SnapsToDevicePixels="True" Command="{Binding SwitchUIModeCommand}"

@@ -8,7 +8,7 @@
         xmlns:behaviours="clr-namespace:Meridian.Behaviours"
         xmlns:localization="clr-namespace:Meridian.Resources.Localization"
         xmlns:converters1="clr-namespace:Meridian.Converters"
-        MinWidth="750" MinHeight="570"
+        MinWidth="850" MinHeight="570"
         WindowStartupLocation="Manual" ShowInTaskbar="{Binding ShowTrayIcon, Converter={StaticResource InvertBoolConverter}}"
         Background="{DynamicResource MainBackgroundBrush}"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
@@ -191,20 +191,6 @@
             <ProgressBar Style="{StaticResource CommonProgressBarStyle}" Margin="25,5,0,0" Padding="0"
                          Visibility="{Binding UpdateService.IsUpdating, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"
                          Value="{Binding UpdateService.UpdateProgress, Source={StaticResource Locator}}"/>
-        </Grid>
-
-        <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10,7,183,10">
-            <Border x:Name="photoMask" CornerRadius="20" Background="{StaticResource MainBackgroundBrush}" Width="28" Height="28" HorizontalAlignment="Right"/>
-
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding User.FirstName}" VerticalAlignment="Center" Margin="0,0,10,0"
-                           FontSize="12" Opacity="0.5" Foreground="{DynamicResource ForegroundBrush}"/>
-                <Image Source="{Binding User.Photo}" Width="28" Height="28">
-                    <Image.OpacityMask>
-                        <VisualBrush Visual="{Binding ElementName=photoMask}"/>
-                    </Image.OpacityMask>
-                </Image>
-            </StackPanel>
         </Grid>
 
         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10,10,10,10" Visibility="{Binding ShowWindowButtons, Converter={StaticResource BoolToVisibilityConverter}}">

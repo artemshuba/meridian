@@ -259,14 +259,15 @@
                 </Button>
             </StackPanel>
         </Border>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,5,5" DataContext="{Binding Main, Source={StaticResource Locator}}">
-            <Button Style="{StaticResource LandscapeModeButtonStyle}" Margin="0,0,15,0" SnapsToDevicePixels="True" Command="{Binding SwitchToUIModeCommand}" CommandParameter="CompactLandscape"
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,5" DataContext="{Binding Main, Source={StaticResource Locator}}">
+            <Button Style="{StaticResource LandscapeModeButtonStyle}" Margin="0,0,10,0" SnapsToDevicePixels="True" Command="{Binding SwitchToUIModeCommand}" CommandParameter="CompactLandscape"
                     ToolTip="{x:Static localization:MainResources.LandscapeMode}"/>
-            <Button Style="{StaticResource MiniModeButtonStyle}" Margin="0,0,15,0" SnapsToDevicePixels="True" Command="{Binding SwitchUIModeCommand}"
-                    ToolTip="{x:Static localization:MainResources.FullMode}"/>
-            <Button Style="{StaticResource MinimizeButtonStyle}" VerticalAlignment="Bottom" Margin="0,0,15,0" SnapsToDevicePixels="True" ToolTip="{x:Static localization:MainResources.Minimize}"
-                    Click="ButtonBase_OnClick"/>
-            <Button Style="{StaticResource CloseButtonStyle}" SnapsToDevicePixels="True" Command="{Binding CloseWindowCommand}" ToolTip="{x:Static localization:MainResources.Close}" Margin="0,0,5,0"/>
+            <Button Style="{StaticResource MiniModeButtonStyle}" Margin="0,0,10,0" SnapsToDevicePixels="True" Command="{Binding SwitchUIModeCommand}"
+                    ToolTip="{x:Static localization:MainResources.FullMode}" Width="20" Height="20"/>
+            <Button Style="{StaticResource MinimizeButtonStyle}" VerticalAlignment="Bottom" Margin="0,0,10,0" SnapsToDevicePixels="True" ToolTip="{x:Static localization:MainResources.Minimize}"
+                    Click="ButtonBase_OnClick" Width="21" Height="21"/>
+            <Button Style="{StaticResource CloseButtonStyle}" SnapsToDevicePixels="True" Command="{Binding CloseWindowCommand}" ToolTip="{x:Static localization:MainResources.Close}" Margin="0,0,5,0"
+                    Width="20" Height="20"/>
         </StackPanel>
     </Grid>
 </Window>

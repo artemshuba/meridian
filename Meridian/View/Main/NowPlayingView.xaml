@@ -108,10 +108,10 @@
         </ListBox>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" DataContext="{Binding Main, Source={StaticResource Locator}}">
-            <Button Style="{StaticResource MiniModeButtonStyle}" Margin="0,0,15,0" SnapsToDevicePixels="True" Command="{Binding SwitchUIModeCommand}"
+            <Button Style="{StaticResource MiniModeButtonStyle}" Margin="0,0,20,0" SnapsToDevicePixels="True" Command="{Binding SwitchUIModeCommand}"
                     ToolTip="{x:Static localization:MainResources.CompactMode}" Foreground="White"/>
-            <Button Style="{StaticResource MinimizeButtonStyle}" VerticalAlignment="Bottom" Margin="0,0,15,0" SnapsToDevicePixels="True" Command="{Binding MinimizeWindowCommand}" ToolTip="{x:Static localization:MainResources.Minimize}" Foreground="White"/>
-            <ToggleButton x:Name="MaximizeButton" Style="{StaticResource MaximizeButtonStyle}" VerticalAlignment="Bottom" Margin="0,0,15,0" SnapsToDevicePixels="True" IsChecked="{Binding IsWindowMaximized, Mode=OneWay}" Command="{Binding MaximizeWindowCommand}"
+            <Button Style="{StaticResource MinimizeButtonStyle}" VerticalAlignment="Bottom" Margin="0,0,20,0" SnapsToDevicePixels="True" Command="{Binding MinimizeWindowCommand}" ToolTip="{x:Static localization:MainResources.Minimize}" Foreground="White"/>
+            <ToggleButton x:Name="MaximizeButton" Style="{StaticResource MaximizeButtonStyle}" VerticalAlignment="Bottom" Margin="0,0,20,0" SnapsToDevicePixels="True" IsChecked="{Binding IsWindowMaximized, Mode=OneWay}" Command="{Binding MaximizeWindowCommand}"
                           ToolTip="{x:Static localization:MainResources.Maximize}" Foreground="White"/>
             <Button Style="{StaticResource CloseButtonStyle}" SnapsToDevicePixels="True" Command="{Binding CloseWindowCommand}" ToolTip="{x:Static localization:MainResources.Close}" Foreground="White"/>
         </StackPanel>

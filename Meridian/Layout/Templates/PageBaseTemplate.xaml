@@ -28,6 +28,18 @@
                             </controls:HeaderControl.Triggers>
                         </controls:HeaderControl>
 
+                        <controls:PageTabControl Grid.Row="1" ItemsSource="{TemplateBinding Content}" Style="{StaticResource CommonTabControlStyle}"
+                                    ItemContainerStyle="{StaticResource CommonTabItemStyle}" SelectedIndex="{Binding SelectedTabIndex, RelativeSource={RelativeSource FindAncestor, AncestorType=layout:PageBase}, Mode=TwoWay}">
+                            <controls:PageTabControl.RenderTransform>
+                                <TranslateTransform />
+                            </controls:PageTabControl.RenderTransform>
+                            <controls:PageTabControl.Triggers>
+                                <EventTrigger RoutedEvent="Page.Loaded">
+                                    <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
+                                </EventTrigger>
+                            </controls:PageTabControl.Triggers>
+                        </controls:PageTabControl>
+
                         <Grid x:Name="SearchBoxGrid" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,45,10,0" Width="170" Height="24">
                             <controls1:TextBoxWithHint x:Name="SearchBox" Padding="8,0,30,0" HorizontalAlignment="Stretch" Style="{StaticResource SearchBoxStyle}" FontWeight="Regular" 
                                                        Hint="{x:Static localization:MainResources.Search}" HintStyle="{StaticResource TextBoxHintStyle}">
@@ -42,17 +54,20 @@
                                     Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Text, ElementName=SearchBox}"/>
                         </Grid>
 
-                        <controls:PageTabControl Grid.Row="1" ItemsSource="{TemplateBinding Content}" Style="{StaticResource CommonTabControlStyle}"
-                                    ItemContainerStyle="{StaticResource CommonTabItemStyle}" SelectedIndex="{Binding SelectedTabIndex, RelativeSource={RelativeSource FindAncestor, AncestorType=layout:PageBase}, Mode=TwoWay}">
-                            <controls:PageTabControl.RenderTransform>
-                                <TranslateTransform />
-                            </controls:PageTabControl.RenderTransform>
-                            <controls:PageTabControl.Triggers>
-                                <EventTrigger RoutedEvent="Page.Loaded">
-                                    <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
-                                </EventTrigger>
-                            </controls:PageTabControl.Triggers>
-                        </controls:PageTabControl>
+
+                        <!--<Grid VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10,7,183,10" DataContext="{Binding Main, Source={StaticResource Locator}}">
+                            <Border x:Name="photoMask" CornerRadius="20" Background="{StaticResource MainBackgroundBrush}" Width="28" Height="28" HorizontalAlignment="Right"/>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding User.FirstName}" VerticalAlignment="Center" Margin="0,0,10,0"
+                                           FontSize="12" Opacity="0.5" Foreground="{DynamicResource ForegroundBrush}"/>
+                                <Image Source="{Binding User.Photo}" Width="28" Height="28">
+                                    <Image.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=photoMask}"/>
+                                    </Image.OpacityMask>
+                                </Image>
+                            </StackPanel>
+                        </Grid>-->
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
