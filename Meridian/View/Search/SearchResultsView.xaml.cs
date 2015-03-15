@@ -1,5 +1,4 @@
-﻿using Meridian.Controls;
-using Meridian.ViewModel;
+﻿using Meridian.Layout;
 using Meridian.ViewModel.Search;
 
 namespace Meridian.View.Search

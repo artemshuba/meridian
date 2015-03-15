@@ -764,7 +764,13 @@ namespace Meridian.ViewModel
             if (Settings.Instance.SendStats)
                 YandexMetrica.ReportEvent("page" + message.Page);
 
-            if (typeof(PageBase).IsAssignableFrom(type))
+            if (typeof(Layout.PageBase).IsAssignableFrom(type))
+            {
+                var page = (Layout.PageBase)Activator.CreateInstance(type);
+                page.NavigationContext.Parameters = message.Parameters;
+                frame.Navigate(page);
+            }
+            else if (typeof(PageBase).IsAssignableFrom(type))
             {
                 var page = (PageBase)Activator.CreateInstance(type);
                 page.NavigationContext.Parameters = message.Parameters;

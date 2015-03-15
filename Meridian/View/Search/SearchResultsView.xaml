@@ -1,4 +1,4 @@
-﻿<controls:PageBase x:Class="Meridian.View.Search.SearchResultsView"
+﻿<layout:PageBase x:Class="Meridian.View.Search.SearchResultsView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,8 +9,10 @@
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
       xmlns:helpers="clr-namespace:Meridian.Helpers"
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
+      xmlns:layout="clr-namespace:Meridian.Layout"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
+      Header="{Binding Header}"
       x:Name="pageRoot">
 
     <Page.RenderTransform>
@@ -116,53 +118,32 @@
 
     </Page.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="180"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left"
-                    Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <TextBlock Grid.Column="1" FontSize="28" FontWeight="Thin" Margin="5,12,0,15" Foreground="{DynamicResource ForegroundBrush}">
-                <Run Text="{x:Static localization:MainResources.SearchResultsTitle}" />
-                "<Run Text="{Binding Query}" />"
-            </TextBlock>
-        </Grid>
-
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-
-        <controls:BusyIndicator Grid.Row="1" BusyContent="{x:Static localization:MainResources.Searching}" IsBusy="{Binding Tasks[results].IsWorking}" Error="{Binding Tasks[results].Error}">
-            <ListBox x:Name="SearchResultsList" ItemsSource="{Binding SearchResults}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+    <layout:TwoColumnPageLayout>
+        <layout:TwoColumnPageLayout.MainContent>
+            <controls:BusyIndicator Grid.Row="1" BusyContent="{x:Static localization:MainResources.Searching}" IsBusy="{Binding Tasks[results].IsWorking}" Error="{Binding Tasks[results].Error}">
+                <ListBox x:Name="SearchResultsList" ItemsSource="{Binding SearchResults}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyleSelector="{StaticResource SearchStyleSelector}"
                  ItemTemplateSelector="{StaticResource SearchTemplateSelector}"
                  Style="{Binding SelectedSectionIndex, Converter={StaticResource SearchListBoxStyleSelector}}">
-                <i:Interaction.Behaviors>
-                    <behaviours:AutoScrollToCurrentItemBehaviour />
-                </i:Interaction.Behaviors>
-            </ListBox>
-        </controls:BusyIndicator>
-
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.SearchSection}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
-        <ListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" Padding="0" ItemsSource="{Binding Sections}" Style="{StaticResource CommonListBoxStyle}" 
+                    <i:Interaction.Behaviors>
+                        <behaviours:AutoScrollToCurrentItemBehaviour />
+                    </i:Interaction.Behaviors>
+                </ListBox>
+            </controls:BusyIndicator>
+        </layout:TwoColumnPageLayout.MainContent>
+        <layout:TwoColumnPageLayout.RightContent>
+            <Grid>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.SearchSection}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
+                <ListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" Padding="0" ItemsSource="{Binding Sections}" Style="{StaticResource CommonListBoxStyle}" 
                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  SelectedIndex="{Binding SelectedSectionIndex, Mode=TwoWay}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
-</controls:PageBase>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </layout:TwoColumnPageLayout.RightContent>
+    </layout:TwoColumnPageLayout>
+</layout:PageBase>

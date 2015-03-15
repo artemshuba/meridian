@@ -43,6 +43,11 @@ namespace Meridian.ViewModel.Search
             get { return _sections; }
         }
 
+        public string Header
+        {
+            get { return MainResources.SearchResultsTitle + " \"" + Query + "\""; }
+        }
+
         public string Query
         {
             get { return _query; }
@@ -50,6 +55,7 @@ namespace Meridian.ViewModel.Search
             {
                 if (Set(ref _query, value))
                 {
+                    RaisePropertyChanged("Header");
                     Search();
                 }
             }
