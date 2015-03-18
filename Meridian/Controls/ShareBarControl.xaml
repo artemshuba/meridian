@@ -53,5 +53,7 @@
             <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.NextButton}" Margin="0,0,15,0" IsEnabled="{Binding CanGoNext}" Command="{Binding GoNextCommand}"/>
             <Button Style="{StaticResource CommonButtonStyle}" Content="{x:Static localization:MainResources.CancelButton}" Command="{Binding CancelCommand}"/>
         </StackPanel>
+
+        <Rectangle Fill="{StaticResource SplitterBrush}" Height="1"  Margin="-24,-34,-24,0" Opacity="0.3"/>
     </Grid>
 </UserControl>

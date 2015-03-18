@@ -37,11 +37,12 @@
             </Button.ContextMenu>
             <Grid Background="Transparent" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="0.5*" MaxWidth="500"/>
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
+
                 <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Title}" Margin="0,0,5,0"/>
                 <Button Style="{StaticResource SimpleButtonStyle}" Grid.Column="2" HorizontalAlignment="Left" Opacity="0.6" Margin="0,0,0,0" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}"
@@ -55,11 +56,11 @@
                     <Button Style="{StaticResource AddButtonStyle}" Width="22" Height="20" Padding="4"
                             Command="{Binding Main.AddToNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Margin="0,0,0,0"
                             ToolTip="{x:Static localization:MainResources.ContextMenuAddToNowPlaying}" Foreground="{DynamicResource AccentBrush}"/>
-                    
+
                     <Button Style="{StaticResource LyricsButtonStyle}" Width="22" Height="20" Padding="4" Visibility="{Binding HasLyrics, Converter={StaticResource BoolToVisibilityConverter}}"
                             Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Margin="5,0,0,0"
                             ToolTip="{x:Static localization:MainResources.ContextMenuLyrics}"/>
-                    
+
                     <Button Style="{StaticResource EditButtonStyle}" Width="22" Height="20" Padding="4" Visibility="{Binding IsAddedByCurrentUser, Converter={StaticResource BoolToVisibilityConverter}}"
                             Command="{Binding Main.EditAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Margin="5,0,0,0"
                             ToolTip="{x:Static localization:MainResources.ContextMenuEdit}"/>
