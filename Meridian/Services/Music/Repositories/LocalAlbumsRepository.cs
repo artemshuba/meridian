@@ -90,16 +90,22 @@ namespace Meridian.Services.Music.Repositories
 
                         if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
                         {
-                            track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim() : StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
+                            string artist = string.Empty;
+                            if (!string.IsNullOrEmpty(audioFile.Tag.FirstAlbumArtist))
+                                artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist);
+                            else if (!string.IsNullOrEmpty(audioFile.Tag.FirstAlbumArtist))
+                                artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist);
+
+                            track.AlbumId = Md5Helper.Md5(artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
                             track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
                             if (!albums.ContainsKey(track.AlbumId))
                                 albums.Add(track.AlbumId, new AudioAlbum()
                                 {
                                     Id = track.AlbumId,
-                                    Artist = audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim() : null,
+                                    Artist = artist.Trim(),
                                     Title = StringHelper.ToUtf8(audioFile.Tag.Album).Trim(),
                                     Year = (int)audioFile.Tag.Year,
-                                    ArtistId = audioFile.Tag.FirstPerformer != null ? Md5Helper.Md5(StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim().ToLower()) : null
+                                    ArtistId = Md5Helper.Md5(artist.Trim().ToLower())
                                 });
                             else
                             {

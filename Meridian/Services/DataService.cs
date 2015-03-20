@@ -166,6 +166,9 @@ namespace Meridian.Services
 
         public static async Task<Uri> GetArtistImage(string artist, bool big)
         {
+            if (string.IsNullOrEmpty(artist))
+                return null;
+
             if (artist.Contains(", ") || artist.Contains(" feat ", StringComparison.OrdinalIgnoreCase) || artist.Contains(" ft. ", StringComparison.OrdinalIgnoreCase))
             {
                 //if there are more then 1 artist, get first
@@ -208,6 +211,9 @@ namespace Meridian.Services
 
         public static async Task<Uri> GetTrackImage(string artist, string title)
         {
+            if (string.IsNullOrEmpty(artist) || string.IsNullOrEmpty(title))
+                return null;
+
             var info = await _lastFm.Track.GetInfo(title, artist);
             if (info == null || info.ImageExtraLarge == null || string.IsNullOrEmpty(info.ImageExtraLarge))
                 return null;

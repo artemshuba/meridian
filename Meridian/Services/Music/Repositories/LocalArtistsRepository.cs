@@ -85,11 +85,16 @@ namespace Meridian.Services.Music.Repositories
                     using (var audioFile = TagLib.File.Create(filePath))
                     {
                         var track = new LocalAudio();
-
+                        string artist = string.Empty;
                         if (!string.IsNullOrWhiteSpace(audioFile.Tag.FirstPerformer))
+                            artist = audioFile.Tag.FirstPerformer;
+                        else if (!string.IsNullOrWhiteSpace(audioFile.Tag.FirstAlbumArtist))
+                            artist = audioFile.Tag.FirstAlbumArtist;
+
+                        if (!string.IsNullOrWhiteSpace(artist))
                         {
-                            track.ArtistId = Md5Helper.Md5(StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim().ToLower());
-                            track.Artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim();
+                            track.ArtistId = Md5Helper.Md5(StringHelper.ToUtf8(artist).Trim().ToLower());
+                            track.Artist = StringHelper.ToUtf8(artist).Trim();
                             if (!artists.ContainsKey(track.ArtistId))
                                 artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = track.Artist });
                         }

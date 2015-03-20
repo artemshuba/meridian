@@ -135,8 +135,14 @@
   <data name="LoadAlbumsErrorCommon" xml:space="preserve">
     <value>Не удалось загрузить список альбомов</value>
   </data>
+  <data name="LoadAlbumsErrorEmpty" xml:space="preserve">
+    <value>Список альбомов пуст</value>
+  </data>
   <data name="LoadArtistsErrorCommon" xml:space="preserve">
     <value>Не удалось загрузить список исполнителей</value>
+  </data>
+  <data name="LoadArtistsErrorEmpty" xml:space="preserve">
+    <value>Список исполнителей пуст</value>
   </data>
   <data name="LoadAudiosErrorAccessDenied" xml:space="preserve">
     <value>Список аудиозаписей недоступен</value>

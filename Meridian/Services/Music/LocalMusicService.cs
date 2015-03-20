@@ -15,11 +15,13 @@ namespace Meridian.Services.Music
     public class LocalMusicService
     {
         private CancellationTokenSource _scanCancellationToken = new CancellationTokenSource();
+        private readonly LocalTracksRepository _tracksRepository;
         private readonly LocalArtistsRepository _artistsRepository;
         private readonly LocalAlbumsRepository _albumsRepository;
 
         public LocalMusicService()
         {
+            _tracksRepository = new LocalTracksRepository();
             _artistsRepository = new LocalArtistsRepository();
             _albumsRepository = new LocalAlbumsRepository();
         }
@@ -53,7 +55,13 @@ namespace Meridian.Services.Music
                                 track.Title = StringHelper.ToUtf8(audioFile.Tag.Title);
                             else
                                 track.Title = Path.GetFileNameWithoutExtension(filePath);
-                            track.Artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer);
+                            var artist = audioFile.Tag.FirstPerformer;
+                            if (string.IsNullOrEmpty(artist))
+                                artist = audioFile.Tag.FirstAlbumArtist;
+                            else
+                                artist = string.Empty;
+
+                            track.Artist = StringHelper.ToUtf8(artist);
                             if (!string.IsNullOrEmpty(track.Artist))
                                 track.Artist = track.Artist.Trim();
                             track.Duration = audioFile.Properties.Duration;
@@ -61,10 +69,10 @@ namespace Meridian.Services.Music
 
                             if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
                             {
-                                track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim() : StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
+                                track.AlbumId = Md5Helper.Md5(track.Artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
                                 track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
                                 if (!albums.ContainsKey(track.AlbumId))
-                                    albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist), Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year });
+                                    albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = track.Artist, Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year });
                                 else
                                 {
                                     if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
@@ -74,10 +82,10 @@ namespace Meridian.Services.Music
                                 }
                             }
 
-                            if (!string.IsNullOrWhiteSpace(audioFile.Tag.FirstPerformer))
+                            if (!string.IsNullOrWhiteSpace(track.Artist))
                             {
-                                track.ArtistId = Md5Helper.Md5(StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim().ToLower());
-                                track.Artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim();
+                                track.ArtistId = Md5Helper.Md5(track.Artist.Trim().ToLower());
+                                track.Artist = track.Artist.Trim();
                                 if (!artists.ContainsKey(track.ArtistId))
                                     artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = track.Artist });
                             }
@@ -117,7 +125,7 @@ namespace Meridian.Services.Music
 
         public async Task<List<LocalAudio>> GetTracks()
         {
-            return await ServiceLocator.DataBaseService.GetItems<LocalAudio>();
+            return await _tracksRepository.GetTracks();
         }
 
         public async Task<List<LocalAudio>> GetAlbumTracks(string albumId)

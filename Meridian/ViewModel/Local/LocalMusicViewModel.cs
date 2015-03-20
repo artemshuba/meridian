@@ -218,11 +218,18 @@ namespace Meridian.ViewModel.Local
 
             try
             {
-                Tracks = await ServiceLocator.LocalMusicService.GetTracks();
+                var tracks = await ServiceLocator.LocalMusicService.GetTracks();
+
+                if (tracks.IsNullOrEmpty())
+                {
+                    OnTaskError("tracks", ErrorResources.LoadAudiosErrorEmpty);
+                }
+                else
+                    Tracks = tracks;
             }
             catch (Exception ex)
             {
-                OnTaskError("tracks", "~Unable to load tracks");
+                OnTaskError("tracks", ErrorResources.LoadAudiosErrorCommon);
 
                 LoggingService.Log(ex);
             }
@@ -237,8 +244,15 @@ namespace Meridian.ViewModel.Local
             try
             {
                 var albums = await ServiceLocator.LocalMusicService.GetAlbums();
-                AlbumGroups = albums.GroupBy(a => a.Artist).Select(g => new AudioArtist() { Title = g.Key, Albums = g.OrderBy(a => a.Year).ToList() }).OrderBy(a => a.Title).ToList();
-                Albums = albums;
+                if (albums.IsNullOrEmpty())
+                {
+                    OnTaskError("albums", ErrorResources.LoadAlbumsErrorEmpty);
+                }
+                else
+                {
+                    AlbumGroups = albums.GroupBy(a => a.Artist).Select(g => new AudioArtist() { Title = g.Key, Albums = g.OrderBy(a => a.Year).ToList() }).OrderBy(a => a.Title).ToList();
+                    Albums = albums;
+                }
             }
             catch (Exception ex)
             {
@@ -256,10 +270,16 @@ namespace Meridian.ViewModel.Local
 
             try
             {
-                Artists = await ServiceLocator.LocalMusicService.GetArtists();
-
-                if (!Artists.IsNullOrEmpty())
+                var artists = await ServiceLocator.LocalMusicService.GetArtists();
+                if (artists.IsNullOrEmpty())
+                {
+                    OnTaskError("artists", ErrorResources.LoadArtistsErrorEmpty);
+                }
+                else
+                {
+                    Artists = artists;
                     SelectedArtist = Artists.FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
