@@ -82,6 +82,8 @@ namespace Meridian
             {
                 case "Light":
                 case "Dark":
+                case "Graphite":
+                case "Accent":
                     Resources.MergedDictionaries[1].Source = new Uri(string.Format("/Resources/Themes/{0}.xaml", Settings.Instance.Theme), UriKind.Relative);
                     break;
 

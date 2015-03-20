@@ -123,7 +123,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid x:Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="Gray" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource ShuffleIcon}"/>
+                        <Path x:Name="Icon" Fill="{DynamicResource SidebarForegroundBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource ShuffleIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -150,7 +150,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid x:Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="Gray" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource RepeatIcon}"/>
+                        <Path x:Name="Icon" Fill="{DynamicResource SidebarForegroundBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource RepeatIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -177,7 +177,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid x:Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="Gray" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource VkIcon}"/>
+                        <Path x:Name="Icon" Fill="{DynamicResource SidebarForegroundBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource VkIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -204,7 +204,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid x:Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="Gray" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource LastFmIcon}"/>
+                        <Path x:Name="Icon" Fill="{DynamicResource SidebarForegroundBrush}" Opacity="0.7" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource LastFmIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -225,7 +225,7 @@
 
     <ControlTemplate x:Key="MuteButton" TargetType="Button">
         <Grid Background="#00000000">
-            <Path Name="Icon" Data="{StaticResource VolumeMuteIcon}" Fill="Gray" Stretch="Uniform" Opacity="0.7"/>
+            <Path Name="Icon" Data="{StaticResource VolumeMuteIcon}" Fill="{DynamicResource SidebarForegroundBrush}" Stretch="Uniform" Opacity="0.7"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -243,7 +243,7 @@
 
     <ControlTemplate x:Key="VolumeButton" TargetType="Button">
         <Grid Background="#00000000">
-            <Path Name="Icon" Data="{StaticResource VolumeIcon}" Fill="Gray" Stretch="Uniform" Opacity="0.7"/>
+            <Path Name="Icon" Data="{StaticResource VolumeIcon}" Fill="{DynamicResource SidebarForegroundBrush}" Stretch="Uniform" Opacity="0.7"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

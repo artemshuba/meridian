@@ -36,7 +36,7 @@ namespace Meridian.ViewModel.Local
             RegisterTasks("tracks");
         }
 
-        public void Activate()
+        public override void Activate()
         {
             Load();
         }

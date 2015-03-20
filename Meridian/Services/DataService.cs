@@ -708,6 +708,9 @@ namespace Meridian.Services
 
         public static async Task<bool> SetMusicStatus(VkAudio audio, List<long> targetIds = null)
         {
+            if (audio == null)
+                return false;
+
             var result = await _vkontakte.Audio.SetBroadcast(long.Parse(audio.Id), audio.OwnerId, targetIds);
 
             return result != null;

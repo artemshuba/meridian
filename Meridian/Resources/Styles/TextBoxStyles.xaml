@@ -95,8 +95,8 @@
     <Style x:Key="SearchBoxStyle" TargetType="{x:Type controls:TextBoxWithHint}">
         <Setter Property="Background" Value="{DynamicResource SearchBarBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SidebarForegroundBrush}"/>
-        <Setter Property="CaretBrush" Value="{DynamicResource SidebarForegroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource ForegroundBrush}" />
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>

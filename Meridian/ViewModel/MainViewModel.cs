@@ -68,6 +68,7 @@ namespace Meridian.ViewModel
         private UIMode _currentUIMode;
         private string _lastArtist;
         private CancellationTokenSource _artCancellationToken = new CancellationTokenSource();
+        private bool _canBroadcast;
 
         #region Commands
 
@@ -500,6 +501,10 @@ namespace Meridian.ViewModel
             }
         }
 
+        public bool CanBroadcast
+        {
+            get { return CurrentAudio is VkAudio; }
+        }
 
         public MainViewModel()
         {
@@ -812,7 +817,7 @@ namespace Meridian.ViewModel
             RaisePropertyChanged("IsPlaying");
             RaisePropertyChanged("CurrentPlaylist");
             RaisePropertyChanged("WindowTitle");
-
+            RaisePropertyChanged("CanBroadcast");
 
             _artRequested = false;
             _statusUpdated = false;

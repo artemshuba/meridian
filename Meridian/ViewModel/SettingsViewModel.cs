@@ -35,7 +35,7 @@ namespace Meridian.ViewModel
 
         private readonly List<string> _themes = new List<string>()
         {
-            "Light", "Dark"
+            "Light", "Dark", "Graphite", "Accent"
         };
 
         private readonly List<ColorScheme> _colors = new List<ColorScheme>()
@@ -539,6 +539,8 @@ namespace Meridian.ViewModel
             {
                 case "Light":
                 case "Dark":
+                case "Graphite":
+                case "Accent":
                     Application.Current.Resources.MergedDictionaries[1].Source = new Uri(string.Format("/Resources/Themes/{0}.xaml", SelectedTheme), UriKind.Relative);
                     break;
 

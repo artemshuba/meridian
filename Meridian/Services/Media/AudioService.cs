@@ -464,7 +464,7 @@ namespace Meridian.Services
                     var o = JObject.Parse(json);
                     if (o["currentAudio"] != null)
                     {
-                        var audio = JsonConvert.DeserializeObject<Audio>(o["currentAudio"].ToString());
+                        var audio = JsonConvert.DeserializeObject<Audio>(o["currentAudio"].ToString(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
                         Application.Current.Dispatcher.Invoke(() => CurrentAudio = audio);
                     }
 

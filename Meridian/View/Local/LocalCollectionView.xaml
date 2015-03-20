@@ -53,7 +53,7 @@
             <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static Properties:MainResources.MainMenuCollection}" Style="{StaticResource HeaderButtonStyle}"/>
         </Grid>
 
-        <TabControl Grid.Row="2" Style="{StaticResource CommonTabControlStyle}" Margin="0,-8,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+        <TabControl Grid.Row="2" Style="{StaticResource CommonTabControlStyle}" Margin="0,10,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
             <TabItem Header="{x:Static Properties:MainResources.TracksTab}" Style="{StaticResource CommonTabItemStyle}">
                 <Grid>
                     <controls:BusyIndicator IsBusy="{Binding Tasks[tracks].IsWorking}" Error="{Binding Tasks[tracks].Error}">
