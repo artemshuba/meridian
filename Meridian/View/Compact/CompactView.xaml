@@ -166,19 +166,20 @@
                     </Grid.RowDefinitions>
                     <ToggleButton VerticalAlignment="Top" Width="32" Height="32" Padding="10" Margin="1,-10,0,0" IsChecked="{Binding Main.CurrentAudio.IsAddedByCurrentUser, Mode=OneWay, Source={StaticResource Locator}}" Style="{StaticResource LikeDislikeButtonStyle}"
                           ToolTip="{Binding Main.CurrentAudio.IsAddedByCurrentUser, Source={StaticResource Locator}, Converter={StaticResource LikeDislikeTooltipConverter}}"
-                          Command="{Binding Main.AddRemoveAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Main.CurrentAudio, Source={StaticResource Locator}}">
+                          Command="{Binding Main.AddRemoveAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Main.CurrentAudio, Source={StaticResource Locator}}"
+                          IsEnabled="{Binding Main.CanBroadcast, Source={StaticResource Locator}}">
                         <ToggleButton.RenderTransform>
                             <TranslateTransform />
                         </ToggleButton.RenderTransform>
                     </ToggleButton>
                     <ToggleButton Grid.Row="1" VerticalAlignment="Center" Width="32" Height="32" Margin="0,0,0,0" IsChecked="{Binding Main.Shuffle, Mode=TwoWay, Source={StaticResource Locator}}" Style="{StaticResource ShuffleButtonStyle}"
-                          ToolTip="{x:Static localization:MainResources.Shuffle}">
+                          ToolTip="{x:Static localization:MainResources.Shuffle}" Foreground="{StaticResource ForegroundBrush}">
                         <ToggleButton.RenderTransform>
                             <TranslateTransform />
                         </ToggleButton.RenderTransform>
                     </ToggleButton>
                     <ToggleButton VerticalAlignment="Bottom" Grid.Row="2" Width="32" Height="32" Margin="0,0,0,-10" IsChecked="{Binding Main.Repeat, Mode=TwoWay, Source={StaticResource Locator}}" Style="{StaticResource RepeatButtonStyle}"
-                          ToolTip="{x:Static localization:MainResources.Repeat}">
+                          ToolTip="{x:Static localization:MainResources.Repeat}" Foreground="{StaticResource ForegroundBrush}">
                         <ToggleButton.RenderTransform>
                             <TranslateTransform />
                         </ToggleButton.RenderTransform>
