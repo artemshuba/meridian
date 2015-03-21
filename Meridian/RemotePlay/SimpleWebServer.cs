@@ -114,6 +114,8 @@ namespace Meridian.RemotePlay
         {
             var requestTarget = Regex.Match(request, @"^\w+\s+([^\s\?]+)[^\s]*\s+HTTP/.*|").Groups[1].Value;
 
+            //if(requestTarget == "/api")
+            //    Debugger.Break();
             var lines = request.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             var i = 1;
 
@@ -129,10 +131,8 @@ namespace Meridian.RemotePlay
                     break;
                 }
 
-                var h = line.Split(new[] { ":" }, StringSplitOptions.None);
-                var headerName = h[0];
-                var headerValue = h[1];
-
+                var headerName = line.Substring(0, line.IndexOf(":"));
+                var headerValue = line.Substring(line.IndexOf(":") + 1);
                 if (!headers.ContainsKey(headerName))
                     headers.Add(headerName, headerValue);
             }
@@ -144,6 +144,13 @@ namespace Meridian.RemotePlay
                     sb.AppendLine(lines[i]);
 
                 body = sb.ToString();
+            }
+
+            //Safari on iOS and IE on Windows Phone doesn't most of time doesn't send data in the post
+            //so using x-data header to pass commands instead of request body
+            if (headers.ContainsKey("x-data"))
+            {
+                body = headers["x-data"];
             }
 
             return new SimpleHttpRequest() { RequestTarget = requestTarget, Headers = headers, Body = body };
