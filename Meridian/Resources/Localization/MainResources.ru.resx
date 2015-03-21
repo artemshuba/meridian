@@ -771,4 +771,16 @@
   <data name="RecommendationsSubHeader" xml:space="preserve">
     <value>Откройте для себя новую музыку с рекомендациями</value>
   </data>
+  <data name="SettingsRemotePlay" xml:space="preserve">
+    <value>RemotePlay</value>
+  </data>
+  <data name="SettingsRemotePlayDescription" xml:space="preserve">
+    <value>RemotePlay позволяет вам управлять Meridian с помощью мобильных устройств, таких как смартфон или планшет. Для работы RemotePlay необходимо, чтобы все устройства были в одной сети.</value>
+  </data>
+  <data name="SettingsRemotePlayEnable" xml:space="preserve">
+    <value>Включить RemotePlay</value>
+  </data>
+  <data name="SettingsRemotePlayHelp" xml:space="preserve">
+    <value>Чтобы начать использовать RemotePlay на вашем iOS или Android устройстве, перейдите по адресу {0} в браузере на устройстве. Чтобы использовать RemotePlay на Windows Phone, установите приложения Meridian из магазина и перейдите в раздел RemotePlay в меню приложения.</value>
+  </data>
 </root>

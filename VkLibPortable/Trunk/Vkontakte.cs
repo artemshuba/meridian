@@ -10,6 +10,7 @@ using VkLib.Core.News;
 using VkLib.Core.Photos;
 using VkLib.Core.Stats;
 using VkLib.Core.Status;
+using VkLib.Core.Storage;
 using VkLib.Core.Subscriptions;
 using VkLib.Core.Users;
 using VkLib.Core.Video;
@@ -235,6 +236,18 @@ namespace VkLib
             get
             {
                 return new VkStatsRequest(this);
+            }
+        }
+
+
+        /// <summary>
+        /// Storage
+        /// </summary>
+        public VkStorageRequest Storage
+        {
+            get
+            {
+                return new VkStorageRequest(this);
             }
         }
 

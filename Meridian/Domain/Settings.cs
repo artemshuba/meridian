@@ -84,7 +84,13 @@ namespace Meridian.Domain
 
         public MediaEngine MediaEngine { get; set; }
 
-        public List<VkGroup> FeedSocieties { get; set; } 
+        public List<VkGroup> FeedSocieties { get; set; }
+
+        public bool EnableRemotePlay { get; set; }
+
+        public int RemotePlayPort { get; set; }
+
+        public string RemotePlayAddress { get; set; }
 
         #region Window settings
 
@@ -163,6 +169,9 @@ namespace Meridian.Domain
             MediaEngine = MediaEngine.Wmp;
 
             FeedSocieties = new List<VkGroup>();
+
+            EnableRemotePlay = false;
+            RemotePlayPort = 9999;
         }
 
         public static void Load()

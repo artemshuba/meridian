@@ -219,6 +219,7 @@
     <Compile Include="Extensions\AudioExtensions.cs" />
     <Compile Include="Extensions\CommonExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\SocketExtensions.cs" />
     <Compile Include="Helpers\ArtistImageHelper.cs" />
     <Compile Include="Helpers\AlbumCoversHelper.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Helpers\LongRunningOperation.cs" />
     <Compile Include="Helpers\Md5Helper.cs" />
     <Compile Include="Helpers\NativeMethods.cs" />
+    <Compile Include="Helpers\NetworkHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Layout\Controls\HeaderControl.xaml.cs">
       <DependentUpon>HeaderControl.xaml</DependentUpon>
@@ -251,6 +253,9 @@
     <Compile Include="Model\Settings\SettingsHotKey.cs" />
     <Compile Include="Model\Settings\SettingsLanguage.cs" />
     <Compile Include="Model\UIMode.cs" />
+    <Compile Include="RemotePlay\SimpleHttpRequest.cs" />
+    <Compile Include="RemotePlay\SimpleHttpResponse.cs" />
+    <Compile Include="RemotePlay\SimpleWebServer.cs" />
     <Compile Include="Resources\Localization\ErrorResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -276,6 +281,7 @@
     <Compile Include="Services\Music\Repositories\LocalTracksRepository.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\RadioService.cs" />
+    <Compile Include="RemotePlay\RemotePlayService.cs" />
     <Compile Include="Services\ServiceLocator.cs" />
     <Compile Include="Services\UpdateService.cs" />
     <Compile Include="SQLite.cs" />
@@ -414,6 +420,9 @@
     </Compile>
     <Compile Include="View\Settings\SettingsUIView.xaml.cs">
       <DependentUpon>SettingsUIView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsRemotePlayView.xaml.cs">
+      <DependentUpon>SettingsRemotePlayView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Settings\SettingsUpdatesView.xaml.cs">
       <DependentUpon>SettingsUpdatesView.xaml</DependentUpon>
@@ -760,6 +769,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Settings\SettingsRemotePlayView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Settings\SettingsUpdatesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -877,6 +890,45 @@
       <Name>Xbox.Music</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="RemotePlay\web\img\light\volume.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\img\light\volume_mute.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\img\player.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\js\index.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\js\utils.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\lib\jquery-2.1.3.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\lib\jquery-ui.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\lib\jquery.ui.touch-punch.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\lib\svg4everybody.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\styles\index.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\styles\player.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <!-- Get "My Application" assembly version -->

@@ -17,6 +17,7 @@ using Meridian.Controls;
 using Meridian.Domain;
 using Meridian.Helpers;
 using Meridian.Model;
+using Meridian.RemotePlay;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.View;
@@ -521,6 +522,9 @@ namespace Meridian.ViewModel
             _hotKeyManager = new HotKeyManager(new WindowInteropHelper(Application.Current.MainWindow).Handle);
             _hotKeyManager.InitializeHotkeys();
             ViewModelLocator.LastFm.SessionKey = Settings.Instance.LastFmSession;
+
+            if (Settings.Instance.EnableRemotePlay)
+                RemotePlayService.Instance.Start();
         }
 
         public async void LoadUserInfo()
@@ -793,7 +797,6 @@ namespace Meridian.ViewModel
         {
             if (message.Type == LoginType.LogIn)
             {
-
                 if (message.Service == "vk")
                 {
                     ShowSidebar = true;
@@ -978,23 +981,30 @@ namespace Meridian.ViewModel
 
             if (CurrentAudio is LocalAudio)
             {
-                using (var audioFile = TagLib.File.Create(CurrentAudio.Source))
+                try
                 {
-                    var image = audioFile.Tag.Pictures.FirstOrDefault();
-                    if (image != null)
+                    using (var audioFile = TagLib.File.Create(CurrentAudio.Source))
                     {
-                        var ms = new MemoryStream();
-                        await ms.WriteAsync(image.Data.Data, 0, image.Data.Data.Length);
-                        ms.Seek(0, SeekOrigin.Begin);
+                        var image = audioFile.Tag.Pictures.FirstOrDefault();
+                        if (image != null)
+                        {
+                            var ms = new MemoryStream();
+                            await ms.WriteAsync(image.Data.Data, 0, image.Data.Data.Length);
+                            ms.Seek(0, SeekOrigin.Begin);
 
-                        BitmapImage bi = null;
-                        bi = new BitmapImage();
-                        bi.BeginInit();
-                        bi.StreamSource = ms;
-                        bi.EndInit();
-                        TrackImage = bi;
-                        return;
+                            BitmapImage bi = null;
+                            bi = new BitmapImage();
+                            bi.BeginInit();
+                            bi.StreamSource = ms;
+                            bi.EndInit();
+                            TrackImage = bi;
+                            return;
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    LoggingService.Log(ex);
                 }
             }
 

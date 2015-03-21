@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +16,7 @@ using Meridian.Controls;
 using Meridian.Helpers;
 using Meridian.Model;
 using Meridian.Model.Settings;
+using Meridian.RemotePlay;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.Services.Media.Core;
@@ -28,6 +31,7 @@ namespace Meridian.ViewModel
         {
             {MainResources.SettingsMenuUI, "/View/Settings/SettingsUIView.xaml"},
             {MainResources.SettingsMenuHotkeys, "/View/Settings/SettingsHotkeysView.xaml"},
+            {MainResources.SettingsRemotePlay, "/View/Settings/SettingsRemotePlayView.xaml"},
             {MainResources.SettingsMenuAccounts, "/View/Settings/SettingsAccountsView.xaml"},
             {MainResources.SettingsMenuUpdates, "/View/Settings/SettingsUpdatesView.xaml"},
             {MainResources.SettingsMenuAbout, "/View/Settings/SettingsAboutView.xaml"}
@@ -79,6 +83,9 @@ namespace Meridian.ViewModel
         private SettingsLanguage _selectedLanguage;
         private string _cacheSize;
         private SettingsEngine _selectedEngine;
+        private string _selectedRemotePlayAddress;
+        private string _remotePlayPort;
+        private bool _enableRemotePlay;
 
         #region Commands
 
@@ -318,6 +325,62 @@ namespace Meridian.ViewModel
             }
         }
 
+        public bool EnableRemotePlay
+        {
+            get { return _enableRemotePlay; }
+            set
+            {
+                if (Set(ref _enableRemotePlay, value))
+                {
+                    CanSave = true;
+                }
+            }
+        }
+
+        public List<string> RemotePlayAddresses
+        {
+            get { return NetworkHelper.GetLocalIpAddresses(); }
+        }
+
+        public string SelectedRemotePlayAddress
+        {
+            get { return _selectedRemotePlayAddress; }
+            set
+            {
+                if (Set(ref _selectedRemotePlayAddress, value))
+                {
+                    CanSave = true;
+                    RaisePropertyChanged("RemotePlayHelp");
+                }
+            }
+        }
+
+
+        public string RemotePlayPort
+        {
+            get { return _remotePlayPort; }
+            set
+            {
+                if (Set(ref _remotePlayPort, value))
+                {
+                    CanSave = true;
+                    RaisePropertyChanged("RemotePlayHelp");
+                }
+            }
+        }
+
+        public string RemotePlayHelp
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_selectedRemotePlayAddress))
+                    return string.Format(MainResources.SettingsRemotePlayHelp,
+                        "http://" + _selectedRemotePlayAddress + ":" + _remotePlayPort);
+
+                return null;
+            }
+        }
+
         public SettingsViewModel()
         {
             InitializeCommands();
@@ -333,6 +396,17 @@ namespace Meridian.ViewModel
             _downloadArtistArt = Domain.Settings.Instance.DownloadArtistArt;
             _downloadAlbumArt = Domain.Settings.Instance.DownloadAlbumArt;
             _selectedEngine = Engines.FirstOrDefault(e => e.Engine == Domain.Settings.Instance.MediaEngine);
+            _enableRemotePlay = Domain.Settings.Instance.EnableRemotePlay;
+            _remotePlayPort = Domain.Settings.Instance.RemotePlayPort.ToString();
+
+            if (string.IsNullOrEmpty(Domain.Settings.Instance.RemotePlayAddress))
+            {
+                var addresses = NetworkHelper.GetLocalIpAddresses();
+                if (addresses != null && addresses.Count > 0)
+                    _selectedRemotePlayAddress = addresses.First();
+            }
+            else
+                _selectedRemotePlayAddress = Domain.Settings.Instance.RemotePlayAddress;
 
             var lang = _languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
             if (lang != null)
@@ -598,6 +672,19 @@ namespace Meridian.ViewModel
             else
             {
                 ((MainWindow)Application.Current.MainWindow).BackgroundArtControl.Effect = null;
+            }
+
+            Domain.Settings.Instance.EnableRemotePlay = _enableRemotePlay;
+            Domain.Settings.Instance.RemotePlayAddress = _selectedRemotePlayAddress;
+            Domain.Settings.Instance.RemotePlayPort = int.Parse(_remotePlayPort);
+
+            if (EnableRemotePlay)
+            {
+                RemotePlayService.Instance.Start();
+            }
+            else
+            {
+                RemotePlayService.Instance.Stop();
             }
 
             foreach (var settingsHotkey in _hotkeys)
