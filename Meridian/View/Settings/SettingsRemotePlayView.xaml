@@ -41,7 +41,7 @@
                 </StackPanel>
                 <StackPanel Margin="20,0,0,0">
                     <TextBlock Text="{x:Static localization:MainResources.SettingsRemotePlayPort}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"/>
-                    <TextBox Margin="0,3,0,0" Width="80" IsReadOnly="True" Style="{StaticResource CommonTextBoxStyle}" Text="{Binding RemotePlayPort}"/>
+                    <TextBox Margin="0,3,0,0" Width="80" Style="{StaticResource CommonTextBoxStyle}" Text="{Binding RemotePlayPort}"/>
                 </StackPanel>
             </StackPanel>
 
