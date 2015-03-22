@@ -70,23 +70,31 @@ namespace Meridian.RemotePlay
 
             if (stream.CanRead)
             {
-                var received = await stream.ReadAsync(buffer, 0, buffer.Length);
-                if (received > 0)
+                try
                 {
-                    var requestString = Encoding.UTF8.GetString(buffer, 0, received);
-                    if (!string.IsNullOrEmpty(requestString))
+                    var received = await stream.ReadAsync(buffer, 0, buffer.Length);
+                    if (received > 0)
                     {
-                        Debug.WriteLine("Request: " + requestString);
-
-                        simpleRequest = ProcessRequest(requestString);
-
-                        if (!string.IsNullOrEmpty(simpleRequest.Body))
+                        var requestString = Encoding.UTF8.GetString(buffer, 0, received);
+                        if (!string.IsNullOrEmpty(requestString))
                         {
-                            if (OnReceivedData != null)
-                                OnReceivedData(simpleRequest.Body);
+                            Debug.WriteLine("Request: " + requestString);
+
+                            simpleRequest = ProcessRequest(requestString);
+
+                            if (!string.IsNullOrEmpty(simpleRequest.Body))
+                            {
+                                if (OnReceivedData != null)
+                                    OnReceivedData(simpleRequest.Body);
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+
             }
 
             if (simpleRequest != null)
