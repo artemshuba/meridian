@@ -71,6 +71,35 @@
             </Button>
         </DataTemplate>
 
+        <DataTemplate x:Key="LocalAlbumTemplate">
+            <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="120" ToolTip="{Binding Title}" Command="{Binding DataContext.GoToLocalAlbumCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}}" CommandParameter="{Binding}">
+                <Button.RenderTransform>
+                    <TranslateTransform />
+                </Button.RenderTransform>
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard Storyboard="{StaticResource FriendLoadAnim}" />
+                    </EventTrigger>
+                </Button.Triggers>
+                <Grid x:Name="RootGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.RowSpan="2">
+                        <Rectangle Fill="{DynamicResource AccentBrush}"/>
+                        <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Image Source="{Binding Cover}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Grid>
+                    <Rectangle Grid.Row="1" Fill="Black" Opacity="0.8" />
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Text="{Binding Artist}" FontWeight="Normal" FontSize="11" Margin="5,3,5,0" TextTrimming="CharacterEllipsis" Opacity="0.8" Foreground="White"/>
+                        <TextBlock Text="{Binding Title}" FontFamily="Segoe UI SemiLight"  FontSize="12" Margin="5,-2,5,7" TextTrimming="CharacterEllipsis" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+        </DataTemplate>
+
         <DataTemplate x:Key="ArtistTemplate">
             <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="120" ToolTip="{Binding Name}" Command="{Binding DataContext.GoToArtistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}}" CommandParameter="{Binding}">
                 <Button.RenderTransform>
@@ -102,6 +131,7 @@
                                                  TrackTemplate="{StaticResource AudioItemTemplate}"
                                                  LocalTrackTemplate="{StaticResource LocalAudioItemTemplate}"
                                                  AlbumTemplate="{StaticResource AlbumTemplate}"
+                                                 LocalAlbumTemplate="{StaticResource LocalAlbumTemplate}"
                                                  ArtistTemplate="{StaticResource ArtistTemplate}"/>
 
         <converters:SearchResultStyleSelector x:Key="SearchStyleSelector"
@@ -115,6 +145,12 @@
                                                AlbumsStyle="{StaticResource AlbumsListBoxStyle}"
                                                ArtistsStyle="{StaticResource AlbumsListBoxStyle}"
                                                SocietiesStyle="{StaticResource AlbumsListBoxStyle}"/>
+
+        <CollectionViewSource x:Key="SearchMenuGroups" Source="{Binding Sections}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Group"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
 
     </Page.Resources>
 
@@ -133,15 +169,44 @@
         </layout:TwoColumnPageLayout.MainContent>
         <layout:TwoColumnPageLayout.RightContent>
             <Grid>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.SearchSection}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
-                <ListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" Padding="0" ItemsSource="{Binding Sections}" Style="{StaticResource CommonListBoxStyle}" 
+                <ListBox Grid.Column="1" Margin="0,20,0,0" Padding="0" ItemsSource="{Binding Source={StaticResource SearchMenuGroups}}" Style="{StaticResource CommonListBoxStyle}" 
                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  SelectedIndex="{Binding SelectedSectionIndex, Mode=TwoWay}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}"/>
+                            <TextBlock Text="{Binding Title}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <ListBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Margin" Value="0,0,0,0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                <Grid Margin="0,0,0,20">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Path Data="{Binding Items[0].GroupIcon}" Stretch="Uniform" Fill="{DynamicResource SidebarForegroundBrush}" Height="8" Margin="17,1,-10,0" Opacity="0.4" VerticalAlignment="Center"
+                                                          Visibility="{Binding Items[0].GroupIcon, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                                    <TextBlock Grid.Column="1" FontWeight="SemiBold" Text="{Binding Path=Name}" Margin="17,0,0,0" FontSize="12" Foreground="{DynamicResource ForegroundBrush}" Opacity="0.7"/>
+                                                    <ItemsPresenter Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
                 </ListBox>
             </Grid>
         </layout:TwoColumnPageLayout.RightContent>

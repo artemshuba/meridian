@@ -164,6 +164,33 @@ namespace Meridian.Services.Music
             });
         }
 
+        public async Task<List<AudioAlbum>> SearchAlbums(string query)
+        {
+            //not good, but sqlite doesn't support case insensitive queries for unicode
+            var albums = await ServiceLocator.DataBaseService.GetItems<AudioAlbum>();
+
+            return await Task.Run(() =>
+            {
+                var result = albums.Where(a => a.Title != null && a.Title.StartsWith(query, StringComparison.OrdinalIgnoreCase)).ToList();
+                result.AddRange(albums.Where(a => a.Artist != null && a.Artist.StartsWith(query, StringComparison.OrdinalIgnoreCase)).ToList());
+                albums.Clear();
+                return result;
+            });
+        }
+
+        public async Task<List<AudioArtist>> SearchArtists(string query)
+        {
+            //not good, but sqlite doesn't support case insensitive queries for unicode
+            var artists = await ServiceLocator.DataBaseService.GetItems<AudioArtist>();
+
+            return await Task.Run(() =>
+            {
+                var result = artists.Where(a => a.Title != null && a.Title.StartsWith(query, StringComparison.OrdinalIgnoreCase)).ToList();
+                artists.Clear();
+                return result;
+            });
+        }
+
         public async Task Clear()
         {
             await ServiceLocator.DataBaseService.Clear<Audio>();

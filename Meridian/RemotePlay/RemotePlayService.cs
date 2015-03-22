@@ -99,6 +99,20 @@ namespace Meridian.RemotePlay
                                 ViewModelLocator.Main.Volume = json["commandParam"].Value<float>();
                             }
                             break;
+
+                        case "shuffle":
+                            if (json["commandParam"] != null)
+                            {
+                                ViewModelLocator.Main.Shuffle = json["commandParam"].Value<bool>();
+                            }
+                            break;
+
+                        case "repeat":
+                            if (json["commandParam"] != null)
+                            {
+                                ViewModelLocator.Main.Repeat = json["commandParam"].Value<bool>();
+                            }
+                            break;
                     }
                 }
             }

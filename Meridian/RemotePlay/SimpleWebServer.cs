@@ -176,7 +176,7 @@ namespace Meridian.RemotePlay
 
                     case "/currentTrack":
                         //return current track
-                        responseText = JsonConvert.SerializeObject(new { response = new { track = ViewModelLocator.Main.CurrentAudio, currentTime = ViewModelLocator.Main.CurrentAudioPositionSeconds, duration = ViewModelLocator.Main.CurrentAudioDuration.TotalSeconds } }, Formatting.None, jsonSettings);
+                        responseText = JsonConvert.SerializeObject(new { response = new { track = ViewModelLocator.Main.CurrentAudio, currentTime = ViewModelLocator.Main.CurrentAudioPositionSeconds, duration = ViewModelLocator.Main.CurrentAudioDuration.TotalSeconds, shuffle = ViewModelLocator.Main.Shuffle, repeat = ViewModelLocator.Main.Repeat } }, Formatting.None, jsonSettings);
                         break;
 
                     case "/isPlaying":

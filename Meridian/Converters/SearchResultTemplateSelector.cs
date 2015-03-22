@@ -18,6 +18,8 @@ namespace Meridian.Converters
 
         public DataTemplate AlbumTemplate { get; set; }
 
+        public DataTemplate LocalAlbumTemplate { get; set; }
+
         public DataTemplate ArtistTemplate { get; set; }
 
         public DataTemplate SocietyTemplate { get; set; }
@@ -34,6 +36,8 @@ namespace Meridian.Converters
                 return ArtistTemplate;
             else if (item is VkGroup)
                 return SocietyTemplate;
+            else if (item is AudioAlbum)
+                return LocalAlbumTemplate;
             return null;
         }
     }
@@ -52,9 +56,9 @@ namespace Meridian.Converters
         {
             if (item is Audio)
                 return TrackStyle;
-            else if (item is LastFmAlbum)
+            else if (item is LastFmAlbum || item is AudioAlbum)
                 return AlbumStyle;
-            else if (item is LastFmArtist)
+            else if (item is LastFmArtist || item is AudioArtist)
                 return ArtistStyle;
             else if (item is VkGroup)
                 return SocietyStyle;
@@ -85,6 +89,10 @@ namespace Meridian.Converters
                     return ArtistsStyle;
                 case 3:
                     return TracksStyle;
+                case 4:
+                    return AlbumsStyle;
+                case 5:
+                    return ArtistsStyle;
             }
             return null;
         }

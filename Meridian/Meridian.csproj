@@ -249,6 +249,7 @@
     <Compile Include="Model\NewsItemsResponse.cs" />
     <Compile Include="Model\RadioStation.cs" />
     <Compile Include="Model\Recommendation.cs" />
+    <Compile Include="Model\SearchMenuItem.cs" />
     <Compile Include="Model\Settings\SettingsEngine.cs" />
     <Compile Include="Model\Settings\SettingsHotKey.cs" />
     <Compile Include="Model\Settings\SettingsLanguage.cs" />
@@ -946,6 +947,8 @@
       copy /y "*.*" "ready"
       mkdir "ready\ru"
       copy /y "ru\*.*" "ready\ru\"
+      mkdir "ready\RemotePlay"
+      xcopy /y "RemotePlay\*.*" "ready\RemotePlay" /s
       cd "ready"
       move /y "*.dll" "libs"
       del *.pdb
