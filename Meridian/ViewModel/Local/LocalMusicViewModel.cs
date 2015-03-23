@@ -284,7 +284,7 @@ namespace Meridian.ViewModel.Local
                 }
                 else
                 {
-                    Artists = artists;
+                    Artists = artists.OrderBy(a => a.Title).ToList();
                     SelectedArtist = Artists.FirstOrDefault();
                 }
             }
@@ -333,7 +333,7 @@ namespace Meridian.ViewModel.Local
 
         private void OnLocalRepositoryUpdated(LocalRepositoryUpdatedMessage message)
         {
-            if (message.RepositoryType == typeof (LocalAudio))
+            if (message.RepositoryType == typeof(LocalAudio))
                 LoadTracks();
             else if (message.RepositoryType == typeof(AudioAlbum))
                 LoadAlbums();
