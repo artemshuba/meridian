@@ -37,7 +37,7 @@
             </Button.ContextMenu>
             <Grid Background="Transparent" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="12"/>
                     <ColumnDefinition Width="0.5*" MaxWidth="500"/>
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.2*"/>

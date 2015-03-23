@@ -233,7 +233,15 @@ namespace Meridian.Services
 
                 if (vkAudio != null)
                 {
+                    if (_playlist != null)
+                    {
+                        var playlistTrackIndex = _playlist.IndexOf(track);
+                        if (playlistTrackIndex >= 0)
+                            _playlist[_playlist.IndexOf(track)] = vkAudio; //to fix radio vk scrobbling
+                    }
+
                     track = vkAudio;
+                    _currentAudio = track;
                     _playFailsCount = 0;
                 }
                 else
