@@ -36,11 +36,14 @@ namespace Meridian.Services.Music
 
                 var tracks = new List<LocalAudio>();
 
+
                 await Task.Run(async () =>
                 {
                     var musicFiles = FilesHelper.GetMusicFiles();
 
                     double totalCount = musicFiles.Count;
+
+                    //not cool but ¯\_(ツ)_/¯
 
                     var albums = new Dictionary<string, AudioAlbum>();
                     var artists = new Dictionary<string, AudioArtist>();
@@ -58,8 +61,6 @@ namespace Meridian.Services.Music
                             var artist = audioFile.Tag.FirstPerformer;
                             if (string.IsNullOrEmpty(artist))
                                 artist = audioFile.Tag.FirstAlbumArtist;
-                            else
-                                artist = string.Empty;
 
                             track.Artist = StringHelper.ToUtf8(artist);
                             if (!string.IsNullOrEmpty(track.Artist))

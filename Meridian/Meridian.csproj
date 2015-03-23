@@ -290,6 +290,7 @@
     <Compile Include="ViewModel\Local\LocalAlbumViewModel.cs" />
     <Compile Include="ViewModel\Local\LocalMusicViewModel.cs" />
     <Compile Include="ViewModel\Main\FeedViewModel.cs" />
+    <Compile Include="ViewModel\Messages\LocalRepositoryUpdatedMessage.cs" />
     <Compile Include="ViewModel\Search\AlbumViewModel.cs" />
     <Compile Include="ViewModel\Search\ArtistViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\EditAudioViewModel.cs" />

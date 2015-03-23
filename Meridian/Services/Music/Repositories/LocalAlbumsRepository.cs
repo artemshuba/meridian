@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using a;
+using GalaSoft.MvvmLight.Messaging;
 using Meridian.Helpers;
 using Meridian.Model;
+using Meridian.ViewModel.Messages;
 
 namespace Meridian.Services.Music.Repositories
 {
@@ -23,8 +26,10 @@ namespace Meridian.Services.Music.Repositories
             {
                 //check for updates on first time
                 _refreshed = true;
-                var changes = await Refresh();
-                AlbumsRepositoryUpdated(changes);
+                Refresh().ContinueWith(t =>
+                {
+                    AlbumsRepositoryUpdated(t.Result);
+                });
             }
 
             return await ServiceLocator.DataBaseService.GetItems<AudioAlbum>();
@@ -91,8 +96,8 @@ namespace Meridian.Services.Music.Repositories
                         if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
                         {
                             string artist = string.Empty;
-                            if (!string.IsNullOrEmpty(audioFile.Tag.FirstAlbumArtist))
-                                artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist);
+                            if (!string.IsNullOrEmpty(audioFile.Tag.FirstPerformer))
+                                artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer);
                             else if (!string.IsNullOrEmpty(audioFile.Tag.FirstAlbumArtist))
                                 artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist);
 
@@ -174,6 +179,9 @@ namespace Meridian.Services.Music.Repositories
             await ServiceLocator.DataBaseService.UpdateItems(changed);
 
             await ServiceLocator.DataBaseService.SaveItems(added);
+
+            if (deleted.Count > 0 || changed.Count > 0 || added.Count > 0)
+                Messenger.Default.Send(new LocalRepositoryUpdatedMessage() { RepositoryType = typeof(AudioAlbum) });
 
             LoggingService.Log(string.Format("Local albums database updated. Deleted: {0}, Changed: {1}, Added: {2}", deleted.Count, changed.Count, added.Count));
         }

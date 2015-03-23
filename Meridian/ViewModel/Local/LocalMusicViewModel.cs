@@ -8,6 +8,7 @@ using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.View.Flyouts.Local;
+using Meridian.ViewModel.Messages;
 using Neptune.Extensions;
 using Neptune.Messages;
 using Xbox.Music;
@@ -117,6 +118,7 @@ namespace Meridian.ViewModel.Local
 
         public LocalMusicViewModel()
         {
+            InitializeMessages();
             InitializeCommands();
 
             RegisterTasks("tracks", "albums", "artists");
@@ -162,6 +164,11 @@ namespace Meridian.ViewModel.Local
             {
                 Refresh();
             });
+        }
+
+        private void InitializeMessages()
+        {
+            MessengerInstance.Register<LocalRepositoryUpdatedMessage>(this, OnLocalRepositoryUpdated);
         }
 
         private async void Load()
@@ -322,6 +329,16 @@ namespace Meridian.ViewModel.Local
             }
 
             OnTaskFinished("artists");
+        }
+
+        private void OnLocalRepositoryUpdated(LocalRepositoryUpdatedMessage message)
+        {
+            if (message.RepositoryType == typeof (LocalAudio))
+                LoadTracks();
+            else if (message.RepositoryType == typeof(AudioAlbum))
+                LoadAlbums();
+            else if (message.RepositoryType == typeof(AudioArtist))
+                LoadArtists();
         }
     }
 }
