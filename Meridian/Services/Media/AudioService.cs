@@ -577,7 +577,7 @@ namespace Meridian.Services
         private static void MediaPlayerOnMediaFailed(object sender, Exception e)
         {
             if (CurrentAudio != null)
-                LoggingService.Log("Media failed " + CurrentAudio.Artist + " - " + CurrentAudio.Title + ". " + e);
+                LoggingService.Log("Media failed " + CurrentAudio.Id + " " + CurrentAudio.Artist + " - " + CurrentAudio.Title + ". " + e);
 
             if (e is InvalidWmpVersionException)
             {
@@ -603,10 +603,18 @@ namespace Meridian.Services
             _playFailsCount++;
             if (_playFailsCount < 5)
             {
-                if (RadioService.CurrentRadio == null)
-                    Next();
+                if (e is FileNotFoundException && CurrentAudio is VkAudio)
+                {
+                    CurrentAudio.Source = null;
+                    PlayInternal(CurrentAudio, _cancellationToken.Token);
+                }
                 else
-                    RadioService.InvalidateCurrentSong();
+                {
+                    if (RadioService.CurrentRadio == null)
+                        Next();
+                    else
+                        RadioService.InvalidateCurrentSong();
+                }
             }
         }
 
