@@ -94,7 +94,7 @@
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource HotPlaylistItemBackgroundBrush}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource MainMenuHotPlaylistItemBackgroundBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource SidebarForegroundBrush}"/>
                         </MultiTrigger>
                         <MultiTrigger>

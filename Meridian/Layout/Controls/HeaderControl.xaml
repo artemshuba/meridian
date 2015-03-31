@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
                PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
-            <Border Background="White" BorderThickness="1" BorderBrush="Black">
+            <Border Background="White" BorderThickness="1" BorderBrush="#a0a0a0">
                 <ItemsControl ItemsSource="{Binding MenuItems, ElementName=rootElement}"/>
             </Border>
         </Popup>

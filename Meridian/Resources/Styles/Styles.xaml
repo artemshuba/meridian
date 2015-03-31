@@ -381,7 +381,7 @@
 
     <ControlTemplate x:Key="SearchBoxButton" TargetType="Button">
         <Grid Background="#00000000">
-            <Path Name="Icon" Data="{StaticResource SearchIcon}" Fill="{DynamicResource SidebarForegroundBrush}" Stretch="Uniform" Opacity="0.3"/>
+            <Path Name="Icon" Data="{StaticResource SearchIcon}" Fill="{DynamicResource ForegroundBrush}" Stretch="Uniform" Opacity="0.3"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

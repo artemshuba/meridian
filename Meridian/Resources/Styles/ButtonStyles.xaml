@@ -132,4 +132,40 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="CurrentAudioMenuButtonStyle" TargetType="ToggleButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontWeight" Value="Thin" />
+        <Setter Property="Padding" Value="25,3,0,3"/>
+        <Setter Property="Margin" Value="-25,7,0,0"/>
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true" Opacity="0.90">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <Path x:Name="DropDownIcon" Data="{StaticResource ChevronDown}" Height="8" Width="12" Fill="{DynamicResource SidebarForegroundBrush}" Stretch="Fill" VerticalAlignment="Top" Margin="10,10,0,0" SnapsToDevicePixels="False" HorizontalAlignment="Left"
+                                  Visibility="Collapsed"/>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <!--<Setter Property="Background" Value="{DynamicResource MainMenuHotPlaylistItemBackgroundBrush}"/>-->
+                            <Setter Property="Visibility" TargetName="DropDownIcon" Value="Visible" />
+                            <Setter Property="Opacity" TargetName="border" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="DropDownIcon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -15,7 +15,10 @@
     <SolidColorBrush x:Key="MainBackgroundSplitterBrush" Color="{StaticResource ForegroundColor}" Opacity="0.15"/>
 
     <SolidColorBrush x:Key="AudioAlternationBackgroundBrush" Color="Black" Opacity="0.03" />
-    
+
+    <!-- Main menu -->
+    <SolidColorBrush x:Key="MainMenuHotPlaylistItemBackgroundBrush" Color="{StaticResource ForegroundColor}" Opacity="0.3"/>
+
     <!-- Buttons -->
     <SolidColorBrush x:Key="ButtonBorderBrush" Color="Gray"/>
     <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#333333"/>
@@ -85,6 +88,7 @@
     <SolidColorBrush x:Key="SidebarForegroundBrush" Color="Black"/>
     <SolidColorBrush x:Key="SidebarInactiveForegroundBrush" Color="Black" Opacity="0.85"/>
     <SolidColorBrush x:Key="SidebarGroupForegroundBrush" Color="Black" Opacity="0.4"/>
+    <SolidColorBrush x:Key="SidebarSliderBackgroundBrush" Color="Black" Opacity="0.1"/>
 
     <SolidColorBrush x:Key="SidebarNowPlayingImageBackgroundBrush" Color="Transparent"/>
 </ResourceDictionary>
