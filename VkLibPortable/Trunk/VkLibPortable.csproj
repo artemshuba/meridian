@@ -86,6 +86,7 @@
     <Compile Include="Core\Account\VkAccountRequest.cs" />
     <Compile Include="Core\Attachments\VkLinkAttachment.cs" />
     <Compile Include="Core\Attachments\VkPhotoAttachment.cs" />
+    <Compile Include="Core\Audio\VkGenre.cs" />
     <Compile Include="Core\Auth\AccessToken.cs" />
     <Compile Include="Core\Auth\OAuthResult.cs" />
     <Compile Include="Core\Auth\VkOAuthRequest.cs" />

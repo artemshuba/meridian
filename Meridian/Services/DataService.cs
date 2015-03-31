@@ -102,9 +102,9 @@ namespace Meridian.Services
             return ItemsResponse<VkAudio>.Empty;
         }
 
-        public static async Task<ItemsResponse<VkAudio>> GetPopularTracks(int count = 0, int offset = 0)
+        public static async Task<ItemsResponse<VkAudio>> GetPopularTracks(int genreId = 0, bool foreignOnly = false, int count = 0, int offset = 0)
         {
-            var response = await _vkontakte.Audio.GetPopular(count: count, offset: offset);
+            var response = await _vkontakte.Audio.GetPopular(count: count, offset: offset, genreId: genreId, onlyEng: foreignOnly);
             if (response.Items != null)
             {
                 return new ItemsResponse<VkAudio>(response.Items.Select(i => i.ToAudio()).ToList(), response.TotalCount);

@@ -783,4 +783,13 @@
   <data name="SettingsRemotePlayHelp" xml:space="preserve">
     <value>Чтобы начать использовать RemotePlay на вашем iOS или Android устройстве, перейдите по адресу {0} в браузере на устройстве. Чтобы использовать RemotePlay на Windows Phone, установите приложения Meridian из магазина и перейдите в раздел RemotePlay в меню приложения.</value>
   </data>
+  <data name="PopularGenresAll" xml:space="preserve">
+    <value>Все жанры</value>
+  </data>
+  <data name="PopularGenresTitle" xml:space="preserve">
+    <value>ЖАНРЫ</value>
+  </data>
+  <data name="PopularForeignOnly" xml:space="preserve">
+    <value>только зарубежные</value>
+  </data>
 </root>

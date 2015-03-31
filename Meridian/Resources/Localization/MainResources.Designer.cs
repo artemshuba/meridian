@@ -1240,6 +1240,33 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to foreign only.
+        /// </summary>
+        public static string PopularForeignOnly {
+            get {
+                return ResourceManager.GetString("PopularForeignOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All genres.
+        /// </summary>
+        public static string PopularGenresAll {
+            get {
+                return ResourceManager.GetString("PopularGenresAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GENRES.
+        /// </summary>
+        public static string PopularGenresTitle {
+            get {
+                return ResourceManager.GetString("PopularGenresTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Popular music from VK.
         /// </summary>
         public static string PopularSubHeader {

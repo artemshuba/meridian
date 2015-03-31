@@ -789,4 +789,13 @@
   <data name="SettingsRemotePlayPort" xml:space="preserve">
     <value>Port</value>
   </data>
+  <data name="PopularGenresAll" xml:space="preserve">
+    <value>All genres</value>
+  </data>
+  <data name="PopularGenresTitle" xml:space="preserve">
+    <value>GENRES</value>
+  </data>
+  <data name="PopularForeignOnly" xml:space="preserve">
+    <value>foreign only</value>
+  </data>
 </root>

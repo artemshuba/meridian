@@ -14,7 +14,7 @@
       Header="{x:Static localization:MainResources.MainMenuPopular}"
       SubHeader="{x:Static localization:MainResources.PopularSubHeader}"
       x:Name="pageRoot">
-    
+
     <layout:PageBase.HeaderMenuItems>
         <MenuItem x:Name="LocalSearchItem" Header="{x:Static localization:MainResources.HeaderMenuLocalSearch}" Click="LocalSearchItem_OnClick"/>
     </layout:PageBase.HeaderMenuItems>
@@ -23,18 +23,53 @@
         <CollectionViewSource x:Key="TracksCollection" Source="{Binding Tracks}" />
     </layout:PageBase.Resources>
 
-    <Grid>
-        <controls:BusyIndicator IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
-            <ListBox x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" 
+    <TabItem>
+        <layout:TwoColumnPageLayout>
+            <layout:TwoColumnPageLayout.MainContent>
+                <Grid>
+                    <controls:BusyIndicator IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
+                        <ListBox Grid.Row="1" x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" 
                      Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                      ItemTemplate="{StaticResource AudioItemTemplate}">
-                <i:Interaction.Behaviors>
-                    <behaviours:AutoScrollToCurrentItemBehaviour />
-                </i:Interaction.Behaviors>
-            </ListBox>
-        </controls:BusyIndicator>
+                            <i:Interaction.Behaviors>
+                                <behaviours:AutoScrollToCurrentItemBehaviour />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                    </controls:BusyIndicator>
 
-        <controls:LocalSearchControl x:Name="LocalSearchBox" Source="{StaticResource TracksCollection}"/>
-    </Grid>
+                    <controls:LocalSearchControl x:Name="LocalSearchBox" Source="{StaticResource TracksCollection}"/>
+                </Grid>
+            </layout:TwoColumnPageLayout.MainContent>
+            <layout:TwoColumnPageLayout.RightContent>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="12,10,0,0">
+                        <TextBlock Text="{x:Static localization:MainResources.PopularGenresTitle}" FontSize="11" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    
+                    <ListBox Margin="0,35,0,0" ItemsSource="{Binding Genres}" Style="{StaticResource CommonListBoxStyle}" 
+                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             SelectedItem="{Binding SelectedGenre, Mode=TwoWay}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}"
+                             Padding="0">
+                        <i:Interaction.Behaviors>
+                            <behaviours:TransitionBehaviour Transition="{StaticResource AlbumLoadAnim}" TransitionDelay="25"/>
+                        </i:Interaction.Behaviors>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Tag="{Binding DataContext, ElementName=pageRoot}" Text="{Binding Title}" ToolTip="{Binding Title}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis">
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <CheckBox Grid.Row="1" Style="{StaticResource CommonCheckBoxStyle}" Content="{x:Static localization:MainResources.PopularForeignOnly}" Margin="12,10,12,10"
+                              IsChecked="{Binding ForeignOnly, Mode=TwoWay}"/>
+                </Grid>
+            </layout:TwoColumnPageLayout.RightContent>
+        </layout:TwoColumnPageLayout>
+    </TabItem>
 </layout:PageBase>
