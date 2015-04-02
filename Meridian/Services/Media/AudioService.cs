@@ -556,7 +556,7 @@ namespace Meridian.Services
                 Messenger.Default.Send(new PlayerPositionChangedMessage() { NewPosition = MediaPlayer.Position });
 
                 //possible fix for not switching tracks issue
-                if (MediaPlayer.Position >= MediaPlayer.Duration)
+                if (MediaPlayer.Position > MediaPlayer.Duration)
                     MediaPlayerOnMediaEnded(MediaPlayer, EventArgs.Empty);
             }
             catch (Exception ex)
