@@ -792,4 +792,7 @@
   <data name="PopularForeignOnly" xml:space="preserve">
     <value>только зарубежные</value>
   </data>
+  <data name="SettingsUseHttps" xml:space="preserve">
+    <value>Использовать HTTPS</value>
+  </data>
 </root>

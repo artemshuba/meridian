@@ -98,6 +98,8 @@ namespace Meridian
             if (Settings.Instance.EnableTrayIcon)
                 AddTrayIcon();
 
+            ViewModelLocator.Vkontakte.UseHttps = Settings.Instance.UseHttps;
+
             AudioService.Load();
         }
 

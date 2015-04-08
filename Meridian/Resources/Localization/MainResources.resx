@@ -798,4 +798,7 @@
   <data name="PopularForeignOnly" xml:space="preserve">
     <value>foreign only</value>
   </data>
+  <data name="SettingsUseHttps" xml:space="preserve">
+    <value>Use HTTPS</value>
+  </data>
 </root>

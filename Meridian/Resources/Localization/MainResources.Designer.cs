@@ -1924,6 +1924,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use HTTPS.
+        /// </summary>
+        public static string SettingsUseHttps {
+            get {
+                return ResourceManager.GetString("SettingsUseHttps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to as society.
         /// </summary>
         public static string ShareAsSociety {

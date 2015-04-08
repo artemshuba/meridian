@@ -4,6 +4,7 @@ using LastFmLib;
 using Meridian.Services;
 using Meridian.ViewModel.Main;
 using VkLib;
+using Meridian.Domain;
 
 namespace Meridian.ViewModel
 {

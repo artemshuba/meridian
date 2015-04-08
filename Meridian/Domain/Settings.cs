@@ -92,6 +92,8 @@ namespace Meridian.Domain
 
         public string RemotePlayAddress { get; set; }
 
+        public bool UseHttps { get; set; }
+
         #region Window settings
 
         public double Width { get; set; }
@@ -172,6 +174,8 @@ namespace Meridian.Domain
 
             EnableRemotePlay = false;
             RemotePlayPort = 9999;
+
+            UseHttps = false;
         }
 
         public static void Load()

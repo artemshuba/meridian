@@ -47,6 +47,11 @@ namespace VkLib
         }
 
         /// <summary>
+        /// Use HTTPS
+        /// </summary>
+        public bool UseHttps { get; set; }
+
+        /// <summary>
         /// Access token
         /// </summary>
         public AccessToken AccessToken { get; set; }
@@ -269,6 +274,9 @@ namespace VkLib
 
             if (!string.IsNullOrEmpty(ApiVersion))
                 parameters.Add("v", ApiVersion);
+
+            if (UseHttps)
+                parameters.Add("https", "1");
         }
     }
 }

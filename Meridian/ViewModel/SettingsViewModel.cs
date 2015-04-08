@@ -86,6 +86,7 @@ namespace Meridian.ViewModel
         private string _selectedRemotePlayAddress;
         private string _remotePlayPort;
         private bool _enableRemotePlay;
+        private bool _useHttps;
 
         #region Commands
 
@@ -321,6 +322,10 @@ namespace Meridian.ViewModel
 
                     if (value.Engine != Domain.Settings.Instance.MediaEngine)
                         RestartRequired = true;
+
+                    if (value.Engine == MediaEngine.Wmp)
+                        UseHttps = false;
+                    RaisePropertyChanged("CanUseHttps");
                 }
             }
         }
@@ -381,6 +386,25 @@ namespace Meridian.ViewModel
             }
         }
 
+        public bool CanUseHttps
+        {
+            //https currently works only in NAudio
+            get { return SelectedEngine.Engine == MediaEngine.NAudio; }
+        }
+
+        public bool UseHttps
+        {
+            get { return _useHttps;}
+            set
+            {
+                if (Set(ref _useHttps, value))
+                {
+                    CanSave = true;
+                    RestartRequired = true;
+                }
+            }
+        }
+
         public SettingsViewModel()
         {
             InitializeCommands();
@@ -398,6 +422,7 @@ namespace Meridian.ViewModel
             _selectedEngine = Engines.FirstOrDefault(e => e.Engine == Domain.Settings.Instance.MediaEngine);
             _enableRemotePlay = Domain.Settings.Instance.EnableRemotePlay;
             _remotePlayPort = Domain.Settings.Instance.RemotePlayPort.ToString();
+            _useHttps = Domain.Settings.Instance.UseHttps;
 
             if (string.IsNullOrEmpty(Domain.Settings.Instance.RemotePlayAddress))
             {
@@ -664,6 +689,8 @@ namespace Meridian.ViewModel
             Domain.Settings.Instance.DownloadAlbumArt = DownloadAlbumArt;
 
             Domain.Settings.Instance.MediaEngine = SelectedEngine.Engine;
+
+            Domain.Settings.Instance.UseHttps = UseHttps;
 
             if (BlurBackground)
             {

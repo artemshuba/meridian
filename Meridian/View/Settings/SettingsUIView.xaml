@@ -135,6 +135,8 @@
                 <TextBlock Text="{x:Static localization:MainResources.SettingsUIPlayUsing}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}" Margin="0,15,0,0"/>
                 <ComboBox Width="200" Style="{StaticResource CommonComboBoxStyle}" Margin="0,3,0,0" HorizontalAlignment="Left" ItemsSource="{Binding Engines}" 
                       SelectedValue="{Binding SelectedEngine, Mode=TwoWay}" DisplayMemberPath="Title"/>
+                <CheckBox IsEnabled="{Binding CanUseHttps}" IsChecked="{Binding UseHttps, Mode=TwoWay}" Content="{x:Static localization:MainResources.SettingsUseHttps}"
+                          Margin="0,5,0,0"/>
             </StackPanel>
         </ScrollViewer>
         

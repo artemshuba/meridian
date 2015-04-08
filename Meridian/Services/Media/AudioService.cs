@@ -272,7 +272,8 @@ namespace Meridian.Services
 
             //look like MediaElement doen't work with https, temporary hack
             var url = track.Source;
-            url = url.Replace("https://", "http://");
+            if (!Settings.Instance.UseHttps)
+                url = url.Replace("https://", "http://");
 
             MediaPlayer.Source = new Uri(url);
             MediaPlayer.Play();
