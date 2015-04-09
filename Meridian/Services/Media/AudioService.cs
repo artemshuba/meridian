@@ -233,15 +233,29 @@ namespace Meridian.Services
 
                 if (vkAudio != null)
                 {
+                    vkAudio.IsPlaying = true;
                     if (_playlist != null)
                     {
                         var playlistTrackIndex = _playlist.IndexOf(track);
                         if (playlistTrackIndex >= 0)
-                            _playlist[_playlist.IndexOf(track)] = vkAudio; //to fix radio vk scrobbling
+                        {
+                            var playlistTrack = (VkAudio) _playlist[_playlist.IndexOf(track)];
+                            playlistTrack.Id = vkAudio.Id;
+                            playlistTrack.Source = vkAudio.Source;
+                            playlistTrack.OwnerId = vkAudio.OwnerId;
+                            playlistTrack.IsAddedByCurrentUser = vkAudio.IsAddedByCurrentUser;
+                            playlistTrack.AlbumId = vkAudio.AlbumId;
+                            playlistTrack.Title = vkAudio.Title;
+                            playlistTrack.Artist = vkAudio.Artist;
+                            playlistTrack.Duration = vkAudio.Duration;
+                            playlistTrack.GenreId = vkAudio.GenreId;
+                            playlistTrack.LyricsId = vkAudio.LyricsId;
+                            //_playlist[_playlist.IndexOf(track)] = vkAudio; //to fix radio vk scrobbling
+                        }
                     }
 
                     track = vkAudio;
-                    _currentAudio = track;
+                    //_currentAudio = track;
                     _playFailsCount = 0;
                 }
                 else

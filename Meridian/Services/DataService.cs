@@ -781,7 +781,7 @@ namespace Meridian.Services
             return true;
         }
 
-        public static async Task<List<Audio>> GetAdvancedRecommendations(int count = 100, CancellationToken token = default(CancellationToken))
+        public static async Task<List<VkAudio>> GetAdvancedRecommendations(int count = 100, CancellationToken token = default(CancellationToken))
         {
             //берем первые 300 треков пользователя
             var allTracks = await GetUserTracks(300);
@@ -830,7 +830,7 @@ namespace Meridian.Services
                 if (recommendedTracks != null)
                 {
                     var results = (from track in recommendedTracks
-                                   select new Audio()
+                                   select new VkAudio()
                                    {
                                        Title = track.Title,
                                        Artist = track.ArtistName
