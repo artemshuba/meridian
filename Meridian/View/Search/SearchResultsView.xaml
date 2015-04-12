@@ -186,7 +186,8 @@
         <converters:SearchListBoxStyleSelector x:Key="SearchListBoxStyleSelector"
                                                TracksStyle="{StaticResource TracksListBoxStyle}"
                                                AlbumsStyle="{StaticResource AlbumsListBoxStyle}"
-                                               ArtistsStyle="{StaticResource ArtistsListBoxStyle}"
+                                               ArtistsStyle="{StaticResource AlbumsListBoxStyle}"
+                                               LocalArtistsStyle="{StaticResource ArtistsListBoxStyle}"
                                                SocietiesStyle="{StaticResource AlbumsListBoxStyle}"/>
 
         <CollectionViewSource x:Key="SearchMenuGroups" Source="{Binding Sections}">

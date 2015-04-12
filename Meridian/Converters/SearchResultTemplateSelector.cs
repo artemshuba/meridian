@@ -82,6 +82,8 @@ namespace Meridian.Converters
 
         public Style ArtistsStyle { get; set; }
 
+        public Style LocalArtistsStyle { get; set; }
+
         public Style SocietiesStyle { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -100,7 +102,7 @@ namespace Meridian.Converters
                 case 4:
                     return AlbumsStyle;
                 case 5:
-                    return ArtistsStyle;
+                    return LocalArtistsStyle;
             }
             return null;
         }
