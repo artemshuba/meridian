@@ -64,7 +64,7 @@ namespace Meridian.ViewModel
         private readonly List<SettingsEngine> _engines = new List<SettingsEngine>()
                 {
                     new SettingsEngine() { Title = "Windows Media Player", Engine = MediaEngine.Wmp },
-                    new SettingsEngine() { Title = "NAudio (experimental)", Engine = MediaEngine.NAudio }
+                    new SettingsEngine() { Title = "NAudio", Engine = MediaEngine.NAudio }
                 };
 
         private readonly List<SettingsHotkey> _hotkeys = new List<SettingsHotkey>();

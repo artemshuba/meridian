@@ -9,7 +9,7 @@ using System.Reflection;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("VkLibPortable")]
-[assembly: AssemblyCopyright("Copyright © Stealth 2014")]
+[assembly: AssemblyCopyright("Copyright © Stealth 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]

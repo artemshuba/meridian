@@ -829,8 +829,14 @@ namespace Meridian.ViewModel
 
             GetTrackImage();
 
-            if (Settings.Instance.ShowTrackNotifications && message.OldAudio != null) //disable show on first start by checking for null
-                ShowTrackNotification(message.NewAudio);
+            if (Settings.Instance.ShowTrackNotifications && message.OldAudio != null)
+                //disable show on first start by checking for null
+            {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    ShowTrackNotification(message.NewAudio);
+                }));
+            }
         }
 
         private async void OnPlayerPositionChanged(PlayerPositionChangedMessage message)
