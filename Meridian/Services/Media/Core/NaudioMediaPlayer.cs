@@ -178,7 +178,7 @@ namespace Meridian.Services.Media.Core
 
         void _wavePlayer_PlaybackStopped(object sender, StoppedEventArgs e)
         {
-            if (_outputStream.CurrentTime.TotalSeconds > Duration.TotalSeconds / 2)
+            if (_outputStream != null && _outputStream.CurrentTime.TotalSeconds > Duration.TotalSeconds / 2)
                 SwitchNext();
         }
     }

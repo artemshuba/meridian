@@ -69,6 +69,7 @@ namespace Meridian.ViewModel
         private UIMode _currentUIMode;
         private string _lastArtist;
         private CancellationTokenSource _artCancellationToken = new CancellationTokenSource();
+        private CancellationTokenSource _coverCancellationToken = new CancellationTokenSource();
         private bool _canBroadcast;
 
         #region Commands
@@ -827,7 +828,8 @@ namespace Meridian.ViewModel
             _nowPlayingUpdated = false;
             _scrobbled = false;
 
-            GetTrackImage();
+            CancelCover();
+            GetTrackImage(_coverCancellationToken.Token);
 
             if (Settings.Instance.ShowTrackNotifications && message.OldAudio != null)
                 //disable show on first start by checking for null
@@ -980,7 +982,7 @@ namespace Meridian.ViewModel
             }
         }
 
-        private async void GetTrackImage()
+        private async void GetTrackImage(CancellationToken token)
         {
             if (CurrentAudio == null)
                 return;
@@ -995,7 +997,10 @@ namespace Meridian.ViewModel
                         if (image != null)
                         {
                             var ms = new MemoryStream();
-                            await ms.WriteAsync(image.Data.Data, 0, image.Data.Data.Length);
+                            await ms.WriteAsync(image.Data.Data, 0, image.Data.Data.Length, token);
+                            if (token.IsCancellationRequested)
+                                return;
+
                             ms.Seek(0, SeekOrigin.Begin);
 
                             BitmapImage bi = null;
@@ -1018,12 +1023,21 @@ namespace Meridian.ViewModel
             {
                 try
                 {
-                    var imageUri = await DataService.GetTrackImage(CurrentAudio.Artist, CurrentAudio.Title);
+                    var artist = CurrentAudio.Artist;
+                    var title = CurrentAudio.Title;
+
+                    var imageUri = await DataService.GetTrackImage(artist, title);
+                    if (token.IsCancellationRequested)
+                        return;
+
                     if (imageUri == null)
                     {
                         if (Settings.Instance.DownloadArtistArt)
                         {
-                            imageUri = await DataService.GetArtistImage(CurrentAudio.Artist, Settings.Instance.ShowBackgroundArt);
+                            imageUri = await DataService.GetArtistImage(artist, Settings.Instance.ShowBackgroundArt);
+
+                            if (token.IsCancellationRequested)
+                                return;
                         }
                     }
 
@@ -1201,6 +1215,12 @@ namespace Meridian.ViewModel
         {
             _artCancellationToken.Cancel();
             _artCancellationToken = new CancellationTokenSource();
+        }
+
+        private void CancelCover()
+        {
+            _coverCancellationToken.Cancel();
+            _coverCancellationToken = new CancellationTokenSource();
         }
     }
 }
