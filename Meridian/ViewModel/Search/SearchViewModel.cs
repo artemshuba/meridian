@@ -12,6 +12,7 @@ using LastFmLib.Core.Artist;
 using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
+using Neptune.Extensions;
 using Neptune.Messages;
 
 namespace Meridian.ViewModel.Search
@@ -27,7 +28,8 @@ namespace Meridian.ViewModel.Search
             new SearchMenuItem() {Group = MainResources.MainMenuVkTitle, Title = MainResources.SearchSectionArtists, GroupIcon = Application.Current.Resources["VkIcon"]},
 
             new SearchMenuItem() {Group = MainResources.MainMenuLocalTitle, GroupIcon = Application.Current.Resources["DeviceIcon"], Title = MainResources.SearchSectionTracks},
-            new SearchMenuItem() {Group = MainResources.MainMenuLocalTitle, GroupIcon = Application.Current.Resources["DeviceIcon"], Title = MainResources.SearchSectionAlbums}
+            new SearchMenuItem() {Group = MainResources.MainMenuLocalTitle, GroupIcon = Application.Current.Resources["DeviceIcon"], Title = MainResources.SearchSectionAlbums},
+            new SearchMenuItem() {Group = MainResources.MainMenuLocalTitle, GroupIcon = Application.Current.Resources["DeviceIcon"], Title = MainResources.SearchSectionArtists}
         };
         private string _query;
         private int _selectedSectionIndex;
@@ -99,7 +101,18 @@ namespace Meridian.ViewModel.Search
             PlayAudioCommand = new RelayCommand<Audio>(audio =>
             {
                 AudioService.Play(audio);
-                AudioService.SetCurrentPlaylist(SearchResults.Cast<Audio>());
+                switch (SelectedSectionIndex)
+                {
+                    //tracks
+                    case 0:
+                        AudioService.SetCurrentPlaylist(SearchResults.Cast<Audio>());
+                        break;
+
+                    //local artists
+                    case 5:
+                        AudioService.SetCurrentPlaylist(SearchResults.Cast<AudioArtist>().Where(a => a.Albums != null).SelectMany(a => a.Albums).SelectMany(a => a.Tracks).ToList());
+                        break;
+                }
             });
 
             GoToAlbumCommand = new RelayCommand<LastFmAlbum>(album =>
@@ -163,6 +176,10 @@ namespace Meridian.ViewModel.Search
 
                 case 4:
                     SearchLocalAlbums(_cancellationToken.Token);
+                    break;
+
+                case 5:
+                    SearchLocalArtists(_cancellationToken.Token);
                     break;
             }
         }
@@ -359,6 +376,75 @@ namespace Meridian.ViewModel.Search
                 if (albums != null && albums.Count > 0)
                 {
                     SearchResults = new ObservableCollection<object>(albums);
+                }
+                else
+                {
+                    OnTaskError("results", ErrorResources.LoadSearchErrorEmpty);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.Log(ex);
+
+                OnTaskError("results", ErrorResources.LoadSearchErrorCommon);
+            }
+
+            OnTaskFinished("results");
+        }
+
+        private async void SearchLocalArtists(CancellationToken token)
+        {
+            SearchResults = null;
+            OnTaskStarted("results");
+
+            SearchResults = null;
+
+            try
+            {
+                var artists = await ServiceLocator.LocalMusicService.SearchArtists(_query);
+
+                if (token.IsCancellationRequested)
+                {
+                    Debug.WriteLine("Local artists search cancelled");
+                    return;
+                }
+
+                if (artists != null && artists.Count > 0)
+                {
+                    var results = new List<AudioArtist>();
+                    foreach (var artist in artists)
+                    {
+                        var a = new AudioArtist(){Title = artist.Title};
+
+                        var albums = await ServiceLocator.LocalMusicService.GetArtistAlbums(artist.Id);
+
+                        if (token.IsCancellationRequested)
+                        {
+                            Debug.WriteLine("Local artists search cancelled");
+                            return;
+                        }
+
+                        if (!albums.IsNullOrEmpty())
+                        {
+                            foreach (var album in albums)
+                            {
+                                var tracks = await ServiceLocator.LocalMusicService.GetAlbumTracks(album.Id);
+                                if (token.IsCancellationRequested)
+                                {
+                                    Debug.WriteLine("Local artists search cancelled");
+                                    return;
+                                }
+
+                                if (!tracks.IsNullOrEmpty())
+                                    album.Tracks = tracks.Cast<Audio>().ToList();
+                            }
+                        }
+
+                        a.Albums = albums;
+                        results.Add(a);
+                    }
+
+                    SearchResults = new ObservableCollection<object>(results);
                 }
                 else
                 {

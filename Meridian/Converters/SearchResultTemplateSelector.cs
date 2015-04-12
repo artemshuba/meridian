@@ -22,6 +22,8 @@ namespace Meridian.Converters
 
         public DataTemplate ArtistTemplate { get; set; }
 
+        public DataTemplate LocalArtistTemplate { get; set; }
+
         public DataTemplate SocietyTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
@@ -38,6 +40,8 @@ namespace Meridian.Converters
                 return SocietyTemplate;
             else if (item is AudioAlbum)
                 return LocalAlbumTemplate;
+            else if (item is AudioArtist)
+                return LocalArtistTemplate;
             return null;
         }
     }
@@ -50,6 +54,8 @@ namespace Meridian.Converters
 
         public Style ArtistStyle { get; set; }
 
+        public Style LocalArtistStyle { get; set; }
+
         public Style SocietyStyle { get; set; }
 
         public override Style SelectStyle(object item, DependencyObject container)
@@ -58,8 +64,10 @@ namespace Meridian.Converters
                 return TrackStyle;
             else if (item is LastFmAlbum || item is AudioAlbum)
                 return AlbumStyle;
-            else if (item is LastFmArtist || item is AudioArtist)
+            else if (item is LastFmArtist)
                 return ArtistStyle;
+            else if (item is AudioArtist)
+                return LocalArtistStyle;
             else if (item is VkGroup)
                 return SocietyStyle;
             return null;

@@ -1618,6 +1618,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string SettingsMenuGeneral {
+            get {
+                return ResourceManager.GetString("SettingsMenuGeneral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hotkeys.
         /// </summary>
         public static string SettingsMenuHotkeys {

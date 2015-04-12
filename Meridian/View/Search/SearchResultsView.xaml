@@ -10,6 +10,7 @@
       xmlns:helpers="clr-namespace:Meridian.Helpers"
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       xmlns:layout="clr-namespace:Meridian.Layout"
+      xmlns:behaviours1="clr-namespace:Neptune.UI.Desktop.Behaviours;assembly=Neptune.Desktop"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
       Header="{Binding Header}"
@@ -40,6 +41,12 @@
                     </ItemsPanelTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <Style x:Key="ArtistsListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource CommonListBoxStyle}">
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="Padding" Value="5,0,0,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         </Style>
 
         <DataTemplate x:Key="AlbumTemplate">
@@ -100,6 +107,40 @@
             </Button>
         </DataTemplate>
 
+        <DataTemplate x:Key="LocalArtistTemplate">
+            <ListBox ItemsSource="{Binding Albums}" Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource GroupListBoxItemStyle}"
+                     HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="15,10,0,0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <i:Interaction.Behaviors>
+                    <behaviours1:IgnoreMouseWheelBehavior/>
+                </i:Interaction.Behaviors>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="RootGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.85" Margin="0,0,0,5" 
+                                                   Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"
+                                                   Foreground="{DynamicResource ForegroundBrush}"/>
+                            <ListBox Grid.Row="1" ItemsSource="{Binding Tracks}" Margin="-24,0,0,10"
+                                                 Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                                 ItemTemplate="{StaticResource LocalAudioItemTemplate}"
+                                                 HorizontalContentAlignment="Stretch"
+                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                <i:Interaction.Behaviors>
+                                    <behaviours1:IgnoreMouseWheelBehavior/>
+                                </i:Interaction.Behaviors>
+                            </ListBox>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </DataTemplate>
+
+
         <DataTemplate x:Key="ArtistTemplate">
             <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="120" ToolTip="{Binding Name}" Command="{Binding DataContext.GoToArtistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}}" CommandParameter="{Binding}">
                 <Button.RenderTransform>
@@ -132,18 +173,20 @@
                                                  LocalTrackTemplate="{StaticResource LocalAudioItemTemplate}"
                                                  AlbumTemplate="{StaticResource AlbumTemplate}"
                                                  LocalAlbumTemplate="{StaticResource LocalAlbumTemplate}"
-                                                 ArtistTemplate="{StaticResource ArtistTemplate}"/>
+                                                 ArtistTemplate="{StaticResource ArtistTemplate}"
+                                                 LocalArtistTemplate="{StaticResource LocalArtistTemplate}"/>
 
         <converters:SearchResultStyleSelector x:Key="SearchStyleSelector"
                                               TrackStyle="{StaticResource AudioListBoxItemStyle}"
                                               AlbumStyle="{StaticResource FriendListBoxItemStyle}"
                                               ArtistStyle="{StaticResource FriendListBoxItemStyle}"
+                                              LocalArtistStyle="{StaticResource GroupListBoxItemStyle}"
                                               SocietyStyle="{StaticResource FriendListBoxItemStyle}"/>
 
         <converters:SearchListBoxStyleSelector x:Key="SearchListBoxStyleSelector"
                                                TracksStyle="{StaticResource TracksListBoxStyle}"
                                                AlbumsStyle="{StaticResource AlbumsListBoxStyle}"
-                                               ArtistsStyle="{StaticResource AlbumsListBoxStyle}"
+                                               ArtistsStyle="{StaticResource ArtistsListBoxStyle}"
                                                SocietiesStyle="{StaticResource AlbumsListBoxStyle}"/>
 
         <CollectionViewSource x:Key="SearchMenuGroups" Source="{Binding Sections}">

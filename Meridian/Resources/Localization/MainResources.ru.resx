@@ -795,4 +795,7 @@
   <data name="SettingsUseHttps" xml:space="preserve">
     <value>Использовать HTTPS</value>
   </data>
+  <data name="SettingsMenuGeneral" xml:space="preserve">
+    <value>Общие</value>
+  </data>
 </root>

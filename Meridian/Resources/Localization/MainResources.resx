@@ -801,4 +801,7 @@
   <data name="SettingsUseHttps" xml:space="preserve">
     <value>Use HTTPS</value>
   </data>
+  <data name="SettingsMenuGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
 </root>

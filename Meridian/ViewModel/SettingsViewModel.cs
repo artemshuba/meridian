@@ -29,7 +29,7 @@ namespace Meridian.ViewModel
     {
         private readonly Dictionary<string, string> _menuItems = new Dictionary<string, string>()
         {
-            {MainResources.SettingsMenuUI, "/View/Settings/SettingsUIView.xaml"},
+            {MainResources.SettingsMenuGeneral, "/View/Settings/SettingsUIView.xaml"},
             {MainResources.SettingsMenuHotkeys, "/View/Settings/SettingsHotkeysView.xaml"},
             {MainResources.SettingsRemotePlay, "/View/Settings/SettingsRemotePlayView.xaml"},
             {MainResources.SettingsMenuAccounts, "/View/Settings/SettingsAccountsView.xaml"},
