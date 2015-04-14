@@ -83,39 +83,49 @@ namespace Meridian.Services.Music.Repositories
 
                 foreach (var filePath in musicFiles)
                 {
-                    using (var audioFile = TagLib.File.Create(filePath))
+                    TagLib.File audioFile = null;
+
+                    try
                     {
-                        var track = new LocalAudio();
-                        track.Id = Md5Helper.Md5(filePath);
-                        if (!string.IsNullOrEmpty(audioFile.Tag.Title))
-                            track.Title = StringHelper.ToUtf8(audioFile.Tag.Title);
-                        else
-                            track.Title = Path.GetFileNameWithoutExtension(filePath);
-
-                        var artist = audioFile.Tag.FirstPerformer;
-                        if (string.IsNullOrEmpty(artist))
-                            artist = audioFile.Tag.FirstAlbumArtist;
-
-                        track.Artist = StringHelper.ToUtf8(artist);
-
-                        if (!string.IsNullOrEmpty(track.Artist))
-                        {
-                            track.Artist = track.Artist.Trim();
-                            track.ArtistId = Md5Helper.Md5(track.Artist.Trim().ToLower());
-                        }
-
-                        track.Duration = audioFile.Properties.Duration;
-                        track.Source = filePath;
-
-                        if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
-                        {
-                            track.AlbumId =
-                                Md5Helper.Md5(track.Artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
-                            track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
-                        }
-
-                        tracks.Add(track);
+                        audioFile = TagLib.File.Create(filePath);
                     }
+                    catch (Exception ex)
+                    {
+                        LoggingService.Log(ex);
+                        continue;
+                    }
+
+                    var track = new LocalAudio();
+                    track.Id = Md5Helper.Md5(filePath);
+                    if (!string.IsNullOrEmpty(audioFile.Tag.Title))
+                        track.Title = StringHelper.ToUtf8(audioFile.Tag.Title);
+                    else
+                        track.Title = Path.GetFileNameWithoutExtension(filePath);
+
+                    var artist = audioFile.Tag.FirstPerformer;
+                    if (string.IsNullOrEmpty(artist))
+                        artist = audioFile.Tag.FirstAlbumArtist;
+
+                    track.Artist = StringHelper.ToUtf8(artist);
+
+                    if (!string.IsNullOrEmpty(track.Artist))
+                    {
+                        track.Artist = track.Artist.Trim();
+                        track.ArtistId = Md5Helper.Md5(track.Artist.Trim().ToLower());
+                    }
+
+                    track.Duration = audioFile.Properties.Duration;
+                    track.Source = filePath;
+
+                    if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
+                    {
+                        track.AlbumId =
+                            Md5Helper.Md5(track.Artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
+                        track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
+                    }
+
+                    tracks.Add(track);
+                    audioFile.Dispose();
                 }
                 await ServiceLocator.DataBaseService.SaveItems(tracks);
 

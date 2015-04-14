@@ -103,5 +103,14 @@ namespace Meridian.Services
 
             return tracks;
         }
+
+        public async Task<List<LocalAudio>> GetLocalArtistUnsortedTracks(string artistId)
+        {
+            var db = new SQLiteAsyncConnection(_dbPath);
+
+            var tracks = await db.Table<LocalAudio>().Where(track => track.ArtistId == artistId && (track.AlbumId == null || track.AlbumId == string.Empty)).ToListAsync();
+
+            return tracks;
+        }
     }
 }

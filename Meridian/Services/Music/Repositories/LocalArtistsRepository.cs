@@ -86,23 +86,34 @@ namespace Meridian.Services.Music.Repositories
 
                 foreach (var filePath in musicFiles)
                 {
-                    using (var audioFile = TagLib.File.Create(filePath))
-                    {
-                        var track = new LocalAudio();
-                        string artist = string.Empty;
-                        if (!string.IsNullOrWhiteSpace(audioFile.Tag.FirstPerformer))
-                            artist = audioFile.Tag.FirstPerformer;
-                        else if (!string.IsNullOrWhiteSpace(audioFile.Tag.FirstAlbumArtist))
-                            artist = audioFile.Tag.FirstAlbumArtist;
+                    TagLib.File audioFile = null;
 
-                        if (!string.IsNullOrWhiteSpace(artist))
-                        {
-                            track.ArtistId = Md5Helper.Md5(StringHelper.ToUtf8(artist).Trim().ToLower());
-                            track.Artist = StringHelper.ToUtf8(artist).Trim();
-                            if (!artists.ContainsKey(track.ArtistId))
-                                artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = track.Artist });
-                        }
+                    try
+                    {
+                        audioFile = TagLib.File.Create(filePath);
                     }
+                    catch (Exception ex)
+                    {
+                        LoggingService.Log(ex);
+                        continue;
+                    }
+
+                    var track = new LocalAudio();
+                    string artist = string.Empty;
+                    if (!string.IsNullOrWhiteSpace(audioFile.Tag.FirstPerformer))
+                        artist = audioFile.Tag.FirstPerformer;
+                    else if (!string.IsNullOrWhiteSpace(audioFile.Tag.FirstAlbumArtist))
+                        artist = audioFile.Tag.FirstAlbumArtist;
+
+                    if (!string.IsNullOrWhiteSpace(artist))
+                    {
+                        track.ArtistId = Md5Helper.Md5(StringHelper.ToUtf8(artist).Trim().ToLower());
+                        track.Artist = StringHelper.ToUtf8(artist).Trim();
+                        if (!artists.ContainsKey(track.ArtistId))
+                            artists.Add(track.ArtistId, new AudioArtist() { Id = track.ArtistId, Title = track.Artist });
+                    }
+
+                    audioFile.Dispose();
                 }
 
                 await ServiceLocator.DataBaseService.SaveItems(artists.Values);

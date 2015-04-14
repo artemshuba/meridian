@@ -89,38 +89,48 @@ namespace Meridian.Services.Music.Repositories
 
                 foreach (var filePath in musicFiles)
                 {
-                    using (var audioFile = TagLib.File.Create(filePath))
+                    TagLib.File audioFile = null;
+
+                    try
                     {
-                        var track = new LocalAudio();
+                        audioFile = TagLib.File.Create(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggingService.Log(ex);
+                        continue;
+                    }
 
-                        if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
-                        {
-                            string artist = string.Empty;
-                            if (!string.IsNullOrEmpty(audioFile.Tag.FirstPerformer))
-                                artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer);
-                            else if (!string.IsNullOrEmpty(audioFile.Tag.FirstAlbumArtist))
-                                artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist);
+                    var track = new LocalAudio();
 
-                            track.AlbumId = Md5Helper.Md5(artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
-                            track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
-                            if (!albums.ContainsKey(track.AlbumId))
-                                albums.Add(track.AlbumId, new AudioAlbum()
-                                {
-                                    Id = track.AlbumId,
-                                    Artist = artist.Trim(),
-                                    Title = StringHelper.ToUtf8(audioFile.Tag.Album).Trim(),
-                                    Year = (int)audioFile.Tag.Year,
-                                    ArtistId = Md5Helper.Md5(artist.Trim().ToLower())
-                                });
-                            else
+                    if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
+                    {
+                        string artist = string.Empty;
+                        if (!string.IsNullOrEmpty(audioFile.Tag.FirstPerformer))
+                            artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer);
+                        else if (!string.IsNullOrEmpty(audioFile.Tag.FirstAlbumArtist))
+                            artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist);
+
+                        track.AlbumId = Md5Helper.Md5(artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
+                        track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
+                        if (!albums.ContainsKey(track.AlbumId))
+                            albums.Add(track.AlbumId, new AudioAlbum()
                             {
-                                if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
-                                {
-                                    albums[track.AlbumId].CoverPath = filePath;
-                                }
+                                Id = track.AlbumId,
+                                Artist = artist.Trim(),
+                                Title = StringHelper.ToUtf8(audioFile.Tag.Album).Trim(),
+                                Year = (int)audioFile.Tag.Year,
+                                ArtistId = Md5Helper.Md5(artist.Trim().ToLower())
+                            });
+                        else
+                        {
+                            if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
+                            {
+                                albums[track.AlbumId].CoverPath = filePath;
                             }
                         }
                     }
+                    audioFile.Dispose();
                 }
 
                 await ServiceLocator.DataBaseService.SaveItems(albums.Values);

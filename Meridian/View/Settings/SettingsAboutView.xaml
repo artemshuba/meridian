@@ -30,7 +30,7 @@
             <TextBlock Foreground="{DynamicResource ForegroundBrush}">
                 <Run Text="Version:" />
                 <Run Text="{Binding Version, Mode=OneWay}" />
-                <!--<Run Text="beta" />-->
+                <Run Text="beta" />
             </TextBlock>
             <TextBlock Text="Copyright © Stealth 2015" Foreground="{DynamicResource ForegroundBrush}"/>
             <TextBlock x:Name="SiteLink" FontWeight="Normal" TextWrapping="Wrap" Text="http://meridianvk.com" HorizontalAlignment="Left" FontSize="12"

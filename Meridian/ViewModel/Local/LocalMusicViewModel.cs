@@ -318,6 +318,17 @@ namespace Meridian.ViewModel.Local
                             album.Tracks = tracks.Cast<Audio>().ToList();
                     }
                 }
+                else
+                {
+                    albums = new List<AudioAlbum>();
+                }
+
+                var unsortedTracks = await ServiceLocator.LocalMusicService.GetArtistUnsortedTracks(SelectedArtist.Id);
+                if (!unsortedTracks.IsNullOrEmpty())
+                {
+                    var unsortedAlbum = new AudioAlbum() { Tracks = unsortedTracks.OfType<Audio>().ToList() };
+                    albums.Insert(0, unsortedAlbum);
+                }
 
                 SelectedArtistAlbums = albums;
             }
