@@ -200,7 +200,6 @@
     #playerControls .play {
         width: 34pt;
         height: 34pt;
-        position: relative;
         top: -2pt;
         left: calc(50% - 17pt);
     }
@@ -208,7 +207,6 @@
     #playerControls .pause {
         width: 32pt;
         height: 32pt;
-        position: relative;
         top: -2pt;
         left: calc(50% - 16pt);
     }
@@ -221,6 +219,22 @@
     #playerControls #next {
         margin-left: 27pt;
         left: 50%;
+    }
+
+    #playerControls.state-play .play{
+        display: none;
+    }
+
+    #playerControls.state-play .pause{
+        display: inline-block;
+    }
+
+    #playerControls.state-pause .play{
+        display: inline-block;
+    }
+
+    #playerControls.state-pause .pause{
+        display: none;
     }
 
 /* */
