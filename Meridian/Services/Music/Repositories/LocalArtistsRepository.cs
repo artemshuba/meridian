@@ -114,9 +114,9 @@ namespace Meridian.Services.Music.Repositories
                     }
 
                     audioFile.Dispose();
-                }
 
-                await ServiceLocator.DataBaseService.SaveItems(artists.Values);
+                    await Task.Delay(50);
+                }
 
                 LoggingService.Log("Music scan finished. Found " + artists.Count + " artists");
 

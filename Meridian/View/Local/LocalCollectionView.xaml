@@ -14,6 +14,11 @@
 
     <Page.Resources>
         <CollectionViewSource x:Key="TracksCollection" Source="{Binding Tracks}" />
+        <CollectionViewSource x:Key="SelectedArtistTracksCollection" Source="{Binding SelectedArtistTracks}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Album"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
     </Page.Resources>
 
     <Page.RenderTransform>
@@ -151,32 +156,28 @@
                         <ColumnDefinition Width="180"/>
                     </Grid.ColumnDefinitions>
                     <controls:BusyIndicator IsBusy="{Binding Tasks[artists].IsWorking}" Error="{Binding Tasks[artists].Error}">
-                        <ListBox Margin="0,0,0,0" Padding="24,5,0,0" ItemsSource="{Binding SelectedArtistAlbums}" ItemContainerStyle="{StaticResource GroupListBoxItemStyle}"
+                        <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Source={StaticResource SelectedArtistTracksCollection}}"
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                             HorizontalContentAlignment="Stretch"
-                             Style="{StaticResource CommonListBoxStyle}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid x:Name="RootGrid">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.85" Margin="0,0,0,5" 
-                                                   Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"
-                                                   Foreground="{DynamicResource ForegroundBrush}"/>
-                                        <ListBox Grid.Row="1" ItemsSource="{Binding Tracks}" Margin="-24,0,0,10"
-                                                 Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
-                                                 ItemTemplate="{StaticResource LocalAudioItemTemplate}"
-                                                 HorizontalContentAlignment="Stretch"
-                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                                            <i:Interaction.Behaviors>
-                                                <behaviours1:IgnoreMouseWheelBehavior/>
-                                            </i:Interaction.Behaviors>
-                                        </ListBox>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
+                             HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource LocalAudioItemTemplate}"
+                             Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                             VirtualizingPanel.IsVirtualizing="True"
+                             VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                            <ListBox.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" Margin="10,10,10,10"
+                                                       FontSize="14" FontFamily="Segoe UI" Opacity="0.85"
+                                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Margin" Value="10,0,15,0"></Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ListBox.GroupStyle>
                         </ListBox>
                     </controls:BusyIndicator>
 

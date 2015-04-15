@@ -126,8 +126,9 @@ namespace Meridian.Services.Music.Repositories
 
                     tracks.Add(track);
                     audioFile.Dispose();
+
+                    await Task.Delay(50);
                 }
-                await ServiceLocator.DataBaseService.SaveItems(tracks);
 
                 LoggingService.Log("Music scan finished. Found " + tracks.Count + " tracks");
 

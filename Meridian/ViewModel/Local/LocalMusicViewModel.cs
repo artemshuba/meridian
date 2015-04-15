@@ -23,6 +23,7 @@ namespace Meridian.ViewModel.Local
         private List<AudioArtist> _artists;
         private AudioArtist _selectedArtist;
         private List<AudioAlbum> _selectedArtistAlbums;
+        private List<LocalAudio> _selectedArtistTracks;
         private double _progress;
         private int _selectedTabIndex;
 
@@ -83,6 +84,12 @@ namespace Meridian.ViewModel.Local
         {
             get { return _selectedArtistAlbums; }
             set { Set(ref _selectedArtistAlbums, value); }
+        }
+
+        public List<LocalAudio> SelectedArtistTracks
+        {
+            get { return _selectedArtistTracks; }
+            set { Set(ref _selectedArtistTracks, value); }
         }
 
         public double Progress
@@ -300,6 +307,9 @@ namespace Meridian.ViewModel.Local
 
         private async Task LoadSelectedArtist()
         {
+            if (SelectedArtist == null)
+                return;
+
             OnTaskStarted("artists");
 
             try
@@ -323,6 +333,9 @@ namespace Meridian.ViewModel.Local
                     albums = new List<AudioAlbum>();
                 }
 
+                if (SelectedArtist == null)
+                    return;
+
                 var unsortedTracks = await ServiceLocator.LocalMusicService.GetArtistUnsortedTracks(SelectedArtist.Id);
                 if (!unsortedTracks.IsNullOrEmpty())
                 {
@@ -331,6 +344,7 @@ namespace Meridian.ViewModel.Local
                 }
 
                 SelectedArtistAlbums = albums;
+                SelectedArtistTracks = albums.SelectMany(a => a.Tracks).Cast<LocalAudio>().ToList();
             }
             catch (Exception ex)
             {
@@ -348,7 +362,7 @@ namespace Meridian.ViewModel.Local
                 LoadTracks();
             else if (message.RepositoryType == typeof(AudioAlbum))
                 LoadAlbums();
-            else if (message.RepositoryType == typeof(AudioArtist))
+            else if (message.RepositoryType == typeof (AudioArtist))
                 LoadArtists();
         }
     }

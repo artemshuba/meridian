@@ -183,7 +183,7 @@
                                 </StackPanel>
                             </ContentPresenter.Content>
                         </ContentPresenter>
-                        <ContentPresenter x:Name="errorcontent" Style="{TemplateBinding BusyContentStyle}">
+                        <ContentPresenter x:Name="errorcontent" Style="{TemplateBinding BusyContentStyle}" Visibility="Collapsed">
                             <ContentPresenter.Content>
                                 <TextBlock Text="{TemplateBinding Error}" Foreground="{TemplateBinding Foreground}" Opacity="0.7" TextWrapping="Wrap"/>
                             </ContentPresenter.Content>
