@@ -2,7 +2,6 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:chromeWindow="clr-namespace:Meridian.ChromeWindow"
         xmlns:converters="clr-namespace:Neptune.UI.Converters;assembly=Neptune.Desktop"
         xmlns:controls="clr-namespace:Meridian.Controls"
         xmlns:behaviours="clr-namespace:Meridian.Behaviours"
@@ -15,7 +14,8 @@
         WindowState="{Binding WindowState}" Left="{Binding WindowLeft}" Top="{Binding WindowTop}"
         Width="{Binding WindowWidth}" Height="{Binding WindowHeight}" Title="{Binding WindowTitle}"
         KeyUp="MainWindow_OnKeyUp"
-        MouseMove="MainWindow_OnMouseMove" Loaded="MainWindow_OnLoaded" Closing="MainWindow_OnClosing">
+        MouseMove="MainWindow_OnMouseMove" Loaded="MainWindow_OnLoaded" Closing="MainWindow_OnClosing"
+        StateChanged="MainWindow_OnStateChanged">
     <Window.Resources>
         <converters:BooleanToObjectConverter x:Key="WindowMarginConverter" TrueObject="6,6,6,0" FalseObject="0"/>
 
@@ -64,9 +64,15 @@
 
         <converters1:MainMenuGroupStyleSelector x:Key="MainMenuGroupStyleSelector" NormalGroupStyle="{StaticResource NormalGroupStyle}" EmptyHeaderGroupStyle="{StaticResource EmptyHeaderGroupStyle}"/>
     </Window.Resources>
-    <i:Interaction.Behaviors>
-        <chromeWindow:ChromeWindowBehaviour/>
-    </i:Interaction.Behaviors>
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="0" ResizeBorderThickness="7" CaptionHeight="0" CornerRadius="0"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo x:Name="Taskbar">
             <TaskbarItemInfo.ThumbButtonInfos>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
@@ -80,6 +81,15 @@ namespace Meridian.View.Compact
                 ViewModelLocator.Main.Volume += 5;
                 if (ViewModelLocator.Main.Volume > 100)
                     ViewModelLocator.Main.Volume = 100;
+            }
+        }
+
+        private void CompactLandscapeView_OnStateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Minimized && Domain.Settings.Instance.EnableTrayIcon)
+            {
+                Hide();
+                Visibility = Visibility.Collapsed;
             }
         }
     }

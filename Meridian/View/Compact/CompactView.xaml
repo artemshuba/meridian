@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:localization="clr-namespace:Meridian.Resources.Localization"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:chromeWindow="clr-namespace:Meridian.ChromeWindow"
         xmlns:controls="clr-namespace:Meridian.Controls"
         xmlns:converters="clr-namespace:Meridian.Converters"
         xmlns:behaviours="clr-namespace:Meridian.Behaviours"
@@ -11,10 +10,17 @@
         Title="{Binding Main.WindowTitle, Source={StaticResource Locator}}" Height="268" Width="160"
         Background="{DynamicResource MainBackgroundBrush}" ShowInTaskbar="{Binding Main.ShowTrayIcon, Source={StaticResource Locator}, Converter={StaticResource InvertBoolConverter}}"
         DataContext="{Binding Main, Source={StaticResource Locator}}" Topmost="{Binding IsChecked, ElementName=pinButton}" ResizeMode="NoResize"
-        MouseMove="CompactView_OnMouseMove" Loaded="CompactView_OnLoaded">
-    <i:Interaction.Behaviors>
-        <chromeWindow:ChromeWindowBehaviour/>
-    </i:Interaction.Behaviors>
+        MouseMove="CompactView_OnMouseMove" Loaded="CompactView_OnLoaded"
+        StateChanged="CompactView_OnStateChanged">
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="0" ResizeBorderThickness="7" CaptionHeight="0" CornerRadius="0"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo x:Name="Taskbar">
             <TaskbarItemInfo.ThumbButtonInfos>

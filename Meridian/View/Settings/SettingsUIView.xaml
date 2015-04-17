@@ -136,7 +136,7 @@
                 <ComboBox Width="200" Style="{StaticResource CommonComboBoxStyle}" Margin="0,3,0,0" HorizontalAlignment="Left" ItemsSource="{Binding Engines}" 
                       SelectedValue="{Binding SelectedEngine, Mode=TwoWay}" DisplayMemberPath="Title"/>
                 <CheckBox IsEnabled="{Binding CanUseHttps}" IsChecked="{Binding UseHttps, Mode=TwoWay}" Content="{x:Static localization:MainResources.SettingsUseHttps}"
-                          Margin="0,5,0,0"/>
+                          Margin="0,5,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
             </StackPanel>
         </ScrollViewer>
         

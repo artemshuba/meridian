@@ -169,7 +169,14 @@ namespace Meridian
         {
             foreach (Window window in Windows)
             {
+                if (window.Visibility == Visibility.Collapsed)
+                {
+                    window.Visibility = Visibility.Visible;
+                    window.Show();
+                }
+
                 window.Activate();
+
                 if (window.WindowState == WindowState.Minimized)
                     window.WindowState = WindowState.Normal;
             }

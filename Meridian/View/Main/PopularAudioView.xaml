@@ -67,7 +67,7 @@
                     </ListBox>
 
                     <CheckBox Grid.Row="1" Style="{StaticResource CommonCheckBoxStyle}" Content="{x:Static localization:MainResources.PopularForeignOnly}" Margin="12,10,12,10"
-                              IsChecked="{Binding ForeignOnly, Mode=TwoWay}"/>
+                              IsChecked="{Binding ForeignOnly, Mode=TwoWay}" Foreground="{DynamicResource ForegroundBrush}"/>
                 </Grid>
             </layout:TwoColumnPageLayout.RightContent>
         </layout:TwoColumnPageLayout>
