@@ -5,6 +5,7 @@
     var pause = document.getElementById("pause");
     var prev = document.getElementById("prev");
     var next = document.getElementById("next");
+    var playerControls = document.getElementById("playerControls");
 
     var currentAudioTitle = document.getElementById("currentAudioTitle");
     var currentAudioArtist = document.getElementById("currentAudioArtist");
@@ -103,11 +104,9 @@
 
     function setIsPlaying(isPlaying) {
         if (isPlaying) {
-            play.setAttribute("hidden", "true");
-            pause.removeAttribute("hidden");
+            playerControls.className = 'state-play';
         } else {
-            pause.setAttribute("hidden", "true");
-            play.removeAttribute("hidden");
+            playerControls.className = 'state-pause';
         }
     }
 
