@@ -1047,7 +1047,15 @@ namespace Meridian.ViewModel
                         return;
                     }
 
-                    TrackImage = new BitmapImage(imageUri);
+                    //http://stackoverflow.com/questions/11326528/error-hresult-0x88982f72-when-trying-streaming-image-file
+                    var bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+                    bi.UriSource = imageUri;
+                    bi.EndInit();
+
+
+                    TrackImage = bi;
                 }
                 catch (Exception ex)
                 {
