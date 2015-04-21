@@ -17,7 +17,7 @@
             <Grid>
                 <Rectangle Fill="{DynamicResource AccentBrush}" Opacity="0.6"/>
                 <Image Source="/Resources/Images/cover_default.png" Margin="50" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <controls:ImageTransitionControl Source="{Binding TrackImage}"/>
+                <controls:ImageTransitionControl Source="{Binding TrackImage}" HorizontalContentAlignment="Center"/>
             </Grid>
             <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="0,0,0,0">
                 <ToggleButton Margin="0,0,0,0" Width="32" Height="32" IsChecked="{Binding Main.EnableStatusBroadcasting, Mode=TwoWay, Source={StaticResource Locator}}" Style="{StaticResource VkStatusButtonStyle}"

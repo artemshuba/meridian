@@ -214,6 +214,44 @@ namespace Meridian.Services
             if (string.IsNullOrEmpty(artist) || string.IsNullOrEmpty(title))
                 return null;
 
+            try
+            {
+                var results = await _xboxMusic.Find(artist + " - " + title, getArtists: false);
+                string imageUrl = null;
+                if (results != null)
+                {
+                    if (results.Tracks != null)
+                    {
+                        var resultTrack = results.Tracks.Items.FirstOrDefault();
+                        if (resultTrack != null && !string.IsNullOrEmpty(resultTrack.ImageUrl))
+                        {
+                            imageUrl = resultTrack.ImageUrl;
+                        }
+                    }
+
+                    if (imageUrl == null && results.Albums != null)
+                    {
+                        var resultAlbum = results.Albums.Items.FirstOrDefault();
+                        if (resultAlbum != null && !string.IsNullOrEmpty(resultAlbum.ImageUrl))
+                        {
+                            imageUrl = resultAlbum.ImageUrl;
+                        }
+                    }
+                }
+
+                if (imageUrl != null)
+                {
+                    var httpClient = new HttpClient();
+                    var response = await httpClient.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead);
+                    if (response.IsSuccessStatusCode)
+                        return new Uri(imageUrl);
+                }
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Xbox Music: Artist " + artist + " not found.");
+            }
+
             var info = await _lastFm.Track.GetInfo(title, artist);
             if (info == null || info.ImageExtraLarge == null || string.IsNullOrEmpty(info.ImageExtraLarge))
                 return null;
@@ -443,7 +481,7 @@ namespace Meridian.Services
                         //result.Add(post);
                     }
 
-                    return new NewsItemsResponse<Audio>(result) { NextFrom = vkNews.NextFrom};
+                    return new NewsItemsResponse<Audio>(result) { NextFrom = vkNews.NextFrom };
                 }
             }
             catch (VkAccessDeniedException ex)
