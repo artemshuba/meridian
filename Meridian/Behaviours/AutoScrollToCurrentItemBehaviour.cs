@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 using System.Windows.Interactivity;
 using GalaSoft.MvvmLight.Messaging;
 using Meridian.Services;
@@ -23,10 +24,13 @@ namespace Meridian.Behaviours
 
         private void OnCurrentAudioChanged(CurrentAudioChangedMessage message)
         {
-            if (AssociatedObject != null && message.NewAudio != null)
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                AssociatedObject.ScrollIntoView(message.NewAudio);
-            }
+                if (AssociatedObject != null && message.NewAudio != null)
+                {
+                    AssociatedObject.ScrollIntoView(message.NewAudio);
+                }
+            }));
         }
     }
 }

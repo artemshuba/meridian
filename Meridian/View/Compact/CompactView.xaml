@@ -158,9 +158,9 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Rectangle Fill="{DynamicResource AccentBrush}" />
+                        <Rectangle Fill="{DynamicResource AccentBrush}" Opacity="0.6"/>
                         <Image Source="/Resources/Images/cover_default.png" Margin="35" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <controls:ImageTransitionControl Source="{Binding Main.TrackImage, Source={StaticResource Locator}}" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <controls:ImageTransitionControl Source="{Binding Main.TrackImage, Source={StaticResource Locator}}" RenderOptions.BitmapScalingMode="HighQuality" HorizontalContentAlignment="Center"/>
                     </Grid>
                 </Border>
 
