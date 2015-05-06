@@ -83,7 +83,7 @@ namespace Meridian.Services.Music
                             track.AlbumId = Md5Helper.Md5(track.Artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
                             track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
                             if (!albums.ContainsKey(track.AlbumId))
-                                albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = track.Artist, Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year });
+                                albums.Add(track.AlbumId, new AudioAlbum() { Id = track.AlbumId, Artist = track.Artist, ArtistId = !string.IsNullOrEmpty(track.Artist) ? Md5Helper.Md5(track.Artist.Trim().ToLower()) : null, Title = StringHelper.ToUtf8(audioFile.Tag.Album), Year = (int)audioFile.Tag.Year });
                             else
                             {
                                 if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)

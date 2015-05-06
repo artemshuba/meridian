@@ -98,10 +98,11 @@ namespace Meridian.Services
         public async Task<List<AudioAlbum>> GetLocalArtistAlbums(string artistId)
         {
             var db = new SQLiteAsyncConnection(_dbPath);
+            var a = await db.Table<AudioAlbum>().ToListAsync();
 
-            var tracks = await db.Table<AudioAlbum>().Where(album => album.ArtistId == artistId).ToListAsync();
+            var albums = await db.Table<AudioAlbum>().Where(album => album.ArtistId == artistId).ToListAsync();
 
-            return tracks;
+            return albums;
         }
 
         public async Task<List<LocalAudio>> GetLocalArtistUnsortedTracks(string artistId)
