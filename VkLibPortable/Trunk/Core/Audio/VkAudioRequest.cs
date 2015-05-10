@@ -453,6 +453,9 @@ namespace VkLib.Core.Audio
 
             if (!string.IsNullOrEmpty(text))
                 parameters.Add("text", text);
+                
+            else if (string.IsNullOrEmpty(text))
+                parameters.Add("text", string.Empty);
 
             if (noSearch)
                 parameters.Add("no_search", "1");
