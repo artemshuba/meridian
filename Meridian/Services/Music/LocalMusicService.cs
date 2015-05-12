@@ -68,6 +68,7 @@ namespace Meridian.Services.Music
                             track.Title = StringHelper.ToUtf8(audioFile.Tag.Title);
                         else
                             track.Title = Path.GetFileNameWithoutExtension(filePath);
+
                         var artist = audioFile.Tag.FirstPerformer;
                         if (string.IsNullOrEmpty(artist))
                             artist = audioFile.Tag.FirstAlbumArtist;
@@ -75,6 +76,9 @@ namespace Meridian.Services.Music
                         track.Artist = StringHelper.ToUtf8(artist);
                         if (!string.IsNullOrEmpty(track.Artist))
                             track.Artist = track.Artist.Trim();
+                        else
+                            track.Artist = string.Empty;
+
                         track.Duration = audioFile.Properties.Duration;
                         track.Source = filePath;
 

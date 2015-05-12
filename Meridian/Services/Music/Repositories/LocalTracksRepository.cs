@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -113,14 +114,15 @@ namespace Meridian.Services.Music.Repositories
                         track.Artist = track.Artist.Trim();
                         track.ArtistId = Md5Helper.Md5(track.Artist.Trim().ToLower());
                     }
+                    else
+                        track.Artist = string.Empty;
 
                     track.Duration = audioFile.Properties.Duration;
                     track.Source = filePath;
 
                     if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
                     {
-                        track.AlbumId =
-                            Md5Helper.Md5(track.Artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
+                        track.AlbumId = Md5Helper.Md5(track.Artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
                         track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
                     }
 
