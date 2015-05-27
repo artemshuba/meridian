@@ -107,7 +107,7 @@ namespace Meridian.ViewModel.Flyouts
 
             try
             {
-                var lyricsId = await DataService.EditAudio(_track.Id.ToString(), _track.OwnerId.ToString(), Title, Artist, _lyricsChanged ? Lyrics : null);
+                var lyricsId = await DataService.EditAudio(_track.Id, _track.OwnerId.ToString(), Title, Artist, Lyrics);
                 if (lyricsId != null)
                 {
                     _track.Title = Title;

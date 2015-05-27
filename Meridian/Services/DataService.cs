@@ -396,7 +396,7 @@ namespace Meridian.Services
                     }
 
                     if (audioIds.Count == 0)
-                        return null;
+                        return new NewsItemsResponse<Audio>(new List<Audio>());
 
                     var vkAudios = new List<VkLib.Core.Audio.VkAudio>();
                     if (audioIds.Count >= 100)
@@ -406,7 +406,7 @@ namespace Meridian.Services
                         while (i + j < audioIds.Count)
                         {
                             if (token.IsCancellationRequested)
-                                return null;
+                                return new NewsItemsResponse<Audio>(new List<Audio>());
 
                             var x = await _vkontakte.Audio.GetById(audioIds.GetRange(i, j));
                             if (x != null)
@@ -424,7 +424,7 @@ namespace Meridian.Services
                         if (token.IsCancellationRequested)
                         {
                             Debug.WriteLine("News audio cancelled");
-                            return null;
+                            return new NewsItemsResponse<Audio>(new List<Audio>());
                         }
 
                         var a = await _vkontakte.Audio.GetById(audioIds);
