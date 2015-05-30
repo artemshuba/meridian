@@ -17,7 +17,7 @@
         <Style TargetType="Window">
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
-                    <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="0" ResizeBorderThickness="7" CaptionHeight="0" CornerRadius="0"/>
+                    <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="0,0,0,1" ResizeBorderThickness="7" CaptionHeight="0" CornerRadius="0"/>
                 </Setter.Value>
             </Setter>
         </Style>
