@@ -39,7 +39,7 @@ namespace Meridian
 
             if (Settings.Instance.SendStats)
             {
-                YandexMetrica.Start(19168); //Yandex Metrica
+                YandexMetrica.Activate("60fb8ba9-ab3c-4ee8-81ac-559c8aeb305e"); //Yandex Metrica
             }
 
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Instance.Language);

@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Meridian")]
-[assembly: AssemblyCopyright("Copyright © Stealth 2015")]
+[assembly: AssemblyCopyright("Copyright © Artem Shuba 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("5.2.770.0")]
-[assembly: AssemblyFileVersion("5.2.770.0")]
+[assembly: AssemblyVersion("5.2.773.0")]
+[assembly: AssemblyFileVersion("5.2.773.0")]

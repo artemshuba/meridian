@@ -172,6 +172,6 @@
                 <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}"/>
             </StackPanel>
         </Grid>
-        <TextBlock FontWeight="Normal" Text="Copyright © Stealth 2015" Foreground="{DynamicResource ForegroundBrush}" FontSize="10" VerticalAlignment="Bottom" Opacity="0.5" HorizontalAlignment="Center" Margin="0,0,0,7"/>
+        <TextBlock FontWeight="Normal" Text="Copyright © Artem Shuba 2016" Foreground="{DynamicResource ForegroundBrush}" FontSize="10" VerticalAlignment="Bottom" Opacity="0.5" HorizontalAlignment="Center" Margin="0,0,0,7"/>
     </Grid>
 </controls:PageBase>

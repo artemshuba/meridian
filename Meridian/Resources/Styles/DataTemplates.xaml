@@ -26,7 +26,7 @@
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuLyrics}" IsEnabled="{Binding HasLyrics}" Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuAddToAlbum}" Command="{Binding Main.AddToAlbumCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShowArtistInfo}" Command="{Binding Main.ShowArtistInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
@@ -106,7 +106,7 @@
             </Button.Triggers>
             <Button.ContextMenu>
                 <ContextMenu Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShowArtistInfo}" Command="{Binding Main.ShowArtistInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
@@ -181,7 +181,7 @@
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShare}" Command="{Binding Main.ShareAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuLyrics}" IsEnabled="{Binding HasLyrics}" Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuRemoveFromNowPlaying}" Command="{Binding Main.RemoveFromNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
@@ -249,7 +249,7 @@
             </Button.Triggers>
             <Button.ContextMenu>
                 <ContextMenu Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShowArtistInfo}" Command="{Binding Main.ShowArtistInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
@@ -312,8 +312,8 @@
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuAdd}" Visibility="{Binding IsAddedByCurrentUser, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" Command="{Binding Main.AddRemoveAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuRemove}" Visibility="{Binding IsAddedByCurrentUser, Converter={StaticResource BoolToVisibilityConverter}}" Command="{Binding Main.AddRemoveAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
-                    <Separator Style="{StaticResource CommonSeparatorStyle}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <Separator Style="{StaticResource CommonSeparatorStyle}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuRemoveFromNowPlaying}" Command="{Binding Main.RemoveFromNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuPlayNext}" Command="{Binding Main.PlayAudioNextCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuCopyInfo}" Command="{Binding Main.CopyInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
@@ -358,7 +358,7 @@
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShare}" Command="{Binding Main.ShareAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuLyrics}" IsEnabled="{Binding HasLyrics}" Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding Main.AddToNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
