@@ -7,6 +7,9 @@ using System.Windows.Navigation;
 using Meridian.Controls;
 using Meridian.ViewModel;
 using Neptune.UI.Extensions;
+using Microsoft.Win32;
+using System.IO;
+using System.Reflection;
 
 namespace Meridian.View.Flyouts
 {
@@ -19,9 +22,23 @@ namespace Meridian.View.Flyouts
 
         public WebValidationView(Uri redirectUri)
         {
+            EnableIE11Mode();
+
             InitializeComponent();
 
             _redirectUri = redirectUri;
+        }
+
+        private void EnableIE11Mode()
+        {
+            //force webbrowser to use IE9 engine instead of default IE7
+            var browserEmulationKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION", true);
+            var appName = Path.GetFileName(Assembly.GetExecutingAssembly().Location);
+            var v = browserEmulationKey.GetValue(appName);
+            if (v == null || (int)v != 0x270f)
+            {
+                browserEmulationKey.SetValue(appName, 0x270f);
+            }
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -49,12 +66,16 @@ namespace Meridian.View.Flyouts
 
         private void Browser_OnNavigated(object sender, NavigationEventArgs e)
         {
+            Debug.WriteLine("Navigated " + e.Uri);
+
             ProgressBar.Visibility = Visibility.Collapsed;
             Browser.Visibility = Visibility.Visible;
         }
 
         private void Browser_OnNavigating(object sender, NavigatingCancelEventArgs e)
         {
+            Debug.WriteLine("Navigating " + e.Uri);
+
             ProgressBar.Visibility = Visibility.Visible;
             Browser.Visibility = Visibility.Collapsed;
 
