@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +16,7 @@ using Meridian.Controls;
 using Meridian.Helpers;
 using Meridian.Model;
 using Meridian.Model.Settings;
+using Meridian.RemotePlay;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.Services.Media.Core;
@@ -26,8 +29,9 @@ namespace Meridian.ViewModel
     {
         private readonly Dictionary<string, string> _menuItems = new Dictionary<string, string>()
         {
-            {MainResources.SettingsMenuUI, "/View/Settings/SettingsUIView.xaml"},
+            {MainResources.SettingsMenuGeneral, "/View/Settings/SettingsUIView.xaml"},
             {MainResources.SettingsMenuHotkeys, "/View/Settings/SettingsHotkeysView.xaml"},
+            {MainResources.SettingsRemotePlay, "/View/Settings/SettingsRemotePlayView.xaml"},
             {MainResources.SettingsMenuAccounts, "/View/Settings/SettingsAccountsView.xaml"},
             {MainResources.SettingsMenuUpdates, "/View/Settings/SettingsUpdatesView.xaml"},
             {MainResources.SettingsMenuAbout, "/View/Settings/SettingsAboutView.xaml"}
@@ -35,7 +39,7 @@ namespace Meridian.ViewModel
 
         private readonly List<string> _themes = new List<string>()
         {
-            "Light", "Dark"
+            "Light", "Dark", "Graphite", "Accent"
         };
 
         private readonly List<ColorScheme> _colors = new List<ColorScheme>()
@@ -60,7 +64,7 @@ namespace Meridian.ViewModel
         private readonly List<SettingsEngine> _engines = new List<SettingsEngine>()
                 {
                     new SettingsEngine() { Title = "Windows Media Player", Engine = MediaEngine.Wmp },
-                    new SettingsEngine() { Title = "NAudio (experimental)", Engine = MediaEngine.NAudio }
+                    new SettingsEngine() { Title = "NAudio", Engine = MediaEngine.NAudio }
                 };
 
         private readonly List<SettingsHotkey> _hotkeys = new List<SettingsHotkey>();
@@ -79,6 +83,10 @@ namespace Meridian.ViewModel
         private SettingsLanguage _selectedLanguage;
         private string _cacheSize;
         private SettingsEngine _selectedEngine;
+        private string _selectedRemotePlayAddress;
+        private string _remotePlayPort;
+        private bool _enableRemotePlay;
+        private bool _useHttps;
 
         #region Commands
 
@@ -131,8 +139,8 @@ namespace Meridian.ViewModel
                 if (Set(ref _selectedTheme, value))
                 {
                     CanSave = true;
-                    if (value != Domain.Settings.Instance.AccentColor)
-                        RestartRequired = true;
+                    //if (value != Domain.Settings.Instance.AccentColor)
+                    //    RestartRequired = true;
                 }
             }
         }
@@ -150,8 +158,6 @@ namespace Meridian.ViewModel
                 if (Set(ref _selectedColorScheme, value))
                 {
                     CanSave = true;
-                    if (value.Name != Domain.Settings.Instance.AccentColor)
-                        RestartRequired = true;
                 }
             }
         }
@@ -316,6 +322,85 @@ namespace Meridian.ViewModel
 
                     if (value.Engine != Domain.Settings.Instance.MediaEngine)
                         RestartRequired = true;
+
+                    if (value.Engine == MediaEngine.Wmp)
+                        UseHttps = false;
+                    RaisePropertyChanged("CanUseHttps");
+                }
+            }
+        }
+
+        public bool EnableRemotePlay
+        {
+            get { return _enableRemotePlay; }
+            set
+            {
+                if (Set(ref _enableRemotePlay, value))
+                {
+                    CanSave = true;
+                }
+            }
+        }
+
+        public List<string> RemotePlayAddresses
+        {
+            get { return NetworkHelper.GetLocalIpAddresses(); }
+        }
+
+        public string SelectedRemotePlayAddress
+        {
+            get { return _selectedRemotePlayAddress; }
+            set
+            {
+                if (Set(ref _selectedRemotePlayAddress, value))
+                {
+                    CanSave = true;
+                    RaisePropertyChanged("RemotePlayHelp");
+                }
+            }
+        }
+
+
+        public string RemotePlayPort
+        {
+            get { return _remotePlayPort; }
+            set
+            {
+                if (Set(ref _remotePlayPort, value))
+                {
+                    CanSave = true;
+                    RaisePropertyChanged("RemotePlayHelp");
+                }
+            }
+        }
+
+        public string RemotePlayHelp
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_selectedRemotePlayAddress))
+                    return string.Format(MainResources.SettingsRemotePlayHelp,
+                        "http://" + _selectedRemotePlayAddress + ":" + _remotePlayPort);
+
+                return null;
+            }
+        }
+
+        public bool CanUseHttps
+        {
+            //https currently works only in NAudio
+            get { return SelectedEngine.Engine == MediaEngine.NAudio; }
+        }
+
+        public bool UseHttps
+        {
+            get { return _useHttps;}
+            set
+            {
+                if (Set(ref _useHttps, value))
+                {
+                    CanSave = true;
+                    RestartRequired = true;
                 }
             }
         }
@@ -335,6 +420,18 @@ namespace Meridian.ViewModel
             _downloadArtistArt = Domain.Settings.Instance.DownloadArtistArt;
             _downloadAlbumArt = Domain.Settings.Instance.DownloadAlbumArt;
             _selectedEngine = Engines.FirstOrDefault(e => e.Engine == Domain.Settings.Instance.MediaEngine);
+            _enableRemotePlay = Domain.Settings.Instance.EnableRemotePlay;
+            _remotePlayPort = Domain.Settings.Instance.RemotePlayPort.ToString();
+            _useHttps = Domain.Settings.Instance.UseHttps;
+
+            if (string.IsNullOrEmpty(Domain.Settings.Instance.RemotePlayAddress))
+            {
+                var addresses = NetworkHelper.GetLocalIpAddresses();
+                if (addresses != null && addresses.Count > 0)
+                    _selectedRemotePlayAddress = addresses.First();
+            }
+            else
+                _selectedRemotePlayAddress = Domain.Settings.Instance.RemotePlayAddress;
 
             var lang = _languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
             if (lang != null)
@@ -537,6 +634,38 @@ namespace Meridian.ViewModel
 
         private void SaveSettings()
         {
+            switch (SelectedTheme)
+            {
+                case "Light":
+                case "Dark":
+                case "Graphite":
+                case "Accent":
+                    Application.Current.Resources.MergedDictionaries[1].Source = new Uri(string.Format("/Resources/Themes/{0}.xaml", SelectedTheme), UriKind.Relative);
+                    break;
+
+                default:
+                    Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Resources/Themes/Light.xaml", UriKind.Relative);
+                    break;
+            }
+
+            switch (SelectedColorScheme.Name)
+            {
+                case "Red":
+                case "Emerald":
+                case "Magenta":
+                case "Mango":
+                case "Sea":
+                case "Sky":
+                case "Purple":
+                case "Pink":
+                    Application.Current.Resources.MergedDictionaries[0].Source = new Uri(string.Format("/Resources/Themes/Accents/{0}.xaml", SelectedColorScheme.Name), UriKind.Relative);
+                    break;
+
+                default:
+                    Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Resources/Themes/Accents/Blue.xaml", UriKind.Relative);
+                    break;
+            }
+
             Domain.Settings.Instance.AccentColor = SelectedColorScheme.Name;
 
             Domain.Settings.Instance.Theme = SelectedTheme;
@@ -561,6 +690,8 @@ namespace Meridian.ViewModel
 
             Domain.Settings.Instance.MediaEngine = SelectedEngine.Engine;
 
+            Domain.Settings.Instance.UseHttps = UseHttps;
+
             if (BlurBackground)
             {
                 ((MainWindow)Application.Current.MainWindow).BackgroundArtControl.Effect = new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35 };
@@ -568,6 +699,19 @@ namespace Meridian.ViewModel
             else
             {
                 ((MainWindow)Application.Current.MainWindow).BackgroundArtControl.Effect = null;
+            }
+
+            Domain.Settings.Instance.EnableRemotePlay = _enableRemotePlay;
+            Domain.Settings.Instance.RemotePlayAddress = _selectedRemotePlayAddress;
+            Domain.Settings.Instance.RemotePlayPort = int.Parse(_remotePlayPort);
+
+            if (EnableRemotePlay)
+            {
+                RemotePlayService.Instance.Start();
+            }
+            else
+            {
+                RemotePlayService.Instance.Stop();
             }
 
             foreach (var settingsHotkey in _hotkeys)

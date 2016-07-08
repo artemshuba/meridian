@@ -96,6 +96,9 @@ namespace Meridian
             NotificationService.Initialize(NotificationControl);
 
             BackgroundArtControl.Effect = Settings.Instance.BlurBackground ? new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35} : null;
+
+            if (Settings.Instance.EnableTrayIcon)
+                WindowStyle = WindowStyle.ToolWindow;
         }
 
         void RootFrame_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
@@ -123,13 +126,13 @@ namespace Meridian
 
         private void ResizeGripMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && Application.Current.MainWindow.WindowState != WindowState.Maximized)
-            {
-                NativeMethods.SizeWindow(_windowHandle);
+            //if (e.LeftButton == MouseButtonState.Pressed && Application.Current.MainWindow.WindowState != WindowState.Maximized)
+            //{
+            //    NativeMethods.SizeWindow(_windowHandle);
 
-                ViewModelLocator.Main.WindowWidth = Width;
-                ViewModelLocator.Main.WindowHeight = Height;
-            }
+            //    ViewModelLocator.Main.WindowWidth = Width;
+            //    ViewModelLocator.Main.WindowHeight = Height;
+            //}
         }
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
@@ -139,10 +142,10 @@ namespace Meridian
 
         private void SearchBox_OnKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && !string.IsNullOrWhiteSpace(SearchBox.Text))
-            {
-                ViewModelLocator.Main.SearchCommand.Execute(SearchBox.Text);
-            }
+            //if (e.Key == Key.Enter && !string.IsNullOrWhiteSpace(SearchBox.Text))
+            //{
+            //    ViewModelLocator.Main.SearchCommand.Execute(SearchBox.Text);
+            //}
         }
 
         private void MainWindow_OnKeyUp(object sender, KeyEventArgs e)
@@ -160,6 +163,15 @@ namespace Meridian
             var flyout = new FlyoutControl();
             flyout.FlyoutContent = new TellFriendsRequestView();
             flyout.Show();
+        }
+
+        private void MainWindow_OnStateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Minimized && Settings.Instance.EnableTrayIcon)
+            {
+                Hide();
+                Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

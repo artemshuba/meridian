@@ -233,7 +233,29 @@ namespace Meridian.Services
 
                 if (vkAudio != null)
                 {
+                    vkAudio.IsPlaying = true;
+                    if (_playlist != null)
+                    {
+                        var playlistTrackIndex = _playlist.IndexOf(track);
+                        if (playlistTrackIndex >= 0)
+                        {
+                            var playlistTrack = (VkAudio) _playlist[_playlist.IndexOf(track)];
+                            playlistTrack.Id = vkAudio.Id;
+                            playlistTrack.Source = vkAudio.Source;
+                            playlistTrack.OwnerId = vkAudio.OwnerId;
+                            playlistTrack.IsAddedByCurrentUser = vkAudio.IsAddedByCurrentUser;
+                            playlistTrack.AlbumId = vkAudio.AlbumId;
+                            playlistTrack.Title = vkAudio.Title;
+                            playlistTrack.Artist = vkAudio.Artist;
+                            playlistTrack.Duration = vkAudio.Duration;
+                            playlistTrack.GenreId = vkAudio.GenreId;
+                            playlistTrack.LyricsId = vkAudio.LyricsId;
+                            //_playlist[_playlist.IndexOf(track)] = vkAudio; //to fix radio vk scrobbling
+                        }
+                    }
+
                     track = vkAudio;
+                    //_currentAudio = track;
                     _playFailsCount = 0;
                 }
                 else
@@ -264,7 +286,8 @@ namespace Meridian.Services
 
             //look like MediaElement doen't work with https, temporary hack
             var url = track.Source;
-            url = url.Replace("https://", "http://");
+            if (!Settings.Instance.UseHttps)
+                url = url.Replace("https://", "http://");
 
             MediaPlayer.Source = new Uri(url);
             MediaPlayer.Play();
@@ -276,8 +299,9 @@ namespace Meridian.Services
         {
             if (MediaPlayer.Source == null && CurrentAudio != null)
             {
-                MediaPlayer.Source = new Uri(CurrentAudio.Source);
-                CurrentAudio.IsPlaying = true;
+                Play(CurrentAudio);
+                //MediaPlayer.Source = new Uri(CurrentAudio.Source);
+                //CurrentAudio.IsPlaying = true;
             }
 
             MediaPlayer.Play();
@@ -463,14 +487,22 @@ namespace Meridian.Services
                     var o = JObject.Parse(json);
                     if (o["currentAudio"] != null)
                     {
-                        var audio = JsonConvert.DeserializeObject<Audio>(o["currentAudio"].ToString());
+                        var audio = JsonConvert.DeserializeObject<Audio>(o["currentAudio"].ToString(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
                         Application.Current.Dispatcher.Invoke(() => CurrentAudio = audio);
                     }
 
                     if (o["currentPlaylist"] != null)
                     {
-                        var playlist = JsonConvert.DeserializeObject<List<object>>(o["currentPlaylist"].ToString(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects});
-                        Application.Current.Dispatcher.Invoke(() => SetCurrentPlaylist(playlist.OfType<Audio>()));
+                        var playlist = JsonConvert.DeserializeObject<List<object>>(o["currentPlaylist"].ToString(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
+                        if (playlist != null)
+                            Application.Current.Dispatcher.Invoke(() => SetCurrentPlaylist(playlist.OfType<Audio>()));
+                    }
+
+                    if (o["currentRadio"] != null && o["currentRadio"]["session"] != null)
+                    {
+                        var session = o["currentRadio"]["session"].Value<string>();
+                        var radio = JsonConvert.DeserializeObject<RadioStation>(o["currentRadio"]["radio"].ToString());
+                        RadioService.RestoreSession(session, radio);
                     }
                 }
                 catch (Exception ex)
@@ -487,10 +519,15 @@ namespace Meridian.Services
                 var o = new
                 {
                     currentAudio = CurrentAudio,
-                    currentPlaylist = Playlist
+                    currentPlaylist = Playlist,
+                    currentRadio = new
+                    {
+                        session = RadioService.SessionId,
+                        radio = RadioService.CurrentRadio
+                    }
                 };
 
-                var json = JsonConvert.SerializeObject(o, new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.Objects});
+                var json = JsonConvert.SerializeObject(o, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
                 File.WriteAllText("currentPlaylist.js", json);
             }
             catch (Exception ex)
@@ -532,6 +569,10 @@ namespace Meridian.Services
             try
             {
                 Messenger.Default.Send(new PlayerPositionChangedMessage() { NewPosition = MediaPlayer.Position });
+
+                //possible fix for not switching tracks issue
+                if (MediaPlayer.Position > MediaPlayer.Duration)
+                    MediaPlayerOnMediaEnded(MediaPlayer, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -555,7 +596,7 @@ namespace Meridian.Services
         private static void MediaPlayerOnMediaFailed(object sender, Exception e)
         {
             if (CurrentAudio != null)
-                LoggingService.Log("Media failed " + CurrentAudio.Artist + " - " + CurrentAudio.Title + ". " + e);
+                LoggingService.Log("Media failed " + CurrentAudio.Id + " " + CurrentAudio.Artist + " - " + CurrentAudio.Title + ". " + e);
 
             if (e is InvalidWmpVersionException)
             {
@@ -567,7 +608,7 @@ namespace Meridian.Services
 
             if (e is COMException)
             {
-                var com = (COMException) e;
+                var com = (COMException)e;
                 if ((uint)com.ErrorCode == 0xC00D0035) //not found or connection problem
                 {
                     var flyout = new FlyoutControl();
@@ -581,10 +622,18 @@ namespace Meridian.Services
             _playFailsCount++;
             if (_playFailsCount < 5)
             {
-                if (RadioService.CurrentRadio == null)
-                    Next();
+                if (e is FileNotFoundException && CurrentAudio is VkAudio)
+                {
+                    CurrentAudio.Source = null;
+                    PlayInternal(CurrentAudio, _cancellationToken.Token);
+                }
                 else
-                    RadioService.InvalidateCurrentSong();
+                {
+                    if (RadioService.CurrentRadio == null)
+                        Next();
+                    else
+                        RadioService.InvalidateCurrentSong();
+                }
             }
         }
 

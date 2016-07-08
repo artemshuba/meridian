@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:localization="clr-namespace:Meridian.Resources.Localization"
-                    xmlns:converters="clr-namespace:Neptune.UI.Converters;assembly=Neptune.UI.Desktop">
+                    xmlns:converters="clr-namespace:Neptune.UI.Converters;assembly=Neptune.Desktop">
 
     <converters:BooleanToObjectConverter x:Key="LikeDislikeTooltipConverter" FalseObject="{x:Static localization:MainResources.ContextMenuAdd}"
                                          TrueObject="{x:Static localization:MainResources.ContextMenuRemove}"/>
@@ -26,7 +26,7 @@
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuLyrics}" IsEnabled="{Binding HasLyrics}" Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuAddToAlbum}" Command="{Binding Main.AddToAlbumCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShowArtistInfo}" Command="{Binding Main.ShowArtistInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
@@ -42,24 +42,25 @@
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+
+                <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Title}" Margin="0,0,5,0"/>
                 <Button Style="{StaticResource SimpleButtonStyle}" Grid.Column="2" HorizontalAlignment="Left" Opacity="0.6" Margin="0,0,0,0" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}"
                         CommandParameter="{Binding Artist}">
-                     <TextBlock x:Name="Artist" Text="{Binding Artist}" Foreground="{StaticResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                    <TextBlock x:Name="Artist" Text="{Binding Artist}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Artist}"/>
                 </Button>
-                <TextBlock x:Name="Duration" Grid.Column="3" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{StaticResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}"
+                <TextBlock x:Name="Duration" Grid.Column="3" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{DynamicResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}"
                            HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
                 <StackPanel x:Name="ToolbarPanel"  Grid.Column="3" HorizontalAlignment="Right" Margin="0,-2,24,-2" Opacity="0" Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Style="{StaticResource AddButtonStyle}" Width="22" Height="20" Padding="4"
                             Command="{Binding Main.AddToNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Margin="0,0,0,0"
-                            ToolTip="{x:Static localization:MainResources.ContextMenuAddToNowPlaying}" Foreground="{StaticResource AccentBrush}"/>
-                    
+                            ToolTip="{x:Static localization:MainResources.ContextMenuAddToNowPlaying}" Foreground="{DynamicResource AccentBrush}"/>
+
                     <Button Style="{StaticResource LyricsButtonStyle}" Width="22" Height="20" Padding="4" Visibility="{Binding HasLyrics, Converter={StaticResource BoolToVisibilityConverter}}"
                             Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Margin="5,0,0,0"
                             ToolTip="{x:Static localization:MainResources.ContextMenuLyrics}"/>
-                    
+
                     <Button Style="{StaticResource EditButtonStyle}" Width="22" Height="20" Padding="4" Visibility="{Binding IsAddedByCurrentUser, Converter={StaticResource BoolToVisibilityConverter}}"
                             Command="{Binding Main.EditAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Margin="5,0,0,0"
                             ToolTip="{x:Static localization:MainResources.ContextMenuEdit}"/>
@@ -72,9 +73,9 @@
         </Button>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsPlaying, Mode=OneWay}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Title"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Artist"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Duration"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Title"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Artist"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Duration"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Title"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Artist"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Duration"/>
@@ -105,7 +106,7 @@
             </Button.Triggers>
             <Button.ContextMenu>
                 <ContextMenu Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShowArtistInfo}" Command="{Binding Main.ShowArtistInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
@@ -122,28 +123,28 @@
                     <ColumnDefinition Width="0.2*"/>
                     <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Title}" Margin="0,0,5,0"/>
                 <Button Style="{StaticResource SimpleButtonStyle}" Grid.Column="2" HorizontalAlignment="Left" Opacity="0.6" Margin="0,0,0,0" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}"
                         CommandParameter="{Binding Artist}">
-                    <TextBlock x:Name="Artist" Text="{Binding Artist}" Foreground="{StaticResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                    <TextBlock x:Name="Artist" Text="{Binding Artist}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Artist}"/>
                 </Button>
-                <TextBlock x:Name="Album" Grid.Column="3" Text="{Binding Album}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="13" Margin="10,0,10,0" TextTrimming="CharacterEllipsis"
+                <TextBlock x:Name="Album" Grid.Column="3" Text="{Binding Album}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="13" Margin="10,0,10,0" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Album}"/>
-                <TextBlock x:Name="Duration" Grid.Column="4" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{StaticResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="Duration" Grid.Column="4" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{DynamicResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
                 <StackPanel x:Name="ToolbarPanel"  Grid.Column="4" HorizontalAlignment="Right" Margin="0,-2,24,-2" Opacity="0" Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Style="{StaticResource AddButtonStyle}" Width="22" Height="20" Padding="4"
                             Command="{Binding Main.AddToNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Margin="0,0,0,0"
-                            ToolTip="{x:Static localization:MainResources.ContextMenuAddToNowPlaying}" Foreground="{StaticResource AccentBrush}"/>
+                            ToolTip="{x:Static localization:MainResources.ContextMenuAddToNowPlaying}" Foreground="{DynamicResource AccentBrush}"/>
                 </StackPanel>
             </Grid>
         </Button>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsPlaying, Mode=OneWay}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Title"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Artist"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Duration"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Title"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Artist"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Duration"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Title"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Artist"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Duration"/>
@@ -154,7 +155,7 @@
                 <Setter TargetName="Duration" Property="Opacity" Value="0" />
                 <Setter TargetName="ToolbarPanel" Property="Opacity" Value="1" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding ElementName='Artist',Path=IsMouseOver}" Value="True">
+            <DataTrigger Binding="{Binding ElementName='Artist', Path=IsMouseOver}" Value="True">
                 <Setter TargetName="Artist" Property="Cursor" Value="Hand" />
                 <Setter TargetName="Artist" Property="TextDecorations" Value="Underline" />
             </DataTrigger>
@@ -180,7 +181,7 @@
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShare}" Command="{Binding Main.ShareAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuLyrics}" IsEnabled="{Binding HasLyrics}" Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuRemoveFromNowPlaying}" Command="{Binding Main.RemoveFromNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
@@ -195,11 +196,11 @@
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Title}" Margin="0,0,5,0"/>
-                <TextBlock x:Name="Artist" Grid.Column="2" Text="{Binding Artist}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="13" TextTrimming="CharacterEllipsis"
+                <TextBlock x:Name="Artist" Grid.Column="2" Text="{Binding Artist}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Artist}"/>
-                <TextBlock x:Name="Duration" Grid.Column="3" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{StaticResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="Duration" Grid.Column="3" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{DynamicResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
 
                 <StackPanel x:Name="ToolbarPanel"  Grid.Column="3" HorizontalAlignment="Right" Margin="0,-2,24,-2" Opacity="0" Orientation="Horizontal">
 
@@ -219,9 +220,9 @@
         </Button>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsPlaying, Mode=OneWay}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Title"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Artist"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Duration"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Title"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Artist"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Duration"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Title"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Artist"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Duration"/>
@@ -248,7 +249,7 @@
             </Button.Triggers>
             <Button.ContextMenu>
                 <ContextMenu Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShowArtistInfo}" Command="{Binding Main.ShowArtistInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
@@ -265,23 +266,23 @@
                     <ColumnDefinition Width="0.2*"/>
                     <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                <TextBlock Grid.Column="1" x:Name="Title" Text="{Binding Title}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Title}" Margin="0,0,5,0"/>
                 <Button Style="{StaticResource SimpleButtonStyle}" Grid.Column="2" HorizontalAlignment="Left" Opacity="0.6" Margin="0,0,0,0" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}"
                         CommandParameter="{Binding Artist}">
-                    <TextBlock x:Name="Artist" Text="{Binding Artist}" Foreground="{StaticResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                    <TextBlock x:Name="Artist" Text="{Binding Artist}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Artist}"/>
                 </Button>
-                <TextBlock x:Name="Album" Grid.Column="3" Text="{Binding Album}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="13" Margin="10,0,10,0" TextTrimming="CharacterEllipsis"
+                <TextBlock x:Name="Album" Grid.Column="3" Text="{Binding Album}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="13" Margin="10,0,10,0" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Album}"/>
-                <TextBlock x:Name="Duration" Grid.Column="4" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{StaticResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="Duration" Grid.Column="4" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{DynamicResource ForegroundBrush}" Visibility="{Binding Duration.TotalSeconds, Converter={StaticResource NullToVisibilityConverter}}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
             </Grid>
         </Button>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsPlaying, Mode=OneWay}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Title"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Artist"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Duration"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Title"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Artist"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Duration"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Title"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Artist"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Duration"/>
@@ -311,8 +312,8 @@
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuAdd}" Visibility="{Binding IsAddedByCurrentUser, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" Command="{Binding Main.AddRemoveAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuRemove}" Visibility="{Binding IsAddedByCurrentUser, Converter={StaticResource BoolToVisibilityConverter}}" Command="{Binding Main.AddRemoveAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
-                    <Separator Style="{StaticResource CommonSeparatorStyle}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <Separator Style="{StaticResource CommonSeparatorStyle}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuRemoveFromNowPlaying}" Command="{Binding Main.RemoveFromNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuPlayNext}" Command="{Binding Main.PlayAudioNextCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuCopyInfo}" Command="{Binding Main.CopyInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
@@ -323,16 +324,16 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock x:Name="Title" Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="12" TextTrimming="CharacterEllipsis"
+                <TextBlock x:Name="Title" Text="{Binding Title}" Foreground="{DynamicResource ForegroundBrush}" FontSize="12" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Title}"/>
-                <TextBlock x:Name="Artist" Grid.Row="1" Text="{Binding Artist}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="12" Margin="0,0,0,0" TextTrimming="CharacterEllipsis"
+                <TextBlock x:Name="Artist" Grid.Row="1" Text="{Binding Artist}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="12" Margin="0,0,0,0" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Artist}"/>
             </Grid>
         </Button>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsPlaying, Mode=OneWay}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Title"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Artist"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Title"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Artist"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Title"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Artist"/>
                 <Setter Property="Opacity" Value="1" TargetName="Artist" />
@@ -357,7 +358,7 @@
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShare}" Command="{Binding Main.ShareAudioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuLyrics}" IsEnabled="{Binding HasLyrics}" Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
-                    <MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuAddToNowPlaying}" Command="{Binding Main.AddToNowPlayingCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
@@ -373,22 +374,22 @@
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="1" x:Name="Order" Foreground="{StaticResource ForegroundBrush}" FontSize="14" Margin="0,0,5,0">
+                <TextBlock Grid.Column="1" x:Name="Order" Foreground="{DynamicResource ForegroundBrush}" FontSize="14" Margin="0,0,5,0">
                     <Run Text="{Binding Order}"/>.
                 </TextBlock>
-                <TextBlock x:Name="Title" Grid.Column="2" Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                <TextBlock x:Name="Title" Grid.Column="2" Text="{Binding Title}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Title}"/>
-                <TextBlock x:Name="Artist" Grid.Column="3" Text="{Binding Artist}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="13" Margin="20,0,0,0" TextTrimming="CharacterEllipsis"
+                <TextBlock x:Name="Artist" Grid.Column="3" Text="{Binding Artist}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Left" Opacity="0.6" FontSize="13" Margin="20,0,0,0" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Artist}"/>
-                <TextBlock x:Name="Duration" Grid.Column="4" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="Duration" Grid.Column="4" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Right" Opacity="0.6" FontSize="12" VerticalAlignment="Center" Margin="0,0,24,0" TextTrimming="CharacterEllipsis"/>
             </Grid>
         </Button>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsPlaying, Mode=OneWay}" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Order"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Title"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Artist"/>
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" TargetName="Duration"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Order"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Title"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Artist"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" TargetName="Duration"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Order"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Title"/>
                 <Setter Property="FontWeight" Value="SemiBold" TargetName="Artist"/>
@@ -402,7 +403,7 @@
     <DataTemplate x:Key="PostItemDataTemplate">
         <StackPanel>
             <ItemsControl ItemsSource="{Binding Audios}" ItemTemplate="{StaticResource AudioItemTemplate}" />
-            <Rectangle Fill="{StaticResource ForegroundBrush}" Height="1" Margin="0,5,0,5" Opacity="0.3"/>
+            <Rectangle Fill="{DynamicResource ForegroundBrush}" Height="1" Margin="0,5,0,5" Opacity="0.3"/>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

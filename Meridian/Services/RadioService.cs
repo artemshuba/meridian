@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using EchonestApi.Core.Artist;
 using EchonestApi.Core.Playlist;
 using Meridian.Model;
@@ -23,10 +21,16 @@ namespace Meridian.Services
         private static List<EchoSong> _futureSongs;
         private static EchoSong _currentSong;
 
+        public static string SessionId
+        {
+            get { return _sessionId; }
+        }
+
         public static RadioStation CurrentRadio
         {
             get { return _currentRadio; }
         }
+
 
         public static async void PlayRadio(RadioStation station)
         {
@@ -172,6 +176,12 @@ namespace Meridian.Services
             _sessionId = null;
         }
 
+        public static void RestoreSession(string sessionId, RadioStation radio)
+        {
+            _sessionId = sessionId;
+            _currentRadio = radio;
+        }
+
         //Переключиться на следующий трек, обычно вызывается автоматически, при завершении текущего трека
         public static async Task SwitchNext()
         {
@@ -183,7 +193,8 @@ namespace Meridian.Services
         {
             try
             {
-                ViewModelLocator.Echonest.Playlist.DynamicFeedback(_sessionId, skipSongs: new[] { _currentSong.Id });
+                if (_currentSong != null)
+                    ViewModelLocator.Echonest.Playlist.DynamicFeedback(_sessionId, skipSongs: new[] { _currentSong.Id });
                 Next();
             }
             catch (Exception ex)
@@ -211,9 +222,17 @@ namespace Meridian.Services
                 }
             }
 
-            var currentIndex = _futureSongs.IndexOf(_currentSong);
-            currentIndex++;
-            PlaySong(_futureSongs[currentIndex]);
+            if (_futureSongs == null)
+            {
+                await DeleteSession(_sessionId);
+                PlayRadio(_currentRadio);
+            }
+            else
+            {
+                var currentIndex = _futureSongs.IndexOf(_currentSong);
+                currentIndex++;
+                PlaySong(_futureSongs[currentIndex]);
+            }
         }
 
         //Вызывается если текущий трек не удалось воспроизвести (не найден ВКонтакте)

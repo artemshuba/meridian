@@ -97,7 +97,7 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can add your favorite societies to feed and easily get new music.
+        ///   Looks up a localized string similar to You should choose which societies will be shown in the feed.
         /// </summary>
         public static string FeedSocietiesEmpty {
             get {
@@ -115,11 +115,29 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Albums list is empty.
+        /// </summary>
+        public static string LoadAlbumsErrorEmpty {
+            get {
+                return ResourceManager.GetString("LoadAlbumsErrorEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to load artists.
         /// </summary>
         public static string LoadArtistsErrorCommon {
             get {
                 return ResourceManager.GetString("LoadArtistsErrorCommon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artists list is empty.
+        /// </summary>
+        public static string LoadArtistsErrorEmpty {
+            get {
+                return ResourceManager.GetString("LoadArtistsErrorEmpty", resourceCulture);
             }
         }
         

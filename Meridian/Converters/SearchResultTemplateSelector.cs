@@ -18,7 +18,11 @@ namespace Meridian.Converters
 
         public DataTemplate AlbumTemplate { get; set; }
 
+        public DataTemplate LocalAlbumTemplate { get; set; }
+
         public DataTemplate ArtistTemplate { get; set; }
+
+        public DataTemplate LocalArtistTemplate { get; set; }
 
         public DataTemplate SocietyTemplate { get; set; }
 
@@ -34,6 +38,10 @@ namespace Meridian.Converters
                 return ArtistTemplate;
             else if (item is VkGroup)
                 return SocietyTemplate;
+            else if (item is AudioAlbum)
+                return LocalAlbumTemplate;
+            else if (item is AudioArtist)
+                return LocalArtistTemplate;
             return null;
         }
     }
@@ -46,16 +54,20 @@ namespace Meridian.Converters
 
         public Style ArtistStyle { get; set; }
 
+        public Style LocalArtistStyle { get; set; }
+
         public Style SocietyStyle { get; set; }
 
         public override Style SelectStyle(object item, DependencyObject container)
         {
             if (item is Audio)
                 return TrackStyle;
-            else if (item is LastFmAlbum)
+            else if (item is LastFmAlbum || item is AudioAlbum)
                 return AlbumStyle;
             else if (item is LastFmArtist)
                 return ArtistStyle;
+            else if (item is AudioArtist)
+                return LocalArtistStyle;
             else if (item is VkGroup)
                 return SocietyStyle;
             return null;
@@ -69,6 +81,8 @@ namespace Meridian.Converters
         public Style AlbumsStyle { get; set; }
 
         public Style ArtistsStyle { get; set; }
+
+        public Style LocalArtistsStyle { get; set; }
 
         public Style SocietiesStyle { get; set; }
 
@@ -85,6 +99,10 @@ namespace Meridian.Converters
                     return ArtistsStyle;
                 case 3:
                     return TracksStyle;
+                case 4:
+                    return AlbumsStyle;
+                case 5:
+                    return LocalArtistsStyle;
             }
             return null;
         }

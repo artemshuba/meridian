@@ -1,4 +1,4 @@
-﻿<controls:PageBase x:Class="Meridian.View.Search.SearchResultsView"
+﻿<layout:PageBase x:Class="Meridian.View.Search.SearchResultsView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,8 +9,11 @@
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
       xmlns:helpers="clr-namespace:Meridian.Helpers"
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
+      xmlns:layout="clr-namespace:Meridian.Layout"
+      xmlns:behaviours1="clr-namespace:Neptune.UI.Desktop.Behaviours;assembly=Neptune.Desktop"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
+      Header="{Binding Header}"
       x:Name="pageRoot">
 
     <Page.RenderTransform>
@@ -40,6 +43,12 @@
             </Setter>
         </Style>
 
+        <Style x:Key="ArtistsListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource CommonListBoxStyle}">
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="Padding" Value="5,0,0,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+
         <DataTemplate x:Key="AlbumTemplate">
             <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="120" ToolTip="{Binding Name}" Command="{Binding DataContext.GoToAlbumCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}}" CommandParameter="{Binding}">
                 <Button.RenderTransform>
@@ -56,7 +65,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <Rectangle Fill="{StaticResource AccentBrush}"/>
+                        <Rectangle Fill="{DynamicResource AccentBrush}"/>
                         <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <Image helpers:ImageAsyncHelper.SourceUri="{Binding ImageLarge}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Grid>
@@ -68,6 +77,69 @@
                 </Grid>
             </Button>
         </DataTemplate>
+
+        <DataTemplate x:Key="LocalAlbumTemplate">
+            <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="120" ToolTip="{Binding Title}" Command="{Binding DataContext.GoToLocalAlbumCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}}" CommandParameter="{Binding}">
+                <Button.RenderTransform>
+                    <TranslateTransform />
+                </Button.RenderTransform>
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard Storyboard="{StaticResource FriendLoadAnim}" />
+                    </EventTrigger>
+                </Button.Triggers>
+                <Grid x:Name="RootGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.RowSpan="2">
+                        <Rectangle Fill="{DynamicResource AccentBrush}"/>
+                        <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Image Source="{Binding Cover}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Grid>
+                    <Rectangle Grid.Row="1" Fill="Black" Opacity="0.8" />
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Text="{Binding Artist}" FontWeight="Normal" FontSize="11" Margin="5,3,5,0" TextTrimming="CharacterEllipsis" Opacity="0.8" Foreground="White"/>
+                        <TextBlock Text="{Binding Title}" FontFamily="Segoe UI SemiLight"  FontSize="12" Margin="5,-2,5,7" TextTrimming="CharacterEllipsis" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="LocalArtistTemplate">
+            <ListBox ItemsSource="{Binding Albums}" Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource GroupListBoxItemStyle}"
+                     HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="15,10,0,0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <i:Interaction.Behaviors>
+                    <behaviours1:IgnoreMouseWheelBehavior/>
+                </i:Interaction.Behaviors>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="RootGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.85" Margin="0,0,0,5" 
+                                                   Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"
+                                                   Foreground="{DynamicResource ForegroundBrush}"/>
+                            <ListBox Grid.Row="1" ItemsSource="{Binding Tracks}" Margin="-24,0,0,10"
+                                                 Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                                 ItemTemplate="{StaticResource LocalAudioItemTemplate}"
+                                                 HorizontalContentAlignment="Stretch"
+                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                <i:Interaction.Behaviors>
+                                    <behaviours1:IgnoreMouseWheelBehavior/>
+                                </i:Interaction.Behaviors>
+                            </ListBox>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </DataTemplate>
+
 
         <DataTemplate x:Key="ArtistTemplate">
             <Button Style="{StaticResource SimpleButtonStyle}" Width="120" Height="120" ToolTip="{Binding Name}" Command="{Binding DataContext.GoToArtistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}}" CommandParameter="{Binding}">
@@ -85,7 +157,7 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <Rectangle Fill="{StaticResource AccentBrush}"/>
+                        <Rectangle Fill="{DynamicResource AccentBrush}"/>
                         <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <Image helpers:ImageAsyncHelper.SourceUri="{Binding ImageLarge}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Grid>
@@ -100,69 +172,87 @@
                                                  TrackTemplate="{StaticResource AudioItemTemplate}"
                                                  LocalTrackTemplate="{StaticResource LocalAudioItemTemplate}"
                                                  AlbumTemplate="{StaticResource AlbumTemplate}"
-                                                 ArtistTemplate="{StaticResource ArtistTemplate}"/>
+                                                 LocalAlbumTemplate="{StaticResource LocalAlbumTemplate}"
+                                                 ArtistTemplate="{StaticResource ArtistTemplate}"
+                                                 LocalArtistTemplate="{StaticResource LocalArtistTemplate}"/>
 
         <converters:SearchResultStyleSelector x:Key="SearchStyleSelector"
                                               TrackStyle="{StaticResource AudioListBoxItemStyle}"
                                               AlbumStyle="{StaticResource FriendListBoxItemStyle}"
                                               ArtistStyle="{StaticResource FriendListBoxItemStyle}"
+                                              LocalArtistStyle="{StaticResource GroupListBoxItemStyle}"
                                               SocietyStyle="{StaticResource FriendListBoxItemStyle}"/>
 
         <converters:SearchListBoxStyleSelector x:Key="SearchListBoxStyleSelector"
                                                TracksStyle="{StaticResource TracksListBoxStyle}"
                                                AlbumsStyle="{StaticResource AlbumsListBoxStyle}"
                                                ArtistsStyle="{StaticResource AlbumsListBoxStyle}"
+                                               LocalArtistsStyle="{StaticResource ArtistsListBoxStyle}"
                                                SocietiesStyle="{StaticResource AlbumsListBoxStyle}"/>
+
+        <CollectionViewSource x:Key="SearchMenuGroups" Source="{Binding Sections}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Group"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
 
     </Page.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="180"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
-                    HorizontalAlignment="Left"
-                    Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <TextBlock Grid.Column="1" FontSize="28" FontWeight="Thin" Margin="5,12,0,15" Foreground="{StaticResource ForegroundBrush}">
-                <Run Text="{x:Static localization:MainResources.SearchResultsTitle}" />
-                "<Run Text="{Binding Query}" />"
-            </TextBlock>
-        </Grid>
-
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-
-        <controls:BusyIndicator Grid.Row="1" BusyContent="{x:Static localization:MainResources.Searching}" IsBusy="{Binding Tasks[results].IsWorking}" Error="{Binding Tasks[results].Error}">
-            <ListBox x:Name="SearchResultsList" ItemsSource="{Binding SearchResults}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+    <layout:TwoColumnPageLayout>
+        <layout:TwoColumnPageLayout.MainContent>
+            <controls:BusyIndicator Grid.Row="1" BusyContent="{x:Static localization:MainResources.Searching}" IsBusy="{Binding Tasks[results].IsWorking}" Error="{Binding Tasks[results].Error}">
+                <ListBox x:Name="SearchResultsList" ItemsSource="{Binding SearchResults}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyleSelector="{StaticResource SearchStyleSelector}"
                  ItemTemplateSelector="{StaticResource SearchTemplateSelector}"
                  Style="{Binding SelectedSectionIndex, Converter={StaticResource SearchListBoxStyleSelector}}">
-                <i:Interaction.Behaviors>
-                    <behaviours:AutoScrollToCurrentItemBehaviour />
-                </i:Interaction.Behaviors>
-            </ListBox>
-        </controls:BusyIndicator>
-
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.SearchSection}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
-        <ListBox Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" Padding="0" ItemsSource="{Binding Sections}" Style="{StaticResource CommonListBoxStyle}" 
+                    <i:Interaction.Behaviors>
+                        <behaviours:AutoScrollToCurrentItemBehaviour />
+                    </i:Interaction.Behaviors>
+                </ListBox>
+            </controls:BusyIndicator>
+        </layout:TwoColumnPageLayout.MainContent>
+        <layout:TwoColumnPageLayout.RightContent>
+            <Grid>
+                <ListBox Margin="0,20,0,0" Padding="0" ItemsSource="{Binding Source={StaticResource SearchMenuGroups}}" Style="{StaticResource CommonListBoxStyle}" 
                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  SelectedIndex="{Binding SelectedSectionIndex, Mode=TwoWay}" ItemContainerStyle="{StaticResource AlbumListBoxItemStyle}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
-</controls:PageBase>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Margin" Value="0,0,0,0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                <Grid Margin="0,0,0,20">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Path Data="{Binding Items[0].GroupIcon}" Stretch="Uniform" Fill="{DynamicResource ForegroundBrush}" Height="8" Margin="17,1,-10,0" Opacity="0.4" VerticalAlignment="Center"
+                                                          Visibility="{Binding Items[0].GroupIcon, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                                    <TextBlock Grid.Column="1" FontWeight="SemiBold" Text="{Binding Path=Name}" Margin="17,0,0,0" FontSize="12" Foreground="{DynamicResource ForegroundBrush}" Opacity="0.7"/>
+                                                    <ItemsPresenter Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
+                </ListBox>
+            </Grid>
+        </layout:TwoColumnPageLayout.RightContent>
+    </layout:TwoColumnPageLayout>
+</layout:PageBase>

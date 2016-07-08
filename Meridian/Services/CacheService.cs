@@ -16,9 +16,9 @@ namespace Meridian.Services
         {
             var filePath = Path.Combine(CachePath, path);
 
-            if (await FileStorageService.Instance.FileExists(filePath))
+            if (await FileStorage.FileExists(filePath))
             {
-                using (var stream = await FileStorageService.Instance.OpenFile(filePath))
+                using (var stream = await FileStorage.OpenFile(filePath))
                 {
 
                     var ms = new MemoryStream();
@@ -44,8 +44,8 @@ namespace Meridian.Services
             var savePath = Path.Combine(CachePath, path);
             var parentDir = Path.GetDirectoryName(savePath);
 
-            if (!await FileStorageService.Instance.FolderExists(parentDir))
-                await FileStorageService.Instance.CreateFolder(parentDir);
+            if (!await FileStorage.FolderExists(parentDir))
+                await FileStorage.CreateFolder(parentDir);
 
             try
             {

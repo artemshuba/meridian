@@ -57,8 +57,8 @@
             <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{Binding SelectedSociety.Name}" Style="{StaticResource HeaderButtonStyle}"/>
         </Grid>
 
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <controls:BusyIndicator Grid.Row="1" IsBusy="{Binding Tasks[audio].IsWorking}" Error="{Binding Tasks[audio].Error}">
             <ListBox x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding Source={StaticResource TracksCollection}}" Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -70,8 +70,8 @@
             </ListBox>
         </controls:BusyIndicator>
 
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.MyMusicAlbums}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static localization:MainResources.MyMusicAlbums}" FontSize="11" Opacity="0.7" FontWeight="SemiBold" Margin="12,10,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
         <controls:ExtendedListBox Grid.Row="1" Grid.Column="1" Padding="0" Margin="0,30,0,0" ItemsSource="{Binding Albums}" Style="{StaticResource CommonListBoxStyle}" 
                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyleSelector="{StaticResource AlbumItemStyleSelector}"

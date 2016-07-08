@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Meridian.Layout.Controls.HeaderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="64" d:DesignWidth="300"
+             x:Name="rootElement">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Popup x:Name="HeaderMenuPopup" PlacementTarget="{Binding ElementName=HeaderButton}" Width="140" StaysOpen="False" VerticalOffset="10"
+               PopupAnimation="Fade" AllowsTransparency="True" IsOpen="{Binding ElementName=HeaderButton, Path=IsChecked, Mode=TwoWay}">
+            <Border Background="White" BorderThickness="1" BorderBrush="#a0a0a0">
+                <ItemsControl ItemsSource="{Binding MenuItems, ElementName=rootElement}"/>
+            </Border>
+        </Popup>
+        <Button Grid.Column="0" Style="{StaticResource MainBackButtonStyle}" Command="{Binding Main.GoBackCommand, Source={StaticResource Locator}}"
+                HorizontalAlignment="Left"
+                Visibility="{Binding Main.CanGoBack, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{Binding Header, ElementName=rootElement}" Style="{StaticResource HeaderButtonStyle}"/>
+        
+        <TextBlock Text="{Binding SubHeader, ElementName=rootElement}" Foreground="{DynamicResource ForegroundBrush}" Opacity="0.6" Grid.Column="1"
+                   Grid.Row="1" Margin="6,-10,0,0" FontSize="14"
+                   Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource NullToVisibilityConverter}}"/>
+    </Grid>
+</UserControl>

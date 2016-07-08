@@ -10,7 +10,7 @@
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
-      Background="{StaticResource MainBackgroundBrush}"
+      Background="{DynamicResource MainBackgroundBrush}"
       x:Name="pageRoot">
 
     <Page.RenderTransform>
@@ -57,8 +57,8 @@
             </Grid>
         </Grid>
 
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <ListBox Grid.Row="1" x:Name="AudioList" Margin="0,0,0,0" ItemsSource="{Binding AllTracks}" 
                          Style="{StaticResource CommonListBoxStyle}" VirtualizingStackPanel.ScrollUnit="Pixel"

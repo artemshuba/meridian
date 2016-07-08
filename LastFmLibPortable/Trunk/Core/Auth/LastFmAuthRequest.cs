@@ -24,7 +24,7 @@ namespace LastFmLib.Core.Auth
             parameters.Add("api_key", _lastFm.ApiKey);
             parameters.Add("api_sig", LastFmUtils.BuildSig(_lastFm.ApiSecret, "auth.getMobileSession", parameters));
 
-            var response = await new CoreRequest(new Uri(LastFmConst.MethodBaseSecure + "auth.getMobileSession"), null, "POST", parameters).Execute();
+            var response = await new CoreRequest(new Uri(LastFmConst.MethodBaseSecure), null, "POST", parameters).Execute();
 
             if (!LastFmErrorProcessor.ProcessError(response))
                 return null;

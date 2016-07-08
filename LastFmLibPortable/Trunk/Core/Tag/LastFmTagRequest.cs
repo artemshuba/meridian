@@ -35,9 +35,9 @@ namespace LastFmLib.Core.Tag
             LastFmErrorProcessor.ProcessError(response);
 
 
-            if (response.SelectToken("toptracks.track") != null)
+            if (response.SelectToken("tracks.track") != null)
             {
-                return from t in response.SelectToken("toptracks.track") select LastFmTrack.FromJson(t);
+                return from t in response.SelectToken("tracks.track") select LastFmTrack.FromJson(t);
             }
 
             return null;

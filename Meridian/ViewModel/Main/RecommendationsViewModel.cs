@@ -19,7 +19,7 @@ namespace Meridian.ViewModel.Main
         private readonly RecommendationsCollection _recommendationsCollection = new RecommendationsCollection()
         {
             new Recommendation() { Title = MainResources.RecommendationsMusicGeneral, Key = "vk", Group = MainResources.RecommendationsMusicGroup },
-            new Recommendation() { Title = MainResources.RecommendationsMusicAdvanced, Key = "echonest", Group = MainResources.RecommendationsMusicGroup, GroupOrder = 1},
+            //new Recommendation() { Title = MainResources.RecommendationsMusicAdvanced, Key = "echonest", Group = MainResources.RecommendationsMusicGroup, GroupOrder = 1},
 
             new MoodRecommendation() { Title =  MainResources.MoodsVintage, Key = "vintage" },
             new MoodRecommendation() { Title = MainResources.MoodsUrban, Key = "urban" },

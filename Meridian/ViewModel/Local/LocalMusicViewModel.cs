@@ -8,6 +8,7 @@ using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.View.Flyouts.Local;
+using Meridian.ViewModel.Messages;
 using Neptune.Extensions;
 using Neptune.Messages;
 using Xbox.Music;
@@ -22,6 +23,7 @@ namespace Meridian.ViewModel.Local
         private List<AudioArtist> _artists;
         private AudioArtist _selectedArtist;
         private List<AudioAlbum> _selectedArtistAlbums;
+        private List<LocalAudio> _selectedArtistTracks;
         private double _progress;
         private int _selectedTabIndex;
 
@@ -84,6 +86,12 @@ namespace Meridian.ViewModel.Local
             set { Set(ref _selectedArtistAlbums, value); }
         }
 
+        public List<LocalAudio> SelectedArtistTracks
+        {
+            get { return _selectedArtistTracks; }
+            set { Set(ref _selectedArtistTracks, value); }
+        }
+
         public double Progress
         {
             get { return _progress; }
@@ -117,6 +125,7 @@ namespace Meridian.ViewModel.Local
 
         public LocalMusicViewModel()
         {
+            InitializeMessages();
             InitializeCommands();
 
             RegisterTasks("tracks", "albums", "artists");
@@ -162,6 +171,11 @@ namespace Meridian.ViewModel.Local
             {
                 Refresh();
             });
+        }
+
+        private void InitializeMessages()
+        {
+            MessengerInstance.Register<LocalRepositoryUpdatedMessage>(this, OnLocalRepositoryUpdated);
         }
 
         private async void Load()
@@ -218,11 +232,18 @@ namespace Meridian.ViewModel.Local
 
             try
             {
-                Tracks = await ServiceLocator.LocalMusicService.GetTracks();
+                var tracks = await ServiceLocator.LocalMusicService.GetTracks();
+
+                if (tracks.IsNullOrEmpty())
+                {
+                    OnTaskError("tracks", ErrorResources.LoadAudiosErrorEmpty);
+                }
+                else
+                    Tracks = tracks;
             }
             catch (Exception ex)
             {
-                OnTaskError("tracks", "~Unable to load tracks");
+                OnTaskError("tracks", ErrorResources.LoadAudiosErrorCommon);
 
                 LoggingService.Log(ex);
             }
@@ -237,8 +258,15 @@ namespace Meridian.ViewModel.Local
             try
             {
                 var albums = await ServiceLocator.LocalMusicService.GetAlbums();
-                AlbumGroups = albums.GroupBy(a => a.Artist).Select(g => new AudioArtist() { Title = g.Key, Albums = g.OrderBy(a => a.Year).ToList() }).OrderBy(a => a.Title).ToList();
-                Albums = albums;
+                if (albums.IsNullOrEmpty())
+                {
+                    OnTaskError("albums", ErrorResources.LoadAlbumsErrorEmpty);
+                }
+                else
+                {
+                    AlbumGroups = albums.GroupBy(a => a.Artist).Select(g => new AudioArtist() { Title = g.Key, Albums = g.OrderBy(a => a.Year).ToList() }).OrderBy(a => a.Title).ToList();
+                    Albums = albums;
+                }
             }
             catch (Exception ex)
             {
@@ -256,10 +284,16 @@ namespace Meridian.ViewModel.Local
 
             try
             {
-                Artists = await ServiceLocator.LocalMusicService.GetArtists();
-
-                if (!Artists.IsNullOrEmpty())
+                var artists = await ServiceLocator.LocalMusicService.GetArtists();
+                if (artists.IsNullOrEmpty())
+                {
+                    OnTaskError("artists", ErrorResources.LoadArtistsErrorEmpty);
+                }
+                else
+                {
+                    Artists = artists.OrderBy(a => a.Title).ToList();
                     SelectedArtist = Artists.FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
@@ -273,6 +307,9 @@ namespace Meridian.ViewModel.Local
 
         private async Task LoadSelectedArtist()
         {
+            if (SelectedArtist == null)
+                return;
+
             OnTaskStarted("artists");
 
             try
@@ -291,8 +328,23 @@ namespace Meridian.ViewModel.Local
                             album.Tracks = tracks.Cast<Audio>().ToList();
                     }
                 }
+                else
+                {
+                    albums = new List<AudioAlbum>();
+                }
+
+                if (SelectedArtist == null)
+                    return;
+
+                var unsortedTracks = await ServiceLocator.LocalMusicService.GetArtistUnsortedTracks(SelectedArtist.Id);
+                if (!unsortedTracks.IsNullOrEmpty())
+                {
+                    var unsortedAlbum = new AudioAlbum() { Tracks = unsortedTracks.OfType<Audio>().ToList() };
+                    albums.Insert(0, unsortedAlbum);
+                }
 
                 SelectedArtistAlbums = albums;
+                SelectedArtistTracks = albums.SelectMany(a => a.Tracks).Cast<LocalAudio>().ToList();
             }
             catch (Exception ex)
             {
@@ -302,6 +354,16 @@ namespace Meridian.ViewModel.Local
             }
 
             OnTaskFinished("artists");
+        }
+
+        private void OnLocalRepositoryUpdated(LocalRepositoryUpdatedMessage message)
+        {
+            if (message.RepositoryType == typeof(LocalAudio))
+                LoadTracks();
+            else if (message.RepositoryType == typeof(AudioAlbum))
+                LoadAlbums();
+            else if (message.RepositoryType == typeof (AudioArtist))
+                LoadArtists();
         }
     }
 }

@@ -453,6 +453,9 @@ namespace VkLib.Core.Audio
 
             if (!string.IsNullOrEmpty(text))
                 parameters.Add("text", text);
+                
+            else if (string.IsNullOrEmpty(text))
+                parameters.Add("text", string.Empty);
 
             if (noSearch)
                 parameters.Add("no_search", "1");
@@ -605,6 +608,40 @@ namespace VkLib.Core.Audio
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Get list of genres
+        /// </summary>
+        /// <returns></returns>
+        public List<VkGenre> GetGenres()
+        {
+            //http://vk.com/dev/audio_genres
+
+            var genres = new List<VkGenre>();
+            genres.Add(new VkGenre() { Id = 1, Title = "Rock" });
+            genres.Add(new VkGenre() { Id = 2, Title = "Pop" });
+            genres.Add(new VkGenre() { Id = 3, Title = "Rap & Hip-Hop" });
+            genres.Add(new VkGenre() { Id = 4, Title = "Easy Listening" });
+            genres.Add(new VkGenre() { Id = 5, Title = "Dance & House" });
+            genres.Add(new VkGenre() { Id = 6, Title = "Instrumental" });
+            genres.Add(new VkGenre() { Id = 7, Title = "Metal" });
+            genres.Add(new VkGenre() { Id = 21, Title = "Alternative" });
+            genres.Add(new VkGenre() { Id = 8, Title = "Dubstep" });
+            genres.Add(new VkGenre() { Id = 9, Title = "Jazz & Blues" });
+            genres.Add(new VkGenre() { Id = 10, Title = "Drum & Bass" });
+            genres.Add(new VkGenre() { Id = 11, Title = "Trance" });
+            genres.Add(new VkGenre() { Id = 12, Title = "Chanson" });
+            genres.Add(new VkGenre() { Id = 13, Title = "Ethnic" });
+            genres.Add(new VkGenre() { Id = 14, Title = "Acoustic & Vocal" });
+            genres.Add(new VkGenre() { Id = 15, Title = "Reggae" });
+            genres.Add(new VkGenre() { Id = 16, Title = "Classical" });
+            genres.Add(new VkGenre() { Id = 17, Title = "Indie Pop" });
+            genres.Add(new VkGenre() { Id = 19, Title = "Speech" });
+            genres.Add(new VkGenre() { Id = 22, Title = "Electropop & Disco" });
+            genres.Add(new VkGenre() { Id = 18, Title = "Other" });
+
+            return genres;
         }
     }
 }

@@ -6,11 +6,11 @@
              xmlns:localization="clr-namespace:Meridian.Resources.Localization"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
-             Background="{StaticResource MainBackgroundBrush}" 
+             Background="{DynamicResource MainBackgroundBrush}" 
              VerticalAlignment="Center">
     <Grid HorizontalAlignment="Center" Width="285">
         <StackPanel Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-            <TextBlock Text="{x:Static localization:MainResources.TellViewTitle}" Foreground="{StaticResource AccentBrush}" FontSize="24" FontWeight="Light"/>
+            <TextBlock Text="{x:Static localization:MainResources.TellViewTitle}" Foreground="{DynamicResource AccentBrush}" FontSize="24" FontWeight="Light"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
                 <Button x:Name="GoToPostButton" Content="{x:Static localization:MainResources.TellViewGoToPost}" Padding="23,3" Margin="0,0,10,0" Style="{StaticResource HighlightedButtonStyle}"
                         Click="GoToPostButton_OnClick"/>

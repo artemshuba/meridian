@@ -381,7 +381,7 @@
   <data name="RadioStationsTitle" xml:space="preserve">
     <value>STATIONS</value>
   </data>
-  <data name="RadioSubheader" xml:space="preserve">
+  <data name="RadioSubHeader" xml:space="preserve">
     <value>Create stations with artists you like</value>
   </data>
   <data name="RecommendationsGenresGroup" xml:space="preserve">
@@ -761,5 +761,47 @@
   </data>
   <data name="SettingsUIShowBackgroundArtCompactMode" xml:space="preserve">
     <value>Show current artist image in compact mode</value>
+  </data>
+  <data name="FeedSubHeader" xml:space="preserve">
+    <value>New music from your favorite societies</value>
+  </data>
+  <data name="PopularSubHeader" xml:space="preserve">
+    <value>Popular music from VK</value>
+  </data>
+  <data name="RecommendationsSubHeader" xml:space="preserve">
+    <value>Discover new music by artists, genres, moods and more</value>
+  </data>
+  <data name="SettingsRemotePlay" xml:space="preserve">
+    <value>RemotePlay</value>
+  </data>
+  <data name="SettingsRemotePlayAddress" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="SettingsRemotePlayDescription" xml:space="preserve">
+    <value>RemotePlay allows you to control Meridian from your mobile device like phone or tablet. Remote devices should be in the same network with this PC.</value>
+  </data>
+  <data name="SettingsRemotePlayEnable" xml:space="preserve">
+    <value>Enable RemotePlay</value>
+  </data>
+  <data name="SettingsRemotePlayHelp" xml:space="preserve">
+    <value>To start using RemotePlay on your iOS or Android device open {0} in browser on that device. To use RemotePlay on Windows Phone install Meridian app from the Store and go to the RemotePlay section in the app's menu.</value>
+  </data>
+  <data name="SettingsRemotePlayPort" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="PopularGenresAll" xml:space="preserve">
+    <value>All genres</value>
+  </data>
+  <data name="PopularGenresTitle" xml:space="preserve">
+    <value>GENRES</value>
+  </data>
+  <data name="PopularForeignOnly" xml:space="preserve">
+    <value>foreign only</value>
+  </data>
+  <data name="SettingsUseHttps" xml:space="preserve">
+    <value>Use HTTPS</value>
+  </data>
+  <data name="SettingsMenuGeneral" xml:space="preserve">
+    <value>General</value>
   </data>
 </root>

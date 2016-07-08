@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
 using Meridian.Helpers;
 using Meridian.Model;
+using Meridian.ViewModel.Messages;
 
 namespace Meridian.Services.Music.Repositories
 {
@@ -23,8 +25,10 @@ namespace Meridian.Services.Music.Repositories
             {
                 //check for updates on first time
                 _refreshed = true;
-                var changes = await Refresh();
-                AlbumsRepositoryUpdated(changes);
+                Refresh().ContinueWith(t =>
+                {
+                    AlbumsRepositoryUpdated(t.Result);
+                });
             }
 
             return await ServiceLocator.DataBaseService.GetItems<AudioAlbum>();
@@ -84,35 +88,51 @@ namespace Meridian.Services.Music.Repositories
 
                 foreach (var filePath in musicFiles)
                 {
-                    using (var audioFile = TagLib.File.Create(filePath))
-                    {
-                        var track = new LocalAudio();
+                    TagLib.File audioFile = null;
 
-                        if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
-                        {
-                            track.AlbumId = Md5Helper.Md5(audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim() : StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
-                            track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
-                            if (!albums.ContainsKey(track.AlbumId))
-                                albums.Add(track.AlbumId, new AudioAlbum()
-                                {
-                                    Id = track.AlbumId,
-                                    Artist = audioFile.Tag.FirstAlbumArtist != null ? StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist).Trim() : null,
-                                    Title = StringHelper.ToUtf8(audioFile.Tag.Album).Trim(),
-                                    Year = (int)audioFile.Tag.Year,
-                                    ArtistId = audioFile.Tag.FirstPerformer != null ? Md5Helper.Md5(StringHelper.ToUtf8(audioFile.Tag.FirstPerformer).Trim().ToLower()) : null
-                                });
-                            else
+                    try
+                    {
+                        audioFile = TagLib.File.Create(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggingService.Log(ex);
+                        continue;
+                    }
+
+                    var track = new LocalAudio();
+
+                    if (!string.IsNullOrWhiteSpace(audioFile.Tag.Album))
+                    {
+                        string artist = string.Empty;
+                        if (!string.IsNullOrEmpty(audioFile.Tag.FirstPerformer))
+                            artist = StringHelper.ToUtf8(audioFile.Tag.FirstPerformer);
+                        else if (!string.IsNullOrEmpty(audioFile.Tag.FirstAlbumArtist))
+                            artist = StringHelper.ToUtf8(audioFile.Tag.FirstAlbumArtist);
+
+                        track.AlbumId = Md5Helper.Md5(artist.Trim().ToLower() + "_" + StringHelper.ToUtf8(audioFile.Tag.Album).Trim());
+                        track.Album = StringHelper.ToUtf8(audioFile.Tag.Album).Trim();
+                        if (!albums.ContainsKey(track.AlbumId))
+                            albums.Add(track.AlbumId, new AudioAlbum()
                             {
-                                if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
-                                {
-                                    albums[track.AlbumId].CoverPath = filePath;
-                                }
+                                Id = track.AlbumId,
+                                Artist = artist.Trim(),
+                                Title = StringHelper.ToUtf8(audioFile.Tag.Album).Trim(),
+                                Year = (int)audioFile.Tag.Year,
+                                ArtistId = Md5Helper.Md5(artist.Trim().ToLower())
+                            });
+                        else
+                        {
+                            if (string.IsNullOrEmpty(albums[track.AlbumId].CoverPath) && audioFile.Tag.Pictures != null && audioFile.Tag.Pictures.Length > 0)
+                            {
+                                albums[track.AlbumId].CoverPath = filePath;
                             }
                         }
                     }
-                }
+                    audioFile.Dispose();
 
-                await ServiceLocator.DataBaseService.SaveItems(albums.Values);
+                    await Task.Delay(50);
+                }
 
                 LoggingService.Log("Music scan finished. Found " + albums.Count + " albums");
 
@@ -168,6 +188,9 @@ namespace Meridian.Services.Music.Repositories
             await ServiceLocator.DataBaseService.UpdateItems(changed);
 
             await ServiceLocator.DataBaseService.SaveItems(added);
+
+            if (deleted.Count > 0 || changed.Count > 0 || added.Count > 0)
+                Messenger.Default.Send(new LocalRepositoryUpdatedMessage() { RepositoryType = typeof(AudioAlbum) });
 
             LoggingService.Log(string.Format("Local albums database updated. Deleted: {0}, Changed: {1}, Added: {2}", deleted.Count, changed.Count, added.Count));
         }

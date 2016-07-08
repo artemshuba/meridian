@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using VkLib.Core.Groups;
 using VkLib.Core.Users;
 
@@ -17,7 +18,7 @@ namespace VkLib.Core.News
             _vkontakte = vkontakte;
         }
 
-        public async Task<VkItemsResponse<VkNewsEntry>> Get(string sourceIds = null, string filters = null, int count = 0, int offset = 0)
+        public async Task<VkNewsResponse> Get(string sourceIds = null, string filters = null, int count = 0, string startFrom = null)
         {
             if (_vkontakte.AccessToken == null || string.IsNullOrEmpty(_vkontakte.AccessToken.Token) || _vkontakte.AccessToken.HasExpired)
                 throw new Exception("Access token is not valid.");
@@ -33,8 +34,8 @@ namespace VkLib.Core.News
             if (count > 0)
                 parameters.Add("count", count.ToString());
 
-            if (offset > 0)
-                parameters.Add("offset", offset.ToString());
+            if (!string.IsNullOrEmpty(startFrom))
+                parameters.Add("start_from", startFrom);
 
             _vkontakte.SignMethod(parameters);
 
@@ -44,7 +45,7 @@ namespace VkLib.Core.News
 
             if (response.SelectToken("response.items") != null)
             {
-                var result = new VkItemsResponse<VkNewsEntry>((from n in response["response"]["items"] select VkNewsEntry.FromJson(n)).ToList());
+                var result = new VkNewsResponse((from n in response["response"]["items"] select VkNewsEntry.FromJson(n)).ToList());
 
                 if (response["response"]["profiles"] != null)
                 {
@@ -63,6 +64,9 @@ namespace VkLib.Core.News
                         entry.Author = groups.FirstOrDefault(g => g.Id == Math.Abs(entry.SourceId));
                     }
                 }
+
+                if (response["response"]["next_from"] != null)
+                    result.NextFrom = response["response"]["next_from"].Value<string>();
 
                 return result;
             }

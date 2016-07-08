@@ -86,6 +86,7 @@
     <Compile Include="Core\Account\VkAccountRequest.cs" />
     <Compile Include="Core\Attachments\VkLinkAttachment.cs" />
     <Compile Include="Core\Attachments\VkPhotoAttachment.cs" />
+    <Compile Include="Core\Audio\VkGenre.cs" />
     <Compile Include="Core\Auth\AccessToken.cs" />
     <Compile Include="Core\Auth\OAuthResult.cs" />
     <Compile Include="Core\Auth\VkOAuthRequest.cs" />
@@ -105,10 +106,13 @@
     <Compile Include="Core\Messages\VkMessagesRequest.cs" />
     <Compile Include="Core\News\VkNewsEntry.cs" />
     <Compile Include="Core\News\VkNewsRequest.cs" />
+    <Compile Include="Core\News\VkNewsResponse.cs" />
     <Compile Include="Core\Photos\VkPhoto.cs" />
     <Compile Include="Core\Photos\VkPhotosRequest.cs" />
     <Compile Include="Core\Photos\VkUploadPhotoResponse.cs" />
+    <Compile Include="Core\Stats\VkStatsRequest.cs" />
     <Compile Include="Core\Status\VkStatusRequest.cs" />
+    <Compile Include="Core\Storage\VkStorageRequest.cs" />
     <Compile Include="Core\Subscriptions\VkSubscriptionsRequest.cs" />
     <Compile Include="Core\Users\VkProfile.cs" />
     <Compile Include="Core\Users\VkProfileBase.cs" />
@@ -155,17 +159,21 @@
     <Folder Include="Core\Execute\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net.Http">
-      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.28\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.28\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.28\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

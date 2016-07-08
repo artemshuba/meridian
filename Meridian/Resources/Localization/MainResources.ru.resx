@@ -381,7 +381,7 @@
   <data name="RadioStationsTitle" xml:space="preserve">
     <value>СТАНЦИИ</value>
   </data>
-  <data name="RadioSubheader" xml:space="preserve">
+  <data name="RadioSubHeader" xml:space="preserve">
     <value>Создавайте станции с любимыми исполнителями</value>
   </data>
   <data name="RecommendationsGenresGroup" xml:space="preserve">
@@ -761,5 +761,41 @@
   </data>
   <data name="SettingsUIShowBackgroundArtCompactMode" xml:space="preserve">
     <value>Отображать изображение текущего исполнителя в компактном режиме</value>
+  </data>
+  <data name="FeedSubHeader" xml:space="preserve">
+    <value>Новая музыка из ваших любимых сообществ</value>
+  </data>
+  <data name="PopularSubHeader" xml:space="preserve">
+    <value>Популярная музыка ВКонтакте</value>
+  </data>
+  <data name="RecommendationsSubHeader" xml:space="preserve">
+    <value>Откройте для себя новую музыку с рекомендациями</value>
+  </data>
+  <data name="SettingsRemotePlay" xml:space="preserve">
+    <value>RemotePlay</value>
+  </data>
+  <data name="SettingsRemotePlayDescription" xml:space="preserve">
+    <value>RemotePlay позволяет вам управлять Meridian с помощью мобильных устройств, таких как смартфон или планшет. Для работы RemotePlay необходимо, чтобы все устройства были в одной сети.</value>
+  </data>
+  <data name="SettingsRemotePlayEnable" xml:space="preserve">
+    <value>Включить RemotePlay</value>
+  </data>
+  <data name="SettingsRemotePlayHelp" xml:space="preserve">
+    <value>Чтобы начать использовать RemotePlay на вашем iOS или Android устройстве, перейдите по адресу {0} в браузере на устройстве. Чтобы использовать RemotePlay на Windows Phone, установите приложения Meridian из магазина и перейдите в раздел RemotePlay в меню приложения.</value>
+  </data>
+  <data name="PopularGenresAll" xml:space="preserve">
+    <value>Все жанры</value>
+  </data>
+  <data name="PopularGenresTitle" xml:space="preserve">
+    <value>ЖАНРЫ</value>
+  </data>
+  <data name="PopularForeignOnly" xml:space="preserve">
+    <value>только зарубежные</value>
+  </data>
+  <data name="SettingsUseHttps" xml:space="preserve">
+    <value>Использовать HTTPS</value>
+  </data>
+  <data name="SettingsMenuGeneral" xml:space="preserve">
+    <value>Общие</value>
   </data>
 </root>

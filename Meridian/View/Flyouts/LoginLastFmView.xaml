@@ -7,14 +7,14 @@
              xmlns:localization="clr-namespace:Meridian.Resources.Localization"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
-             Background="{StaticResource MainBackgroundBrush}" 
+             Background="{DynamicResource MainBackgroundBrush}" 
              VerticalAlignment="Center">
     <Grid HorizontalAlignment="Center" Width="285">
         <StackPanel Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
             <TextBlock Text="Last.FM" Foreground="#e51400" FontSize="24" FontWeight="Light"/>
-            <TextBlock Text="{x:Static localization:MainResources.LastFmLoginTitle}" FontSize="12" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBlock Text="{x:Static localization:MainResources.LastFmLoginTitle}" FontSize="12" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
             <TextBox x:Name="LoginTextBox" Margin="0,3,0,0" Text="{Binding Login, Mode=TwoWay}" Style="{StaticResource CommonTextBoxStyle}" KeyUp="LoginTextBox_OnKeyUp"/>
-            <TextBlock Text="{x:Static localization:MainResources.LoginPasswordTitle}" FontSize="12" Margin="0,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBlock Text="{x:Static localization:MainResources.LoginPasswordTitle}" FontSize="12" Margin="0,10,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
             <controls:BindablePasswordBox x:Name="PasswordBox" Password="{Binding Password, Mode=TwoWay}" Width="285" Margin="0,3,0,0" KeyUp="PasswordBox_OnKeyUp"/>
             <TextBlock Foreground="Red" Text="{Binding LoginError}" Margin="0,3,0,0" Visibility="{Binding LoginError, Converter={StaticResource NullToVisibilityConverter}}"
                        TextWrapping="Wrap"/>
@@ -25,7 +25,7 @@
         </StackPanel>
         <StackPanel Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,50,0,50">
             <TextBlock Text="Last.FM" Foreground="#e51400" FontSize="24" FontWeight="Light" HorizontalAlignment="Left"/>
-            <TextBlock Text="{x:Static localization:MainResources.Loading}" FontSize="14" HorizontalAlignment="Left" Opacity="0.4" FontWeight="Light" Foreground="{StaticResource ForegroundBrush}" Margin="0,10,0,10"/>
+            <TextBlock Text="{x:Static localization:MainResources.Loading}" FontSize="14" HorizontalAlignment="Left" Opacity="0.4" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}" Margin="0,10,0,10"/>
             <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}" Foreground="#e51400" Margin="-12,0,-12,0"/>
         </StackPanel>
     </Grid>

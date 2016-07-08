@@ -1,0 +1,95 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Colors -->
+    <Color x:Key="ForegroundColor">#414042</Color>
+    <Color x:Key="BackgroundColor">White</Color>
+    <Color x:Key="ContrastColor">#f2f2f2</Color>
+
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}" />
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
+
+    <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource BackgroundColor}"/>
+
+    <SolidColorBrush x:Key="MainTabActiveForegroundBrush" Color="{StaticResource ForegroundColor}"/>
+
+    <SolidColorBrush x:Key="MainBackgroundSplitterBrush" Color="{StaticResource ForegroundColor}" Opacity="0.15"/>
+
+    <SolidColorBrush x:Key="AudioAlternationBackgroundBrush" Color="Black" Opacity="0.03" />
+    
+    <!-- Main menu -->
+    <SolidColorBrush x:Key="MainMenuHotPlaylistItemBackgroundBrush" Color="{StaticResource BackgroundColor}" Opacity="0.05"/>
+
+    <!-- Buttons -->
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="Gray"/>
+    <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#333333"/>
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#eeeeee"/>
+    <SolidColorBrush x:Key="ButtonHotBackgroundBrush" Color="#dedede"/>
+    <SolidColorBrush x:Key="ButtonPressForegroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="ButtonPressBackgroundBrush" Color="#333333"/>
+    <SolidColorBrush x:Key="ButtonHighlightedHotBackgroundBrush" Color="{StaticResource AccentColor}" Opacity="0.8"/>
+    <SolidColorBrush x:Key="ButtonHighlightedDisabledBackgroundBrush" Color="LightGray" Opacity="1"/>
+
+    <!-- Control Icons -->
+    <SolidColorBrush x:Key="ControlButtonForeground" Color="{StaticResource ForegroundColor}"/>
+    <SolidColorBrush x:Key="ControlButtonBackground" Color="{StaticResource BackgroundColor}"/>
+    <SolidColorBrush x:Key="ControlButtonOverBackground" Color="{StaticResource ForegroundColor}" Opacity="0.1"/>
+
+    <!-- Albums -->
+    <SolidColorBrush x:Key="PlaylistItemForegroundBrush" Color="#707070"/>
+    <SolidColorBrush x:Key="HotPlaylistItemBackgroundBrush" Color="{StaticResource ForegroundColor}" Opacity="0.1"/>
+    <SolidColorBrush x:Key="SelectedPlaylistItemForegroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="SelectedPlaylistItemBackgroundBrush" Color="{StaticResource AccentColor}" Opacity="0.08"/>
+
+    <!-- Current track -->
+    <SolidColorBrush x:Key="HotCurrentTrackBackgroundBrush" Color="{StaticResource ForegroundColor}" Opacity="0.1"/>
+
+    <!-- Context menu -->
+    <SolidColorBrush x:Key="HotContextMenuItemBackgroundBrush" Color="Black" Opacity="0.1"/>
+
+    <!-- TextBoxes -->
+    <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource ForegroundColor}" Opacity="0.3"/>
+    <SolidColorBrush x:Key="TextBoxHotBorderBrush" Color="{StaticResource ForegroundColor}" Opacity="0.7"/>
+    <SolidColorBrush x:Key="TextBoxForegroundBrush" Color="{StaticResource ForegroundColor}"/>
+    <SolidColorBrush x:Key="TextBoxBackgroundBrush" Color="#33FFFFFF"/>
+
+    <SolidColorBrush x:Key="ShadowTopBrush" Color="Black" Opacity="0.2"/>
+    <SolidColorBrush x:Key="ShadowBottomBrush" Color="Black" Opacity="0.2"/>
+
+    <SolidColorBrush x:Key="AlbumsListBackgroundBrush" Color="{StaticResource ContrastColor}" Opacity="0.7"/>
+    <SolidColorBrush x:Key="SplitterBrush" Color="{StaticResource ForegroundColor}"/>
+
+    <!-- Progress bar -->
+    <SolidColorBrush x:Key="ProgressBarBackgroundBrush" Color="#22000000"/>
+
+    <!-- Volume bar -->
+    <SolidColorBrush x:Key="VolumeBarBackgroundBrush" Color="White"/>
+
+    <SolidColorBrush x:Key="SearchBarBackgroundBrush" Color="#ecebec" Opacity="0.7"/>
+
+    <!-- Comboboxes -->
+    <!-- ComboBoxBg-->
+    <SolidColorBrush x:Key="ComboBoxBackgroundBrush" Color="#FFEEEEEE" />
+    <!-- ComboBoxForeground-->
+    <SolidColorBrush x:Key="ComboBoxForegroundBrush" Color="Black"/>
+    <!-- ComboBoxBorder-->
+    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#FFEEEEEE"/>
+    <!-- ComboBoxArrow-->
+    <SolidColorBrush x:Key="ComboBoxArrowBrush" Color="#FF999999"/>
+    <!-- ComboBoxBorderHover && ComboBoxArrowHover-->
+    <SolidColorBrush x:Key="ComboBoxHotBrush" Color="#FF333333" />
+    <!-- ComboBoxBgHover-->
+    <SolidColorBrush x:Key="ComboBoxHotBackgroundBrush" Color="#FFFFFFFF"/>
+    <!-- ComboBoxItemHighlighted-->
+    <SolidColorBrush x:Key="ComboBoxItemHotBackgroundBrush" Color="#FFDFDFDF" />
+
+    <!-- Sidebar -->
+    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource AccentColor}" Opacity="0.65"/>
+    <FontFamily x:Key="SidebarForegroundFont">Segoe UI SemiLight</FontFamily>
+    <SolidColorBrush x:Key="SidebarForegroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="SidebarInactiveForegroundBrush" Color="White" Opacity="0.5"/>
+    <SolidColorBrush x:Key="SidebarGroupForegroundBrush" Color="White" Opacity="0.9"/>
+    <SolidColorBrush x:Key="SidebarSliderBackgroundBrush" Color="White" Opacity="0.1"/>
+
+    <SolidColorBrush x:Key="SidebarNowPlayingImageBackgroundBrush" Color="Transparent"/>
+    
+</ResourceDictionary>

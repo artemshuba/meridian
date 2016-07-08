@@ -7,7 +7,7 @@
              xmlns:localization="clr-namespace:Meridian.Resources.Localization"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="500"
-             Background="{StaticResource MainBackgroundBrush}"
+             Background="{DynamicResource MainBackgroundBrush}"
              x:Name="rootElement">
     <Grid x:Name="rootGrid" Margin="24,10,24,10"              
           dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}" dragDrop:DragDrop.DropHandler="{Binding}">
@@ -22,8 +22,8 @@
         </Grid.RowDefinitions>
         
         <Rectangle Fill="Transparent" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-        
-        <TextBlock Text="{x:Static localization:MainResources.ShareBarTitle}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Center" FontSize="16" Opacity="0.2" VerticalAlignment="Top" Margin="0,-5,0,0"/>
+
+        <TextBlock Text="{x:Static localization:MainResources.ShareBarTitle}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Center" FontSize="16" Opacity="0.2" VerticalAlignment="Top" Margin="0,-5,0,0"/>
         
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Tracks}" Margin="0,5,0,5">
             <ItemsControl.ItemsPanel>
@@ -39,7 +39,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="Title" Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="14" TextTrimming="CharacterEllipsis"
+                            <TextBlock x:Name="Title" Text="{Binding Title}" Foreground="{DynamicResource ForegroundBrush}" FontSize="14" TextTrimming="CharacterEllipsis"
                                     ToolTip="{Binding Title}"/>
                             <Button Grid.Column="1" Style="{StaticResource CloseButtonStyle}" SnapsToDevicePixels="True" Command="{Binding DataContext.RemoveTrackCommand, ElementName=rootGrid}" CommandParameter="{Binding}"
                                     VerticalAlignment="Center" Margin="3,0,0,0"/>
@@ -53,5 +53,7 @@
             <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.NextButton}" Margin="0,0,15,0" IsEnabled="{Binding CanGoNext}" Command="{Binding GoNextCommand}"/>
             <Button Style="{StaticResource CommonButtonStyle}" Content="{x:Static localization:MainResources.CancelButton}" Command="{Binding CancelCommand}"/>
         </StackPanel>
+
+        <Rectangle Fill="{StaticResource SplitterBrush}" Height="1"  Margin="-24,-34,-24,0" Opacity="0.3"/>
     </Grid>
 </UserControl>

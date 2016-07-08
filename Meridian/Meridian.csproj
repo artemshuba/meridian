@@ -104,22 +104,24 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack">
-      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell">
       <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio">
-      <HintPath>..\packages\NAudio.1.7.1\lib\net35\NAudio.dll</HintPath>
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NLog, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
@@ -129,16 +131,15 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Extensions, Version=2.2.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net.Http.Primitives, Version=4.2.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
-    <Reference Include="System.ObjectModel" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -158,13 +159,13 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Yandex.Metrica, Version=1.6.5415.248, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Yandex.Metrica.1.6.5415.248\lib\net45\Yandex.Metrica.dll</HintPath>
+    <Reference Include="Yandex.Metrica.NET4.5, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Yandex.Metrica.2.2.6007.533\lib\net45\Yandex.Metrica.NET4.5.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Zlib.Portable, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Zlib.Portable.1.10.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zlib.Portable.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +219,7 @@
     <Compile Include="Extensions\AudioExtensions.cs" />
     <Compile Include="Extensions\CommonExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\SocketExtensions.cs" />
     <Compile Include="Helpers\ArtistImageHelper.cs" />
     <Compile Include="Helpers\AlbumCoversHelper.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
@@ -227,7 +229,15 @@
     <Compile Include="Helpers\LongRunningOperation.cs" />
     <Compile Include="Helpers\Md5Helper.cs" />
     <Compile Include="Helpers\NativeMethods.cs" />
+    <Compile Include="Helpers\NetworkHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Layout\Controls\HeaderControl.xaml.cs">
+      <DependentUpon>HeaderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Layout\Controls\PageTabControl.cs" />
+    <Compile Include="Layout\LayoutBase.cs" />
+    <Compile Include="Layout\PageBase.cs" />
+    <Compile Include="Layout\TwoColumnPageLayout.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Audio.cs" />
     <Compile Include="Model\AudioAlbum.cs" />
@@ -236,12 +246,17 @@
     <Compile Include="Model\ColorScheme.cs" />
     <Compile Include="Model\ItemsResponse.cs" />
     <Compile Include="Model\MainMenuItem.cs" />
+    <Compile Include="Model\NewsItemsResponse.cs" />
     <Compile Include="Model\RadioStation.cs" />
     <Compile Include="Model\Recommendation.cs" />
+    <Compile Include="Model\SearchMenuItem.cs" />
     <Compile Include="Model\Settings\SettingsEngine.cs" />
     <Compile Include="Model\Settings\SettingsHotKey.cs" />
     <Compile Include="Model\Settings\SettingsLanguage.cs" />
     <Compile Include="Model\UIMode.cs" />
+    <Compile Include="RemotePlay\SimpleHttpRequest.cs" />
+    <Compile Include="RemotePlay\SimpleHttpResponse.cs" />
+    <Compile Include="RemotePlay\SimpleWebServer.cs" />
     <Compile Include="Resources\Localization\ErrorResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -267,6 +282,7 @@
     <Compile Include="Services\Music\Repositories\LocalTracksRepository.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\RadioService.cs" />
+    <Compile Include="RemotePlay\RemotePlayService.cs" />
     <Compile Include="Services\ServiceLocator.cs" />
     <Compile Include="Services\UpdateService.cs" />
     <Compile Include="SQLite.cs" />
@@ -274,6 +290,7 @@
     <Compile Include="ViewModel\Local\LocalAlbumViewModel.cs" />
     <Compile Include="ViewModel\Local\LocalMusicViewModel.cs" />
     <Compile Include="ViewModel\Main\FeedViewModel.cs" />
+    <Compile Include="ViewModel\Messages\LocalRepositoryUpdatedMessage.cs" />
     <Compile Include="ViewModel\Search\AlbumViewModel.cs" />
     <Compile Include="ViewModel\Search\ArtistViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\EditAudioViewModel.cs" />
@@ -321,6 +338,12 @@
     </Compile>
     <Compile Include="View\Main\FeedView.xaml.cs">
       <DependentUpon>FeedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\MusicView.xaml.cs">
+      <DependentUpon>MusicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\PopularAudioView.xaml.cs">
+      <DependentUpon>PopularAudioView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Search\AlbumView.xaml.cs">
       <DependentUpon>AlbumView.xaml</DependentUpon>
@@ -376,14 +399,8 @@
     <Compile Include="View\Flyouts\LyricsView.xaml.cs">
       <DependentUpon>LyricsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Main\MusicView.xaml.cs">
-      <DependentUpon>MusicView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Main\NowPlayingView.xaml.cs">
       <DependentUpon>NowPlayingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Main\PopularAudioView.xaml.cs">
-      <DependentUpon>PopularAudioView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main\RadioView.xaml.cs">
       <DependentUpon>RadioView.xaml</DependentUpon>
@@ -405,6 +422,9 @@
     </Compile>
     <Compile Include="View\Settings\SettingsUIView.xaml.cs">
       <DependentUpon>SettingsUIView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsRemotePlayView.xaml.cs">
+      <DependentUpon>SettingsRemotePlayView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Settings\SettingsUpdatesView.xaml.cs">
       <DependentUpon>SettingsUpdatesView.xaml</DependentUpon>
@@ -465,6 +485,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Layout\Controls\HeaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Templates\PageBaseTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Layout\Templates\TwoColumnPageLayoutTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -473,8 +505,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ChromeWindow\ChromeWindowBehaviour.cs" />
-    <Compile Include="ChromeWindow\NativeHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -587,6 +617,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Themes\Accent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\Graphite.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Themes\Light.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -616,6 +654,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Main\FeedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\MusicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\PopularAudioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -691,15 +737,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Main\MusicView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Main\NowPlayingView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Main\PopularAudioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -730,6 +768,10 @@
     <Page Include="View\Settings\SettingsUIView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsRemotePlayView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Settings\SettingsUpdatesView.xaml">
       <SubType>Designer</SubType>
@@ -839,10 +881,6 @@
       <Project>{4aa2609b-b5e4-4f3e-95fd-47c1a27929b2}</Project>
       <Name>Neptune.Desktop</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Neptune\Trunk\Neptune.UI.Desktop\Neptune.UI.Desktop.csproj">
-      <Project>{2097b5fe-54ab-4347-9b7c-b895f3657be6}</Project>
-      <Name>Neptune.UI.Desktop</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VkLibPortable\Trunk\VkLibPortable.csproj">
       <Project>{96824317-5143-413a-8ec6-5f92de7ab60e}</Project>
       <Name>VkLibPortable</Name>
@@ -852,6 +890,45 @@
       <Name>Xbox.Music</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="RemotePlay\web\img\light\volume.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\img\light\volume_mute.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\img\player.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\js\index.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\js\utils.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\lib\jquery-2.1.3.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\lib\jquery-ui.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\lib\jquery.ui.touch-punch.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\lib\svg4everybody.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\styles\index.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RemotePlay\web\styles\player.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <!-- Get "My Application" assembly version -->
@@ -869,6 +946,8 @@
       copy /y "*.*" "ready"
       mkdir "ready\ru"
       copy /y "ru\*.*" "ready\ru\"
+      mkdir "ready\RemotePlay"
+      xcopy /y "RemotePlay\*.*" "ready\RemotePlay" /s
       cd "ready"
       move /y "*.dll" "libs"
       del *.pdb

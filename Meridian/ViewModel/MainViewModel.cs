@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,6 +17,7 @@ using Meridian.Controls;
 using Meridian.Domain;
 using Meridian.Helpers;
 using Meridian.Model;
+using Meridian.RemotePlay;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using Meridian.View;
@@ -42,7 +44,7 @@ namespace Meridian.ViewModel
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.FeedView", Title = MainResources.MainMenuFeed},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.PopularAudioView", Title = MainResources.MainMenuPopular},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.RecommendationsView", Title = MainResources.MainMenuRecommendations},
-            new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.RadioView", Title = MainResources.MainMenuRadio},
+            //new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.RadioView", Title = MainResources.MainMenuRadio},
 
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.FriendsView", Title = MainResources.MainMenuFriends},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.SocietiesView", Title = MainResources.MainMenuSocieties},
@@ -67,6 +69,8 @@ namespace Meridian.ViewModel
         private UIMode _currentUIMode;
         private string _lastArtist;
         private CancellationTokenSource _artCancellationToken = new CancellationTokenSource();
+        private CancellationTokenSource _coverCancellationToken = new CancellationTokenSource();
+        private bool _canBroadcast;
 
         #region Commands
 
@@ -83,6 +87,8 @@ namespace Meridian.ViewModel
         public RelayCommand GoToSettingsCommand { get; private set; }
 
         public RelayCommand<string> SearchCommand { get; private set; }
+
+        public RelayCommand<KeyEventArgs> SearchKeyUpCommand { get; private set; }
 
         public RelayCommand NextAudioCommand { get; private set; }
 
@@ -497,6 +503,10 @@ namespace Meridian.ViewModel
             }
         }
 
+        public bool CanBroadcast
+        {
+            get { return CurrentAudio is VkAudio; }
+        }
 
         public MainViewModel()
         {
@@ -513,6 +523,9 @@ namespace Meridian.ViewModel
             _hotKeyManager = new HotKeyManager(new WindowInteropHelper(Application.Current.MainWindow).Handle);
             _hotKeyManager.InitializeHotkeys();
             ViewModelLocator.LastFm.SessionKey = Settings.Instance.LastFmSession;
+
+            if (Settings.Instance.EnableRemotePlay)
+                RemotePlayService.Instance.Start();
         }
 
         public async void LoadUserInfo()
@@ -520,6 +533,9 @@ namespace Meridian.ViewModel
             try
             {
                 User = await DataService.GetUserInfo();
+
+                //Track user for stats
+                await ViewModelLocator.Vkontakte.Stats.TrackVisitor();
             }
             catch (Exception ex)
             {
@@ -579,6 +595,16 @@ namespace Meridian.ViewModel
                                     {"query", query}
                                 }
                     });
+                }
+            });
+
+            SearchKeyUpCommand = new RelayCommand<KeyEventArgs>(args =>
+            {
+                if (args.Key == Key.Enter)
+                {
+                    var textBox = args.Source as TextBox;
+                    if (textBox != null && !string.IsNullOrWhiteSpace(textBox.Text))
+                        SearchCommand.Execute(textBox.Text);
                 }
             });
 
@@ -748,7 +774,13 @@ namespace Meridian.ViewModel
             if (Settings.Instance.SendStats)
                 YandexMetrica.ReportEvent("page" + message.Page);
 
-            if (typeof(PageBase).IsAssignableFrom(type))
+            if (typeof(Layout.PageBase).IsAssignableFrom(type))
+            {
+                var page = (Layout.PageBase)Activator.CreateInstance(type);
+                page.NavigationContext.Parameters = message.Parameters;
+                frame.Navigate(page);
+            }
+            else if (typeof(PageBase).IsAssignableFrom(type))
             {
                 var page = (PageBase)Activator.CreateInstance(type);
                 page.NavigationContext.Parameters = message.Parameters;
@@ -766,7 +798,6 @@ namespace Meridian.ViewModel
         {
             if (message.Type == LoginType.LogIn)
             {
-
                 if (message.Service == "vk")
                 {
                     ShowSidebar = true;
@@ -790,17 +821,24 @@ namespace Meridian.ViewModel
             RaisePropertyChanged("IsPlaying");
             RaisePropertyChanged("CurrentPlaylist");
             RaisePropertyChanged("WindowTitle");
-
+            RaisePropertyChanged("CanBroadcast");
 
             _artRequested = false;
             _statusUpdated = false;
             _nowPlayingUpdated = false;
             _scrobbled = false;
 
-            GetTrackImage();
+            CancelCover();
+            GetTrackImage(_coverCancellationToken.Token);
 
-            if (Settings.Instance.ShowTrackNotifications && message.OldAudio != null) //disable show on first start by checking for null
-                ShowTrackNotification(message.NewAudio);
+            if (Settings.Instance.ShowTrackNotifications && message.OldAudio != null)
+                //disable show on first start by checking for null
+            {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    ShowTrackNotification(message.NewAudio);
+                }));
+            }
         }
 
         private async void OnPlayerPositionChanged(PlayerPositionChangedMessage message)
@@ -944,30 +982,40 @@ namespace Meridian.ViewModel
             }
         }
 
-        private async void GetTrackImage()
+        private async void GetTrackImage(CancellationToken token)
         {
             if (CurrentAudio == null)
                 return;
 
             if (CurrentAudio is LocalAudio)
             {
-                using (var audioFile = TagLib.File.Create(CurrentAudio.Source))
+                try
                 {
-                    var image = audioFile.Tag.Pictures.FirstOrDefault();
-                    if (image != null)
+                    using (var audioFile = TagLib.File.Create(CurrentAudio.Source))
                     {
-                        var ms = new MemoryStream();
-                        await ms.WriteAsync(image.Data.Data, 0, image.Data.Data.Length);
-                        ms.Seek(0, SeekOrigin.Begin);
+                        var image = audioFile.Tag.Pictures.FirstOrDefault();
+                        if (image != null)
+                        {
+                            var ms = new MemoryStream();
+                            await ms.WriteAsync(image.Data.Data, 0, image.Data.Data.Length, token);
+                            if (token.IsCancellationRequested)
+                                return;
 
-                        BitmapImage bi = null;
-                        bi = new BitmapImage();
-                        bi.BeginInit();
-                        bi.StreamSource = ms;
-                        bi.EndInit();
-                        TrackImage = bi;
-                        return;
+                            ms.Seek(0, SeekOrigin.Begin);
+
+                            BitmapImage bi = null;
+                            bi = new BitmapImage();
+                            bi.BeginInit();
+                            bi.StreamSource = ms;
+                            bi.EndInit();
+                            TrackImage = bi;
+                            return;
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    LoggingService.Log(ex);
                 }
             }
 
@@ -975,12 +1023,21 @@ namespace Meridian.ViewModel
             {
                 try
                 {
-                    var imageUri = await DataService.GetTrackImage(CurrentAudio.Artist, CurrentAudio.Title);
+                    var artist = CurrentAudio.Artist;
+                    var title = CurrentAudio.Title;
+
+                    var imageUri = await DataService.GetTrackImage(artist, title);
+                    if (token.IsCancellationRequested)
+                        return;
+
                     if (imageUri == null)
                     {
                         if (Settings.Instance.DownloadArtistArt)
                         {
-                            imageUri = await DataService.GetArtistImage(CurrentAudio.Artist, Settings.Instance.ShowBackgroundArt);
+                            imageUri = await DataService.GetArtistImage(artist, Settings.Instance.ShowBackgroundArt);
+
+                            if (token.IsCancellationRequested)
+                                return;
                         }
                     }
 
@@ -990,7 +1047,15 @@ namespace Meridian.ViewModel
                         return;
                     }
 
-                    TrackImage = new BitmapImage(imageUri);
+                    //http://stackoverflow.com/questions/11326528/error-hresult-0x88982f72-when-trying-streaming-image-file
+                    var bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+                    bi.UriSource = imageUri;
+                    bi.EndInit();
+
+
+                    TrackImage = bi;
                 }
                 catch (Exception ex)
                 {
@@ -1158,6 +1223,12 @@ namespace Meridian.ViewModel
         {
             _artCancellationToken.Cancel();
             _artCancellationToken = new CancellationTokenSource();
+        }
+
+        private void CancelCover()
+        {
+            _coverCancellationToken.Cancel();
+            _coverCancellationToken = new CancellationTokenSource();
         }
     }
 }

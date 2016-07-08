@@ -9,6 +9,7 @@ using Meridian.Domain;
 using Meridian.Model;
 using Meridian.Services;
 using Meridian.ViewModel.Messages;
+using Neptune.Desktop.Storage;
 
 namespace Meridian.ViewModel.Main
 {
@@ -40,7 +41,7 @@ namespace Meridian.ViewModel.Main
             InitializeCommands();
         }
 
-        public void Activate()
+        public override void Activate()
         {
             ViewModelLocator.Main.ShowWindowButtons = false;
 
@@ -49,7 +50,7 @@ namespace Meridian.ViewModel.Main
             InitializeMessageInterception();
         }
 
-        public void Deactivate()
+        public override void Deactivate()
         {
             DeinitializeMessageInterception();
 
@@ -123,8 +124,13 @@ namespace Meridian.ViewModel.Main
                 var cachedImage = await CacheService.GetCachedImage("artists/" + CacheService.GetSafeFileName(audio.Artist + "_" + imageType + ".jpg"));
                 if (cachedImage != null)
                 {
-                    ArtistImage = cachedImage;
-                    return;
+                    var lastUpdateTime = FileStorage.GetFileUpdateTime("artists/" + CacheService.GetSafeFileName(audio.Artist + "_" + imageType + ".jpg"));
+                    if ((DateTime.Now - lastUpdateTime).TotalDays < 14)
+                    {
+                        //if image was downloaded less than 2 weeks ago, show it, else download newer
+                        ArtistImage = cachedImage;
+                        return;
+                    }
                 }
 
                 if (Settings.Instance.DownloadArtistArt)

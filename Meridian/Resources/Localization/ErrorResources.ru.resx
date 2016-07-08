@@ -130,13 +130,19 @@
     <value>Пожалуйста, проверьте соединение с Интернетом и попробуйте снова. Код ошибки: 0xC00D0035</value>
   </data>
   <data name="FeedSocietiesEmpty" xml:space="preserve">
-    <value>Вы можете добавить сообщества в ленту и легко получать новую музыку</value>
+    <value>Выберите сообщества, из которых будет отображаться музыка в ленте</value>
   </data>
   <data name="LoadAlbumsErrorCommon" xml:space="preserve">
     <value>Не удалось загрузить список альбомов</value>
   </data>
+  <data name="LoadAlbumsErrorEmpty" xml:space="preserve">
+    <value>Список альбомов пуст</value>
+  </data>
   <data name="LoadArtistsErrorCommon" xml:space="preserve">
     <value>Не удалось загрузить список исполнителей</value>
+  </data>
+  <data name="LoadArtistsErrorEmpty" xml:space="preserve">
+    <value>Список исполнителей пуст</value>
   </data>
   <data name="LoadAudiosErrorAccessDenied" xml:space="preserve">
     <value>Список аудиозаписей недоступен</value>

@@ -30,8 +30,8 @@ namespace Meridian.Services.Media.Core
                     return TimeSpan.Zero;
 
                 var currentPos = _outputStream.CurrentTime;
-                if (Math.Round(currentPos.TotalSeconds, 1) >= Math.Round(_duration.TotalSeconds, 1))
-                    SwitchNext();
+                //if (Math.Round(currentPos.TotalSeconds, 1) >= Math.Round(_duration.TotalSeconds, 1))
+                //    SwitchNext();
 
                 return TimeSpan.FromSeconds(Math.Min(Duration.TotalSeconds, currentPos.TotalSeconds));
             }
@@ -158,7 +158,9 @@ namespace Meridian.Services.Media.Core
                 {
                     _outputStream = new MediaFoundationReader(_source.OriginalString);
                     _volumeStream = new WaveChannel32(_outputStream, (float)Volume, 0);
+                    _volumeStream.PadWithZeroes = false;
                     _wavePlayer.Init(_volumeStream);
+                    _wavePlayer.PlaybackStopped += _wavePlayer_PlaybackStopped;
                     _duration = _outputStream.TotalTime;
                     _initialized = true;
                     _initSourceEvent.Set();
@@ -172,6 +174,12 @@ namespace Meridian.Services.Media.Core
                         MediaFailed(this, ex);
                 }
             });
+        }
+
+        void _wavePlayer_PlaybackStopped(object sender, StoppedEventArgs e)
+        {
+            if (_outputStream != null && _outputStream.CurrentTime.TotalSeconds > Duration.TotalSeconds / 2)
+                SwitchNext();
         }
     }
 }

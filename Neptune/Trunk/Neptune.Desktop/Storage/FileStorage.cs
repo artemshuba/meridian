@@ -1,30 +1,22 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Neptune.Extensions;
-using Neptune.Storage;
 
 namespace Neptune.Desktop.Storage
 {
-    public class FileStorageService : IFileStorage
+    public static class FileStorage
     {
-        private static FileStorageService _intance;
+        private static readonly Dictionary<string, SemaphoreSlim> _semaphores = new Dictionary<string, SemaphoreSlim>();
 
-        public static IFileStorage Instance
-        {
-            get
-            {
-                if (_intance == null)
-                    _intance = new FileStorageService();
-                return _intance;
-            }
-        }
-
-        public async Task<Stream> OpenFile(string path)
+        public static async Task<Stream> OpenFile(string path)
         {
             return await Task.Run(() => File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite));
         }
 
-        public Task<string> GetText(string path)
+        public static Task<string> GetText(string path)
         {
             return Task.Run(() =>
             {
@@ -35,21 +27,27 @@ namespace Neptune.Desktop.Storage
             });
         }
 
-        public async Task WriteText(string path, string text)
+        public static async Task WriteText(string path, string text)
         {
+            var semaphore = GetSemaphore(path);
+            await semaphore.WaitAsync();
+
             using (var stream = await OpenFile(path))
             {
                 stream.SetLength(0);
                 stream.WriteText(text);
             }
+
+            _semaphores.Remove(path);
+            semaphore.Release();
         }
 
-        public Task<bool> FileExists(string path)
+        public static Task<bool> FileExists(string path)
         {
             return Task.Run(() => File.Exists(path));
         }
 
-        public Task DeleteFile(string path)
+        public static Task DeleteFile(string path)
         {
             return Task.Run(() =>
             {
@@ -59,7 +57,12 @@ namespace Neptune.Desktop.Storage
             });
         }
 
-        public Task<bool> FolderExists(string path)
+        public static DateTime GetFileUpdateTime(string path)
+        {
+            return File.GetLastWriteTime(path);
+        }
+
+        public static Task<bool> FolderExists(string path)
         {
             return Task.Run(() =>
             {
@@ -67,7 +70,7 @@ namespace Neptune.Desktop.Storage
             });
         }
 
-        public Task CreateFolder(string path)
+        public static Task CreateFolder(string path)
         {
             return Task.Run(() =>
             {
@@ -75,11 +78,19 @@ namespace Neptune.Desktop.Storage
             });
         }
 
-        public Task DeleteFolder(string path)
+        public static Task DeleteFolder(string path)
         {
             return Task.Run(() => Directory.Delete(path, true));
         }
 
-        public bool UserRoaming { get; set; }
+        private static SemaphoreSlim GetSemaphore(string fileName)
+        {
+            if (_semaphores.ContainsKey(fileName))
+                return _semaphores[fileName];
+
+            var semaphore = new SemaphoreSlim(1);
+            _semaphores[fileName] = semaphore;
+            return semaphore;
+        }
     }
 }

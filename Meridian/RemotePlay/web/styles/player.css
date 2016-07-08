@@ -1,0 +1,298 @@
+﻿#playerControl {
+    margin-top: 30pt;
+}
+
+    #playerControl #progressBar {
+        width: auto;
+        padding: 0;
+        margin: 0;
+    }
+
+/* progress bar */
+
+#progressBarContainer {
+    width: auto;
+    height: auto;
+    margin: 10pt 20pt -5pt 20pt;
+    position: relative;
+}
+
+#progressBar {
+    height: 10pt;
+}
+
+#progressBarBg {
+    height: 4pt;
+    background-color: #dddddd;
+}
+
+#progressBar .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 15pt;
+    height: 15pt;
+    cursor: pointer;
+    background: white no-repeat 50% 50%;
+    border: 1pt solid rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    outline: none;
+    top: -7pt;
+    margin-left: -7pt;
+    border-radius: 15pt;
+    box-shadow: 0 1.5pt 3pt rgba(0,0,0,0.2);
+}
+
+#progressBar .ui-slider-range {
+    position: absolute;
+    border: 0;
+    top: 0;
+    height: 4pt;
+    background-color: #006ac1;
+}
+
+/* volume bar */
+
+#volumeWrapper {
+    position: absolute;
+    height: 36pt;
+    width: 188pt;
+    left: calc(50% - 94pt);
+    bottom: 20pt;
+}
+
+#volumeBarContainer {
+    width: 118pt;
+    height: auto;
+    /*margin: 10pt 30pt -5pt;*/
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 59pt);
+}
+
+#volumeBar {
+    height: 10pt;
+    left: 20pt;
+}
+
+#volumeBarBg {
+    height: 3pt;
+    background-color: #dddddd;
+}
+
+#volumeBar .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 12pt;
+    height: 12pt;
+    cursor: pointer;
+    background: white no-repeat 50% 50%;
+    border: 1pt solid rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    outline: none;
+    top: -7pt;
+    margin-left: -7pt;
+    border-radius: 15pt;
+    box-shadow: 0 1.5pt 3pt rgba(0,0,0,0.2);
+}
+
+#volumeBar .ui-slider-range {
+    background: #444444;
+    position: absolute;
+    border: 0;
+    top: 0;
+    height: 3pt;
+}
+
+.volumeIcon {
+    width: 36pt;
+    height: 36pt;
+    opacity: 0.3;
+    top: 2pt;
+    position: absolute;
+}
+
+#volumeMute {
+    left: -8pt;
+}
+
+#volumeMax {
+    right: -8pt;
+}
+
+/* */
+
+#playerControl #currentAudioTitle {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 18pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    height: 24pt;
+    margin-top: 80pt;
+    margin-left: 20pt;
+    margin-right: 20pt;
+    text-align: center;
+}
+
+#playerControl #currentAudioArtist {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: normal;
+    height: 20pt;
+    margin-left: 20pt;
+    margin-right: 20pt;
+    text-align: center;
+    font-size: 16pt;
+}
+
+.progress {
+    width: 100%;
+    position: absolute;
+    bottom: 110pt;
+}
+
+#currentTime {
+    display: inline-block;
+    font-size: 12pt;
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+#duration {
+    display: inline-block;
+    float: right;
+    font-size: 12pt;
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+/* control buttons */
+#playerControls {
+    width: auto;
+    height: 32pt;
+    position: absolute;
+    bottom: 60pt;
+    min-width: 200pt;
+    left: calc(50% - 100pt);
+}
+
+    #playerControls .controlButton {
+        min-width: 0pt;
+        min-height: 0pt;
+        background-color: transparent;
+        border: none;
+        width: 30pt;
+        height: 30pt;
+        outline: none;
+        fill: #1e1e1e;
+        position: absolute;
+    }
+
+        #playerControls .controlButton:active {
+            fill: black;
+        }
+
+
+    #playerControls .play {
+        width: 34pt;
+        height: 34pt;
+        top: -2pt;
+        left: calc(50% - 17pt);
+    }
+
+    #playerControls .pause {
+        width: 32pt;
+        height: 32pt;
+        top: -2pt;
+        left: calc(50% - 16pt);
+    }
+
+    #playerControls #prev {
+        margin-left: -25pt;
+        left: calc(50% - 35pt);
+    }
+
+    #playerControls #next {
+        margin-left: 27pt;
+        left: 50%;
+    }
+
+    #playerControls.state-play .play{
+        display: none;
+    }
+
+    #playerControls.state-play .pause{
+        display: inline-block;
+    }
+
+    #playerControls.state-pause .play{
+        display: inline-block;
+    }
+
+    #playerControls.state-pause .pause{
+        display: none;
+    }
+
+/* */
+
+#playerControl .coverButtonsBlock {
+    position: absolute;
+    top: 0;
+    right: 14pt;
+    width: 20pt;
+}
+
+    #playerControl .coverButtonsBlock .coverButton {
+        min-width: 0;
+        min-height: 0;
+        height: 20pt;
+        width: 100%;
+        padding: 0;
+        background: none;
+        opacity: 0.5;
+        outline: none;
+        border: none;
+        padding: 3pt;
+        position: absolute;
+    }
+
+        #playerControl .coverButtonsBlock .coverButton:hover {
+            opacity: 0.6;
+        }
+
+        #playerControl .coverButtonsBlock .coverButton:active {
+            transform: scale(0.92, 0.92);
+        }
+
+        #playerControl .coverButtonsBlock .coverButton#vk {
+            top: 10pt;
+        }
+
+        #playerControl .coverButtonsBlock .coverButton#like {
+            padding: 0;
+            height: 25pt;
+            width: 25pt;
+            margin-left: -3pt;
+        }
+
+        #playerControl .coverButtonsBlock .coverButton#shuffle {
+            padding: 4pt;
+            top: 50%;
+            margin-top: -15pt;
+        }
+
+            #playerControl .coverButtonsBlock .coverButton#shuffle.active {
+                opacity: 1;
+            }
+
+        #playerControl .coverButtonsBlock .coverButton#repeat {
+            bottom: 10pt;
+        }
+
+            #playerControl .coverButtonsBlock .coverButton#repeat.active {
+                opacity: 1;
+            }

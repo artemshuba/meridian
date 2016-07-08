@@ -6,6 +6,6 @@
         internal const string MethodBase = "http://ws.audioscrobbler.com/2.0/?format=json&method=";
         internal const string UrlBase = "http://ws.audioscrobbler.com/2.0/?format=json";
         internal const string UrlBaseSecure = "https://ws.audioscrobbler.com/2.0/?format=json";
-        internal const string MethodBaseSecure = "https://ws.audioscrobbler.com/2.0/?format=json&method=";
+        internal const string MethodBaseSecure = "https://ws.audioscrobbler.com/2.0/?format=json";
     }
 }

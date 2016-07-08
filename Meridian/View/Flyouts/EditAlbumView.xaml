@@ -6,7 +6,7 @@
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="600"
-      Background="{StaticResource MainBackgroundBrush}" VerticalAlignment="Center">
+      Background="{DynamicResource MainBackgroundBrush}" VerticalAlignment="Center">
 
     <Grid Margin="0,20,0,20" HorizontalAlignment="Center" Width="400">
         <Grid.RowDefinitions>
@@ -14,8 +14,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel>
-            <TextBlock x:Name="Title" Text="{x:Static localization:MainResources.EditAlbumNewTitle}" FontSize="24" FontWeight="Light" Foreground="{StaticResource AccentBrush}"/>
-            <TextBlock Text="{x:Static localization:MainResources.EditAlbumName}" Opacity="0.6" Margin="0,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+            <TextBlock x:Name="Title" Text="{x:Static localization:MainResources.EditAlbumNewTitle}" FontSize="24" FontWeight="Light" Foreground="{DynamicResource AccentBrush}"/>
+            <TextBlock Text="{x:Static localization:MainResources.EditAlbumName}" Opacity="0.6" Margin="0,10,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
             <TextBox x:Name="TitleTextBox" Style="{StaticResource CommonTextBoxStyle}" Margin="0,5,0,0" />
         </StackPanel>
 

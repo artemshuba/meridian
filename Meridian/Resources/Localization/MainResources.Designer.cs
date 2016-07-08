@@ -574,6 +574,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New music from your favorite societies.
+        /// </summary>
+        public static string FeedSubHeader {
+            get {
+                return ResourceManager.GetString("FeedSubHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Normal mode.
         /// </summary>
         public static string FullMode {
@@ -1231,6 +1240,42 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to foreign only.
+        /// </summary>
+        public static string PopularForeignOnly {
+            get {
+                return ResourceManager.GetString("PopularForeignOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All genres.
+        /// </summary>
+        public static string PopularGenresAll {
+            get {
+                return ResourceManager.GetString("PopularGenresAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GENRES.
+        /// </summary>
+        public static string PopularGenresTitle {
+            get {
+                return ResourceManager.GetString("PopularGenresTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popular music from VK.
+        /// </summary>
+        public static string PopularSubHeader {
+            get {
+                return ResourceManager.GetString("PopularSubHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Portrait mode.
         /// </summary>
         public static string PortraitMode {
@@ -1269,9 +1314,9 @@ namespace Meridian.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Create stations with artists you like.
         /// </summary>
-        public static string RadioSubheader {
+        public static string RadioSubHeader {
             get {
-                return ResourceManager.GetString("RadioSubheader", resourceCulture);
+                return ResourceManager.GetString("RadioSubHeader", resourceCulture);
             }
         }
         
@@ -1317,6 +1362,15 @@ namespace Meridian.Resources.Localization {
         public static string RecommendationsMusicGroup {
             get {
                 return ResourceManager.GetString("RecommendationsMusicGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discover new music by artists, genres, moods and more.
+        /// </summary>
+        public static string RecommendationsSubHeader {
+            get {
+                return ResourceManager.GetString("RecommendationsSubHeader", resourceCulture);
             }
         }
         
@@ -1564,6 +1618,15 @@ namespace Meridian.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string SettingsMenuGeneral {
+            get {
+                return ResourceManager.GetString("SettingsMenuGeneral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hotkeys.
         /// </summary>
         public static string SettingsMenuHotkeys {
@@ -1587,6 +1650,60 @@ namespace Meridian.Resources.Localization {
         public static string SettingsMenuUpdates {
             get {
                 return ResourceManager.GetString("SettingsMenuUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RemotePlay.
+        /// </summary>
+        public static string SettingsRemotePlay {
+            get {
+                return ResourceManager.GetString("SettingsRemotePlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string SettingsRemotePlayAddress {
+            get {
+                return ResourceManager.GetString("SettingsRemotePlayAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RemotePlay allows you to control Meridian from your mobile device like phone or tablet. Remote devices should be in the same network with this PC..
+        /// </summary>
+        public static string SettingsRemotePlayDescription {
+            get {
+                return ResourceManager.GetString("SettingsRemotePlayDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable RemotePlay.
+        /// </summary>
+        public static string SettingsRemotePlayEnable {
+            get {
+                return ResourceManager.GetString("SettingsRemotePlayEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To start using RemotePlay on your iOS or Android device open {0} in browser on that device. To use RemotePlay on Windows Phone install Meridian app from the Store and go to the RemotePlay section in the app&apos;s menu..
+        /// </summary>
+        public static string SettingsRemotePlayHelp {
+            get {
+                return ResourceManager.GetString("SettingsRemotePlayHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port.
+        /// </summary>
+        public static string SettingsRemotePlayPort {
+            get {
+                return ResourceManager.GetString("SettingsRemotePlayPort", resourceCulture);
             }
         }
         
@@ -1812,6 +1929,15 @@ namespace Meridian.Resources.Localization {
         public static string SettingsUpdatesUpdated {
             get {
                 return ResourceManager.GetString("SettingsUpdatesUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use HTTPS.
+        /// </summary>
+        public static string SettingsUseHttps {
+            get {
+                return ResourceManager.GetString("SettingsUseHttps", resourceCulture);
             }
         }
         

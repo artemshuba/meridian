@@ -10,7 +10,7 @@
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
-      Background="{StaticResource MainBackgroundBrush}"
+      Background="{DynamicResource MainBackgroundBrush}"
       x:Name="pageRoot">
 
     <Page.RenderTransform>
@@ -29,7 +29,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Grid.RowSpan="2" MaxWidth="800" MaxHeight="800" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ClipToBounds="True" Opacity="0.4">
+        <Grid Grid.Row="1" MaxWidth="800" MaxHeight="800" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ClipToBounds="True" Opacity="0.4">
             <Grid.OpacityMask>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Offset="0.5" Color="White"/>
@@ -72,19 +72,19 @@
                 <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
                     <ToggleButton x:Name="HeaderButton" Style="{StaticResource HeaderButtonStyle}"
                               Content="{Binding Artist.Name}" Margin="0,-3,0,0" FontSize="24"/>
-                    <TextBlock Text="{Binding TagsString}" Foreground="{StaticResource ForegroundBrush}" Margin="2,-4,10,0" TextTrimming="CharacterEllipsis" Opacity="0.7"/>
+                    <TextBlock Text="{Binding TagsString}" Foreground="{DynamicResource ForegroundBrush}" Margin="2,-4,10,0" TextTrimming="CharacterEllipsis" Opacity="0.7"/>
                 </StackPanel>
             </Grid>
         </Grid>
         <ProgressBar IsIndeterminate="{Binding IsWorking}" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource HeaderProgressBarStyle}"/>
 
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{StaticResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
 
         <ScrollViewer Grid.Row="1" Margin="0,0,0,0" Padding="0,15,0,0">
             <StackPanel>
                 <Grid Margin="26,0,0,0" Visibility="{Binding Albums, Converter={StaticResource NullToVisibilityConverter}}">
-                    <TextBlock Text="{x:Static localization:MainResources.ArtistAlbums}" FontSize="12" Opacity="0.3" Foreground="{StaticResource ForegroundBrush}"/>
-                    <Button Style="{StaticResource ShowAllButton}" Content="{x:Static localization:MainResources.ArtistShowAll}" Foreground="{StaticResource AccentBrush}" Margin="15,0,24,0" FontWeight="SemiBold"
+                    <TextBlock Text="{x:Static localization:MainResources.ArtistAlbums}" FontSize="12" Opacity="0.3" Foreground="{DynamicResource ForegroundBrush}"/>
+                    <Button Style="{StaticResource ShowAllButton}" Content="{x:Static localization:MainResources.ArtistShowAll}" Foreground="{DynamicResource AccentBrush}" Margin="15,0,24,0" FontWeight="SemiBold"
                             FontSize="11" Command="{Binding ShowAllAlbumsCommand}" HorizontalAlignment="Right"/>
                 </Grid>
 
@@ -114,7 +114,7 @@
                                     </Grid.RowDefinitions>
                                     <Image helpers:ImageAsyncHelper.SourceUri="{Binding ImageMedium}" Width="80" Height="80"/>
                                     <TextBlock Grid.Row="1" Text="{Binding Name}" Margin="0,0,0,0" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
-                                           FontSize="11" Height="30" Foreground="{StaticResource ForegroundBrush}"/>
+                                           FontSize="11" Height="30" Foreground="{DynamicResource ForegroundBrush}"/>
                                 </Grid>
                             </Button>
                         </DataTemplate>
@@ -122,8 +122,8 @@
                 </ListBox>
 
                 <Grid Margin="26,0,0,0" Visibility="{Binding Tracks, Converter={StaticResource NullToVisibilityConverter}}">
-                    <TextBlock Text="{x:Static localization:MainResources.ArtistTopTracks}" FontSize="12" Opacity="0.3" Foreground="{StaticResource ForegroundBrush}"/>
-                    <Button Style="{StaticResource ShowAllButton}" Content="{x:Static localization:MainResources.ArtistShowAll}" Foreground="{StaticResource AccentBrush}" Margin="15,0,24,0" FontWeight="SemiBold"
+                    <TextBlock Text="{x:Static localization:MainResources.ArtistTopTracks}" FontSize="12" Opacity="0.3" Foreground="{DynamicResource ForegroundBrush}"/>
+                    <Button Style="{StaticResource ShowAllButton}" Content="{x:Static localization:MainResources.ArtistShowAll}" Foreground="{DynamicResource AccentBrush}" Margin="15,0,24,0" FontWeight="SemiBold"
                             FontSize="11" Command="{Binding ShowAllTracksCommand}" HorizontalAlignment="Right"/>
                 </Grid>
 
@@ -136,7 +136,7 @@
                     </i:Interaction.Behaviors>
                 </ListBox>
 
-                <TextBlock Text="{x:Static localization:MainResources.ArtistRelatedArtists}" FontSize="12" Opacity="0.3" Margin="26,0,0,0" Foreground="{StaticResource ForegroundBrush}"
+                <TextBlock Text="{x:Static localization:MainResources.ArtistRelatedArtists}" FontSize="12" Opacity="0.3" Margin="26,0,0,0" Foreground="{DynamicResource ForegroundBrush}"
                            Visibility="{Binding SimilarArtists, Converter={StaticResource NullToVisibilityConverter}}"/>
                 <ListBox Margin="20,5,0,0" ItemsSource="{Binding SimilarArtists}" Style="{StaticResource AlbumsListBoxStyle}" 
                          VirtualizingStackPanel.ScrollUnit="Pixel"
@@ -165,7 +165,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Image helpers:ImageAsyncHelper.SourceUri="{Binding ImageMedium}" Width="50" Height="50" Stretch="UniformToFill"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="10,0,0,0" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
-                                           FontSize="12" MaxHeight="40" VerticalAlignment="Center" Foreground="{StaticResource ForegroundBrush}"/>
+                                           FontSize="12" MaxHeight="40" VerticalAlignment="Center" Foreground="{DynamicResource ForegroundBrush}"/>
                                 </Grid>
                             </Button>
                         </DataTemplate>

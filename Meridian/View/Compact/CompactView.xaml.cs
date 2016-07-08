@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using Meridian.ViewModel;
@@ -65,7 +66,7 @@ namespace Meridian.View.Compact
         }
 
         private void UIElement_OnMouseWheel(object sender, MouseWheelEventArgs e)
-        {            
+        {
             if (e.Delta < 0)
             {
                 ViewModelLocator.Main.Volume -= 5;
@@ -77,6 +78,15 @@ namespace Meridian.View.Compact
                 ViewModelLocator.Main.Volume += 5;
                 if (ViewModelLocator.Main.Volume > 100)
                     ViewModelLocator.Main.Volume = 100;
+            }
+        }
+
+        private void CompactView_OnStateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Minimized && Domain.Settings.Instance.EnableTrayIcon)
+            {
+                Hide();
+                Visibility = Visibility.Collapsed;
             }
         }
     }

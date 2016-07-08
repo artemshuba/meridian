@@ -8,7 +8,9 @@ using VkLib.Core.Groups;
 using VkLib.Core.Messages;
 using VkLib.Core.News;
 using VkLib.Core.Photos;
+using VkLib.Core.Stats;
 using VkLib.Core.Status;
+using VkLib.Core.Storage;
 using VkLib.Core.Subscriptions;
 using VkLib.Core.Users;
 using VkLib.Core.Video;
@@ -43,6 +45,11 @@ namespace VkLib
             get { return _apiVersion; }
             set { _apiVersion = value; }
         }
+
+        /// <summary>
+        /// Use HTTPS
+        /// </summary>
+        public bool UseHttps { get; set; }
 
         /// <summary>
         /// Access token
@@ -226,6 +233,29 @@ namespace VkLib
             }
         }
 
+        /// <summary>
+        /// Statistics
+        /// </summary>
+        public VkStatsRequest Stats
+        {
+            get
+            {
+                return new VkStatsRequest(this);
+            }
+        }
+
+
+        /// <summary>
+        /// Storage
+        /// </summary>
+        public VkStorageRequest Storage
+        {
+            get
+            {
+                return new VkStorageRequest(this);
+            }
+        }
+
         public Vkontakte(string appId, string clientSecret = null, string apiVersion = null)
         {
             AccessToken = new AccessToken();
@@ -244,6 +274,9 @@ namespace VkLib
 
             if (!string.IsNullOrEmpty(ApiVersion))
                 parameters.Add("v", ApiVersion);
+
+            if (UseHttps)
+                parameters.Add("https", "1");
         }
     }
 }

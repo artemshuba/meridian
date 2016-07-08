@@ -39,7 +39,7 @@ namespace Meridian
 
             if (Settings.Instance.SendStats)
             {
-                YandexMetrica.Start(19168); //Yandex Metrica
+                YandexMetrica.Activate("60fb8ba9-ab3c-4ee8-81ac-559c8aeb305e"); //Yandex Metrica
             }
 
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Instance.Language);
@@ -82,6 +82,8 @@ namespace Meridian
             {
                 case "Light":
                 case "Dark":
+                case "Graphite":
+                case "Accent":
                     Resources.MergedDictionaries[1].Source = new Uri(string.Format("/Resources/Themes/{0}.xaml", Settings.Instance.Theme), UriKind.Relative);
                     break;
 
@@ -95,6 +97,8 @@ namespace Meridian
 
             if (Settings.Instance.EnableTrayIcon)
                 AddTrayIcon();
+
+            ViewModelLocator.Vkontakte.UseHttps = Settings.Instance.UseHttps;
 
             AudioService.Load();
         }
@@ -165,7 +169,14 @@ namespace Meridian
         {
             foreach (Window window in Windows)
             {
+                if (window.Visibility == Visibility.Collapsed)
+                {
+                    window.Visibility = Visibility.Visible;
+                    window.Show();
+                }
+
                 window.Activate();
+
                 if (window.WindowState == WindowState.Minimized)
                     window.WindowState = WindowState.Normal;
             }

@@ -102,9 +102,9 @@ namespace Meridian.Services
             return ItemsResponse<VkAudio>.Empty;
         }
 
-        public static async Task<ItemsResponse<VkAudio>> GetPopularTracks(int count = 0, int offset = 0)
+        public static async Task<ItemsResponse<VkAudio>> GetPopularTracks(int genreId = 0, bool foreignOnly = false, int count = 0, int offset = 0)
         {
-            var response = await _vkontakte.Audio.GetPopular(count: count, offset: offset);
+            var response = await _vkontakte.Audio.GetPopular(count: count, offset: offset, genreId: genreId, onlyEng: foreignOnly);
             if (response.Items != null)
             {
                 return new ItemsResponse<VkAudio>(response.Items.Select(i => i.ToAudio()).ToList(), response.TotalCount);
@@ -166,6 +166,9 @@ namespace Meridian.Services
 
         public static async Task<Uri> GetArtistImage(string artist, bool big)
         {
+            if (string.IsNullOrEmpty(artist))
+                return null;
+
             if (artist.Contains(", ") || artist.Contains(" feat ", StringComparison.OrdinalIgnoreCase) || artist.Contains(" ft. ", StringComparison.OrdinalIgnoreCase))
             {
                 //if there are more then 1 artist, get first
@@ -208,6 +211,47 @@ namespace Meridian.Services
 
         public static async Task<Uri> GetTrackImage(string artist, string title)
         {
+            if (string.IsNullOrEmpty(artist) || string.IsNullOrEmpty(title))
+                return null;
+
+            try
+            {
+                var results = await _xboxMusic.Find(artist + " - " + title, getArtists: false);
+                string imageUrl = null;
+                if (results != null)
+                {
+                    if (results.Tracks != null)
+                    {
+                        var resultTrack = results.Tracks.Items.FirstOrDefault();
+                        if (resultTrack != null && !string.IsNullOrEmpty(resultTrack.ImageUrl))
+                        {
+                            imageUrl = resultTrack.ImageUrl;
+                        }
+                    }
+
+                    if (imageUrl == null && results.Albums != null)
+                    {
+                        var resultAlbum = results.Albums.Items.FirstOrDefault();
+                        if (resultAlbum != null && !string.IsNullOrEmpty(resultAlbum.ImageUrl))
+                        {
+                            imageUrl = resultAlbum.ImageUrl;
+                        }
+                    }
+                }
+
+                if (imageUrl != null)
+                {
+                    var httpClient = new HttpClient();
+                    var response = await httpClient.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead);
+                    if (response.IsSuccessStatusCode)
+                        return new Uri(imageUrl);
+                }
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Xbox Music: Artist " + artist + " not found.");
+            }
+
             var info = await _lastFm.Track.GetInfo(title, artist);
             if (info == null || info.ImageExtraLarge == null || string.IsNullOrEmpty(info.ImageExtraLarge))
                 return null;
@@ -215,18 +259,13 @@ namespace Meridian.Services
             return new Uri(info.ImageExtraLarge);
         }
 
-        public static async Task<List<Audio>> GetTagTopTracks(string tag, int count = 50)
+        public static async Task<List<VkAudio>> GetTagTopTracks(string tag, int count = 50)
         {
             var tracks = await _lastFm.Tag.GetTopTracks(tag, count);
             if (tracks != null)
             {
                 return (from track in tracks
-                        select new Audio()
-                        {
-                            Title = track.Title,
-                            Artist = track.Artist,
-                            Duration = TimeSpan.FromSeconds(track.Duration)
-                        }).ToList();
+                        select track.ToAudio()).ToList();
             }
 
             return null;
@@ -329,11 +368,11 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<List<Audio>> GetNewsAudio(int count, int offset, CancellationToken token, List<long> sourceIds = null)
+        public static async Task<NewsItemsResponse<Audio>> GetNewsAudio(int count, string nextFrom, CancellationToken token, List<long> sourceIds = null)
         {
             try
             {
-                var vkNews = await _vkontakte.News.Get(sourceIds != null ? string.Join(",", sourceIds) : null, "post", count, offset);
+                var vkNews = await _vkontakte.News.Get(sourceIds != null ? string.Join(",", sourceIds) : null, "post", count, nextFrom);
                 if (vkNews.Items != null)
                 {
                     var audioIds = new List<string>();
@@ -357,7 +396,7 @@ namespace Meridian.Services
                     }
 
                     if (audioIds.Count == 0)
-                        return null;
+                        return new NewsItemsResponse<Audio>(new List<Audio>());
 
                     var vkAudios = new List<VkLib.Core.Audio.VkAudio>();
                     if (audioIds.Count >= 100)
@@ -367,7 +406,7 @@ namespace Meridian.Services
                         while (i + j < audioIds.Count)
                         {
                             if (token.IsCancellationRequested)
-                                return null;
+                                return new NewsItemsResponse<Audio>(new List<Audio>());
 
                             var x = await _vkontakte.Audio.GetById(audioIds.GetRange(i, j));
                             if (x != null)
@@ -385,7 +424,7 @@ namespace Meridian.Services
                         if (token.IsCancellationRequested)
                         {
                             Debug.WriteLine("News audio cancelled");
-                            return null;
+                            return new NewsItemsResponse<Audio>(new List<Audio>());
                         }
 
                         var a = await _vkontakte.Audio.GetById(audioIds);
@@ -442,7 +481,7 @@ namespace Meridian.Services
                         //result.Add(post);
                     }
 
-                    return result;
+                    return new NewsItemsResponse<Audio>(result) { NextFrom = vkNews.NextFrom };
                 }
             }
             catch (VkAccessDeniedException ex)
@@ -707,6 +746,9 @@ namespace Meridian.Services
 
         public static async Task<bool> SetMusicStatus(VkAudio audio, List<long> targetIds = null)
         {
+            if (audio == null)
+                return false;
+
             var result = await _vkontakte.Audio.SetBroadcast(long.Parse(audio.Id), audio.OwnerId, targetIds);
 
             return result != null;
@@ -777,7 +819,7 @@ namespace Meridian.Services
             return true;
         }
 
-        public static async Task<List<Audio>> GetAdvancedRecommendations(int count = 100, CancellationToken token = default(CancellationToken))
+        public static async Task<List<VkAudio>> GetAdvancedRecommendations(int count = 100, CancellationToken token = default(CancellationToken))
         {
             //берем первые 300 треков пользователя
             var allTracks = await GetUserTracks(300);
@@ -826,7 +868,7 @@ namespace Meridian.Services
                 if (recommendedTracks != null)
                 {
                     var results = (from track in recommendedTracks
-                                   select new Audio()
+                                   select new VkAudio()
                                    {
                                        Title = track.Title,
                                        Artist = track.ArtistName

@@ -4,17 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:behaviours="clr-namespace:Neptune.UI.Behaviours;assembly=Neptune.UI.Desktop"
+      xmlns:behaviours="clr-namespace:Neptune.UI.Behaviours;assembly=Neptune.Desktop"
       xmlns:controls="clr-namespace:Meridian.Controls"
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       mc:Ignorable="d"
       d:DesignHeight="600" d:DesignWidth="600"
       KeepAlive="False" 
-      Background="{StaticResource MainBackgroundBrush}">
+      Background="{DynamicResource MainBackgroundBrush}">
 
     <Page.Resources>
         <Style x:Key="LoginButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -53,7 +53,7 @@
         </Style>
         <Style x:Key="RegisterButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
             <Setter Property="FontSize" Value="11"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -109,7 +109,7 @@
         <ControlTemplate x:Key="MeridianLogo">
             <Viewbox Margin="-5">
                 <Canvas Width="428.799" Height="469.596" Clip="F1 M 0,0L 428.799,0L 428.799,469.596L 0,469.596L 0,0" UseLayoutRounding="False">
-                    <Path x:Name="Path" Width="428.799" Height="469.596" Canvas.Left="-2.98023e-008" Canvas.Top="-3.5733e-005" Stretch="Fill" StrokeThickness="5" StrokeLineJoin="Round" Stroke="{StaticResource BackgroundBrush}" Fill="{StaticResource AccentBrush}" Data="F1 M 306.7,254.793L 428.465,0.333298L 268.125,104.479M 90.7547,63.112L 0.333333,55.512L 107.937,130.405M 158.985,326.891L 220.3,202.433L 91.28,63.0626M 361.739,469.263L 158.984,326.891L 268.125,104.477L 361.739,469.263 Z"/>
+                    <Path x:Name="Path" Width="428.799" Height="469.596" Canvas.Left="-2.98023e-008" Canvas.Top="-3.5733e-005" Stretch="Fill" StrokeThickness="5" StrokeLineJoin="Round" Stroke="{DynamicResource BackgroundBrush}" Fill="{DynamicResource AccentBrush}" Data="F1 M 306.7,254.793L 428.465,0.333298L 268.125,104.479M 90.7547,63.112L 0.333333,55.512L 107.937,130.405M 158.985,326.891L 220.3,202.433L 91.28,63.0626M 361.739,469.263L 158.984,326.891L 268.125,104.477L 361.739,469.263 Z"/>
                 </Canvas>
             </Viewbox>
         </ControlTemplate>
@@ -122,10 +122,10 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <StackPanel>
-                <ContentControl Template="{StaticResource MeridianLogo}" Width="50" VerticalAlignment="Center" Margin="0,20,10,0" Foreground="{StaticResource AccentBrush}"/>
+                <ContentControl Template="{StaticResource MeridianLogo}" Width="50" VerticalAlignment="Center" Margin="0,20,10,0" Foreground="{DynamicResource AccentBrush}"/>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,0">
                     <!--<ContentControl Template="{StaticResource MeridianLogo}" Width="40" VerticalAlignment="Center" Margin="0,5,10,0" Foreground="{StaticResource AccentBrush}"/>-->
-                    <TextBlock Text="Meridian" Foreground="{StaticResource ForegroundBrush}" FontFamily="Segoe UI SemiLight" FontSize="32" Margin="0,0,0,0" Opacity="0.7"/>
+                    <TextBlock Text="Meridian" Foreground="{DynamicResource ForegroundBrush}" FontFamily="Segoe UI SemiLight" FontSize="32" Margin="0,0,0,0" Opacity="0.7"/>
                 </StackPanel>
             </StackPanel>
             <Grid Grid.Row="1" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
@@ -148,13 +148,13 @@
                         <behaviours:VisibilityTransitionBehaviour Value="{Binding IsLoginFormVisible, Converter={StaticResource BoolToVisibilityConverter}}" AnimationIn="{StaticResource LoginFormTransitionIn}" AnimationOut="{StaticResource LoginFormTransitionOut}"/>
                     </i:Interaction.Behaviors>
                     <StackPanel Margin="50,15,50,0" Width="285">
-                        <TextBlock Text="{x:Static localization:MainResources.LoginLoginTitle}" FontSize="12" Margin="0,20,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+                        <TextBlock Text="{x:Static localization:MainResources.LoginLoginTitle}" FontSize="12" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
                         <TextBox x:Name="LoginTextBox" Width="285" Margin="0,3,0,0" Text="{Binding Login, Mode=TwoWay}" Style="{StaticResource CommonTextBoxStyle}" KeyUp="LoginTextBox_OnKeyUp"/>
-                        <TextBlock Text="{x:Static localization:MainResources.LoginPasswordTitle}" FontSize="12" Margin="0,10,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+                        <TextBlock Text="{x:Static localization:MainResources.LoginPasswordTitle}" FontSize="12" Margin="0,10,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
                         <controls:BindablePasswordBox x:Name="PasswordBox" Password="{Binding Password, Mode=TwoWay}" Width="285" Margin="0,3,0,0" KeyUp="PasswordBox_OnKeyUp"/>
                         <StackPanel Visibility="{Binding ShowCaptcha, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Image Source="{Binding CaptchaImg}" Margin="0,10,0,0" Height="70" HorizontalAlignment="Left"/>
-                            <TextBlock Text="{x:Static localization:MainResources.CaptchaEnterSymbols}" FontSize="12" Margin="0,5,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+                            <TextBlock Text="{x:Static localization:MainResources.CaptchaEnterSymbols}" FontSize="12" Margin="0,5,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
                             <TextBox Text="{Binding CaptchaKey, Mode=TwoWay}" Margin="0,3,0,12" Style="{StaticResource CommonTextBoxStyle}"/>
                         </StackPanel>
                         <TextBlock Foreground="Red" Text="{Binding LoginError}" Margin="0,3,0,0" Visibility="{Binding LoginError, Converter={StaticResource NullToVisibilityConverter}}"
@@ -168,10 +168,10 @@
             </Grid>
 
             <StackPanel Grid.Row="1" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0" >
-                <TextBlock Text="{x:Static localization:MainResources.LoginLoading}" FontSize="22" HorizontalAlignment="Center" Opacity="0.4" FontWeight="Light" Foreground="{StaticResource ForegroundBrush}"/>
+                <TextBlock Text="{x:Static localization:MainResources.LoginLoading}" FontSize="22" HorizontalAlignment="Center" Opacity="0.4" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
                 <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}"/>
             </StackPanel>
         </Grid>
-        <TextBlock FontWeight="Normal" Text="Copyright © Stealth 2014" Foreground="{StaticResource ForegroundBrush}" FontSize="10" VerticalAlignment="Bottom" Opacity="0.5" HorizontalAlignment="Center" Margin="0,0,0,7"/>
+        <TextBlock FontWeight="Normal" Text="Copyright © Artem Shuba 2016" Foreground="{DynamicResource ForegroundBrush}" FontSize="10" VerticalAlignment="Bottom" Opacity="0.5" HorizontalAlignment="Center" Margin="0,0,0,7"/>
     </Grid>
 </controls:PageBase>

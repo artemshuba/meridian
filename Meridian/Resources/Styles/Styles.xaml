@@ -34,7 +34,7 @@
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
         <Setter Property="BusyContent" Value="{x:Static localization:MainResources.Loading}" />
         <Setter Property="BusyContentStyle">
             <Setter.Value>
@@ -183,7 +183,7 @@
                                 </StackPanel>
                             </ContentPresenter.Content>
                         </ContentPresenter>
-                        <ContentPresenter x:Name="errorcontent" Style="{TemplateBinding BusyContentStyle}">
+                        <ContentPresenter x:Name="errorcontent" Style="{TemplateBinding BusyContentStyle}" Visibility="Collapsed">
                             <ContentPresenter.Content>
                                 <TextBlock Text="{TemplateBinding Error}" Foreground="{TemplateBinding Foreground}" Opacity="0.7" TextWrapping="Wrap"/>
                             </ContentPresenter.Content>
@@ -196,7 +196,7 @@
 
     <Style x:Key="AddButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource SimpleButtonStyle}">
         <Setter Property="Opacity" Value="0.7" />
-        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
         <Setter Property="SnapsToDevicePixels" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -207,7 +207,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Opacity" Value="1" />
-                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -215,7 +215,7 @@
                                 <Condition Property="IsPressed" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter Property="Opacity" Value="1" />
-                            <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -249,7 +249,7 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource HotCurrentTrackBackgroundBrush}" />
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource HotCurrentTrackBackgroundBrush}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -258,13 +258,13 @@
     </Style>
 
     <Style x:Key="MainBackButtonStyle" TargetType="Button">
-        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="20"/>
         <Setter Property="Opacity" Value="0.5" />
         <Setter Property="Padding" Value="5" />
-        <Setter Property="Margin" Value="3,0,-3,0" />
+        <Setter Property="Margin" Value="3,1,-3,-1" />
         <Setter Property="ToolTip" Value="{x:Static localization:MainResources.BackButton}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -299,7 +299,7 @@
     </Style>
 
     <Style x:Key="CompactBackButtonStyle" TargetType="ToggleButton">
-        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
         <Setter Property="Width" Value="56"/>
         <Setter Property="Height" Value="56"/>
         <Setter Property="Opacity" Value="0.7" />
@@ -338,7 +338,7 @@
     </Style>
 
     <Style x:Key="PinButtonStyle" TargetType="ToggleButton">
-        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
         <Setter Property="Width" Value="56"/>
         <Setter Property="Height" Value="56"/>
         <Setter Property="Opacity" Value="0.7" />
@@ -381,7 +381,7 @@
 
     <ControlTemplate x:Key="SearchBoxButton" TargetType="Button">
         <Grid Background="#00000000">
-            <Path Name="Icon" Data="{StaticResource SearchIcon}" Fill="{StaticResource SidebarForegroundBrush}" Stretch="Uniform" Opacity="0.3"/>
+            <Path Name="Icon" Data="{StaticResource SearchIcon}" Fill="{DynamicResource ForegroundBrush}" Stretch="Uniform" Opacity="0.3"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -395,7 +395,7 @@
 
     <ControlTemplate x:Key="CancelSearchBoxButton" TargetType="Button">
         <Grid Background="#00000000">
-            <Path Name="Icon" Data="{StaticResource CloseIcon}" Fill="{StaticResource AccentBrush}" Stretch="Uniform" Opacity="0.7"/>
+            <Path Name="Icon" Data="{StaticResource CloseIcon}" Fill="{DynamicResource AccentBrush}" Stretch="Uniform" Opacity="0.7"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

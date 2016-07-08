@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using Meridian.ViewModel;
+﻿using Meridian.Layout;
 using Meridian.ViewModel.Main;
 
 namespace Meridian.View.Main
@@ -7,7 +6,7 @@ namespace Meridian.View.Main
     /// <summary>
     /// Interaction logic for RadioView.xaml
     /// </summary>
-    public partial class RadioView : Page
+    public partial class RadioView : PageBase
     {
         private RadioViewModel _viewModel;
 

@@ -7,13 +7,18 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
       xmlns:Properties="clr-namespace:Meridian.Resources.Localization"
-      xmlns:behaviours1="clr-namespace:Neptune.UI.Desktop.Behaviours;assembly=Neptune.UI.Desktop"
+      xmlns:behaviours1="clr-namespace:Neptune.UI.Desktop.Behaviours;assembly=Neptune.Desktop"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
       x:Name="pageRoot" Loaded="LocalCollectionView_OnLoaded">
 
     <Page.Resources>
         <CollectionViewSource x:Key="TracksCollection" Source="{Binding Tracks}" />
+        <CollectionViewSource x:Key="SelectedArtistTracksCollection" Source="{Binding SelectedArtistTracks}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Album"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
     </Page.Resources>
 
     <Page.RenderTransform>
@@ -33,7 +38,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid>
+        <Grid Margin="0,5,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition />
@@ -53,7 +58,7 @@
             <ToggleButton Grid.Column="1" x:Name="HeaderButton" Content="{x:Static Properties:MainResources.MainMenuCollection}" Style="{StaticResource HeaderButtonStyle}"/>
         </Grid>
 
-        <TabControl Grid.Row="2" Style="{StaticResource CommonTabControlStyle}" Margin="0,-8,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+        <TabControl Grid.Row="2" Style="{StaticResource CommonTabControlStyle}" Margin="0,4.5,0,0" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
             <TabItem Header="{x:Static Properties:MainResources.TracksTab}" Style="{StaticResource CommonTabItemStyle}">
                 <Grid>
                     <controls:BusyIndicator IsBusy="{Binding Tasks[tracks].IsWorking}" Error="{Binding Tasks[tracks].Error}">
@@ -66,8 +71,6 @@
                             </i:Interaction.Behaviors>
                         </ListBox>
                     </controls:BusyIndicator>
-
-                    <Rectangle Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
 
                     <controls:LocalSearchControl x:Name="LocalSearchBox" Grid.ColumnSpan="2" Source="{StaticResource TracksCollection}" FontSize="12" VerticalAlignment="Top"/>
                 </Grid>
@@ -87,7 +90,7 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.85" Margin="0,0,0,5" 
                                                    Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"
-                                                   Foreground="{StaticResource ForegroundBrush}"/>
+                                                   Foreground="{DynamicResource ForegroundBrush}"/>
                                         <ItemsControl Grid.Row="1" ItemsSource="{Binding Albums}" Margin="0,0,0,0"
                                            ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                                             <ItemsControl.ItemsPanel>
@@ -118,14 +121,14 @@
                                                                 <RowDefinition Height="Auto"/>
                                                             </Grid.RowDefinitions>
                                                             <Grid Height="120">
-                                                                <Rectangle Fill="{StaticResource ForegroundBrush}" Opacity="0.3"/>
+                                                                <Rectangle Fill="{DynamicResource ForegroundBrush}" Opacity="0.3"/>
                                                                 <Image Source="/Resources/Images/cover_default.png" Margin="25,25,25,40" RenderOptions.BitmapScalingMode="HighQuality"/>
                                                                 <Image Source="{Binding Cover}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
                                                                 <Border x:Name="Border" Opacity="0.8"/>
                                                             </Grid>
                                                             <StackPanel Grid.Row="1">
-                                                                <TextBlock Text="{Binding Title}" FontSize="12" Margin="0,0,0,0" TextTrimming="CharacterEllipsis" Foreground="{StaticResource ForegroundBrush}"/>
-                                                                <TextBlock Text="{Binding Year}" FontSize="12" Margin="0,-2,0,0" TextTrimming="CharacterEllipsis" Foreground="{StaticResource ForegroundBrush}"
+                                                                <TextBlock Text="{Binding Title}" FontSize="12" Margin="0,0,0,0" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource ForegroundBrush}"/>
+                                                                <TextBlock Text="{Binding Year}" FontSize="12" Margin="0,-2,0,0" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource ForegroundBrush}"
                                                                        Visibility="{Binding Year, Converter={StaticResource NullToVisibilityConverter}}" Opacity="0.7"/>
                                                             </StackPanel>
                                                         </Grid>
@@ -133,7 +136,7 @@
                                                     <DataTemplate.Triggers>
                                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=IsMouseOver}" Value="True">
                                                             <Setter TargetName="Border" Property="BorderThickness" Value="4" />
-                                                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
                                                         </DataTrigger>
                                                     </DataTemplate.Triggers>
                                                 </DataTemplate>
@@ -144,7 +147,6 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </controls:BusyIndicator>
-                    <Rectangle Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static Properties:MainResources.ArtistsTab}" Style="{StaticResource CommonTabItemStyle}">
@@ -154,36 +156,32 @@
                         <ColumnDefinition Width="180"/>
                     </Grid.ColumnDefinitions>
                     <controls:BusyIndicator IsBusy="{Binding Tasks[artists].IsWorking}" Error="{Binding Tasks[artists].Error}">
-                        <ListBox Margin="0,0,0,0" Padding="24,5,0,0" ItemsSource="{Binding SelectedArtistAlbums}" ItemContainerStyle="{StaticResource GroupListBoxItemStyle}"
+                        <ListBox Margin="0,0,0,0" Padding="0,5,0,0" ItemsSource="{Binding Source={StaticResource SelectedArtistTracksCollection}}"
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                             HorizontalContentAlignment="Stretch"
-                             Style="{StaticResource CommonListBoxStyle}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid x:Name="RootGrid">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Opacity="0.85" Margin="0,0,0,5" 
-                                                   Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}"
-                                                   Foreground="{StaticResource ForegroundBrush}"/>
-                                        <ListBox Grid.Row="1" ItemsSource="{Binding Tracks}" Margin="-24,0,0,10"
-                                                 Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
-                                                 ItemTemplate="{StaticResource LocalAudioItemTemplate}"
-                                                 HorizontalContentAlignment="Stretch"
-                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                                            <i:Interaction.Behaviors>
-                                                <behaviours1:IgnoreMouseWheelBehavior/>
-                                            </i:Interaction.Behaviors>
-                                        </ListBox>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
+                             HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource LocalAudioItemTemplate}"
+                             Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                             VirtualizingPanel.IsVirtualizing="True"
+                             VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                            <ListBox.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" Margin="10,10,10,10"
+                                                       FontSize="14" FontFamily="Segoe UI" Opacity="0.85"
+                                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Margin" Value="10,0,15,0"></Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ListBox.GroupStyle>
                         </ListBox>
                     </controls:BusyIndicator>
 
-                    <Rectangle Grid.Column="1" Fill="{StaticResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
+                    <Rectangle Grid.Column="1" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,-25" Opacity="0.4"/>
 
                     <ListBox Grid.Column="1" ItemsSource="{Binding Artists}" Style="{StaticResource CommonListBoxStyle}" Margin="0,10,0,0"
                              VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -209,8 +207,8 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Rectangle Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
-                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{StaticResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
+                    <!--<Rectangle Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>-->
+                    <Rectangle Width="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0"/>
                 </Grid>
             </TabItem>
         </TabControl>

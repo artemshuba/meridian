@@ -38,14 +38,14 @@
             </Storyboard>
         </Storyboard>
     </Window.Resources>
-    <Border Background="{StaticResource MainBackgroundBrush}" BorderBrush="Gray" BorderThickness="1">
+    <Border Background="{DynamicResource MainBackgroundBrush}" BorderBrush="Gray" BorderThickness="1">
         <Grid>
             <Grid Margin="20,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Border Background="{StaticResource AccentBrush}" Width="40" Height="40">
+                <Border Background="{DynamicResource AccentBrush}" Width="40" Height="40">
                     <Grid>
                         <Image Source="/Resources/Images/cover_default.png" Margin="8" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <controls:ImageTransitionControl Source="{Binding Main.TrackImage, Source={StaticResource Locator}}"/>
@@ -53,8 +53,8 @@
                 </Border>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,10,20,10">
                     <TextBlock Text="{Binding ElementName=rootElement, Path=Track.Artist}" TextTrimming="CharacterEllipsis"
-                       FontSize="14" Opacity="0.6" Foreground="{StaticResource ForegroundBrush}" Margin="0,0,0,-2"/>
-                    <TextBlock Text="{Binding ElementName=rootElement, Path=Track.Title}" FontFamily="Segoe UI Semilight" TextTrimming="CharacterEllipsis" FontSize="20" Margin="0,0,0,0" Foreground="{StaticResource ForegroundBrush}"/>
+                       FontSize="14" Opacity="0.6" Foreground="{DynamicResource ForegroundBrush}" Margin="0,0,0,-2"/>
+                    <TextBlock Text="{Binding ElementName=rootElement, Path=Track.Title}" FontFamily="Segoe UI Semilight" TextTrimming="CharacterEllipsis" FontSize="20" Margin="0,0,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
                 </StackPanel>
             </Grid>
 
