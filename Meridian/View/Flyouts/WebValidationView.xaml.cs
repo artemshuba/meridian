@@ -33,6 +33,12 @@ namespace Meridian.View.Flyouts
         {
             //force webbrowser to use IE9 engine instead of default IE7
             var browserEmulationKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION", true);
+            if (browserEmulationKey == null)
+            {
+                //if there is no such key in registry create it
+                browserEmulationKey = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION");
+            }
+
             var appName = Path.GetFileName(Assembly.GetExecutingAssembly().Location);
             var v = browserEmulationKey.GetValue(appName);
             if (v == null || (int)v != 0x270f)
