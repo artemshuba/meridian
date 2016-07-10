@@ -35,39 +35,39 @@ namespace Meridian.Controls
             base.OnApplyTemplate();
 
             _hintContent = GetTemplateChild("HintContent") as ContentControl;
-            if (_hintContent != null)
-                DetermineHintVisibility();
+            DetermineHintVisibility();
         }
 
         protected override void OnGotFocus(RoutedEventArgs e)
         {
-            if (_hintContent != null && string.IsNullOrEmpty(this.Text))
-            {
-                _hintContent.Visibility = Visibility.Collapsed;
-            }
-
+            DetermineHintVisibility();
             base.OnGotFocus(e);
         }
 
         protected override void OnLostFocus(RoutedEventArgs e)
         {
-            if (_hintContent != null && string.IsNullOrEmpty(this.Text))
-            {
-                _hintContent.Visibility = Visibility.Visible;
-            }
-
+            DetermineHintVisibility();
             base.OnLostFocus(e);
+        }
+
+        protected override void OnTextChanged(TextChangedEventArgs e)
+        {
+            DetermineHintVisibility();
+            base.OnTextChanged(e);
         }
 
         private void DetermineHintVisibility()
         {
-            if (string.IsNullOrEmpty(this.Text) && !IsFocused)
+            if(_hintContent != null)
             {
-                _hintContent.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                _hintContent.Visibility = Visibility.Collapsed;
+                if (string.IsNullOrEmpty(this.Text) && !IsFocused)
+                {
+                    _hintContent.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _hintContent.Visibility = Visibility.Collapsed;
+                }
             }
         }
     }

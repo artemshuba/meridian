@@ -42,7 +42,7 @@
 
                         <Grid x:Name="SearchBoxGrid" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,45,10,0" Width="170" Height="24">
                             <controls1:TextBoxWithHint x:Name="SearchBox" Padding="8,0,30,0" HorizontalAlignment="Stretch" Style="{StaticResource SearchBoxStyle}" FontWeight="Regular" 
-                                                       Hint="{x:Static localization:MainResources.Search}" HintStyle="{StaticResource TextBoxHintStyle}">
+                                                       Hint="{x:Static localization:MainResources.Search}" HintStyle="{StaticResource TextBoxHintStyle}" Text="{Binding Query}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="KeyUp">
                                         <command:EventToCommand Command="{Binding Main.SearchKeyUpCommand, Source={StaticResource Locator}}" PassEventArgsToCommand="True"/>
