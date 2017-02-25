@@ -87,7 +87,9 @@ namespace Meridian.Services
                 var response = await _vkontakte.Audio.Get(ownerId, albumId, count, offset);
                 if (response.Items != null)
                 {
-                    return new ItemsResponse<VkAudio>(response.Items.Select(i => i.ToAudio()).ToList(), response.TotalCount);
+                    var validTracks = RemoveCorruptedTracks(response.Items.Select(i => i.ToAudio()));
+
+                    return new ItemsResponse<VkAudio>(validTracks.ToList(), response.TotalCount);
                 }
             }
             catch (VkInvalidTokenException)
@@ -985,6 +987,11 @@ namespace Meridian.Services
 
                 NotificationService.NotifyProgressFinished(MainResources.NotificationSaved);
             }
+        }
+
+        private static IEnumerable<VkAudio> RemoveCorruptedTracks(IEnumerable<VkAudio> source)
+        {
+            return source.Where(x => x.Source != string.Empty);
         }
     }
 }
