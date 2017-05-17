@@ -128,6 +128,7 @@
     <Compile Include="Error\VkAccessDeniedException.cs" />
     <Compile Include="Error\VkCaptchaNeededException.cs" />
     <Compile Include="Error\VkException.cs" />
+    <Compile Include="Error\VkFloodControlException.cs" />
     <Compile Include="Error\VkInvalidClientException.cs" />
     <Compile Include="Error\VkInvalidTokenException.cs" />
     <Compile Include="Error\VkNeedValidationException.cs" />

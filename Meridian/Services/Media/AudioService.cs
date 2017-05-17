@@ -239,7 +239,7 @@ namespace Meridian.Services
                         var playlistTrackIndex = _playlist.IndexOf(track);
                         if (playlistTrackIndex >= 0)
                         {
-                            var playlistTrack = (VkAudio) _playlist[_playlist.IndexOf(track)];
+                            var playlistTrack = (VkAudio)_playlist[_playlist.IndexOf(track)];
                             playlistTrack.Id = vkAudio.Id;
                             playlistTrack.Source = vkAudio.Source;
                             playlistTrack.OwnerId = vkAudio.OwnerId;
@@ -286,13 +286,16 @@ namespace Meridian.Services
 
             //look like MediaElement doen't work with https, temporary hack
             var url = track.Source;
-            if (!Settings.Instance.UseHttps)
-                url = url.Replace("https://", "http://");
+            if (!string.IsNullOrEmpty(url))
+            {
+                if (!Settings.Instance.UseHttps)
+                    url = url.Replace("https://", "http://");
 
-            MediaPlayer.Source = new Uri(url);
-            MediaPlayer.Play();
+                MediaPlayer.Source = new Uri(url);
+                MediaPlayer.Play();
 
-            State = PlayerPlayState.Playing;
+                State = PlayerPlayState.Playing;
+            }
         }
 
         public static async void Play()
@@ -369,9 +372,9 @@ namespace Meridian.Services
                 SwitchNext();
             else
                 if (RadioService.CurrentRadio == null)
-                    Next(true);
-                else
-                    RadioService.SkipNext();
+                Next(true);
+            else
+                RadioService.SkipNext();
         }
 
         /// <summary>
@@ -460,7 +463,7 @@ namespace Meridian.Services
         {
             if (playlist == null)
             {
-                Playlist.Clear();
+                Playlist?.Clear();
             }
             else
                 Playlist = new ObservableCollection<Audio>(playlist);

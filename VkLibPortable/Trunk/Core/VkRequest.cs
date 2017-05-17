@@ -46,6 +46,7 @@ namespace VkLib.Core
             JObject response = null;
 
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("User-Agent", VkConst.UserAgent);
             if (_method == "GET")
             {
                 HttpResponseMessage responseMessage = await httpClient.GetAsync(uri);

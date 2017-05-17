@@ -18,6 +18,8 @@ namespace VkLib.Core
                         throw new VkStatusBroadcastDisabledException();
                     if (response["error"]["error_code"].Value<string>() == "5")
                         throw new VkInvalidTokenException();
+                    if (response["error"]["error_code"].Value<string>() == "9")
+                        throw new VkFloodControlException();
                     if (response["error"]["error_code"].Value<string>() == "14")
                         throw new VkCaptchaNeededException(response["error"]["captcha_sid"].Value<string>(), response["error"]["captcha_img"].Value<string>());
                 }

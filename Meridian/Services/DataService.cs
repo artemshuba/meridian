@@ -99,7 +99,13 @@ namespace Meridian.Services
 
                 AccountManager.LogOutVk();
             }
+            catch (VkFloodControlException)
+            {
+                Settings.Instance.AccessToken = null;
+                Settings.Instance.Save();
 
+                AccountManager.LogOutVk();
+            }
 
             return ItemsResponse<VkAudio>.Empty;
         }
