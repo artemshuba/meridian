@@ -55,6 +55,17 @@ namespace Meridian.Services
             {
                 Settings.Instance.AccessToken = token;
                 Settings.Instance.Save();
+
+                var p = _vkontakte.LoginParams ?? new Dictionary<string, string>()
+                {
+                    ["version"] = "4.11.1",
+                    ["func_v"] = "5"
+                };
+
+                p.Add("userId", token.UserId.ToString());
+
+                await _vkontakte.Execute.GetBaseData(p);
+
                 Messenger.Default.Send(new LoginMessage() { Type = LoginType.LogIn, Service = "vk" });
             }
         }

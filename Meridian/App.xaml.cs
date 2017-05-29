@@ -29,7 +29,7 @@ namespace Meridian
 
         public static readonly string Root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        private void App_OnStartup(object sender, StartupEventArgs e)
+        private async void App_OnStartup(object sender, StartupEventArgs e)
         {
             LoggingService.Log("Meridian v" + Assembly.GetExecutingAssembly().GetName().Version + " started. OS: " + Environment.OSVersion);
 
@@ -94,6 +94,8 @@ namespace Meridian
 
             if (Settings.Instance.CheckForUpdates)
                 ViewModelLocator.UpdateService.CheckUpdates();
+
+            await HostService.Update();
 
             if (Settings.Instance.EnableTrayIcon)
                 AddTrayIcon();

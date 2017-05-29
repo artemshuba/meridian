@@ -268,6 +268,7 @@
       <DependentUpon>MainResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\AccountManager.cs" />
+    <Compile Include="Services\HostService.cs" />
     <Compile Include="Services\Media\AudioService.cs" />
     <Compile Include="Services\Media\Core\MediaPlayerBase.cs" />
     <Compile Include="Services\CacheService.cs" />

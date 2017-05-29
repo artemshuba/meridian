@@ -20,13 +20,15 @@ namespace VkLib.Core
         private readonly string _method;
         private readonly Dictionary<string, string> _parameters;
 
+        internal static string UserAgent { get; set; }
+
         public VkRequest(Uri uri)
         {
             _uri = uri;
             _method = "GET";
         }
 
-        public VkRequest(Uri uri, Dictionary<string, string> parameters, string method = "GET")
+        public VkRequest(Uri uri, Dictionary<string, string> parameters, string method = "POST")
         {
             _uri = uri;
             _method = method;
@@ -46,7 +48,7 @@ namespace VkLib.Core
             JObject response = null;
 
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("User-Agent", VkConst.UserAgent);
+            httpClient.DefaultRequestHeaders.Add("User-Agent", UserAgent);
             if (_method == "GET")
             {
                 HttpResponseMessage responseMessage = await httpClient.GetAsync(uri);

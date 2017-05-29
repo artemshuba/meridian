@@ -10,6 +10,7 @@ using Meridian.View.Flyouts;
 using Neptune.Messages;
 using VkLib.Core.Auth;
 using VkLib.Error;
+using System.Collections.Generic;
 
 namespace Meridian.ViewModel.Main
 {
@@ -252,6 +253,16 @@ namespace Meridian.ViewModel.Main
             if (token != null)
             {
                 AccountManager.SetLoginVk(token);
+
+                var p = ViewModelLocator.Vkontakte.LoginParams ?? new Dictionary<string, string>()
+                {
+                    ["version"] = "4.11.1",
+                    ["func_v"] = "5"
+                };
+
+                p.Add("userId", token.UserId.ToString());
+
+                await ViewModelLocator.Vkontakte.Execute.GetBaseData(p);
 
                 MessengerInstance.Send(new NavigateToPageMessage() { Page = "/Main.MusicView" });
             }

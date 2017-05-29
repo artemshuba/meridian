@@ -96,6 +96,7 @@
     <Compile Include="Core\Audio\VkAudio.cs" />
     <Compile Include="Core\Audio\VkAudioAlbum.cs" />
     <Compile Include="Core\Audio\VkAudioRequest.cs" />
+    <Compile Include="Core\Execute\VkExecuteRequest.cs" />
     <Compile Include="Core\Favorites\VkFavoritesRequest.cs" />
     <Compile Include="Core\Friends\VkFriendsRequest.cs" />
     <Compile Include="Core\Groups\VkGroup.cs" />
@@ -156,9 +157,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Execute\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>

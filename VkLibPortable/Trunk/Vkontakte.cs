@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using VkLib.Core;
 using VkLib.Core.Account;
 using VkLib.Core.Audio;
 using VkLib.Core.Auth;
+using VkLib.Core.Execute;
 using VkLib.Core.Favorites;
 using VkLib.Core.Friends;
 using VkLib.Core.Groups;
@@ -23,19 +25,30 @@ namespace VkLib
     /// </summary>
     public class Vkontakte
     {
-        private readonly string _clientSecret;
-        private readonly string _appId;
+        private string _clientSecret;
+        private string _appId;
         private string _apiVersion = "5.9";
+        private string _userAgent;
 
-        internal string AppId
+        public string AppId
         {
             get { return _appId; }
+            set { _appId = value; }
         }
 
-        internal string ClientSecret
+        public string ClientSecret
         {
             get { return _clientSecret; }
+            set { _clientSecret = value; }
         }
+
+        public string UserAgent
+        {
+            get { return VkRequest.UserAgent; }
+            set { VkRequest.UserAgent = value; }
+        }
+
+        public Dictionary<string, string> LoginParams { get; set; }
 
         /// <summary>
         /// Api version
@@ -256,13 +269,27 @@ namespace VkLib
             }
         }
 
-        public Vkontakte(string appId, string clientSecret = null, string apiVersion = null)
+
+        /// <summary>
+        /// Execute
+        /// </summary>
+        public VkExecuteRequest Execute
+        {
+            get
+            {
+                return new VkExecuteRequest(this);
+            }
+        }
+
+
+        public Vkontakte(string appId, string clientSecret, string apiVersion, string userAgent)
         {
             AccessToken = new AccessToken();
             ApiVersion = apiVersion;
 
-            _appId = appId;
-            _clientSecret = clientSecret;
+            AppId = appId;
+            ClientSecret = clientSecret;
+            UserAgent = userAgent;
         }
 
         internal void SignMethod(Dictionary<string, string> parameters)
