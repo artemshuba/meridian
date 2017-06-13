@@ -90,6 +90,8 @@ namespace Meridian.ViewModel
         private bool _enableRemotePlay;
         private bool _useHttps;
 
+        private bool _isSidebarOpened;
+
         #region Commands
 
         public RelayCommand CloseSettingsCommand { get; private set; }
@@ -443,6 +445,8 @@ namespace Meridian.ViewModel
             else
                 _selectedLanguage = _languages.First();
 
+            _isSidebarOpened = ViewModelLocator.Main.ShowSidebar;
+
             #region Hotkeys
 
             _hotkeys.Add(new SettingsHotkey()
@@ -556,7 +560,6 @@ namespace Meridian.ViewModel
             });
 
             #endregion
-
         }
 
         public async void Activate()
@@ -573,7 +576,7 @@ namespace Meridian.ViewModel
         {
             CloseSettingsCommand = new RelayCommand(() =>
             {
-                ViewModelLocator.Main.ShowSidebar = true;
+                ViewModelLocator.Main.ShowSidebar = _isSidebarOpened;
                 ViewModelLocator.Main.GoBackCommand.Execute(null);
             });
 

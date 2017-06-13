@@ -555,8 +555,8 @@ namespace Meridian.ViewModel
 
             GoToSettingsCommand = new RelayCommand(() =>
             {
-                ShowSidebar = false;
                 OnNavigateToPage(new NavigateToPageMessage() { Page = "/Settings.SettingsView" });
+                ShowSidebar = false;
             });
 
             PrevAudioCommand = new RelayCommand(AudioService.Prev);
