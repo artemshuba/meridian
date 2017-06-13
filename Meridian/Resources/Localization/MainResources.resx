@@ -804,4 +804,7 @@
   <data name="SettingsMenuGeneral" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="LoginGoToSettings" xml:space="preserve">
+    <value>Go to settings.</value>
+  </data>
 </root>

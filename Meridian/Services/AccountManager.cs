@@ -62,7 +62,7 @@ namespace Meridian.Services
                     ["func_v"] = "5"
                 };
 
-                p.Add("userId", token.UserId.ToString());
+                p["userId"] = token.UserId.ToString();
 
                 await _vkontakte.Execute.GetBaseData(p);
 
@@ -127,6 +127,7 @@ namespace Meridian.Services
             Settings.Instance.Save();
 
             ViewModelLocator.Main.ShowSidebar = false;
+            ViewModelLocator.Main.User = null;
             Messenger.Default.Send(new NavigateToPageMessage() { Page = "/Main.LoginView" });
         }
 

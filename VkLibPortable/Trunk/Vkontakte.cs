@@ -297,13 +297,13 @@ namespace VkLib
             if (parameters == null)
                 parameters = new Dictionary<string, string>();
 
-            parameters.Add("access_token", AccessToken.Token);
+            parameters["access_token"] = AccessToken.Token;
 
             if (!string.IsNullOrEmpty(ApiVersion))
-                parameters.Add("v", ApiVersion);
+                parameters["v"] = ApiVersion;
 
             if (UseHttps)
-                parameters.Add("https", "1");
+                parameters["https"] = "1";
         }
     }
 }

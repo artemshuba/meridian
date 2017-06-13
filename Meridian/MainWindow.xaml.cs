@@ -16,6 +16,7 @@ using Meridian.View.Main;
 using Meridian.ViewModel;
 using Neptune.Messages;
 using Neptune.UI.Extensions;
+using Meridian.View.Settings;
 
 namespace Meridian
 {
@@ -103,7 +104,7 @@ namespace Meridian
 
         void RootFrame_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
         {
-            if (RootFrame.Content is LoginView)
+            if (RootFrame.Content is LoginView && !(e.Content is SettingsView))
             {
                 _clearStack = true;
             }

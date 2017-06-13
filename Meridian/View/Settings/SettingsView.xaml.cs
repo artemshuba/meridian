@@ -12,6 +12,7 @@ namespace Meridian.View.Settings
     public partial class SettingsView : PageBase
     {
         private SettingsViewModel _viewModel;
+        private bool _isSidebarOpened;
 
         public SettingsView()
         {
@@ -28,6 +29,7 @@ namespace Meridian.View.Settings
 
         public override void OnNavigatedTo()
         {
+            _isSidebarOpened = ViewModelLocator.Main.ShowSidebar;
             ViewModelLocator.Main.ShowSidebar = false;
 
             var p = NavigationContext.Parameters;
@@ -42,7 +44,7 @@ namespace Meridian.View.Settings
 
         public override void OnNavigatedFrom()
         {
-            ViewModelLocator.Main.ShowSidebar = true;
+            ViewModelLocator.Main.ShowSidebar = _isSidebarOpened;
         }
 
         private void SettingsFrame_OnNavigated(object sender, NavigationEventArgs e)

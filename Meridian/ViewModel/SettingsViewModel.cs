@@ -22,6 +22,8 @@ using Meridian.Services;
 using Meridian.Services.Media.Core;
 using Meridian.View.Flyouts;
 using VkLib.Core.Attachments;
+using GalaSoft.MvvmLight.Messaging;
+using Neptune.Messages;
 
 namespace Meridian.ViewModel
 {
@@ -99,6 +101,8 @@ namespace Meridian.ViewModel
         public RelayCommand SignOutVkCommand { get; private set; }
 
         public RelayCommand LoginLastFmCommand { get; private set; }
+
+        public RelayCommand LoginVkCommand { get; private set; }
 
         public RelayCommand SignOutLastFmCommand { get; private set; }
 
@@ -590,6 +594,11 @@ namespace Meridian.ViewModel
                 var flyout = new FlyoutControl();
                 flyout.FlyoutContent = new LoginLastFmView();
                 flyout.Show();
+            });
+
+            LoginVkCommand = new RelayCommand(() =>
+            {
+                Messenger.Default.Send(new NavigateToPageMessage() { Page = "/Main.LoginView" });
             });
 
             SignOutLastFmCommand = new RelayCommand(AccountManager.LogoutLastFm);

@@ -798,4 +798,7 @@
   <data name="SettingsMenuGeneral" xml:space="preserve">
     <value>Общие</value>
   </data>
+  <data name="LoginGoToSettings" xml:space="preserve">
+    <value>Перейти в настройки.</value>
+  </data>
 </root>

@@ -54,7 +54,7 @@ namespace Neptune.UI.Converters
 
             }
 
-            return Visibility.Visible;
+            return invert ? Visibility.Collapsed : Visibility.Visible;
         }
 
 #if MODERN

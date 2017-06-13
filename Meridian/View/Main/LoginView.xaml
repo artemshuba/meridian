@@ -172,6 +172,13 @@
                 <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}"/>
             </StackPanel>
         </Grid>
-        <TextBlock FontWeight="Normal" Text="Copyright © Artem Shuba 2017" Foreground="{DynamicResource ForegroundBrush}" FontSize="10" VerticalAlignment="Bottom" Opacity="0.5" HorizontalAlignment="Center" Margin="0,0,0,7"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,7">
+            <TextBlock FontWeight="Normal" Text="Copyright © Artem Shuba 2017." Foreground="{DynamicResource ForegroundBrush}" FontSize="10" Opacity="0.5"/>
+            <TextBlock FontSize="10" Opacity="0.5" Margin="5,0,0,0">
+                <Hyperlink Foreground="{DynamicResource ForegroundBrush}" Command="{Binding Main.GoToSettingsCommand, Source={StaticResource Locator}}">
+                    <Run Text="{x:Static localization:MainResources.LoginGoToSettings}"/>
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </controls:PageBase>
