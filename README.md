@@ -14,5 +14,4 @@ Unfortunately most parts of code isn't documented yet.
 Changes and improvements are very welcome. Feel free to fork and open a pull request.
 
 ## License
-[Apache License](LICENSE.txt)
-The source code is licensed under the Apache License.
+The source code is licensed under the [Apache License](LICENSE.txt).
