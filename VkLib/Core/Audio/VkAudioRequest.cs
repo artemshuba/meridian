@@ -119,8 +119,9 @@ namespace VkLib.Core.Audio
                 parameters.Add("offset", offset.ToString(CultureInfo.InvariantCulture));
 
             _vkontakte.SignMethod(parameters);
+            parameters["v"] = "5.68";
 
-            var response = await new VkRequest(new Uri(VkConst.MethodBase + "audio.getAlbums"), parameters).Execute();
+            var response = await new VkRequest(new Uri(VkConst.MethodBase + "audio.getPlaylists"), parameters).Execute();
 
             VkErrorProcessor.ProcessError(response);
 
@@ -453,7 +454,7 @@ namespace VkLib.Core.Audio
 
             if (!string.IsNullOrEmpty(text))
                 parameters.Add("text", text);
-                
+
             else if (string.IsNullOrEmpty(text))
                 parameters.Add("text", string.Empty);
 

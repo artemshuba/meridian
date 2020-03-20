@@ -31,7 +31,7 @@ namespace Meridian.Services
 {
     public static class DataService
     {
-        private static readonly Vkontakte _vkontakte;
+        public static readonly Vkontakte _vkontakte;
         private static readonly LastFm _lastFm;
         private static readonly MusicClient _xboxMusic = new MusicClient("Meridian", "u6QLSdNTIS9lrjk306Q1EdsAsHHM3fIk+FYgNTRZrhs=");
 
@@ -59,7 +59,7 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<ItemsResponse<VkAudioAlbum>> GetUserAlbums(int count = 0, int offset = 0, long ownerId = 0)
+        public static async Task<ItemsResponse<VkAudioAlbum>> GetUserAlbums(long ownerId, int count = 0, int offset = 0)
         {
             try
             {

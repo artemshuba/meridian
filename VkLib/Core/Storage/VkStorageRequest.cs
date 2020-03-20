@@ -24,6 +24,7 @@ namespace VkLib.Core.Storage
                 parameters.Add("value", value);
 
             parameters.Add("access_token", _vkontakte.AccessToken.Token);
+            parameters.Add("v", _vkontakte.ApiVersion);
 
             var response = await new VkRequest(new Uri(VkConst.MethodBase + "storage.set"), parameters).Execute();
 

@@ -323,7 +323,7 @@ namespace Meridian.ViewModel.Main
 
             try
             {
-                var response = await DataService.GetUserAlbums();
+                var response = await DataService.GetUserAlbums((int) DataService._vkontakte.AccessToken.UserId);
 
                 var albums = response.Items;
 
@@ -363,7 +363,7 @@ namespace Meridian.ViewModel.Main
 
             try
             {
-                var response = await DataService.GetUserAlbums(0, Albums.Count - 5);
+                var response = await DataService.GetUserAlbums((int) DataService._vkontakte.AccessToken.UserId, Albums.Count - 5);
 
 
                 if (response.Items != null)

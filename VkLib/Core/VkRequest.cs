@@ -40,24 +40,21 @@ namespace VkLib.Core
             if (!NetworkInterface.GetIsNetworkAvailable())
                 throw new Exception("Network is not available.");
 
+            JObject response = null;
             var uri = GetFullUri();
 #if DEBUG
             Debug.WriteLine("Invoking " + uri);
 #endif
 
-            JObject response = null;
-
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("User-Agent", UserAgent);
-            if (_method == "GET")
-            {
+            if (_method == "GET") {
                 HttpResponseMessage responseMessage = await httpClient.GetAsync(uri);
                 var content = await responseMessage.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(content))
                     response = JObject.Parse(content);
             }
-            else
-            {
+            else {
                 var postContent = new FormUrlEncodedContent(_parameters);
                 postContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
                 HttpResponseMessage responseMessage = await httpClient.PostAsync(uri, postContent);
