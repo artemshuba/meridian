@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using ProtoBuf;
-using Sharp_VAG_Deluxe_3000;
 using VkLib.Auth;
 using VkLib.Error;
 using VkLib.Extensions;
@@ -90,23 +89,26 @@ namespace VkLib.Core.Auth
 
             if (response["user_id"] == null) throw new InvalidDataException($"user_id is null! {response}");
             var nonRefreshedToken = response["access_token"].ToString();
-            var refreshResult = await _http.GetAsync(Utils.BuildUrl("https://api.vk.com/method/auth.refreshToken",
-                new Dictionary<string, string> {
-                    {"access_token", nonRefreshedToken},
-                    {"receipt", receipt},
-                    {"v", "5.92"}
-                }));
-            refreshResult.EnsureSuccessStatusCode();
-            var refreshResponse = JObject.Parse(await refreshResult.Content.ReadAsStringAsync())["response"];
-            if (refreshResponse["token"] == null) throw new InvalidDataException($"token is null! {refreshResponse}");
 
+            var refreshParameters = new Dictionary<string, string> {
+                {"access_token", nonRefreshedToken},
+                {"receipt", receipt},
+                {"v", "5.92"}
+            };
+            var refreshRequest = new VkRequest(new Uri(VkConst.MethodBase + "auth.refreshToken"), refreshParameters);
+            var refreshResponse = await refreshRequest.Execute();
+
+            if (refreshResponse["token"] == null) throw new InvalidDataException($"token is null! {refreshResponse}");
             if (refreshResponse["token"].ToString() == nonRefreshedToken)
                 throw new InvalidOperationException($"token {nonRefreshedToken} not refreshed!");
 
-            var token = new AccessToken();
-            token.Token = refreshResponse["token"].Value<string>();
-            token.UserId = response["user_id"].Value<long>();
-            token.ExpiresIn = response["expires_in"].Value<long>() == 0 ? DateTime.MaxValue : DateTimeExtensions.UnixTimeStampToDateTime(response["expires_in"].Value<long>());
+            var token = new AccessToken {
+                Token = refreshResponse["token"].Value<string>(),
+                UserId = response["user_id"].Value<long>(),
+                ExpiresIn = response["expires_in"].Value<long>() == 0
+                    ? DateTime.MaxValue
+                    : DateTimeExtensions.UnixTimeStampToDateTime(response["expires_in"].Value<long>())
+            };
             _vkontakte.AccessToken = token;
             return token;
         }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sharp_VAG_Deluxe_3000 {
+namespace VkLib {
     /// <summary>
     ///     Various utilities.
     /// </summary>
@@ -23,41 +23,11 @@ namespace Sharp_VAG_Deluxe_3000 {
         }
 
         /// <summary>
-        ///     Build GET query URL.
+        ///     Creates compact integer representation called VarInt, as in Protobuf
+        ///     (see <a href="https://developers.google.com/protocol-buffers/docs/encoding#varints">official docs</a>).
         /// </summary>
-        /// <param name="baseUrl">Base URL to add params to.</param>
-        /// <param name="params">Params dictionary.</param>
-        /// <returns>Query URL.</returns>
-        public static string BuildUrl(string baseUrl, Dictionary<string, string> @params) {
-            if (@params.Count <= 0) return baseUrl;
-            baseUrl += "?";
-            var isFirst = true;
-            foreach (var param in @params) {
-                if (string.IsNullOrWhiteSpace(param.Key) || string.IsNullOrEmpty(param.Value)) continue;
-
-                if (!isFirst)
-                    baseUrl += "&";
-                else
-                    isFirst = false;
-
-                baseUrl += Uri.EscapeDataString(param.Key) + "=" + Uri.EscapeDataString(param.Value);
-            }
-
-            return baseUrl;
-        }
-
-        /// <summary>
-        ///     Get enum instance from its value.
-        /// </summary>
-        /// <param name="value">One of source enum values.</param>
-        /// <typeparam name="T">Source enum.</typeparam>
-        /// <returns>Enum instance associated with provided value, null if no element associated with that value.</returns>
-        public static T? GetEnumObjectByValue<T>(int? value) where T : struct {
-            if (value == null) return null;
-            if (Enum.IsDefined(typeof(T), value)) return (T) Enum.ToObject(typeof(T), value);
-            return null;
-        }
-
+        /// <param name="value">An integer.</param>
+        /// <returns>A byte array, representation of the input integer</returns>
         public static IEnumerable<byte> VarIntWrite(int value) {
             while (value != 0) {
                 var current = value & 0x7F;

@@ -64,7 +64,7 @@ namespace Meridian.View.Flyouts
         {
             try
             {
-                var albums = await DataService.GetUserAlbums((int) DataService._vkontakte.AccessToken.UserId);
+                var albums = await DataService.GetUserAlbums();
                 if (albums != null && albums.Items != null)
                 {
                     Albums = albums.Items;
