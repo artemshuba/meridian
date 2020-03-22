@@ -98,12 +98,13 @@ namespace VkLib.Core.Auth
             var refreshRequest = new VkRequest(new Uri(VkConst.MethodBase + "auth.refreshToken"), refreshParameters);
             var refreshResponse = await refreshRequest.Execute();
 
-            if (refreshResponse["token"] == null) throw new InvalidDataException($"token is null! {refreshResponse}");
-            if (refreshResponse["token"].ToString() == nonRefreshedToken)
+            var refreshedToken = refreshResponse?["response"]?["token"];
+            if (refreshedToken == null) throw new InvalidDataException($"token is null! {refreshResponse}");
+            if (refreshedToken.ToString() == nonRefreshedToken)
                 throw new InvalidOperationException($"token {nonRefreshedToken} not refreshed!");
 
             var token = new AccessToken {
-                Token = refreshResponse["token"].Value<string>(),
+                Token = refreshedToken.Value<string>(),
                 UserId = response["user_id"].Value<long>(),
                 ExpiresIn = response["expires_in"].Value<long>() == 0
                     ? DateTime.MaxValue
