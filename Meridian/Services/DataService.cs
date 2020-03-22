@@ -361,7 +361,7 @@ namespace Meridian.Services
         {
             var albums = await _lastFm.Artist.GetTopAlbums(id, artist, count);
 
-            return albums;
+            return albums.FindAll(album => album.Name != "(null)");
         }
 
         public static async Task<List<VkAudio>> GetArtistTopTracks(string id, string artist, int count = 0)
