@@ -132,7 +132,7 @@ namespace Meridian.ViewModel.People
 
             try
             {
-                var response = await DataService.GetUserAlbums(0, 0, -SelectedSociety.Id);
+                var response = await DataService.GetUserAlbums(-SelectedSociety.Id, 0, 0);
 
                 var albums = response.Items;
 
@@ -168,7 +168,7 @@ namespace Meridian.ViewModel.People
 
             try
             {
-                var response = await DataService.GetUserAlbums(0, Albums.Count - 3, -SelectedSociety.Id);
+                var response = await DataService.GetUserAlbums(-SelectedSociety.Id, 0, Albums.Count - 3);
 
                 if (response.Items != null)
                 {

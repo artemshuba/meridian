@@ -27,7 +27,7 @@ namespace VkLib
     {
         private string _clientSecret;
         private string _appId;
-        private string _apiVersion = "5.9";
+        private string _apiVersion = "5.57";
         private string _userAgent;
 
         public string AppId

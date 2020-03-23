@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -49,6 +50,7 @@ namespace Meridian.Services
 
             try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                 using (var stream = await new HttpClient().GetStreamAsync(url))
                 {
                     using (var ms = new MemoryStream())

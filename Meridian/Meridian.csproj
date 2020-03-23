@@ -882,9 +882,9 @@
       <Project>{4aa2609b-b5e4-4f3e-95fd-47c1a27929b2}</Project>
       <Name>Neptune.Desktop</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VkLibPortable\Trunk\VkLibPortable.csproj">
-      <Project>{96824317-5143-413a-8ec6-5f92de7ab60e}</Project>
-      <Name>VkLibPortable</Name>
+    <ProjectReference Include="..\VkLib\VkLib.csproj">
+      <Project>{7d6f23ca-6be8-487f-8e96-f990dc34ee4d}</Project>
+      <Name>VkLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\XboxMusic\Xbox.Music.csproj">
       <Project>{53203a30-e4ce-4b7e-ae31-a46b8c7cc142}</Project>

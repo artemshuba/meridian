@@ -112,15 +112,19 @@ namespace VkLib.Core.Audio
             if (ownerId != 0)
                 parameters.Add("owner_id", ownerId.ToString(CultureInfo.InvariantCulture));
 
-            if (count > 0)
-                parameters.Add("count", count.ToString(CultureInfo.InvariantCulture));
+            parameters.Add("count",
+                count > 0
+                    ? count.ToString(CultureInfo.InvariantCulture)
+                    : 100.ToString(CultureInfo.InvariantCulture)
+            );
 
             if (offset > 0)
                 parameters.Add("offset", offset.ToString(CultureInfo.InvariantCulture));
 
             _vkontakte.SignMethod(parameters);
+            parameters["v"] = "5.68";
 
-            var response = await new VkRequest(new Uri(VkConst.MethodBase + "audio.getAlbums"), parameters).Execute();
+            var response = await new VkRequest(new Uri(VkConst.MethodBase + "audio.getPlaylists"), parameters).Execute();
 
             VkErrorProcessor.ProcessError(response);
 
@@ -453,7 +457,7 @@ namespace VkLib.Core.Audio
 
             if (!string.IsNullOrEmpty(text))
                 parameters.Add("text", text);
-                
+
             else if (string.IsNullOrEmpty(text))
                 parameters.Add("text", string.Empty);
 

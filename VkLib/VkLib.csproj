@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{7D6F23CA-6BE8-487F-8E96-F990DC34EE4D}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>VkLib</RootNamespace>
+		<AssemblyName>VkLib</AssemblyName>
+		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<FileAlignment>512</FileAlignment>
+		<Deterministic>true</Deterministic>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Debug\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>bin\Release\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+			<HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+			<Private>True</Private>
+		</Reference>
+		<Reference Include="protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67">
+			<HintPath>..\packages\protobuf-net.2.4.4\lib\net40\protobuf-net.dll</HintPath>
+			<Private>True</Private>
+		</Reference>
+		<Reference Include="System"/>
+		<Reference Include="System.Configuration"/>
+		<Reference Include="System.Core"/>
+		<Reference Include="System.Runtime.Serialization"/>
+		<Reference Include="System.ServiceModel"/>
+		<Reference Include="System.Xml.Linq"/>
+		<Reference Include="System.Data.DataSetExtensions"/>
+		<Reference Include="Microsoft.CSharp"/>
+		<Reference Include="System.Data"/>
+		<Reference Include="System.Net.Http"/>
+		<Reference Include="System.Xml"/>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Core\Account\VkAccountRequest.cs"/>
+		<Compile Include="Core\Attachments\VkAttachment.cs"/>
+		<Compile Include="Core\Attachments\VkAudioAttachment.cs"/>
+		<Compile Include="Core\Attachments\VkLinkAttachment.cs"/>
+		<Compile Include="Core\Attachments\VkPhotoAttachment.cs"/>
+		<Compile Include="Core\Audio\VkAudio.cs"/>
+		<Compile Include="Core\Audio\VkAudioAlbum.cs"/>
+		<Compile Include="Core\Audio\VkAudioRequest.cs"/>
+		<Compile Include="Core\Audio\VkGenre.cs"/>
+		<Compile Include="Core\Auth\AccessToken.cs"/>
+		<Compile Include="Core\Auth\GcmCheckinProto.cs"/>
+		<Compile Include="Core\Auth\OAuthResult.cs"/>
+		<Compile Include="Core\Auth\VkDirectAuthRequest.cs"/>
+		<Compile Include="Core\Auth\VkOAuthRequest.cs"/>
+		<Compile Include="Core\Auth\VkScopeSettings.cs"/>
+		<Compile Include="Core\Execute\VkExecuteRequest.cs"/>
+		<Compile Include="Core\Favorites\VkFavoritesRequest.cs"/>
+		<Compile Include="Core\Friends\VkFriendsRequest.cs"/>
+		<Compile Include="Core\Groups\VkGroup.cs"/>
+		<Compile Include="Core\Groups\VkGroupsRequest.cs"/>
+		<Compile Include="Core\Messages\VkLongPollMessage.cs"/>
+		<Compile Include="Core\Messages\VkLongPollService.cs"/>
+		<Compile Include="Core\Messages\VkMessage.cs"/>
+		<Compile Include="Core\Messages\VkMessagesRequest.cs"/>
+		<Compile Include="Core\News\VkNewsEntry.cs"/>
+		<Compile Include="Core\News\VkNewsRequest.cs"/>
+		<Compile Include="Core\News\VkNewsResponse.cs"/>
+		<Compile Include="Core\Photos\VkPhoto.cs"/>
+		<Compile Include="Core\Photos\VkPhotosRequest.cs"/>
+		<Compile Include="Core\Photos\VkUploadPhotoResponse.cs"/>
+		<Compile Include="Core\Stats\VkStatsRequest.cs"/>
+		<Compile Include="Core\Status\VkStatusRequest.cs"/>
+		<Compile Include="Core\Storage\VkStorageRequest.cs"/>
+		<Compile Include="Core\Subscriptions\VkSubscriptionsRequest.cs"/>
+		<Compile Include="Core\Users\VkProfile.cs"/>
+		<Compile Include="Core\Users\VkProfileBase.cs"/>
+		<Compile Include="Core\Users\VkUsersRequest.cs"/>
+		<Compile Include="Core\Video\VkVideo.cs"/>
+		<Compile Include="Core\Video\VkVideoRequest.cs"/>
+		<Compile Include="Core\VkErrorProcessor.cs"/>
+		<Compile Include="Core\VkItemsResponse.cs"/>
+		<Compile Include="Core\VkRequest.cs"/>
+		<Compile Include="Core\Wall\VkWallEntry.cs"/>
+		<Compile Include="Core\Wall\VkWallRequest.cs"/>
+		<Compile Include="Error\VkAccessDeniedException.cs"/>
+		<Compile Include="Error\VkCaptchaNeededException.cs"/>
+		<Compile Include="Error\VkException.cs"/>
+		<Compile Include="Error\VkFloodControlException.cs"/>
+		<Compile Include="Error\VkInvalidClientException.cs"/>
+		<Compile Include="Error\VkInvalidTokenException.cs"/>
+		<Compile Include="Error\VkNeedValidationException.cs"/>
+		<Compile Include="Error\VkStatusBroadcastDisabledException.cs"/>
+		<Compile Include="Extensions\DateTimeExtensions.cs"/>
+		<Compile Include="Extensions\DictionaryExtensions.cs"/>
+		<Compile Include="Extensions\StreamExtensions.cs"/>
+		<Compile Include="Properties\AssemblyInfo.cs"/>
+		<Compile Include="Utils.cs"/>
+		<Compile Include="VkConst.cs"/>
+		<Compile Include="Vkontakte.cs"/>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="packages.config"/>
+	</ItemGroup>
+	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+</Project>

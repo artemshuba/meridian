@@ -59,11 +59,11 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<ItemsResponse<VkAudioAlbum>> GetUserAlbums(int count = 0, int offset = 0, long ownerId = 0)
+        public static async Task<ItemsResponse<VkAudioAlbum>> GetUserAlbums(long ownerId = 0, int count = 0, int offset = 0)
         {
             try
             {
-                var response = await _vkontakte.Audio.GetAlbums(ownerId, count, offset);
+                var response = await _vkontakte.Audio.GetAlbums(ownerId == 0 ? _vkontakte.AccessToken.UserId : ownerId, count, offset);
                 if (response.Items != null)
                 {
                     return new ItemsResponse<VkAudioAlbum>(response.Items, response.TotalCount);
@@ -361,7 +361,7 @@ namespace Meridian.Services
         {
             var albums = await _lastFm.Artist.GetTopAlbums(id, artist, count);
 
-            return albums;
+            return albums.FindAll(album => album.Name != "(null)");
         }
 
         public static async Task<List<VkAudio>> GetArtistTopTracks(string id, string artist, int count = 0)
