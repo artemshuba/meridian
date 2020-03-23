@@ -87,32 +87,48 @@ namespace VkLib.Core.Auth
                 return null;
             }
 
-            if (response["user_id"] == null) throw new InvalidDataException($"user_id is null! {response}");
-            var nonRefreshedToken = response["access_token"].ToString();
+            if (response["user_id"] == null) 
+                throw new InvalidDataException($"user_id is null! {response}");
 
+            var token = new AccessToken
+            {
+                Token = response["access_token"].ToString(),
+                UserId = response["user_id"].Value<long>(),
+                ExpiresIn = response["expires_in"].Value<long>() == 0 ? DateTime.MaxValue
+                : DateTimeExtensions.UnixTimeStampToDateTime(response["expires_in"].Value<long>())
+            };
+
+            _vkontakte.AccessToken = token;
+
+            await RefreshToken();
+
+            return _vkontakte.AccessToken;
+        }
+
+        public async Task RefreshToken()
+        {
+            var accessToken = _vkontakte.AccessToken.Token;
+
+            var receipt = await GetGcmReceipt();
             var refreshParameters = new Dictionary<string, string> {
-                {"access_token", nonRefreshedToken},
+                {"access_token", accessToken},
                 {"receipt", receipt},
                 {"v", "5.92"}
             };
+
             var refreshRequest = new VkRequest(new Uri(VkConst.MethodBase + "auth.refreshToken"), refreshParameters);
             var refreshResponse = await refreshRequest.Execute();
 
             var refreshedToken = refreshResponse?["response"]?["token"];
-            if (refreshedToken == null) throw new InvalidDataException($"token is null! {refreshResponse}");
-            if (refreshedToken.ToString() == nonRefreshedToken)
-                throw new InvalidOperationException($"token {nonRefreshedToken} not refreshed!");
+            if (refreshedToken == null) 
+                throw new InvalidDataException($"token is null! {refreshResponse}");
+            if (refreshedToken.ToString() == accessToken)
+                throw new InvalidOperationException($"token {accessToken} not refreshed!");
 
-            var token = new AccessToken {
-                Token = refreshedToken.Value<string>(),
-                UserId = response["user_id"].Value<long>(),
-                ExpiresIn = response["expires_in"].Value<long>() == 0
-                    ? DateTime.MaxValue
-                    : DateTimeExtensions.UnixTimeStampToDateTime(response["expires_in"].Value<long>())
-            };
-            _vkontakte.AccessToken = token;
-            return token;
+            var token = refreshedToken.Value<string>();
+            _vkontakte.AccessToken = new AccessToken { Token = token, ExpiresIn = _vkontakte.AccessToken?.ExpiresIn ?? DateTime.MinValue, UserId = _vkontakte.AccessToken?.UserId ?? 0 };
         }
+
 
         /// <summary>
         ///     Get receipt for authorization w/ access to audio.* methods.

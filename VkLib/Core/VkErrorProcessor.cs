@@ -22,6 +22,8 @@ namespace VkLib.Core
                         throw new VkFloodControlException();
                     if (response["error"]["error_code"].Value<string>() == "14")
                         throw new VkCaptchaNeededException(response["error"]["captcha_sid"].Value<string>(), response["error"]["captcha_img"].Value<string>());
+                    if (response["error"]["error_code"].Value<string>() == "25")
+                        throw new VkTokenConfirmationRequired();
                 }
                 if (response["error"].HasValues)
                 {

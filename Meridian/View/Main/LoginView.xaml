@@ -173,7 +173,7 @@
             </StackPanel>
         </Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,7">
-            <TextBlock FontWeight="Normal" Text="Copyright © Artem Shuba 2017." Foreground="{DynamicResource ForegroundBrush}" FontSize="10" Opacity="0.5"/>
+            <TextBlock FontWeight="Normal" Text="Copyright © Artem Shuba 2020." Foreground="{DynamicResource ForegroundBrush}" FontSize="10" Opacity="0.5"/>
             <TextBlock FontSize="10" Opacity="0.5" Margin="5,0,0,0">
                 <Hyperlink Foreground="{DynamicResource ForegroundBrush}" Command="{Binding Main.GoToSettingsCommand, Source={StaticResource Locator}}">
                     <Run Text="{x:Static localization:MainResources.LoginGoToSettings}"/>

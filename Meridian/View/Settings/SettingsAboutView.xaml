@@ -30,24 +30,10 @@
             <TextBlock Foreground="{DynamicResource ForegroundBrush}">
                 <Run Text="Version:" />
                 <Run Text="{Binding Version, Mode=OneWay}" />
-                <!--<Run Text="beta" />-->
+                <Run Text="beta" />
             </TextBlock>
-            <TextBlock Text="Copyright © Artem Shuba 2017" Foreground="{DynamicResource ForegroundBrush}"/>
-            <TextBlock x:Name="SiteLink" FontWeight="Normal" TextWrapping="Wrap" Text="http://meridianvk.com" HorizontalAlignment="Left" FontSize="12"
-                       MouseLeftButtonUp="SiteLink_OnMouseLeftButtonUp">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Cursor" Value="Hand"/>
-                        <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="TextDecorations" Value="Underline"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-            
+            <TextBlock Text="Copyright © Artem Shuba 2020" Foreground="{DynamicResource ForegroundBrush}"/>
+
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                 <TextBlock TextWrapping="Wrap" Text="Recommendations and radio are powered by the" HorizontalAlignment="Left" Foreground="{DynamicResource ForegroundBrush}"/>
                 <TextBlock Name="EchonestLink" Margin="4,0,0,0" TextWrapping="Wrap" Text="www.echonest.com" HorizontalAlignment="Left" ToolTip="http://www.echonest.com" MouseLeftButtonUp="EchonestLink_OnMouseLeftButtonUp">

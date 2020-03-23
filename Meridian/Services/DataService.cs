@@ -76,6 +76,11 @@ namespace Meridian.Services
 
                 AccountManager.LogOutVk();
             }
+            catch (VkTokenConfirmationRequired)
+            {
+                await _vkontakte.Auth.RefreshToken();
+                return await GetUserAlbums(ownerId, count, offset);
+            }
 
             return ItemsResponse<VkAudioAlbum>.Empty;
         }
@@ -106,6 +111,12 @@ namespace Meridian.Services
 
                 AccountManager.LogOutVk();
             }
+            catch (VkTokenConfirmationRequired)
+            {
+                await _vkontakte.Auth.RefreshToken();
+                return await GetUserTracks(count, offset, albumId, ownerId);
+            }
+
 
             return ItemsResponse<VkAudio>.Empty;
         }
