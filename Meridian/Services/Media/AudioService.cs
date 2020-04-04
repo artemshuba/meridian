@@ -82,6 +82,8 @@ namespace Meridian.Services
                 else
                     _positionTimer.Stop();
 
+                _mediaPlayer.UpdateTransportControls(CurrentAudio);
+
                 Messenger.Default.Send(new PlayStateChangedMessage() { NewState = value });
             }
         }
@@ -98,6 +100,7 @@ namespace Meridian.Services
                 _currentAudio = value;
 
                 NotifyAudioChanged(old);
+                _mediaPlayer.UpdateTransportControls(value);
             }
         }
 
@@ -477,7 +480,11 @@ namespace Meridian.Services
                     if (o["currentAudio"] != null)
                     {
                         var audio = JsonConvert.DeserializeObject<Audio>(o["currentAudio"].ToString(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
-                        Application.Current.Dispatcher.Invoke(() => CurrentAudio = audio);
+                        Application.Current.Dispatcher.Invoke(() => 
+                        { 
+                            CurrentAudio = audio;
+                            _mediaPlayer.UpdateTransportControls(CurrentAudio);
+                        });
                     }
 
                     if (o["currentPlaylist"] != null)

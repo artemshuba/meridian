@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Meridian.View.Compact.CompactLandscapeView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:converters="clr-namespace:Meridian.Converters"
         xmlns:localization="clr-namespace:Meridian.Resources.Localization"
         xmlns:behaviours="clr-namespace:Meridian.Behaviours"

@@ -1,6 +1,6 @@
 ﻿#if DESKTOP || PHONE
+using Microsoft.Xaml.Behaviors;
 using System.Windows;
-using System.Windows.Interactivity;
 using System.Windows.Media.Animation;
 #elif MODERN
 using Windows.UI.Interactivity;

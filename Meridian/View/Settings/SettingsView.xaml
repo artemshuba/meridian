@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
       xmlns:controls="clr-namespace:Meridian.Controls"
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"

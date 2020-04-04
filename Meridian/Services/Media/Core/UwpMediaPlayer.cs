@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Meridian.Model;
+using System;
+using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 
@@ -10,6 +12,11 @@ namespace Meridian.Services.Media.Core
     public class UwpMediaPlayer : MediaPlayerBase
     {
         private MediaPlayer _mediaPlayer;
+
+        private bool IsPlaying => 
+            _mediaPlayer.PlaybackSession.PlaybackState == MediaPlaybackState.Playing
+            || _mediaPlayer.PlaybackSession.PlaybackState == MediaPlaybackState.Opening
+            || _mediaPlayer.PlaybackSession.PlaybackState == MediaPlaybackState.Buffering;
 
         public override TimeSpan Position
         {
@@ -30,7 +37,8 @@ namespace Meridian.Services.Media.Core
 
         public override Uri Source
         {
-            get { 
+            get
+            { 
                 return _mediaPlayer.Source as Uri;
             }
             set { _mediaPlayer.Source = MediaSource.CreateFromUri(value); }
@@ -90,6 +98,25 @@ namespace Meridian.Services.Media.Core
         {
             if (MediaEnded != null)
                 MediaEnded(sender, EventArgs.Empty);
+        }
+
+        public override void UpdateTransportControls(Audio currentTrack)
+        {
+            _mediaPlayer.SystemMediaTransportControls.PlaybackStatus = IsPlaying ? MediaPlaybackStatus.Playing : MediaPlaybackStatus.Stopped;
+
+            var updater = _mediaPlayer.SystemMediaTransportControls.DisplayUpdater;
+
+            if (currentTrack != null)
+            {
+                updater.Type = MediaPlaybackType.Music;
+                updater.MusicProperties.Title = currentTrack.Title;
+                updater.MusicProperties.Artist = currentTrack.Artist;
+                updater.Update();
+            }
+            else
+            {
+                updater.ClearAll();
+            }
         }
     }
 }

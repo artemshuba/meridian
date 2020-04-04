@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using GalaSoft.MvvmLight.Threading;
 using Meridian.Model;
 using Meridian.Services;
 
@@ -100,7 +99,7 @@ namespace Meridian.Helpers
                         if (target != null)
                         {
                             KeyValuePair<string, ImageSource> pair = keyValuePair;
-                            DispatcherHelper.RunAsync(() =>
+                            Application.Current.Dispatcher.Invoke(() =>
                             {
                                 target.Image = pair.Value;
                             });
@@ -145,7 +144,7 @@ namespace Meridian.Helpers
         {
             var tcs = new TaskCompletionSource<ImageSource>();
 
-            DispatcherHelper.RunAsync(async () =>
+            Application.Current.Dispatcher.Invoke(async () =>
             {
                 var cachedImage = await CacheService.GetCachedImage("artists/" + CacheService.GetSafeFileName(artist + "_big.jpg"));
                 if (cachedImage != null)

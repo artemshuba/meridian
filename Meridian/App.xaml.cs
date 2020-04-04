@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using GalaSoft.MvvmLight.Threading;
 using Meridian.Controls;
 using Meridian.Domain;
 using Meridian.Model;
@@ -33,7 +32,7 @@ namespace Meridian
         {
             LoggingService.Log("Meridian v" + Assembly.GetExecutingAssembly().GetName().Version + " started. OS: " + Environment.OSVersion);
 
-            DispatcherHelper.Initialize();
+            //DispatcherHelper.Initialize();
 
             Settings.Load();
 
@@ -145,8 +144,8 @@ namespace Meridian
             _trayIcon.MouseClick += TrayIconOnMouseClick;
             _trayIcon.Visible = true;
 
-            _trayIcon.ContextMenu = new ContextMenu();
-            var closeItem = new System.Windows.Forms.MenuItem();
+            _trayIcon.ContextMenuStrip = new ContextMenuStrip();
+            var closeItem = new System.Windows.Forms.ToolStripMenuItem();
             closeItem.Text = MainResources.Close;
             closeItem.Click += (s, e) =>
             {
@@ -155,7 +154,7 @@ namespace Meridian
                     window.Close();
                 }
             };
-            _trayIcon.ContextMenu.MenuItems.Add(closeItem);
+            _trayIcon.ContextMenuStrip.Items.Add(closeItem);
         }
 
         private void TrayIconOnMouseClick(object sender, MouseEventArgs mouseEventArgs)

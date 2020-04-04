@@ -6,7 +6,7 @@
       xmlns:layout="clr-namespace:Meridian.Layout"
       xmlns:localization="clr-namespace:Meridian.Resources.Localization"
       xmlns:controls="clr-namespace:Meridian.Controls"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1024"

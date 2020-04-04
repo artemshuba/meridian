@@ -1,8 +1,8 @@
 ﻿#if DESKTOP || PHONE
-using System;
+using Microsoft.Xaml.Behaviors;
 using System.Windows.Controls;
+using System;
 using System.Windows.Data;
-using System.Windows.Interactivity;
 #elif MODERN
 using Windows.UI.Interactivity;
 using Windows.UI.Xaml.Controls;
@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Data;
 #endif
 
 // ReSharper disable once CheckNamespace
+
 namespace Neptune.UI.Behaviours
 {
     /// <summary>

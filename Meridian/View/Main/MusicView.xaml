@@ -7,11 +7,10 @@
       xmlns:Properties="clr-namespace:Meridian.Resources.Localization"
       xmlns:controls="clr-namespace:Meridian.Controls"
       xmlns:dragDrop="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:behaviours="clr-namespace:Meridian.Behaviours"
       xmlns:converters="clr-namespace:Meridian.Converters"
-      mc:Ignorable="d" 
-      d:DesignHeight="1024" d:DesignWidth="1024"
+      mc:Ignorable="d"
       x:Name="pageRoot"
       KeepAlive="False"
       Header="{x:Static Properties:MainResources.MainMenuMyMusic}"
@@ -38,8 +37,7 @@
                                  VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                                  ItemTemplateSelector="{StaticResource AudioTemplateSelector}"
-                                 dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}" dragDrop:DragDrop.DropHandler="{Binding}"
-                                 dragDrop:DragDrop.ScrollOnDrag="{Binding Main.ShowShareBar, Source={StaticResource Locator}, Converter={StaticResource InvertBoolConverter}}">
+                                 dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" dragDrop:DragDrop.DragHandler="{Binding}" dragDrop:DragDrop.DropHandler="{Binding}">
                             <i:Interaction.Behaviors>
                                 <behaviours:AutoScrollToCurrentItemBehaviour />
                             </i:Interaction.Behaviors>

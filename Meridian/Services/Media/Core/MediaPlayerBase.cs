@@ -41,6 +41,11 @@ namespace Meridian.Services.Media.Core
         public abstract void Pause();
         public abstract void Stop();
 
+        public virtual void UpdateTransportControls(Audio currentTrack)
+        {
+
+        }
+
         public abstract void Dispose();
     }
 }

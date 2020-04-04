@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Controls;
-using System.Windows.Interactivity;
 using GalaSoft.MvvmLight.Messaging;
 using Meridian.Services;
 using Meridian.ViewModel.Messages;
+using Microsoft.Xaml.Behaviors;
 
 namespace Meridian.Behaviours
 {

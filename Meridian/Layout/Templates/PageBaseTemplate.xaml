@@ -4,8 +4,8 @@
                     xmlns:controls="clr-namespace:Meridian.Layout.Controls"
                     xmlns:controls1="clr-namespace:Meridian.Controls"
                     xmlns:localization="clr-namespace:Meridian.Resources.Localization"
-                    xmlns:command="http://www.galasoft.ch/mvvmlight"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+                    xmlns:command="clr-namespace:GalaSoft.MvvmLight;assembly=GalaSoft.MvvmLight"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
     <Style x:Key="PageBaseStyle" TargetType="layout:PageBase" x:Shared="False">
         <Setter Property="Template">
             <Setter.Value>
@@ -45,7 +45,7 @@
                                                        Hint="{x:Static localization:MainResources.Search}" HintStyle="{StaticResource TextBoxHintStyle}" Text="{Binding Query}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="KeyUp">
-                                        <command:EventToCommand Command="{Binding Main.SearchKeyUpCommand, Source={StaticResource Locator}}" PassEventArgsToCommand="True"/>
+                                        <i:InvokeCommandAction Command="{Binding Main.SearchKeyUpCommand, Source={StaticResource Locator}}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </controls1:TextBoxWithHint>

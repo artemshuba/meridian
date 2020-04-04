@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using GalaSoft.MvvmLight.Threading;
 using Meridian.Model;
 
 namespace Meridian.Helpers
@@ -101,9 +99,8 @@ namespace Meridian.Helpers
                         if (target != null)
                         {
                             KeyValuePair<string, ImageSource> pair = keyValuePair;
-                            DispatcherHelper.RunAsync(() =>
+                            Application.Current.Dispatcher.Invoke(() =>
                             {
-
                                 target.Cover = pair.Value;
                             });
                         }
@@ -119,6 +116,7 @@ namespace Meridian.Helpers
             }
 
             _isQueueWorking = false;
+
         }
 
         private static async Task<KeyValuePair<string, ImageSource>> ProcessQueueItem(string albumId, string coverPath)
