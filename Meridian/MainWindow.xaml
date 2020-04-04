@@ -97,7 +97,6 @@
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <MediaElement LoadedBehavior="Manual" Volume="1"/>
         <Rectangle Fill="Black" Grid.RowSpan="2" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <!-- Menu -->
         <Grid Width="220" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}" Background="{DynamicResource SidebarBackgroundBrush}" Grid.RowSpan="2">
@@ -205,7 +204,7 @@
         <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Visibility="{Binding ShowSidebar, Converter={StaticResource BoolToVisibilityConverter}}">
             <ProgressBar Style="{StaticResource CommonProgressBarStyle}" Margin="25,5,0,0" Padding="0"
                          Visibility="{Binding UpdateService.IsUpdating, Source={StaticResource Locator}, Converter={StaticResource BoolToVisibilityConverter}}"
-                         Value="{Binding UpdateService.UpdateProgress, Source={StaticResource Locator}}"/>
+                         Value="{Binding UpdateService.UpdateProgress, Source={StaticResource Locator}, Mode=OneWay}"/>
         </Grid>
 
         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10,10,10,10" Visibility="{Binding ShowWindowButtons, Converter={StaticResource BoolToVisibilityConverter}}">

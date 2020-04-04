@@ -249,20 +249,10 @@ namespace Meridian.ViewModel.Main
         {
             var flyout = new FlyoutControl();
             flyout.FlyoutContent = new WebValidationView(redirectUri);
-            var token = await flyout.ShowAsync() as AccessToken;
+            var token = await flyout.ShowAsync() as VkAccessToken;
             if (token != null)
             {
                 AccountManager.SetLoginVk(token);
-
-                var p = ViewModelLocator.Vkontakte.LoginParams ?? new Dictionary<string, string>()
-                {
-                    ["version"] = "4.11.1",
-                    ["func_v"] = "5"
-                };
-
-                p.Add("userId", token.UserId.ToString());
-
-                await ViewModelLocator.Vkontakte.Execute.GetBaseData(p);
 
                 MessengerInstance.Send(new NavigateToPageMessage() { Page = "/Main.MusicView" });
             }

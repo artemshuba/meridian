@@ -805,7 +805,6 @@ namespace Meridian.ViewModel
         private void OnCurrentAudioChanged(CurrentAudioChangedMessage message)
         {
             RaisePropertyChanged("CurrentAudio");
-            RaisePropertyChanged("CurrentRadio");
             RaisePropertyChanged("IsPlaying");
             RaisePropertyChanged("CurrentPlaylist");
             RaisePropertyChanged("WindowTitle");

@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
@@ -42,9 +41,20 @@ namespace Meridian.Services
             {
                 if (_mediaPlayer == null)
                 {
-                    _mediaPlayer = Settings.Instance.MediaEngine == MediaEngine.NAudio
-                        ? (MediaPlayerBase)new NaudioMediaPlayer()
-                        : new WmpMediaPlayer();
+
+                    switch (Settings.Instance.MediaEngine)
+                    {
+                        case MediaEngine.Wmp:
+                            _mediaPlayer = new WmpMediaPlayer();
+                            break;
+                        case MediaEngine.Uwp:
+                            _mediaPlayer = new UwpMediaPlayer();
+                            break;
+
+                        case MediaEngine.NAudio:
+                            _mediaPlayer = new NaudioMediaPlayer();
+                            break;
+                    }
 
                     _mediaPlayer.Initialize();
                     _mediaPlayer.MediaEnded += MediaPlayerOnMediaEnded;
@@ -538,7 +548,7 @@ namespace Meridian.Services
                 Messenger.Default.Send(new PlayerPositionChangedMessage() { NewPosition = MediaPlayer.Position });
 
                 //possible fix for not switching tracks issue
-                if (MediaPlayer.Position > MediaPlayer.Duration)
+                if (MediaPlayer.Position > CurrentAudio.Duration)
                     MediaPlayerOnMediaEnded(MediaPlayer, EventArgs.Empty);
             }
             catch (Exception ex)

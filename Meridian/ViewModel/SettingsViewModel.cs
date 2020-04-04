@@ -35,7 +35,6 @@ namespace Meridian.ViewModel
             {MainResources.SettingsMenuHotkeys, "/View/Settings/SettingsHotkeysView.xaml"},
             {MainResources.SettingsRemotePlay, "/View/Settings/SettingsRemotePlayView.xaml"},
             {MainResources.SettingsMenuAccounts, "/View/Settings/SettingsAccountsView.xaml"},
-            {MainResources.SettingsMenuUpdates, "/View/Settings/SettingsUpdatesView.xaml"},
             {MainResources.SettingsMenuAbout, "/View/Settings/SettingsAboutView.xaml"}
         };
 
@@ -66,7 +65,8 @@ namespace Meridian.ViewModel
         private readonly List<SettingsEngine> _engines = new List<SettingsEngine>()
                 {
                     new SettingsEngine() { Title = "Windows Media Player", Engine = MediaEngine.Wmp },
-                    new SettingsEngine() { Title = "NAudio", Engine = MediaEngine.NAudio }
+                    new SettingsEngine() { Title = "NAudio", Engine = MediaEngine.NAudio },
+                    new SettingsEngine() { Title = "UWP (Windows 10)", Engine = MediaEngine.Uwp }
                 };
 
         private readonly List<SettingsHotkey> _hotkeys = new List<SettingsHotkey>();

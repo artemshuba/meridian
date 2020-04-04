@@ -321,7 +321,7 @@ namespace Meridian.ViewModel.Flyouts
                 try
                 {
                     var server = await ViewModelLocator.Vkontakte.Photos.GetWallUploadServer(0, ShareToSociety ? _selectedSociety.Id : 0);
-                    var o = await ViewModelLocator.Vkontakte.Photos.UploadWallPhoto(server, Path.GetFileName(ImagePath), File.OpenRead(ImagePath));
+                    var o = await ViewModelLocator.Vkontakte.Photos.UploadPhoto(server, Path.GetFileName(ImagePath), File.OpenRead(ImagePath));
                     if (o != null)
                     {
                         var photo = await ViewModelLocator.Vkontakte.Photos.SaveWallPhoto(o.Server, o.Photo, o.Hash, ShareToUser ? _selectedFriend.Id : 0, ShareToSociety ? _selectedSociety.Id : 0);

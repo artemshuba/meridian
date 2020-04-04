@@ -16,6 +16,7 @@ using Meridian.Services;
 using Meridian.View.Flyouts;
 using Meridian.ViewModel.Flyouts;
 using VkLib.Core.Audio;
+using VkLib.Core.Audio.Types;
 using VkLib.Error;
 using VkAudio = Meridian.Model.VkAudio;
 
@@ -193,7 +194,7 @@ namespace Meridian.ViewModel.Search
 
         private async void Save()
         {
-            var album = new VkAudioAlbum() { Title = _album.Artist + " - " + _album.Name };
+            var album = new VkPlaylist() { Title = _album.Artist + " - " + _album.Name };
 
             var flyout = new FlyoutControl();
             flyout.FlyoutContent = new EditAlbumView(album);

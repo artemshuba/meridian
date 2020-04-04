@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Meridian</RootNamespace>
     <AssemblyName>Meridian</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -20,6 +20,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>e3b46165</NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -115,9 +116,8 @@
       <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
@@ -155,6 +155,9 @@
     </Reference>
     <Reference Include="taglib-sharp">
       <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Windows">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.18362.0\Windows.winmd</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -275,6 +278,7 @@
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\Media\Core\NaudioMediaPlayer.cs" />
+    <Compile Include="Services\Media\Core\UwpMediaPlayer.cs" />
     <Compile Include="Services\Media\Core\WmpMediaPlayer.cs" />
     <Compile Include="Services\Music\LocalMusicService.cs" />
     <Compile Include="Services\Music\Repositories\LocalAlbumsRepository.cs" />
@@ -860,6 +864,10 @@
     <ProjectReference Include="..\Neptune\Trunk\Neptune.Desktop\Neptune.Desktop.csproj">
       <Project>{4aa2609b-b5e4-4f3e-95fd-47c1a27929b2}</Project>
       <Name>Neptune.Desktop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VkLib\VkLib.csproj">
+      <Project>{0437f114-685a-4f79-8a75-f4690672afab}</Project>
+      <Name>VkLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

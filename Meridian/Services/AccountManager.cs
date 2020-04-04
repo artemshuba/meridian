@@ -17,7 +17,7 @@ namespace Meridian.Services
 {
     public static class AccountManager
     {
-        private static readonly Vkontakte _vkontakte;
+        private static readonly Vk _vkontakte;
         private static readonly LastFm _lastFm;
         private const VkScopeSettings ScopeSettings = VkScopeSettings.CanAccessAudios | VkScopeSettings.CanAccessVideos | VkScopeSettings.CanAccessFriends |
                       VkScopeSettings.CanAccessGroups | VkScopeSettings.CanAccessWall | VkScopeSettings.CanAccessStatus | VkScopeSettings.CanAccessPhotos;
@@ -70,7 +70,7 @@ namespace Meridian.Services
             }
         }
 
-        public static void SetLoginVk(AccessToken token)
+        public static void SetLoginVk(VkAccessToken token)
         {
             if (token == null || token.Token == null)
             {

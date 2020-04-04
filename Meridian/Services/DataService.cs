@@ -19,6 +19,7 @@ using Meridian.ViewModel;
 using VkLib;
 using VkLib.Core.Attachments;
 using VkLib.Core.Audio;
+using VkLib.Core.Audio.Types;
 using VkLib.Core.Friends;
 using VkLib.Core.Groups;
 using VkLib.Core.Users;
@@ -30,7 +31,7 @@ namespace Meridian.Services
 {
     public static class DataService
     {
-        private static readonly Vkontakte _vkontakte;
+        private static readonly Vk _vkontakte;
         private static readonly LastFm _lastFm;
 
         static DataService()
@@ -57,14 +58,14 @@ namespace Meridian.Services
             return null;
         }
 
-        public static async Task<ItemsResponse<VkAudioAlbum>> GetUserAlbums(long ownerId = 0, int count = 0, int offset = 0)
+        public static async Task<ItemsResponse<VkPlaylist>> GetUserAlbums(long ownerId = 0, int count = 0, int offset = 0)
         {
             try
             {
-                var response = await _vkontakte.Audio.GetAlbums(ownerId == 0 ? _vkontakte.AccessToken.UserId : ownerId, count, offset);
+                var response = await _vkontakte.Audio.GetPlaylists(ownerId == 0 ? _vkontakte.AccessToken.UserId : ownerId, count, offset);
                 if (response.Items != null)
                 {
-                    return new ItemsResponse<VkAudioAlbum>(response.Items, response.TotalCount);
+                    return new ItemsResponse<VkPlaylist>(response.Items, response.TotalCount);
                 }
             }
             catch (VkInvalidTokenException)
@@ -74,13 +75,8 @@ namespace Meridian.Services
 
                 AccountManager.LogOutVk();
             }
-            catch (VkTokenConfirmationRequired)
-            {
-                await _vkontakte.Auth.RefreshToken();
-                return await GetUserAlbums(ownerId, count, offset);
-            }
 
-            return ItemsResponse<VkAudioAlbum>.Empty;
+            return ItemsResponse<VkPlaylist>.Empty;
         }
 
         public static async Task<ItemsResponse<VkAudio>> GetUserTracks(int count = 0, int offset = 0, long albumId = 0, long ownerId = 0)
@@ -109,12 +105,6 @@ namespace Meridian.Services
 
                 AccountManager.LogOutVk();
             }
-            catch (VkTokenConfirmationRequired)
-            {
-                await _vkontakte.Auth.RefreshToken();
-                return await GetUserTracks(count, offset, albumId, ownerId);
-            }
-
 
             return ItemsResponse<VkAudio>.Empty;
         }

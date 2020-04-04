@@ -1,31 +1,28 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Meridian.Model;
-using Meridian.ViewModel.Messages;
+using Windows.Media.Core;
+using Windows.Media.Playback;
 
 namespace Meridian.Services.Media.Core
 {
     /// <summary>
-    /// Wrapper on MediaElement which uses Windows Media Player engine
+    /// Wrapper on UWP MediaPlayer (Win10)
     /// </summary>
-    public class WmpMediaPlayer : MediaPlayerBase
+    public class UwpMediaPlayer : MediaPlayerBase
     {
         private MediaPlayer _mediaPlayer;
 
         public override TimeSpan Position
         {
-            get { return _mediaPlayer.Position; }
-            set { _mediaPlayer.Position = value; }
+            get { return _mediaPlayer.PlaybackSession.Position; }
+            set { _mediaPlayer.PlaybackSession.Position = value; }
         }
 
         public override TimeSpan Duration
         {
             get
             {
-                if (_mediaPlayer.NaturalDuration != null && _mediaPlayer.NaturalDuration.HasTimeSpan)
-                    return _mediaPlayer.NaturalDuration.TimeSpan;
+                if (_mediaPlayer.PlaybackSession.NaturalDuration != null)
+                    return _mediaPlayer.PlaybackSession.NaturalDuration;
 
                 return TimeSpan.Zero;
             }
@@ -33,8 +30,10 @@ namespace Meridian.Services.Media.Core
 
         public override Uri Source
         {
-            get { return _mediaPlayer.Source; }
-            set { _mediaPlayer.Open(value); }
+            get { 
+                return _mediaPlayer.Source as Uri;
+            }
+            set { _mediaPlayer.Source = MediaSource.CreateFromUri(value); }
         }
 
         public override double Volume
@@ -46,7 +45,7 @@ namespace Meridian.Services.Media.Core
         public override void Initialize()
         {
             _mediaPlayer = new MediaPlayer();
-            _mediaPlayer.MediaEnded  += MediaPlayerOnMediaEnded;
+            _mediaPlayer.MediaEnded += MediaPlayerOnMediaEnded;
             _mediaPlayer.MediaFailed += MediaPlayerOnMediaFailed;
             _mediaPlayer.MediaOpened += MediaPlayerOnMediaOpened;
         }
@@ -63,7 +62,7 @@ namespace Meridian.Services.Media.Core
 
         public override void Stop()
         {
-            _mediaPlayer.Stop();
+            _mediaPlayer.Source = null;
         }
 
         public override void Dispose()
@@ -75,22 +74,22 @@ namespace Meridian.Services.Media.Core
             _mediaPlayer = null;
         }
 
-        private void MediaPlayerOnMediaOpened(object sender, EventArgs e)
+        private void MediaPlayerOnMediaOpened(MediaPlayer sender, object e)
         {
             if (MediaOpened != null)
-                MediaOpened(sender, e);
+                MediaOpened(sender, EventArgs.Empty);
         }
 
-        private void MediaPlayerOnMediaFailed(object sender, ExceptionEventArgs e)
+        private void MediaPlayerOnMediaFailed(MediaPlayer sender, MediaPlayerFailedEventArgs e)
         {
             if (MediaFailed != null)
-                MediaFailed(sender, e.ErrorException);
+                MediaFailed(sender, new Exception(e.ErrorMessage));
         }
 
-        private void MediaPlayerOnMediaEnded(object sender, EventArgs e)
+        private void MediaPlayerOnMediaEnded(MediaPlayer sender, object e)
         {
             if (MediaEnded != null)
-                MediaEnded(sender, e);
+                MediaEnded(sender, EventArgs.Empty);
         }
     }
 }

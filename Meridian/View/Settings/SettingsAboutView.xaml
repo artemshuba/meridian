@@ -32,24 +32,7 @@
                 <Run Text="{Binding Version, Mode=OneWay}" />
                 <Run Text="beta" />
             </TextBlock>
-            <TextBlock Text="Copyright © Artem Shuba 2020" Foreground="{DynamicResource ForegroundBrush}"/>
-
-            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                <TextBlock TextWrapping="Wrap" Text="Recommendations and radio are powered by the" HorizontalAlignment="Left" Foreground="{DynamicResource ForegroundBrush}"/>
-                <TextBlock Name="EchonestLink" Margin="4,0,0,0" TextWrapping="Wrap" Text="www.echonest.com" HorizontalAlignment="Left" ToolTip="http://www.echonest.com" MouseLeftButtonUp="EchonestLink_OnMouseLeftButtonUp">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Cursor" Value="Hand"/>
-                            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="TextDecorations" Value="Underline"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </StackPanel>
+            <TextBlock Text="Copyright © Artem Shuba 2011 ― 2020" Foreground="{DynamicResource ForegroundBrush}"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                 <TextBlock TextWrapping="Wrap" Text="The information about artists and albums is provided by the" HorizontalAlignment="Left" Foreground="{DynamicResource ForegroundBrush}"/>
@@ -68,13 +51,8 @@
                 </TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Image Source="/Resources/Images/echonest_logo_light.gif" Stretch="Uniform" Width="120" HorizontalAlignment="Left" Margin="0,5,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <Image Source="/Resources/Images/lastfm_logo.gif" Stretch="UniformToFill" Width="60" HorizontalAlignment="Left" Margin="10,5,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Image Source="/Resources/Images/lastfm_logo.gif" Stretch="UniformToFill" Width="60" HorizontalAlignment="Left" Margin="0,5,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
             </StackPanel>
-
-            <TextBlock Text="{x:Static localization:MainResources.AboutTellFriendsTitle}" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
-            <Button Style="{StaticResource CommonButtonStyle}" HorizontalAlignment="Left" Content="{x:Static localization:MainResources.AboutTellFriends}" Margin="0,5,0,0"
-                    Command="{Binding TellCommand}"/>
         </StackPanel>
     </Grid>
 </Page>

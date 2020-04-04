@@ -32,7 +32,7 @@ namespace Meridian.Domain
 
         public List<Account> Accounts { get; set; } 
 
-        public AccessToken AccessToken { get; set; }
+        public VkAccessToken AccessToken { get; set; }
 
         public bool Shuffle { get; set; }
 
@@ -168,7 +168,7 @@ namespace Meridian.Domain
 
             Accounts = new List<Account>();
 
-            MediaEngine = MediaEngine.Wmp;
+            MediaEngine = MediaEngine.Uwp;
 
             FeedSocieties = new List<VkGroup>();
 

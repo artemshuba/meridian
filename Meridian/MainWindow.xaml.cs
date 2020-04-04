@@ -78,12 +78,12 @@ namespace Meridian
 
                 ViewModelLocator.Main.LoadUserInfo();
 
-                if (!Settings.Instance.TellRequestShown && (DateTime.Now - Settings.Instance.FirstStart).TotalDays >= 3)
+                /*if (!Settings.Instance.TellRequestShown && (DateTime.Now - Settings.Instance.FirstStart).TotalDays >= 3)
                 {
                     Settings.Instance.TellRequestShown = true;
                     Settings.Instance.Save();
                     TellFriendsRequest();
-                }
+                }*/
             }
             else
             {

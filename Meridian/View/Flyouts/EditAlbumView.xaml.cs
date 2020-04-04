@@ -5,6 +5,7 @@ using Meridian.Controls;
 using Meridian.Resources.Localization;
 using Neptune.UI.Extensions;
 using VkLib.Core.Audio;
+using VkLib.Core.Audio.Types;
 
 namespace Meridian.View.Flyouts
 {
@@ -13,9 +14,9 @@ namespace Meridian.View.Flyouts
     /// </summary>
     public partial class EditAlbumView : UserControl
     {
-        private VkAudioAlbum _album;
+        private VkPlaylist _album;
 
-        public EditAlbumView(VkAudioAlbum album)
+        public EditAlbumView(VkPlaylist album)
         {
             InitializeComponent();
 

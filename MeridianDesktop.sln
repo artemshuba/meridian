@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{285F580B-F
 		Meridian\bin\Debug\sqlite3.dll = Meridian\bin\Debug\sqlite3.dll
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VkLib", "VkLib\VkLib.csproj", "{0437F114-685A-4F79-8A75-F4690672AFAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,14 @@ Global
 		{4AA2609B-B5E4-4F3E-95FD-47C1A27929B2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4AA2609B-B5E4-4F3E-95FD-47C1A27929B2}.Release|x86.ActiveCfg = Release|x86
 		{4AA2609B-B5E4-4F3E-95FD-47C1A27929B2}.Release|x86.Build.0 = Release|x86
+		{0437F114-685A-4F79-8A75-F4690672AFAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0437F114-685A-4F79-8A75-F4690672AFAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0437F114-685A-4F79-8A75-F4690672AFAB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0437F114-685A-4F79-8A75-F4690672AFAB}.Debug|x86.Build.0 = Debug|Any CPU
+		{0437F114-685A-4F79-8A75-F4690672AFAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0437F114-685A-4F79-8A75-F4690672AFAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0437F114-685A-4F79-8A75-F4690672AFAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{0437F114-685A-4F79-8A75-F4690672AFAB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +88,7 @@ Global
 		{E66C0B37-0DC3-4B21-B3B7-E783BBA48554} = {285F580B-F600-46BE-A1B6-F4F3BA669C4F}
 		{D914B630-6F50-47DE-9719-6CD7644C6908} = {E66C0B37-0DC3-4B21-B3B7-E783BBA48554}
 		{4AA2609B-B5E4-4F3E-95FD-47C1A27929B2} = {E66C0B37-0DC3-4B21-B3B7-E783BBA48554}
+		{0437F114-685A-4F79-8A75-F4690672AFAB} = {285F580B-F600-46BE-A1B6-F4F3BA669C4F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47DA62B6-EA98-4CA0-9B70-F177B0CD2335}
