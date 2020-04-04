@@ -606,8 +606,6 @@ namespace Meridian.ViewModel
 
             SignOutLastFmCommand = new RelayCommand(AccountManager.LogoutLastFm);
 
-            CheckUpdatesCommand = new RelayCommand(() => ViewModelLocator.UpdateService.CheckUpdates());
-
             ClearCacheCommand = new RelayCommand(async () =>
             {
                 if (!Directory.Exists("Cache"))

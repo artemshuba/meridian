@@ -11,7 +11,6 @@ using Meridian.View.Flyouts.Local;
 using Meridian.ViewModel.Messages;
 using Neptune.Extensions;
 using Neptune.Messages;
-using Xbox.Music;
 
 namespace Meridian.ViewModel.Local
 {

@@ -23,7 +23,6 @@ using VkLib.Core.Friends;
 using VkLib.Core.Groups;
 using VkLib.Core.Users;
 using VkLib.Error;
-using Xbox.Music;
 using DateTimeConverter = Meridian.Helpers.DateTimeConverter;
 using VkAudio = Meridian.Model.VkAudio;
 
@@ -33,7 +32,6 @@ namespace Meridian.Services
     {
         private static readonly Vkontakte _vkontakte;
         private static readonly LastFm _lastFm;
-        private static readonly MusicClient _xboxMusic = new MusicClient("Meridian", "u6QLSdNTIS9lrjk306Q1EdsAsHHM3fIk+FYgNTRZrhs=");
 
         static DataService()
         {
@@ -196,31 +194,6 @@ namespace Meridian.Services
                     artist = artists.First();
             }
 
-            if (big)
-            {
-                try
-                {
-                    var results = await _xboxMusic.Find(artist);
-                    if (results != null && results.Artists != null)
-                    {
-                        var resultArtist = results.Artists.Items.FirstOrDefault();
-                        if (resultArtist != null && !string.IsNullOrEmpty(resultArtist.ImageUrl))
-                        {
-                            var imageUrl = resultArtist.ImageUrl;
-
-                            var httpClient = new HttpClient();
-                            var response = await httpClient.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead);
-                            if (response.IsSuccessStatusCode)
-                                return new Uri(resultArtist.ImageUrl);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    Debug.WriteLine("Xbox Music: Artist " + artist + " not found.");
-                }
-            }
-
             var info = await _lastFm.Artist.GetInfo(null, artist);
             if (info == null || string.IsNullOrEmpty(big ? info.ImageMega : info.ImageExtraLarge))
                 return null;
@@ -232,44 +205,6 @@ namespace Meridian.Services
         {
             if (string.IsNullOrEmpty(artist) || string.IsNullOrEmpty(title))
                 return null;
-
-            try
-            {
-                var results = await _xboxMusic.Find(artist + " - " + title, getArtists: false);
-                string imageUrl = null;
-                if (results != null)
-                {
-                    if (results.Tracks != null)
-                    {
-                        var resultTrack = results.Tracks.Items.FirstOrDefault();
-                        if (resultTrack != null && !string.IsNullOrEmpty(resultTrack.ImageUrl))
-                        {
-                            imageUrl = resultTrack.ImageUrl;
-                        }
-                    }
-
-                    if (imageUrl == null && results.Albums != null)
-                    {
-                        var resultAlbum = results.Albums.Items.FirstOrDefault();
-                        if (resultAlbum != null && !string.IsNullOrEmpty(resultAlbum.ImageUrl))
-                        {
-                            imageUrl = resultAlbum.ImageUrl;
-                        }
-                    }
-                }
-
-                if (imageUrl != null)
-                {
-                    var httpClient = new HttpClient();
-                    var response = await httpClient.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead);
-                    if (response.IsSuccessStatusCode)
-                        return new Uri(imageUrl);
-                }
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Xbox Music: Artist " + artist + " not found.");
-            }
 
             var info = await _lastFm.Track.GetInfo(title, artist);
             if (info == null || info.ImageExtraLarge == null || string.IsNullOrEmpty(info.ImageExtraLarge))

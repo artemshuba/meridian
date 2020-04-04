@@ -92,11 +92,6 @@ namespace Meridian
                     break;
             }
 
-            if (Settings.Instance.CheckForUpdates)
-                ViewModelLocator.UpdateService.CheckUpdates();
-
-//            await HostService.Update();
-
             if (Settings.Instance.EnableTrayIcon)
                 AddTrayIcon();
 

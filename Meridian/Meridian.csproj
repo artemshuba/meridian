@@ -865,10 +865,6 @@
       <Project>{7d6f23ca-6be8-487f-8e96-f990dc34ee4d}</Project>
       <Name>VkLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XboxMusic\Xbox.Music.csproj">
-      <Project>{53203a30-e4ce-4b7e-ae31-a46b8c7cc142}</Project>
-      <Name>Xbox.Music</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="RemotePlay\web\img\light\volume.png">
