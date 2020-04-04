@@ -22,7 +22,7 @@ namespace Meridian.Services
 
         public async Task Initialize()
         {
-            var db = new SQLiteAsyncConnection(_dbPath, caseSensitive: false);
+            var db = new SQLiteAsyncConnection(_dbPath);
 
             await db.CreateTablesAsync(
                 typeof(Audio), 

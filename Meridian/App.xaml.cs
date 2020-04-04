@@ -39,6 +39,7 @@ namespace Meridian
 
             if (Settings.Instance.SendStats)
             {
+                YandexMetricaFolder.SetCurrent(Directory.GetCurrentDirectory());
                 YandexMetrica.Activate("60fb8ba9-ab3c-4ee8-81ac-559c8aeb305e"); //Yandex Metrica
             }
 
@@ -106,11 +107,6 @@ namespace Meridian
 
             AudioService.Save();
             AudioService.Dispose();
-
-            if (Settings.Instance.SendStats)
-            {
-                YandexMetrica.ReportExit();
-            }
         }
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
