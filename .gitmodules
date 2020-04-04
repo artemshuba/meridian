@@ -1,0 +1,3 @@
+[submodule "VkLib"]
+	path = VkLib
+	url = https://github.com/artemshuba/VkLib.git
