@@ -247,7 +247,6 @@
     <Compile Include="Model\ItemsResponse.cs" />
     <Compile Include="Model\MainMenuItem.cs" />
     <Compile Include="Model\NewsItemsResponse.cs" />
-    <Compile Include="Model\RadioStation.cs" />
     <Compile Include="Model\Recommendation.cs" />
     <Compile Include="Model\SearchMenuItem.cs" />
     <Compile Include="Model\Settings\SettingsEngine.cs" />
@@ -282,7 +281,6 @@
     <Compile Include="Services\Music\Repositories\LocalArtistsRepository.cs" />
     <Compile Include="Services\Music\Repositories\LocalTracksRepository.cs" />
     <Compile Include="Services\NotificationService.cs" />
-    <Compile Include="Services\RadioService.cs" />
     <Compile Include="RemotePlay\RemotePlayService.cs" />
     <Compile Include="Services\ServiceLocator.cs" />
     <Compile Include="Services\UpdateService.cs" />
@@ -309,7 +307,6 @@
     <Compile Include="ViewModel\Main\MusicViewModel.cs" />
     <Compile Include="ViewModel\Main\NowPlayingViewModel.cs" />
     <Compile Include="ViewModel\Main\PopularAudioViewModel.cs" />
-    <Compile Include="ViewModel\Main\RadioViewModel.cs" />
     <Compile Include="ViewModel\Main\RecommendationsViewModel.cs" />
     <Compile Include="ViewModel\Search\SearchViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
@@ -367,9 +364,6 @@
     <Compile Include="View\Compact\CompactView.xaml.cs">
       <DependentUpon>CompactView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Flyouts\CreateRadioStationView.xaml.cs">
-      <DependentUpon>CreateRadioStationView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Flyouts\EditAlbumView.xaml.cs">
       <DependentUpon>EditAlbumView.xaml</DependentUpon>
     </Compile>
@@ -402,9 +396,6 @@
     </Compile>
     <Compile Include="View\Main\NowPlayingView.xaml.cs">
       <DependentUpon>NowPlayingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Main\RadioView.xaml.cs">
-      <DependentUpon>RadioView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main\RecommendationsView.xaml.cs">
       <DependentUpon>RecommendationsView.xaml</DependentUpon>
@@ -694,10 +685,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Flyouts\CreateRadioStationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Flyouts\EditAlbumView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -739,10 +726,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Main\NowPlayingView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Main\RadioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -866,10 +849,6 @@
     <Resource Include="Resources\Images\cover_default.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EchonestApi\Trunk\EchonestApi.csproj">
-      <Project>{da5b936a-fac0-48c8-973a-01af3902cb16}</Project>
-      <Name>EchonestApi</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LastFmLibPortable\Trunk\LastFmLibPortable.csproj">
       <Project>{476c6b20-3acf-4c71-8847-afcd90e29fbd}</Project>
       <Name>LastFmLibPortable</Name>

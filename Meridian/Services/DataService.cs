@@ -838,68 +838,6 @@ namespace Meridian.Services
             return true;
         }
 
-        public static async Task<List<VkAudio>> GetAdvancedRecommendations(int count = 100, CancellationToken token = default(CancellationToken))
-        {
-            //берем первые 300 треков пользователя
-            var allTracks = await GetUserTracks(300);
-            var targetArtists = new List<string>();
-
-            if (allTracks.Items != null)
-            {
-                //перемешиваем и вытаскиваем 5 исполнителей, о которых знает Echonest
-                allTracks.Items.Shuffle();
-
-                int checksCount = 0;
-
-                foreach (var audio in allTracks.Items)
-                {
-                    if (token.IsCancellationRequested)
-                        break;
-
-                    if (targetArtists.Contains(audio.Artist))
-                        continue;
-
-                    if (checksCount > 19)
-                        break;
-
-                    checksCount++;
-
-                    var echoArtists = await ViewModelLocator.Echonest.Artist.Search(audio.Artist);
-
-                    if (token.IsCancellationRequested)
-                        break;
-
-                    if (echoArtists == null || echoArtists.Count == 0)
-                        continue;
-
-                    var artist = echoArtists.First().Name;
-                    targetArtists.Add(artist);
-
-
-                    if (targetArtists.Count == 5)
-                        break;
-                }
-
-                if (token.IsCancellationRequested)
-                    return null;
-
-                var recommendedTracks = await ViewModelLocator.Echonest.Playlist.Basic(artists: targetArtists, count: 100);
-                if (recommendedTracks != null)
-                {
-                    var results = (from track in recommendedTracks
-                                   select new VkAudio()
-                                   {
-                                       Title = track.Title,
-                                       Artist = track.ArtistName
-                                   }).ToList();
-
-                    return results;
-                }
-            }
-
-            return null;
-        }
-
         public static Task<List<AudioArtist>> GetArtistsFromTracks(IEnumerable<Audio> tracks, CancellationToken token)
         {
             return Task.Run(() =>

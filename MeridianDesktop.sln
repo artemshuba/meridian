@@ -1,7 +1,6 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian", "Meridian\Meridian.csproj", "{C769D3C7-9A2F-440D-8CA1-25FE0BE98135}"
 EndProject
@@ -11,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{904094
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchonestApi", "EchonestApi\Trunk\EchonestApi.csproj", "{DA5B936A-FAC0-48C8-973A-01AF3902CB16}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastFmLibPortable", "LastFmLibPortable\Trunk\LastFmLibPortable.csproj", "{476C6B20-3ACF-4C71-8847-AFCD90E29FBD}"
 EndProject
@@ -52,14 +49,6 @@ Global
 		{C769D3C7-9A2F-440D-8CA1-25FE0BE98135}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C769D3C7-9A2F-440D-8CA1-25FE0BE98135}.Release|x86.ActiveCfg = Release|x86
 		{C769D3C7-9A2F-440D-8CA1-25FE0BE98135}.Release|x86.Build.0 = Release|x86
-		{DA5B936A-FAC0-48C8-973A-01AF3902CB16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA5B936A-FAC0-48C8-973A-01AF3902CB16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA5B936A-FAC0-48C8-973A-01AF3902CB16}.Debug|x86.ActiveCfg = Debug|x86
-		{DA5B936A-FAC0-48C8-973A-01AF3902CB16}.Debug|x86.Build.0 = Debug|x86
-		{DA5B936A-FAC0-48C8-973A-01AF3902CB16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA5B936A-FAC0-48C8-973A-01AF3902CB16}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA5B936A-FAC0-48C8-973A-01AF3902CB16}.Release|x86.ActiveCfg = Release|x86
-		{DA5B936A-FAC0-48C8-973A-01AF3902CB16}.Release|x86.Build.0 = Release|x86
 		{476C6B20-3ACF-4C71-8847-AFCD90E29FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{476C6B20-3ACF-4C71-8847-AFCD90E29FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{476C6B20-3ACF-4C71-8847-AFCD90E29FBD}.Debug|x86.ActiveCfg = Debug|x86
@@ -105,7 +94,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DA5B936A-FAC0-48C8-973A-01AF3902CB16} = {285F580B-F600-46BE-A1B6-F4F3BA669C4F}
 		{476C6B20-3ACF-4C71-8847-AFCD90E29FBD} = {285F580B-F600-46BE-A1B6-F4F3BA669C4F}
 		{E66C0B37-0DC3-4B21-B3B7-E783BBA48554} = {285F580B-F600-46BE-A1B6-F4F3BA669C4F}
 		{D914B630-6F50-47DE-9719-6CD7644C6908} = {E66C0B37-0DC3-4B21-B3B7-E783BBA48554}

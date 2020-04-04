@@ -113,7 +113,7 @@ namespace VkLib.Core.Auth
             var refreshParameters = new Dictionary<string, string> {
                 {"access_token", accessToken},
                 {"receipt", receipt},
-                {"v", "5.92"}
+                {"v", "5.97"}
             };
 
             var refreshRequest = new VkRequest(new Uri(VkConst.MethodBase + "auth.refreshToken"), refreshParameters);

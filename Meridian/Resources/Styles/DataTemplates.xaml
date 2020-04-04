@@ -26,7 +26,6 @@
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuLyrics}" IsEnabled="{Binding HasLyrics}" Command="{Binding Main.ShowLyricsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                     <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuAddToAlbum}" Command="{Binding Main.AddToAlbumCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>
-                    <!--<MenuItem Header="{x:Static localization:MainResources.ContextMenuStartRadio}" Command="{Binding Main.StartTrackRadioCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>-->
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuShowArtistInfo}" Command="{Binding Main.ShowArtistInfoCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <MenuItem Header="{x:Static localization:MainResources.ContextMenuSearchArtist}" Command="{Binding Main.SearchCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Artist}" />
                     <Separator Style="{StaticResource CommonSeparatorStyle}"/>

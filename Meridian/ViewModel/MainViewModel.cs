@@ -44,7 +44,6 @@ namespace Meridian.ViewModel
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.FeedView", Title = MainResources.MainMenuFeed},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.PopularAudioView", Title = MainResources.MainMenuPopular},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.RecommendationsView", Title = MainResources.MainMenuRecommendations},
-            //new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/Main.RadioView", Title = MainResources.MainMenuRadio},
 
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.FriendsView", Title = MainResources.MainMenuFriends},
             new MainMenuItem() {Group = MainResources.MainMenuVkTitle, GroupIcon = Application.Current.Resources["VkIcon"], Page = "/People.SocietiesView", Title = MainResources.MainMenuSocieties},
@@ -314,11 +313,6 @@ namespace Meridian.ViewModel
                     return a;
                 }
             }
-        }
-
-        public RadioStation CurrentRadio
-        {
-            get { return RadioService.CurrentRadio; }
         }
 
         public TimeSpan CurrentAudioPosition
@@ -691,12 +685,6 @@ namespace Meridian.ViewModel
                 UIMode mode;
                 if (Enum.TryParse(s, true, out mode))
                     SwitchUIMode(mode);
-            });
-
-            StartTrackRadioCommand = new RelayCommand<Audio>(track =>
-            {
-                RadioService.StartRadioFromSong(track.Title, track.Artist);
-                MessengerInstance.Send(new NavigateToPageMessage() { Page = "/Main.NowPlayingView" });
             });
 
             ShowArtistInfoCommand = new RelayCommand<string>(async artist =>

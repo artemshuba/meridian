@@ -265,11 +265,8 @@ namespace Meridian.Services
                     _playFailsCount++;
                     if (_playFailsCount > 5)
                         return;
-
-                    if (RadioService.CurrentRadio == null)
-                        Next();
-                    else
-                        RadioService.InvalidateCurrentSong();
+                    
+                    Next();
 
                     return;
                 }
@@ -298,7 +295,7 @@ namespace Meridian.Services
             }
         }
 
-        public static async void Play()
+        public static void Play()
         {
             if (MediaPlayer.Source == null && CurrentAudio != null)
             {
@@ -371,10 +368,7 @@ namespace Meridian.Services
             if (CurrentAudioPosition.TotalSeconds > CurrentAudioDuration.TotalSeconds / 3)
                 SwitchNext();
             else
-                if (RadioService.CurrentRadio == null)
                 Next(true);
-            else
-                RadioService.SkipNext();
         }
 
         /// <summary>
@@ -382,10 +376,7 @@ namespace Meridian.Services
         /// </summary>
         public static void SwitchNext()
         {
-            if (RadioService.CurrentRadio == null)
-                Next();
-            else
-                RadioService.SwitchNext();
+            Next();
         }
 
         private static void Next(bool invokedByUser = false)
@@ -442,20 +433,10 @@ namespace Meridian.Services
                         currentIndex = _playlist.IndexOf(current);
                 }
 
-                if (RadioService.CurrentRadio == null)
-                {
-                    currentIndex--;
+                currentIndex--;
 
-                    if (currentIndex >= 0)
-                        Play(_playlist[currentIndex]);
-                }
-                else
-                {
-                    currentIndex++;
-
-                    if (currentIndex < _playlist.Count)
-                        Play(_playlist[currentIndex]);
-                }
+                if (currentIndex >= 0)
+                    Play(_playlist[currentIndex]);
             }
         }
 
@@ -467,11 +448,6 @@ namespace Meridian.Services
             }
             else
                 Playlist = new ObservableCollection<Audio>(playlist);
-
-            if (!radio)
-            {
-                RadioService.Stop();
-            }
         }
 
         public static Task Load()
@@ -500,13 +476,6 @@ namespace Meridian.Services
                         if (playlist != null)
                             Application.Current.Dispatcher.Invoke(() => SetCurrentPlaylist(playlist.OfType<Audio>()));
                     }
-
-                    if (o["currentRadio"] != null && o["currentRadio"]["session"] != null)
-                    {
-                        var session = o["currentRadio"]["session"].Value<string>();
-                        var radio = JsonConvert.DeserializeObject<RadioStation>(o["currentRadio"]["radio"].ToString());
-                        RadioService.RestoreSession(session, radio);
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -522,12 +491,7 @@ namespace Meridian.Services
                 var o = new
                 {
                     currentAudio = CurrentAudio,
-                    currentPlaylist = Playlist,
-                    currentRadio = new
-                    {
-                        session = RadioService.SessionId,
-                        radio = RadioService.CurrentRadio
-                    }
+                    currentPlaylist = Playlist
                 };
 
                 var json = JsonConvert.SerializeObject(o, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
@@ -632,10 +596,7 @@ namespace Meridian.Services
                 }
                 else
                 {
-                    if (RadioService.CurrentRadio == null)
-                        Next();
-                    else
-                        RadioService.InvalidateCurrentSong();
+                    Next();
                 }
             }
         }

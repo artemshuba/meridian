@@ -113,12 +113,7 @@ namespace Meridian.ViewModel.Main
                         LoadRecommendationsByTag(value.Key, _cancellationToken.Token);
                     else
                     {
-                        if (value.Key == "vk")
-                            LoadGeneralRecommendations(_cancellationToken.Token);
-                        else
-                        {
-                            LoadAdvancedRecommendations(_cancellationToken.Token);
-                        }
+                        LoadGeneralRecommendations(_cancellationToken.Token);
                     }
                 }
             }
@@ -171,12 +166,7 @@ namespace Meridian.ViewModel.Main
                     LoadRecommendationsByTag(SelectedRecommendation.Key, _cancellationToken.Token);
                 else
                 {
-                    if (SelectedRecommendation.Key == "vk")
-                        LoadGeneralRecommendations(_cancellationToken.Token);
-                    else
-                    {
-                        LoadAdvancedRecommendations(_cancellationToken.Token);
-                    }
+                    LoadGeneralRecommendations(_cancellationToken.Token);
                 }
             });
         }
@@ -236,36 +226,6 @@ namespace Meridian.ViewModel.Main
 
                 if ((Tracks == null || Tracks.Count == 0) && !token.IsCancellationRequested)
                     OnTaskError("audio", ErrorResources.LoadAudiosErrorEmpty);
-            }
-            catch (Exception ex)
-            {
-                LoggingService.Log(ex);
-
-                OnTaskError("audio", ErrorResources.LoadAudiosErrorCommon);
-            }
-
-            OnTaskFinished("audio");
-        }
-
-        private async void LoadAdvancedRecommendations(CancellationToken token)
-        {
-            IsWorking = true;
-
-            OnTaskStarted("audio");
-
-            try
-            {
-                var recommendations = await DataService.GetAdvancedRecommendations(100, token);
-                if (recommendations != null && recommendations.Count > 0)
-                {
-                    Tracks = new ObservableCollection<Audio>(recommendations);
-                }
-                else
-                {
-                    Tracks = null;
-
-                    OnTaskError("audio", ErrorResources.LoadAudiosErrorEmpty);
-                }
             }
             catch (Exception ex)
             {
