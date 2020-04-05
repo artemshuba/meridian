@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:Meridian.Controls"
         xmlns:behaviours="clr-namespace:Meridian.Behaviours"
         xmlns:localization="clr-namespace:Meridian.Resources.Localization"
-        xmlns:converters1="clr-namespace:Meridian.Converters"
+        xmlns:converters1="clr-namespace:Meridian.Converters" xmlns:wrappers="clr-namespace:Meridian.Wrappers"
         MinWidth="850" MinHeight="570"
         WindowStartupLocation="Manual" ShowInTaskbar="{Binding ShowTrayIcon, Converter={StaticResource InvertBoolConverter}}"
         Background="{DynamicResource MainBackgroundBrush}"

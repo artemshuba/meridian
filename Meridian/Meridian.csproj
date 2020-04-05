@@ -5,11 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject>Meridian.App</StartupObject>
+    <StartupObject>Meridian.Program</StartupObject>
     <Version>5.5.790</Version>
     <Authors>Artem Shuba</Authors>
     <Copyright>© Artem Shuba 2011 ― 2020</Copyright>
     <PackageIcon>icon.ico</PackageIcon>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="gong-wpf-dragdrop" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.XamlHost" Version="6.0.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
     <PackageReference Include="NAudio" Version="1.10.0" />
@@ -39,6 +41,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LastFmLibPortable\Trunk\LastFmLibPortable.csproj" />
+    <ProjectReference Include="..\Meridian.WrappedControls\Meridian.WrappedControls.csproj" />
     <ProjectReference Include="..\Neptune\Trunk\Neptune.Base\Neptune.Base.csproj" />
     <ProjectReference Include="..\Neptune\Trunk\Neptune.Desktop\Neptune.Desktop.csproj" />
     <ProjectReference Include="..\VkLib\VkLib.csproj" />
@@ -80,6 +83,10 @@
     <Resource Include="Resources\Images\prev_thumb.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.VCRTForwarders.140" Version="1.0.5" />
   </ItemGroup>
 
 </Project>

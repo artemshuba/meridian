@@ -1,0 +1,35 @@
+﻿<xaml:XamlApplication
+    xmlns:xaml="using:Microsoft.Toolkit.Win32.UI.XamlHost"
+    x:Class="Meridian.WrappedControls.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Meridian.WrappedControls">
+    <xaml:XamlApplication.Resources>
+        <local:AudioTimeSpanConverter x:Key="AudioTimeSpanConverter" />
+        
+        <DataTemplate x:Key="AudioTemplate">
+            <Grid x:Name="LayoutRoot" Padding="15,11,15,11" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.3*" x:Name="ArtistColumn"/>
+                    <ColumnDefinition Width="0.2*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="TitleTextBlock" Text="{Binding Title}" Margin="0,0,10,0" TextTrimming="CharacterEllipsis"
+                   MaxLines="1"
+                   Opacity="0.8" ToolTipService.ToolTip="{Binding Title}"/>
+
+                <TextBlock x:Name="ArtistTextBlock" Grid.Column="1" Text="{Binding Artist}" Margin="0,0,10,0" HorizontalAlignment="Stretch" TextAlignment="Left" TextTrimming="CharacterEllipsis"
+                   MaxLines="1"
+                   Opacity="0.5" ToolTipService.ToolTip="{Binding Artist}"/>
+
+                <TextBlock x:Name="DurationTextBlock" x:FieldModifier="private" Grid.Column="2" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" HorizontalAlignment="Right"
+                   Opacity="0.5" Margin="0,0,0,0"/>
+            </Grid>
+        </DataTemplate>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+        </Style>
+    </xaml:XamlApplication.Resources>
+</xaml:XamlApplication>
