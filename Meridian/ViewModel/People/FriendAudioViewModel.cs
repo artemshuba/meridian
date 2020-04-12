@@ -10,7 +10,6 @@ using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
 using VkLib.Core.Audio;
-using VkLib.Core.Audio.Types;
 using VkLib.Core.Users;
 using VkLib.Error;
 

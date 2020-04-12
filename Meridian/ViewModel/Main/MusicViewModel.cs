@@ -18,7 +18,6 @@ using Meridian.View.Flyouts;
 using Meridian.ViewModel.Messages;
 using Neptune.Extensions;
 using VkLib.Core.Audio;
-using VkLib.Core.Audio.Types;
 
 namespace Meridian.ViewModel.Main
 {

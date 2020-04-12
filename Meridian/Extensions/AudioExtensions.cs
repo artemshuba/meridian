@@ -20,6 +20,8 @@ namespace Meridian.Extensions
             result.Source = audio.Url;
             result.GenreId = audio.GenreId;
             result.IsAddedByCurrentUser = audio.OwnerId == ViewModelLocator.Vkontakte.AccessToken.UserId;
+            if (audio.Album?.Thumb != null && !string.IsNullOrWhiteSpace(audio.Album.Thumb.Photo300))
+                result.AlbumCover = new Uri(audio.Album.Thumb.Photo300);
 
             return result;
         }

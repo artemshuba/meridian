@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Meridian.Controls;
-using Meridian.Model;
 using Meridian.Services;
 using Meridian.ViewModel;
 using Neptune.UI.Extensions;
 using VkLib.Core.Audio;
-using VkLib.Core.Audio.Types;
 using VkAudio = Meridian.Model.VkAudio;
 
 namespace Meridian.View.Flyouts

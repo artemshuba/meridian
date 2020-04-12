@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using LastFmLib;
@@ -19,7 +18,6 @@ using Meridian.ViewModel;
 using VkLib;
 using VkLib.Core.Attachments;
 using VkLib.Core.Audio;
-using VkLib.Core.Audio.Types;
 using VkLib.Core.Friends;
 using VkLib.Core.Groups;
 using VkLib.Core.Users;

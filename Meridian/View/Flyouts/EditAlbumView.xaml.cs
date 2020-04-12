@@ -5,7 +5,6 @@ using Meridian.Controls;
 using Meridian.Resources.Localization;
 using Neptune.UI.Extensions;
 using VkLib.Core.Audio;
-using VkLib.Core.Audio.Types;
 
 namespace Meridian.View.Flyouts
 {

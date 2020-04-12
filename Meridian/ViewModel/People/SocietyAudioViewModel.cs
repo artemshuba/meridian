@@ -5,15 +5,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using GalaSoft.MvvmLight.Command;
-using Meridian.Controls;
 using Meridian.Model;
 using Meridian.Resources.Localization;
 using Meridian.Services;
-using Meridian.View.Flyouts;
 using VkLib.Core.Audio;
-using VkLib.Core.Audio.Types;
 using VkLib.Core.Groups;
 using VkLib.Error;
 

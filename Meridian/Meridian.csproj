@@ -6,10 +6,15 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>Meridian.App</StartupObject>
-    <Version>5.5.790</Version>
+    <Version>5.5.791</Version>
     <Authors>Artem Shuba</Authors>
     <Copyright>© Artem Shuba 2011 ― 2020</Copyright>
     <PackageIcon>icon.ico</PackageIcon>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>

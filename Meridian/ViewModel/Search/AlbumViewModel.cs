@@ -16,7 +16,6 @@ using Meridian.Services;
 using Meridian.View.Flyouts;
 using Meridian.ViewModel.Flyouts;
 using VkLib.Core.Audio;
-using VkLib.Core.Audio.Types;
 using VkLib.Error;
 using VkAudio = Meridian.Model.VkAudio;
 

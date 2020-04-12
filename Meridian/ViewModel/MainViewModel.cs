@@ -69,7 +69,6 @@ namespace Meridian.ViewModel
         private string _lastArtist;
         private CancellationTokenSource _artCancellationToken = new CancellationTokenSource();
         private CancellationTokenSource _coverCancellationToken = new CancellationTokenSource();
-        private bool _canBroadcast;
 
         #region Commands
 
@@ -1013,18 +1012,25 @@ namespace Meridian.ViewModel
                     var artist = CurrentAudio.Artist;
                     var title = CurrentAudio.Title;
 
-                    var imageUri = await DataService.GetTrackImage(artist, title);
-                    if (token.IsCancellationRequested)
-                        return;
+                    Uri imageUri = null;
 
-                    if (imageUri == null)
+                    if (CurrentAudio.AlbumCover != null)
+                        imageUri = CurrentAudio.AlbumCover;
+                    else
                     {
-                        if (Settings.Instance.DownloadArtistArt)
-                        {
-                            imageUri = await DataService.GetArtistImage(artist, Settings.Instance.ShowBackgroundArt);
+                        imageUri = await DataService.GetTrackImage(artist, title);
+                        if (token.IsCancellationRequested)
+                            return;
 
-                            if (token.IsCancellationRequested)
-                                return;
+                        if (imageUri == null)
+                        {
+                            if (Settings.Instance.DownloadArtistArt)
+                            {
+                                imageUri = await DataService.GetArtistImage(artist, Settings.Instance.ShowBackgroundArt);
+
+                                if (token.IsCancellationRequested)
+                                    return;
+                            }
                         }
                     }
 

@@ -115,6 +115,11 @@ namespace Meridian.Model
         }
 
         /// <summary>
+        /// Album cover uri
+        /// </summary>
+        public Uri AlbumCover { get; set; }
+
+        /// <summary>
         /// Returns a copy of current audio object
         /// </summary>
         /// <returns></returns>
@@ -126,6 +131,7 @@ namespace Meridian.Model
             audio.Artist = this.Artist;
             audio.Duration = this.Duration;
             audio.IsPlaying = this.IsPlaying;
+            audio.AlbumCover = this.AlbumCover;
 
             return audio;
         }
@@ -220,6 +226,7 @@ namespace Meridian.Model
             audio.Lyrics = this.Lyrics;
             audio.LyricsId = this.LyricsId;
             audio.IsAddedByCurrentUser = this.IsAddedByCurrentUser;
+            audio.AlbumCover = this.AlbumCover;
 
             return audio;
         }
