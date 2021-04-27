@@ -1,0 +1,63 @@
+﻿<UserControl
+    x:Class="Meridian.View.Controls.TrackControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Meridian.Behaviors"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    x:Name="rootElement"
+    FontSize="14"
+    Tapped="TrackControl_OnTapped">
+
+    <Grid x:Name="LayoutRoot" Padding="15,11,15,11" Background="Transparent">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="NormalStates">
+                <VisualState x:Name="Compact">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ArtistColumn.Width" Value="0" />
+                        <Setter Target="ArtistTextBlock.(Grid.Column)" Value="0" />
+                        <Setter Target="ArtistTextBlock.Margin" Value="0,19,10,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ArtistColumn.Width" Value="0.3*" />
+                        <Setter Target="ArtistTextBlock.(Grid.Column)" Value="1" />
+                        <Setter Target="ArtistTextBlock.Margin" Value="0,0,10,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <interactivity:Interaction.Behaviors>
+            <interactivity:BehaviorCollection>
+                <behaviors:ContextMenuBehavior Context="{x:Bind Context, Mode=OneWay}"/>
+            </interactivity:BehaviorCollection>
+        </interactivity:Interaction.Behaviors>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.3*" x:Name="ArtistColumn"/>
+            <ColumnDefinition Width="0.2*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock x:Name="TitleTextBlock" x:FieldModifier="private" Text="{Binding Track.Title, ElementName=rootElement}" Margin="0,0,10,0" TextTrimming="CharacterEllipsis"
+                   MaxLines="1"
+                   Opacity="0.8" ToolTipService.ToolTip="{Binding Track.Title, ElementName=rootElement}"/>
+
+        <TextBlock x:Name="ArtistTextBlock" x:FieldModifier="private" Grid.Column="1" Text="{Binding Track.Artist, ElementName=rootElement}" Margin="0,0,10,0" HorizontalAlignment="Stretch" TextAlignment="Left" TextTrimming="CharacterEllipsis"
+                   MaxLines="1"
+                   Opacity="0.5" ToolTipService.ToolTip="{Binding Track.Artist, ElementName=rootElement}"/>
+        
+        <TextBlock x:Name="DurationTextBlock" x:FieldModifier="private" Grid.Column="2" Text="{Binding Track.Duration, ElementName=rootElement, Converter={StaticResource AudioTimeSpanConverter}}" HorizontalAlignment="Right"
+                   Opacity="0.5" Margin="0,0,0,0"/>
+    </Grid>
+</UserControl>

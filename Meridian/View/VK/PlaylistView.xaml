@@ -1,0 +1,120 @@
+﻿<Page
+    x:Class="Meridian.View.Compact.Vk.PlaylistView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Meridian.ViewModel.VK"
+    xmlns:controls="using:Jupiter.Controls"
+    xmlns:appControls="using:Meridian.Controls"
+    xmlns:view="using:Meridian.View.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Meridian.Behaviors"
+    xmlns:interfaces="using:Meridian.Interfaces"
+    mc:Ignorable="d"
+    x:Name="rootElement">
+
+    <Page.DataContext>
+        <vm:PlaylistViewModel />
+    </Page.DataContext>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="CompactState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TabsView.Margin" Value="4,-18,0,0" />
+                        <Setter Target="SearchBox.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <RelativePanel>
+            <view:PageHeaderControl x:Name="PageHeader" Title="{Binding [PageHeader_Playlist], Source={StaticResource Resources}}"/>
+        </RelativePanel>
+
+        <controls:LoadingIndicator Grid.Row="1"  IsBusy="{Binding Operations[tracks].IsWorking}" 
+                                               Error="{Binding Operations[tracks].Error}">
+            <!-- Tracks -->
+            <ListView Margin="0,5,0,0" ItemsSource="{Binding TracksCollection.View}" Style="{StaticResource TracksListViewStyle}"
+                      SelectionMode="{Binding IsTracksSelectionEnabled, Mode=TwoWay, Converter={StaticResource BoolToSelectionModeConverter}}"
+                      SelectionChanged="{x:Bind ViewModel.TracksListView_SelectionChanged}">
+                <ListView.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <RelativePanel DataContext="{Binding Playlist}" 
+                                       Margin="15,0,0,0">
+                            <Grid x:Name="PlaylistCover" Background="{ThemeResource SystemControlHighlightListLowBrush}" Width="100" Height="100"
+                                  RelativePanel.AlignLeftWithPanel="True">
+                                <Image Source="{ThemeResource AlbumDefaultCover}" Stretch="Uniform" Height="50"/>
+                                <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                            </Grid>
+                            <StackPanel x:Name="PlaylistInfo" Grid.Row="1" Margin="10,5,0,0"
+                                        RelativePanel.RightOf="PlaylistCover" RelativePanel.AlignRightWithPanel="True">
+                                <TextBlock Text="{Binding Title}" FontSize="16" TextTrimming="CharacterEllipsis" TextWrapping="WrapWholeWords" MaxLines="2"/>
+                                <TextBlock Text="{Binding TracksCount, Converter={StaticResource TracksUnitsStringConverter}}" FontSize="12" Opacity="0.6" FontWeight="SemiBold"
+                                           Visibility="{Binding Text, RelativeSource={RelativeSource Self}, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+
+                                <controls:LoadingIndicator Margin="0,10,0,0" IsBusy="{Binding DataContext.Operations[follow].IsWorking, ElementName=rootElement}"
+                                                           Error="{Binding DataContext.Operations[follow].Error, ElementName=rootElement}"
+                                                           HorizontalAlignment="Left">
+                                    <Grid>
+                                        <Button Style="{StaticResource HighlightButtonStyle}" Content="{Binding [Playlist_AddToMyMusic], Source={StaticResource Resources}}"
+                                                Command="{Binding DataContext.FollowCommand, ElementName=rootElement}"
+                                                Visibility="{Binding DataContext.IsAddedToMyMusic, ElementName=rootElement, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"/>
+                                        <TextBlock Visibility="{Binding DataContext.IsAddedToMyMusic, ElementName=rootElement, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                   Opacity="0.6" FontSize="12">
+                                            <Run Text="" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
+                                            <Run Text="{Binding [Playlist_AddedToMyMusic], Source={StaticResource Resources}}"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </controls:LoadingIndicator>
+                            </StackPanel>
+                        </RelativePanel>
+                        
+                        <!-- Toolbar -->
+                        <appControls:ToolbarControl Grid.Row="1" RelativePanel.Below="PlaylistInfo"
+                                         Items="{Binding DataContext.ToolbarItems, ElementName=rootElement}" 
+                                         Margin="15,10,0,5" 
+                                         IsEnabled="{Binding DataContext.IsToolbarEnabled, ElementName=rootElement}"/>
+
+                    </Grid>
+                </ListView.Header>
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:TracksListBehavior />
+                </interactivity:Interaction.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="interfaces:IAudio">
+                        <view:TrackControl Track="{Binding}" IsEnabled="{Binding DataContext.IsTracksSelectionEnabled, ElementName=rootElement, Converter={StaticResource InvertBooleanConverter}}"
+                                           Command="{Binding DataContext.PlayTrackCommand, ElementName=rootElement}"
+                                           CommandParameter="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.GroupStyle>
+                    <GroupStyle HeaderContainerStyle="{StaticResource TracksListGroupHeaderItemStyle}"
+                                            HidesIfEmpty="True" HeaderTemplate="{StaticResource TracksListGroupHeaderTemplate}">
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+        </controls:LoadingIndicator>
+    </Grid>
+</Page>

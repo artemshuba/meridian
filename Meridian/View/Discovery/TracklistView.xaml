@@ -1,0 +1,74 @@
+﻿<Page
+    x:Class="Meridian.View.Discovery.TracklistView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="using:Meridian.View.Controls"
+    xmlns:appControls="using:Meridian.Controls"
+    xmlns:controls="using:Jupiter.Controls"
+    xmlns:behaviors="using:Meridian.Behaviors"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:interfaces="using:Meridian.Interfaces"
+    xmlns:vm="using:Meridian.ViewModel.Discovery"
+    mc:Ignorable="d"
+    x:Name="rootElement">
+
+    <Page.DataContext>
+        <vm:TracklistViewModel />
+    </Page.DataContext>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="CompactState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <RelativePanel>
+            <view:PageHeaderControl x:Name="PageHeader" Title="{Binding [PageHeader_Tracks], Source={StaticResource Resources}}" />
+
+            <!-- Toolbar -->
+            <appControls:ToolbarControl  RelativePanel.Below="PageHeader" RelativePanel.AlignLeftWith="PageHeader" RelativePanel.AlignRightWithPanel="True"
+                                         Items="{Binding ToolbarItems}" Margin="15,0,10,0" IsEnabled="{Binding IsToolbarEnabled}"/>
+
+            <appControls:SearchBox x:Name="SearchBox" x:Uid="SearchBox" SearchCommand="{Binding Main.SearchCommand, Source={StaticResource Locator}}"
+                     RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
+        </RelativePanel>
+
+        <!-- Tracks -->
+        <ListView Grid.Row="1" Margin="0,5,0,0" ItemsSource="{Binding Tracks}" Style="{StaticResource TracksListViewStyle}"
+                   SelectionMode="{Binding IsTracksSelectionEnabled, Mode=TwoWay, Converter={StaticResource BoolToSelectionModeConverter}}"
+                   SelectionChanged="{x:Bind ViewModel.TracksListView_SelectionChanged}">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:TracksListBehavior />
+            </interactivity:Interaction.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="interfaces:IAudio">
+                    <view:TrackControl Track="{Binding}"
+                                           Command="{Binding DataContext.PlayTrackCommand, ElementName=rootElement}"
+                                           CommandParameter="{Binding}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

@@ -1,35 +1,35 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
+﻿using System;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Media.Imaging;
+
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace Meridian.Controls
 {
-    /// <summary>
-    /// Interaction logic for ImageTransitionControl.xaml
-    /// </summary>
-    public partial class ImageTransitionControl : UserControl
+    public sealed partial class ImageTransitionControl : UserControl
     {
-        private Image _currentImage;
-        private Image _newImage;
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
+                    "Source", typeof(ImageSource), typeof(ImageTransitionControl), new PropertyMetadata(default(ImageSource), OnSourcePropertyChanged));
 
-        public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(ImageSource), typeof(ImageTransitionControl), new PropertyMetadata(default(ImageSource), ImageSourcePropertyChanged));
-
-        private static void ImageSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            var newImage = e.NewValue as BitmapImage;
+            var oldImage = e.OldValue as BitmapImage;
+
+            if (newImage == oldImage)
+                return;
+
             var control = (ImageTransitionControl)d;
 
-            control.Swap();
-
-            control._newImage.Source = (ImageSource)e.NewValue;
-
-            if (e.OldValue != null)
-                control.AnimateOut();
-
-            if (e.NewValue != null)
+            if (control.Image.Source != null)
+                control.FadeOut();
+            else
             {
-                control.AnimateIn();
+                control.Image.Source = newImage;
+                control.FadeIn();
             }
         }
 
@@ -39,74 +39,70 @@ namespace Meridian.Controls
             set { SetValue(SourceProperty, value); }
         }
 
-        public static readonly DependencyProperty ImageOpacityProperty =
-            DependencyProperty.Register("ImageOpacity", typeof(double), typeof(ImageTransitionControl), new PropertyMetadata(default(double), ImageOpacityPropertyChanged));
+        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(
+            "Stretch", typeof(Stretch), typeof(ImageTransitionControl), new PropertyMetadata(default(Stretch), OnStretchPropertyChanged));
 
-        private static void ImageOpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnStretchPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (ImageTransitionControl)d;
+            control.Image.Stretch = (Stretch)e.NewValue;
+        }
 
-            if (e.NewValue != null)
+        public Stretch Stretch
+        {
+            get { return (Stretch)GetValue(StretchProperty); }
+            set { SetValue(StretchProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for TransitionDuration.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TransitionDurationProperty =
+            DependencyProperty.Register("TransitionDuration", typeof(TimeSpan), typeof(ImageTransitionControl), new PropertyMetadata(TimeSpan.FromSeconds(0.15), (d, e) =>
             {
-                var storyboard = (Storyboard)control.Resources["TransitionIn"];
-                var anim = (DoubleAnimationUsingKeyFrames)storyboard.Children[0];
-                var keyFrame = anim.KeyFrames[1];
-                keyFrame.Value = (double)e.NewValue;
-            }
-        }
+                var control = (ImageTransitionControl)d;
+                var newValue = (TimeSpan)e.NewValue;
 
-        public double ImageOpacity
+                var fadeInAnim = (Storyboard)control.Resources["FadeInAnim"];
+                fadeInAnim.Children[0].Duration = newValue;
+
+                var fadeOutAnim = (Storyboard)control.Resources["FadeOutAnim"];
+                fadeOutAnim.Children[0].Duration = newValue;
+            }));
+
+        public TimeSpan TransitionDuration
         {
-            get { return (double)GetValue(ImageOpacityProperty); }
-            set { SetValue(ImageOpacityProperty, value); }
-        }
-
-
-        public static readonly DependencyProperty ImageBackgroundProperty =
-            DependencyProperty.Register("ImageBackground", typeof(Brush), typeof(ImageTransitionControl), new PropertyMetadata(default(Brush)));
-
-
-        public Brush ImageBackground
-        {
-            get { return (Brush)GetValue(ImageBackgroundProperty); }
-            set { SetValue(ImageBackgroundProperty, value); }
+            get { return (TimeSpan)GetValue(TransitionDurationProperty); }
+            set { SetValue(TransitionDurationProperty, value); }
         }
 
         public ImageTransitionControl()
         {
-            InitializeComponent();
-
-            _currentImage = Image1;
-            _newImage = Image2;
+            this.InitializeComponent();
         }
 
-        private void Swap()
+        private void Image_OnImageOpened(object sender, RoutedEventArgs e)
         {
-            var x = _currentImage;
-            _currentImage = _newImage;
-            _newImage = x;
+            FadeIn();
         }
 
-        private void AnimateOut()
+        private void FadeOut()
         {
-            var s = (Storyboard)Resources["TransitionOut"];
-
-            s.Begin(_currentImage);
-
-            s = (Storyboard)Resources["BgTransitionOut"];
-
+            var s = (Storyboard)Resources["FadeOutAnim"];
             s.Begin();
         }
 
-        private void AnimateIn()
+        private void FadeIn()
         {
-            var s = (Storyboard)Resources["TransitionIn"];
-
-            s.Begin(_newImage);
-
-            s = (Storyboard)Resources["BgTransitionIn"];
-
+            var s = (Storyboard)Resources["FadeInAnim"];
             s.Begin();
+        }
+
+        private void ImageFadeOutAnim_OnCompleted(object sender, object e)
+        {
+            Image.Source = Source;
+
+            //if it's a local image, fade in immediately
+            if ((Source as BitmapImage)?.UriSource == null)
+                FadeIn();
         }
     }
 }

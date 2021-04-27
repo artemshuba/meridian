@@ -1,0 +1,105 @@
+﻿<UserControl
+    x:Class="Meridian.View.Controls.AudioPostControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="using:Meridian.View.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Meridian.Behaviors"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    Width="430"
+    VerticalAlignment="Top"
+    x:Name="rootElement">
+    
+    <!--<controls:DropShadowPanel OffsetY="3" ShadowOpacity="0.08" BlurRadius="7">-->
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="CompactState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="rootElement.Width" Value="Auto" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="rootElement.Width" Value="430" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!-- Author & Date -->
+            <RelativePanel Grid.Row="0" Margin="10,10,0,15">
+                <Border x:Name="UserPhoto" Width="40" Height="40" CornerRadius="20"
+                    RelativePanel.AlignLeftWithPanel="True">
+                    <Border.Background>
+                        <ImageBrush ImageSource="{Binding Author.PhotoMedium}"/>
+                    </Border.Background>
+                </Border>
+                <StackPanel Margin="10,0,0,0"
+                           RelativePanel.RightOf="UserPhoto" RelativePanel.AlignRightWithPanel="True"
+                           RelativePanel.AlignVerticalCenterWithPanel="True">
+                    <Button x:Name="AuthorNameButton" Style="{StaticResource SimpleButtonStyle}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Left"
+                            Click="AuthorNameButton_Click">
+                        <TextBlock Text="{Binding Author.Name}"  Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                            TextTrimming="CharacterEllipsis"/>
+                    </Button>
+                    <Button x:Name="PostDateButton" Style="{StaticResource SimpleButtonStyle}"  Margin="0,-1,0,0" 
+                            FontSize="11" Opacity="0.6" HorizontalAlignment="Left"
+                            Click="PostDateButton_Click">
+                        <TextBlock Text="{Binding Date, Converter={StaticResource PostTimeConverter}}"/>
+                    </Button>
+                </StackPanel>
+            </RelativePanel>
+
+            <!-- Content -->
+            <RichTextBlock x:Name="ContentTextBlock" Grid.Row="1" TextWrapping="WrapWholeWords"
+                       Margin="10,0,10,15" FontSize="12"
+                       Visibility="{Binding Text, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+
+            <!-- Post image -->
+            <!--<controls:DropShadowPanel Grid.Row="2" Margin="10,0,10,0" Visibility="{Binding ImageUri, Converter={StaticResource IsEmptyToVisibilityConverter}}"
+                                      OffsetY="7" BlurRadius="15" ShadowOpacity="0.3" Height="250">-->
+            <Grid Grid.Row="2" Margin="10,0,10,0" Visibility="{Binding ImageUri, Converter={StaticResource IsEmptyToVisibilityConverter}}"
+                  Height="250">
+                <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+            </Grid>
+
+            <Image Grid.Row="2" Margin="-4,0,-4,0" Height="250" Source="{Binding ImageUri}" Stretch="UniformToFill" Visibility="{Binding ImageUri, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+
+            <!-- Tracks -->
+            <ListView Grid.Row="3" ItemsSource="{Binding Tracks}" SelectionMode="None" ItemContainerStyle="{StaticResource TrackListViewItemContainerStyle}"
+                      Margin="0,10,0,0" IsItemClickEnabled="True"
+                      ItemClick="TracksListView_ItemClick"
+                      ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:TracksListBehavior />
+                </interactivity:Interaction.Behaviors>
+                <ListView.ItemContainerTransitions>
+                    <TransitionCollection />
+                </ListView.ItemContainerTransitions>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <view:TrackControl Track="{Binding}" FontSize="12" Margin="-5,0,-5,0"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

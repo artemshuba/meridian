@@ -1,0 +1,217 @@
+﻿<Page
+    x:Class="Meridian.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Meridian.Controls"
+    xmlns:view="using:Meridian.View.Controls"
+    mc:Ignorable="d"
+    x:Name="rootElement"
+    Loaded="Shell_Loaded">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="GroupedMenuItems" Source="{x:Bind MenuItems}" IsSourceGrouped="True" ItemsPath="Items"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="NormalStates">
+                <VisualState x:Name="Compact">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Player.Visibility" Value="Collapsed" />
+                        <Setter Target="_contentShadow.Visibility" Value="Collapsed" />
+                        <Setter Target="_menuListView.Padding" Value="0,20,0,0" />
+                        <Setter Target="PaneGrid.Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+                        <Setter Target="HostBackDrop.Visibility" Value="Collapsed" />
+                        <Setter Target="MenuButton.Margin" Value="9,20,0,0" />
+                        <Setter Target="SidebarColumn.Width" Value="0" />
+                        <Setter Target="SidebarBg.Opacity" Value="0"/>
+                        <Setter Target="SettingsButton.Margin" Value="0,70,0,0" />
+                        <Setter Target="SearchBox.Visibility" Value="Visible" />
+                        <Setter Target="MiniPlayer.Visibility" Value="Visible" />
+                        <Setter Target="BackgroundArtOverlay.Visibility" Value="Collapsed" />
+                        <Setter Target="BackgroundArt.Opacity" Value="0.2" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="SplitView.IsPaneOpen" Value="True" />
+                        <Setter Target="MenuButton.Visibility" Value="Collapsed" />
+                        <Setter Target="Player.Visibility" Value="Visible" />
+                        <Setter Target="_contentShadow.Visibility" Value="Visible" />
+                        <Setter Target="_menuListView.Padding" Value="0,0,0,0" />
+                        <Setter Target="PaneGrid.Background" Value="{x:Null}" />
+                        <Setter Target="HostBackDrop.Visibility" Value="Visible" />
+                        <Setter Target="MenuButton.Margin" Value="11,15,0,0" />
+                        <Setter Target="SidebarColumn.Width" Value="210" />
+                        <Setter Target="SidebarBg.Opacity" Value="0.04"/>
+                        <Setter Target="SettingsButton.Margin" Value="0,10,0,0" />
+                        <Setter Target="BackgroundArtOverlay.Visibility" Value="Visible" />
+                        <Setter Target="BackgroundArt.Opacity" Value="0.3" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <!-- Background stuff -->
+        <Grid x:Name="BackgroundArtGrid" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="SidebarColumn" Width="0"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <controls:BackDrop x:Name="HostBackDrop" UseHostBackDrop="True"
+                               Grid.ColumnSpan="3"/>
+            <!-- Backdrop overlay -->
+            <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                       Opacity="0.82" Grid.ColumnSpan="3"/>
+
+            <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                       Opacity="0.7" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+            <!-- Background art -->
+            <controls:ImageTransitionControl x:Name="BackgroundArt" Source="{Binding Player.ArtistImage.Source, Source={StaticResource Locator}}" Opacity="0.3" TransitionDuration="0:0:0.6"
+                                             Grid.Column="1"/>
+
+            <Grid x:Name="BackgroundArtOverlay"  Grid.Column="1">
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Offset="0" Color="{ThemeResource SystemAltHighColor}"/>
+                            <GradientStop Offset="1" Color="{ThemeResource BackgroundArtFadeColor}"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="{ThemeResource SystemAltHighColor}"/>
+                            <GradientStop Offset="0.4" Color="{ThemeResource BackgroundArtMiddleFadeColor}"/>
+                            <GradientStop Offset="1" Color="{ThemeResource BackgroundArtFadeColor}"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+
+            <controls:BackDrop x:Name="BackgroundArtBlur" BlurAmount="20" Grid.Column="1"/>
+        </Grid>
+        
+        <Rectangle x:Name="TitleBar" Fill="Transparent" Height="32" VerticalAlignment="Top"/>
+
+        <controls:SwipeableSplitView x:Name="SplitView" IsPaneOpen="False" DisplayMode="Overlay" Template="{StaticResource ShellSplitViewTemplate}" 
+                                     PaneBackground="{x:Null}" OpenPaneLength="200">
+            <SplitView.Pane>
+                <Grid x:Name="PaneGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <!-- Sidebar bg -->
+                    <Rectangle x:Name="SidebarBg" Fill="{ThemeResource ApplicationForegroundThemeBrush}" Grid.RowSpan="2"
+                               Opacity="0.04"/>
+
+                    <StackPanel Margin="0,0,0,10">
+                        <!-- Player control -->
+                        <view:PlayerControl x:Name="Player" x:FieldModifier="private" x:DeferLoadStrategy="Lazy" DataContext="{Binding Player, Source={StaticResource Locator}}"
+                                            Margin="0,10,0,0" Width="170"/>
+
+                        <!-- Current user -->
+                        <Button x:Name="SettingsButton" Style="{StaticResource SimpleButtonStyle}" Margin="0,0,0,10" FontSize="12"
+                                Command="{Binding Main.GoToSettingsCommand, Source={StaticResource Locator}}">
+                            <RelativePanel>
+                                <!-- User photo -->
+                                <Grid x:Name="UserPhotoGrid" Width="20" Height="20" CornerRadius="10" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                                      Margin="20,0,8,0"
+                                      RelativePanel.AlignLeftWithPanel="True">
+                                    <Border CornerRadius="10">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding Main.CurrentUser.Photo, Source={StaticResource Locator}}"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Grid>
+
+                                <!-- User name -->
+                                <TextBlock Text="{Binding Main.CurrentUser.Name, Source={StaticResource Locator}}" FontSize="12"
+                                           TextTrimming="CharacterEllipsis" FontWeight="SemiBold"
+                                           RelativePanel.RightOf="UserPhotoGrid" RelativePanel.AlignRightWith="SettingsIcon" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+                                <!-- Settings icon -->
+                                <TextBlock x:Name="SettingsIcon" Text="" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" FontSize="12" Margin="0,0,20,0"
+                                           Opacity="0.7"
+                                           RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+                            </RelativePanel>
+                        </Button>
+
+                        <controls:SearchBox x:Name="SearchBox" x:Uid="SearchBox" SearchCommand="{Binding Main.SearchCommand, Source={StaticResource Locator}}"
+                                            x:DeferLoadStrategy="Lazy" Visibility="Collapsed" Width="Auto" HorizontalAlignment="Stretch"
+                                            Margin="15,20,15,-10"/>
+                    </StackPanel>
+                    <!-- Main menu -->
+                    <ListView x:Name="_menuListView" x:FieldModifier="private" IsItemClickEnabled="True" ShowsScrollingPlaceholders="False"
+                              Margin="0,0,0,0" Padding="20,0,20,0"
+                              ItemsSource="{Binding Source={StaticResource GroupedMenuItems}}" Grid.Row="1" ItemContainerStyle="{StaticResource MainMenuListViewItemStyle}"
+                              ItemClick="MenuListView_OnItemClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <RelativePanel>
+                                    <TextBlock Text="{Binding Title}" 
+                                               RelativePanel.AlignLeftWithPanel="True"
+                                               RelativePanel.AlignRightWithPanel="True"/>
+                                </RelativePanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.GroupStyle>
+                            <GroupStyle HidesIfEmpty="True" HeaderContainerStyle="{StaticResource MainMenuListViewGroupHeaderStyle}">
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Rectangle Height="1" Fill="{ThemeResource ApplicationForegroundThemeBrush}" Opacity="0.2" VerticalAlignment="Center"
+                                                   Margin="20,15,20,15"
+                                                   Visibility="{Binding Title, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+                    </ListView>
+
+                    <!-- Content shadow -->
+                    <Rectangle x:Name="_contentShadow" x:FieldModifier="private" Grid.RowSpan="2" HorizontalAlignment="Right" Width="5" Opacity="0.04" IsHitTestVisible="False">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                                <GradientStop Color="Black" />
+                                <GradientStop Color="#00000000" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Grid>
+                    <Frame x:Name="ContentFrame" x:FieldModifier="public" Navigating="ContentFrame_Navigating" Navigated="ContentFrame_OnNavigated"/>
+
+                    <Border x:Name="MiniPlayerHost" VerticalAlignment="Bottom">
+                        <view:MiniPlayerControl x:Name="MiniPlayer" x:DeferLoadStrategy="Lazy" Visibility="Collapsed"
+                                DataContext="{Binding Player, Source={StaticResource Locator}}"/>
+                    </Border>
+                </Grid>
+            </SplitView.Content>
+        </controls:SwipeableSplitView>
+        <Button x:Name="MenuButton" Content="&#xE700;" FontFamily="{StaticResource SymbolThemeFontFamily}" Style="{StaticResource SimpleButtonStyle}" FontSize="18" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="MenuButton_Click"/>
+
+        <Border x:Name="PopupHost">
+
+        </Border>
+
+        <controls:AppViewHelperControl AppViewForeground="{ThemeResource ApplicationForegroundThemeBrush}"
+                                       AppViewBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+    </Grid>
+</Page>

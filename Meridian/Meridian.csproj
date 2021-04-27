@@ -1,90 +1,212 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject>Meridian.App</StartupObject>
-    <Version>5.5.791</Version>
-    <Authors>Artem Shuba</Authors>
-    <Copyright>© Artem Shuba 2011 ― 2020</Copyright>
-    <PackageIcon>icon.ico</PackageIcon>
-    <Platforms>AnyCPU;x86</Platforms>
+    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>Meridian</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x86;x64;arm64</Platforms>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <AssemblyName>Meridian</AssemblyName>
+    <Version>8.0.0</Version>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <WarningLevel>0</WarningLevel>
-  </PropertyGroup>
-
   <ItemGroup>
-    <None Remove="Resources\Images\cover_default.png" />
-    <None Remove="Resources\Images\echonest_logo_light.gif" />
-    <None Remove="Resources\Images\lastfm_logo.gif" />
-    <None Remove="Resources\Images\next_thumb.png" />
-    <None Remove="Resources\Images\pause_thumb.png" />
-    <None Remove="Resources\Images\play_thumb.png" />
-    <None Remove="Resources\Images\prev_thumb.png" />
+    <None Remove="Resources\Localization\en-US\Resources.resw" />
+    <None Remove="Resources\Localization\ru-RU\Resources.resw" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="gong-wpf-dragdrop" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+    <PackageReference Include="Microsoft.ProjectReunion" Version="0.5" />
+    <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.5" />
+    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.5" />
+    <PackageReference Include="Microsoft.Toolkit" Version="7.0.1" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.5.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.3" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
-    <PackageReference Include="NAudio" Version="1.10.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NLog" Version="4.7.0" />
-    <PackageReference Include="SharpZipLib" Version="1.2.0" />
-    <PackageReference Include="sqlite-net" Version="1.6.292" />
-    <PackageReference Include="taglib" Version="2.1.0" />
-    <PackageReference Include="WindowsAPICodePack-Core" Version="1.1.2" />
-    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
-    <PackageReference Include="Yandex.Metrica" Version="3.5.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LastFmLibPortable\Trunk\LastFmLibPortable.csproj" />
-    <ProjectReference Include="..\Neptune\Trunk\Neptune.Base\Neptune.Base.csproj" />
-    <ProjectReference Include="..\Neptune\Trunk\Neptune.Desktop\Neptune.Desktop.csproj" />
+    <PRIResource Include="Resources\Localization\en-US\Resources.resw" />
+    <PRIResource Include="Resources\Localization\ru-RU\Resources.resw" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Jupiter\Jupiter.UWP\Jupiter.UWP.csproj" />
+    <ProjectReference Include="..\libs\DeezerLib\DeezerLib.csproj" />
+    <ProjectReference Include="..\libs\LastFmLib\LastFmLib.csproj" />
     <ProjectReference Include="..\VkLib\VkLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Windows">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.18362.0\Windows.winmd</HintPath>
-      <IsWinMDFile>true</IsWinMDFile>
-    </Reference>
+    <Page Update="Controls\AlbumCoverControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\ImageTransitionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\PaginationListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\PopupControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\ToolbarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\Blue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\Emerald.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\Magenta.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\Mango.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\Pink.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\Purple.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\Red.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\Sea.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\Sky.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Accents\System.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\Brushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\ButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\ListViewStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\LoadingIndicatorStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\PivotStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\PlayerControlStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\SplitViewStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\TextBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Styles\ToolbarStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Shell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Common\ExploreView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Common\LastFmLoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Common\NowPlayingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Common\PlaylistsListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Controls\AudioPostControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Controls\MiniPlayerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Controls\PageHeaderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Controls\PlayerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Controls\TrackControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Discovery\AlbumListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Discovery\AlbumView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Discovery\ArtistlistView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Discovery\ArtistView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Discovery\TracklistView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\LoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\SearchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\Settings\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\EditPlaylistView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\EditTrackView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\FeedView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\FriendMusicView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\FriendsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\MyMusicView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\PlaylistView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\PopularMusicView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\RecommendationsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\SelectPlaylistView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\SocietiesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\SocietyMusicView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\VK\TrackLyricsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
-
-  <ItemGroup>
-    <None Include="icon.ico">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\Images\cover_default.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\echonest_logo_light.gif">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\lastfm_logo.gif">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\next_thumb.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\pause_thumb.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\play_thumb.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\prev_thumb.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-
 </Project>

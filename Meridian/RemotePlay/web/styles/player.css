@@ -23,7 +23,8 @@
 
 #progressBarBg {
     height: 4pt;
-    background-color: #dddddd;
+    background-color: #000;
+    opacity: 0.05;
 }
 
 #progressBar .ui-slider-handle {
@@ -136,6 +137,12 @@
     text-align: center;
 }
 
+@media (max-height: 610px) {
+    #playerControl #currentAudioTitle {
+        margin-top: 20pt;
+    }
+}
+
 #playerControl #currentAudioArtist {
     display: block;
     text-overflow: ellipsis;
@@ -212,28 +219,28 @@
     }
 
     #playerControls #prev {
-        margin-left: -25pt;
+        margin-left: -45pt;
         left: calc(50% - 35pt);
     }
 
     #playerControls #next {
-        margin-left: 27pt;
+        margin-left: 47pt;
         left: 50%;
     }
 
-    #playerControls.state-play .play{
+    #playerControls.state-play .play {
         display: none;
     }
 
-    #playerControls.state-play .pause{
+    #playerControls.state-play .pause {
         display: inline-block;
     }
 
-    #playerControls.state-pause .play{
+    #playerControls.state-pause .play {
         display: inline-block;
     }
 
-    #playerControls.state-pause .pause{
+    #playerControls.state-pause .pause {
         display: none;
     }
 
@@ -296,3 +303,38 @@
             #playerControl .coverButtonsBlock .coverButton#repeat.active {
                 opacity: 1;
             }
+
+#currentAudioCoverContainer {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    position: relative;
+}
+
+    #currentAudioCoverContainer img {
+        width: auto;
+        height: 100%;
+        position: relative;
+        left: -55%;
+    }
+
+
+@media (max-height: 536px) {
+    #currentAudioCoverContainer {
+        display: none;
+    }
+}
+
+#currentAudioBgCover {
+    -webkit-filter: blur(50px);
+    filter: blur(50px);
+    opacity: 0.35;
+    position: absolute;
+    left: calc(50% - 250px);
+    top: calc(50% - 250px);
+    width: 500px;
+    height: 500px;
+}

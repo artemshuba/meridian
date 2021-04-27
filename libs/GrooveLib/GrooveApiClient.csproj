@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EFC538C3-4EF6-43B4-B49A-152E35563BDA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Groove.Api.Client</RootNamespace>
+    <AssemblyName>Microsoft.Groove.Api.Client</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AuthenticationDataContract\MicrosoftAccountAuthenticationResponse.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ContentExtensions.cs" />
+    <Compile Include="DataContract\Activity.cs" />
+    <Compile Include="DataContract\Album.cs" />
+    <Compile Include="DataContract\Artist.cs" />
+    <Compile Include="DataContract\BaseResponse.cs" />
+    <Compile Include="DataContract\BrowseItemType.cs" />
+    <Compile Include="DataContract\CollectionEdit\ActionResult.cs" />
+    <Compile Include="DataContract\CollectionEdit\IPlaylistEditableMetadata.cs" />
+    <Compile Include="DataContract\CollectionEdit\PlaylistAction.cs" />
+    <Compile Include="DataContract\CollectionEdit\PlaylistActionResponse.cs" />
+    <Compile Include="DataContract\CollectionEdit\PlaylistActionResult.cs" />
+    <Compile Include="DataContract\CollectionEdit\PlaylistActionType.cs" />
+    <Compile Include="DataContract\CollectionEdit\TrackAction.cs" />
+    <Compile Include="DataContract\CollectionEdit\TrackActionRequest.cs" />
+    <Compile Include="DataContract\CollectionEdit\TrackActionResponse.cs" />
+    <Compile Include="DataContract\CollectionEdit\TrackActionResult.cs" />
+    <Compile Include="DataContract\CollectionEdit\TrackActionType.cs" />
+    <Compile Include="DataContract\CollectionState.cs" />
+    <Compile Include="DataContract\Content.cs" />
+    <Compile Include="DataContract\ContentCategory.cs" />
+    <Compile Include="DataContract\ContentItem.cs" />
+    <Compile Include="DataContract\ContentResponse.cs" />
+    <Compile Include="DataContract\CreateRadioRequest.cs" />
+    <Compile Include="DataContract\Error.cs" />
+    <Compile Include="DataContract\ExtraDetails.cs" />
+    <Compile Include="DataContract\GenericCollections.cs" />
+    <Compile Include="DataContract\ItemType.cs" />
+    <Compile Include="DataContract\MediaNamespace.cs" />
+    <Compile Include="DataContract\Mood.cs" />
+    <Compile Include="DataContract\OrderBy.cs" />
+    <Compile Include="DataContract\PaginatedList.cs" />
+    <Compile Include="DataContract\Playlist.cs" />
+    <Compile Include="DataContract\Radio.cs" />
+    <Compile Include="DataContract\RadioResponse.cs" />
+    <Compile Include="DataContract\RadioSeed.cs" />
+    <Compile Include="DataContract\RadioSeedType.cs" />
+    <Compile Include="DataContract\SearchFilter.cs" />
+    <Compile Include="DataContract\StreamResponse.cs" />
+    <Compile Include="DataContract\SubscriptionState.cs" />
+    <Compile Include="DataContract\Track.cs" />
+    <Compile Include="DataContract\TrackContainer.cs" />
+    <Compile Include="DataContract\UserProfileResponse.cs" />
+    <Compile Include="ErrorCode.cs" />
+    <Compile Include="GrooveClient.cs" />
+    <Compile Include="GrooveClientFactory.cs" />
+    <Compile Include="IGrooveClient.cs" />
+    <Compile Include="IUserTokenManager.cs" />
+    <Compile Include="MicrosoftAccountAuthenticationCache.cs" />
+    <Compile Include="MicrosoftAccountAuthenticationClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleServiceClient.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="project.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+</Project>

@@ -12,6 +12,7 @@
 
     var currentTime = document.getElementById("currentTime");
     var duration = document.getElementById("duration");
+    var lastTrackInfo;
 
     play.onclick = onPlay;
     pause.onclick = onPause;
@@ -55,6 +56,14 @@
 
             if (!positionChanging)
                 progressBar.slider({ value: trackInfo.currentTime, max: trackInfo.duration });
+
+            if (lastTrackInfo == null || (trackInfo.track.artist != lastTrackInfo.track.artist && trackInfo.track.title != lastTrackInfo.track.title)) {
+                var src = "/api/currentTrackImage?" + Math.random();
+                document.getElementById("currentAudioCover").src = src;
+                document.getElementById("currentAudioBgCover").src = src;
+            }
+
+            lastTrackInfo = trackInfo;
         });
     }, 1000);
 

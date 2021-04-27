@@ -1,0 +1,143 @@
+﻿<UserControl
+    x:Class="Meridian.View.Controls.PlayerControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:appControls="using:Meridian.Controls"
+    xmlns:behaviors="using:Meridian.Behaviors"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    mc:Ignorable="d"
+    d:DesignHeight="800"
+    d:DesignWidth="200"
+    x:Name="rootElement"
+    Loaded="PlayerControlLoaded"
+    Unloaded="PlayerControlUnloaded"
+    SizeChanged="PlayerControlSizeChanged">
+
+    <UserControl.Resources>
+        <Storyboard x:Key="PlayStoppedAnim">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AlbumCoverShadow" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="0.2">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut" Exponent="6"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AlbumCover" Storyboard.TargetProperty="(RenderTransform).ScaleX">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="0.95">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut" Exponent="6"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AlbumCover" Storyboard.TargetProperty="(RenderTransform).ScaleY">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="0.95">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut" Exponent="6"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="PlayStartedAnim">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AlbumCoverShadow" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut" Exponent="6"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AlbumCover" Storyboard.TargetProperty="(RenderTransform).ScaleX">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut" Exponent="6"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AlbumCover" Storyboard.TargetProperty="(RenderTransform).ScaleY">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut" Exponent="6"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <StackPanel x:Name="RootPanel">
+        <!-- Album art -->
+        <Grid x:Name="AlbumArtGrid" VerticalAlignment="Top" Margin="0,5,0,0">
+            <!--<controls:DropShadowPanel x:Name="AlbumCoverShadow" ShadowOpacity="0.2" OffsetY="5" BlurRadius="20" Opacity="0.2">-->
+            <Grid x:Name="AlbumCoverShadow" Opacity="0.2">
+                <Border Background="Transparent" CornerRadius="0"/>
+            </Grid>
+            <appControls:AlbumCoverControl x:Name="AlbumCover" Source="{Binding TrackImage}" RenderTransformOrigin="0.5,0.3">
+                <appControls:AlbumCoverControl.RenderTransform>
+                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                </appControls:AlbumCoverControl.RenderTransform>
+            </appControls:AlbumCoverControl>
+        </Grid>
+
+        <!-- Current audio artist & title -->
+        <StackPanel DataContext="{Binding CurrentAudio}" HorizontalAlignment="Stretch" Margin="20,15,20,0"
+                    Visibility="{Binding Converter={StaticResource IsEmptyToVisibilityConverter}, FallbackValue=Collapsed}">
+            <interactivity:Interaction.Behaviors>
+                <interactivity:BehaviorCollection>
+                    <behaviors:ContextMenuBehavior Context="Player"/>
+                </interactivity:BehaviorCollection>
+            </interactivity:Interaction.Behaviors>
+            <TextBlock Text="{Binding Title, Converter={StaticResource StringToUpperConverter}}" FontWeight="Bold" FontSize="14" TextTrimming="CharacterEllipsis"
+                       CharacterSpacing="30" TextAlignment="Center" MaxLines="1"
+                       ToolTipService.ToolTip="{Binding Title}"/>
+            <TextBlock Text="{Binding Artist}" FontWeight="SemiLight" FontSize="14" Opacity="0.85" Margin="0,0,0,0" TextTrimming="CharacterEllipsis" 
+                       CharacterSpacing="10" TextAlignment="Center" MaxLines="1"
+                       ToolTipService.ToolTip="{Binding Artist}"/>
+        </StackPanel>
+
+        <!-- Progress slider -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Slider Grid.Row="0" Value="{Binding PositionSeconds, Mode=TwoWay}" Maximum="{Binding DurationSeconds}" 
+                    ThumbToolTipValueConverter="{StaticResource AudioTimeSpanConverter}" Margin="0,-5,0,0" Style="{StaticResource PlayerSliderStyle}"/>
+            <TextBlock Grid.Row="1" Text="{Binding Position, Converter={StaticResource AudioTimeSpanConverter}}" Margin="0,-15,0,0" FontSize="12" Opacity="0.6" />
+            <TextBlock Grid.Row="1" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Margin="0,-15,0,0" FontSize="12" Opacity="0.6" HorizontalAlignment="Right"/>
+        </Grid>
+
+        <!-- Control buttons -->
+        <Border HorizontalAlignment="Stretch" Margin="0,10,0,0">
+            <StackPanel x:Name="PlayerControlsPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                <!-- Shuffle -->
+                <ToggleButton Width="34" Height="34" Margin="-2,0,4,0" Style="{StaticResource ShuffleToggleButtonStyle}" VerticalAlignment="Center"
+                              IsChecked="{Binding Shuffle, Mode=TwoWay}"
+                              ToolTipService.ToolTip="{Binding [Player_TooltipShuffleButton], Source={StaticResource Resources}}"/>
+
+                <Button Content="Prev" Command="{Binding SwitchPrevCommand}" Style="{StaticResource PrevButtonStyle}" Width="30"/>
+                <ToggleButton Content="Play" Command="{Binding PlayPauseCommand}" IsChecked="{Binding IsPlaying, Mode=TwoWay}" Style="{StaticResource PlayPauseButtonStyle}" Width="36" Height="36" Margin="8,0,8,0"/>
+                <Button Content="Next" Command="{Binding SwitchNextCommand}" Style="{StaticResource NextButtonStyle}" Width="30"/>
+
+                <!-- Repeat -->
+                <ToggleButton Width="34" Height="34" Margin="4,0,-2,0" Style="{StaticResource RepeatButtonStyle}" VerticalAlignment="Center"
+                              IsChecked="{Binding Repeat, Mode=TwoWay}"
+                              ToolTipService.ToolTip="{Binding [Player_TooltipRepeatButton], Source={StaticResource Resources}}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Volume -->
+        <Grid Margin="5,0,5,0" HorizontalAlignment="Stretch" Background="Transparent" PointerWheelChanged="VolumeGridPointerWheelChanged">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Style="{StaticResource VolumeMuteButtonStyle}" Height="30" Margin="0,-6,0,0" HorizontalAlignment="Left" Click="VolumeMuteButtonClick"
+                    ToolTipService.ToolTip="{Binding [Player_TooltipMuteButton], Source={StaticResource Resources}}"/>
+            <Slider x:Name="VolumeSlider" Grid.Column="1" Value="{Binding Volume, Mode=TwoWay}" Style="{StaticResource VolumeSliderStyle}" Margin="0,0,0,0" Opacity="1"/>
+            <Button Grid.Column="2" Style="{StaticResource VolumeButtonStyle}" Width="33" Margin="0,-6,0,0" HorizontalAlignment="Right" Click="VolumeMaxButtonClick"
+                    ToolTipService.ToolTip="{Binding [Player_TooltipVolumeMaxButton], Source={StaticResource Resources}}"/>
+        </Grid>
+    </StackPanel>
+</UserControl>

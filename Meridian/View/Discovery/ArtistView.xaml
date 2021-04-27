@@ -1,0 +1,195 @@
+﻿<Page
+    x:Class="Meridian.View.Discovery.ArtistView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Meridian.ViewModel.Discovery"
+    xmlns:view="using:Meridian.View.Controls"
+    xmlns:appControls="using:Meridian.Controls"
+    xmlns:controls="using:Jupiter.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Meridian.Behaviors"
+    xmlns:interfaces="using:Meridian.Interfaces"
+    mc:Ignorable="d"
+    x:Name="rootElement">
+
+    <Page.DataContext>
+        <vm:ArtistViewModel />
+    </Page.DataContext>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="CompactState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Rectangle IsHitTestVisible="False" Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                   Grid.RowSpan="2"/>
+
+        <Grid IsHitTestVisible="False" Height="250">
+            <!-- Background art -->
+            <appControls:ImageTransitionControl x:Name="BackgroundArt" Source="{Binding ArtistImage.Source}" Opacity="1" TransitionDuration="0:0:0.6"
+                                                VerticalAlignment="Top" IsHitTestVisible="False"
+                                                RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                                                RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
+
+            <Rectangle>
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                        <GradientStop Offset="0" Color="{ThemeResource SystemAltHighColor}"/>
+                        <GradientStop Offset="0.6" Color="{ThemeResource BackgroundArtMiddleFadeColor}"/>
+                        <GradientStop Offset="1" Color="{ThemeResource BackgroundArtFadeColor}"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+
+        <RelativePanel>
+            <view:PageHeaderControl x:Name="PageHeader" Title=""/>
+
+            <RelativePanel x:Name="ArtistInfoPanel" DataContext="{Binding Artist}" 
+                           Margin="15,0,0,20" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.LeftOf="SearchBox">
+                <Grid x:Name="ArtistImage" CornerRadius="40" Background="{ThemeResource SystemControlHighlightListLowBrush}" Width="80" Height="80"
+                      RelativePanel.AlignBottomWithPanel="True">
+                    <TextBlock Text="" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"
+                               Foreground="White"/>
+                    <Border CornerRadius="40">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center" ImageSource="{Binding Image}" />
+                        </Border.Background>
+                    </Border>
+                </Grid>
+                <TextBlock Text="{Binding Name, Converter={StaticResource StringToUpperConverter}}" FontWeight="Bold" FontSize="36"
+                           TextTrimming="CharacterEllipsis" Margin="20,0,10,0"
+                           RelativePanel.RightOf="ArtistImage" RelativePanel.AlignRightWithPanel="True"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            </RelativePanel>
+
+            <appControls:SearchBox x:Name="SearchBox" x:Uid="SearchBox" SearchCommand="{Binding Main.SearchCommand, Source={StaticResource Locator}}"
+                                   RelativePanel.Below="PageHeader" Margin="0,-33,10,33"
+                                   RelativePanel.AlignRightWithPanel="True"/>
+        </RelativePanel>
+
+        <controls:LoadingIndicator Grid.Row="1" IsBusy="{Binding Operations[tracks].IsWorking}" 
+                                   Error="{Binding Operations[tracks].Error}">
+            <ScrollViewer>
+                <StackPanel Margin="0,0,0,20">
+                    <!-- Related artists -->
+                    <Grid  Margin="15,5,0,5" Visibility="{Binding RelatedArtists, Converter={StaticResource IsEmptyToVisibilityConverter}}">
+                        <TextBlock Text="{Binding [Search_RelatedArtistsTitle], Source={StaticResource Resources}}"
+                                   FontWeight="Bold"/>
+                        <Button Content="{Binding [ShowMore], Source={StaticResource Resources}}" Style="{StaticResource LinkButtonStyle}"
+                                Command="{Binding ShowMoreArtistsCommand}"/>
+                    </Grid>
+
+
+                    <appControls:PaginationListView x:Name="ArtistsListView" ItemsSource="{Binding RelatedArtists}"
+                                  Visibility="{Binding RelatedArtists, Converter={StaticResource IsEmptyToVisibilityConverter}}"
+                                  Padding="7,0,0,0"
+                                  ItemContainerStyle="{StaticResource PlaylistCompactListViewItemStyle}"
+                                  ItemClickCommand="{Binding DataContext.GoToArtistCommand, ElementName=rootElement}">
+                        <appControls:PaginationListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="100" ToolTipService.ToolTip="{Binding Name}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="43"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid CornerRadius="50" Background="{ThemeResource SystemControlHighlightListLowBrush}">
+                                        <TextBlock Text="" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White"/>
+                                        <Border CornerRadius="50">
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center" ImageSource="{Binding Image}" />
+                                            </Border.Background>
+                                        </Border>
+                                    </Grid>
+                                    <TextBlock Grid.Row="1" MaxLines="2" TextWrapping="WrapWholeWords" Text="{Binding Name}" TextAlignment="Center" Margin="0,5,0,0" TextTrimming="CharacterEllipsis"
+                                                   FontSize="14"  Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </appControls:PaginationListView.ItemTemplate>
+                    </appControls:PaginationListView>
+                    
+                    <!-- Tracks -->
+                    <Grid Margin="15,5,0,5"  Visibility="{Binding TopTracks, Converter={StaticResource IsEmptyToVisibilityConverter}}">
+                        <TextBlock Text="{Binding [Search_TopTracksTitle], Source={StaticResource Resources}}"
+                                   FontWeight="Bold"/>
+                        <Button Content="{Binding [ShowMore], Source={StaticResource Resources}}" Style="{StaticResource LinkButtonStyle}"
+                                Command="{Binding ShowMoreTracksCommand}"/>
+                    </Grid>
+
+                    <ListView Margin="0,0,0,0" ItemsSource="{Binding TopTracks}" Style="{StaticResource TracksListViewStyle}"
+                              ScrollViewer.VerticalScrollMode="Disabled">
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:TracksListBehavior />
+                        </interactivity:Interaction.Behaviors>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="interfaces:IAudio">
+                                <view:TrackControl Track="{Binding}"
+                                           Command="{Binding DataContext.PlayTrackCommand, ElementName=rootElement}"
+                                           CommandParameter="{Binding}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <!-- Albums -->
+                    <Grid Margin="15,5,0,5" Visibility="{Binding Albums, Converter={StaticResource IsEmptyToVisibilityConverter}}">
+                        <TextBlock Text="{Binding [Search_AlbumsTitle], Source={StaticResource Resources}}"
+                               FontWeight="Bold"/>
+                        
+                        <Button Content="{Binding [ShowMore], Source={StaticResource Resources}}" Style="{StaticResource LinkButtonStyle}"
+                                Command="{Binding ShowMoreAlbumsCommand}"/>
+                    </Grid>
+                    <appControls:PaginationListView x:Name="AlbumsListView" ItemsSource="{Binding Albums}"
+                                                        Visibility="{Binding Albums, Converter={StaticResource IsEmptyToVisibilityConverter}}"
+                                                        Padding="7,0,0,0"
+                                                        ItemContainerStyle="{StaticResource PlaylistCompactListViewItemStyle}"
+                                                        ItemClickCommand="{Binding DataContext.GoToAlbumCommand, ElementName=rootElement}">
+                        <appControls:PaginationListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="100" ToolTipService.ToolTip="{Binding Title}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="45"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Background="{ThemeResource SystemControlForegroundAccentBrush}">
+                                        <Path Data="{StaticResource LogoBird}" Fill="White" Stretch="Uniform" Margin="40"/>
+                                        <Image Source="{Binding Cover}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                    <StackPanel Grid.Row="1" >
+                                        <TextBlock Text="{Binding Title}" Margin="0,5,0,0" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" TextTrimming="CharacterEllipsis" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="2"/>
+                                        <TextBlock Text="{Binding Artist.Name}" Margin="0,-2,0,0" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" TextTrimming="CharacterEllipsis" Opacity="0.6"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </appControls:PaginationListView.ItemTemplate>
+                    </appControls:PaginationListView>
+                </StackPanel>
+            </ScrollViewer>
+
+        </controls:LoadingIndicator>
+    </Grid>
+</Page>

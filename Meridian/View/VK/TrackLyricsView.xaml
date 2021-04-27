@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="Meridian.View.VK.TrackLyricsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Meridian.ViewModel.Common"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:TrackLyricsViewModel />
+    </Page.DataContext>
+
+    <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid HorizontalAlignment="Stretch" MaxWidth="400" Margin="15,10,15,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <TextBlock Text="{Binding Track.Title, Converter={StaticResource StringToUpperConverter}}"
+                       FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding Track.Artist}" FontSize="14" Opacity="0.6"/>
+            </StackPanel>
+
+            <TextBox Grid.Row="1" IsReadOnly="True" Text="{Binding Lyrics}" BorderThickness="0" AcceptsReturn="True" Padding="0,0,0,0" Margin="0,20,0,0"
+                     TextWrapping="Wrap" Background="Transparent"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+            <Button Content="{Binding [Close], Source={StaticResource Resources}}" VerticalAlignment="Bottom" Command="{Binding CloseCommand}" Grid.Row="2"
+                    Style="{StaticResource HighlightButtonStyle}" HorizontalAlignment="Right" Margin="0,10,0,0" />
+        </Grid>
+    </Border>
+</Page>

@@ -1,0 +1,46 @@
+﻿<Page
+    x:Class="Meridian.View.Common.LastFmLoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Meridian.ViewModel.Common"
+    xmlns:controls="using:Jupiter.Controls"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:LastFmLoginViewModel />
+    </Page.DataContext>
+
+    <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid HorizontalAlignment="Stretch" MaxWidth="400" Margin="15,10,15,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="{Binding [LastFmLogin_Title], Source={StaticResource Resources}, Converter={StaticResource StringToUpperConverter}}" FontWeight="Bold" FontSize="14"/>
+
+            <controls:LoadingIndicator Grid.Row="1" Margin="0,20,0,0" IsBusy="{Binding Operations[login].IsWorking}">
+                <StackPanel>
+                    <TextBox x:Name="LoginTextBox" Header="{Binding [LastFmLogin_LoginTitle], Source={StaticResource Resources}}" Margin="0,20,0,0" KeyDown="LoginBox_OnKeyDown"
+                             Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <PasswordBox x:Name="PasswordBox" Header="{Binding [LastFmLogin_PasswordTitle], Source={StaticResource Resources}}" Margin="0,10,0,0" KeyDown="PasswordBox_OnKeyDown"
+                                 Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Foreground="Red" Margin="0,10,0,0" TextWrapping="WrapWholeWords"
+                           Text="{Binding Operations[login].Error}" Visibility="{Binding Operations[login].Error, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+                </StackPanel>
+            </controls:LoadingIndicator>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0" Grid.Row="2">
+                <Button Content="{Binding [Close], Source={StaticResource Resources}}" VerticalAlignment="Bottom" Command="{Binding CloseCommand}"
+                        Style="{StaticResource CommonButtonStyle}" />
+                
+                <Button Content="{Binding [SignIn], Source={StaticResource Resources}}"  Command="{Binding LoginCommand}" IsEnabled="{Binding CanLogin}"
+                        Style="{StaticResource HighlightButtonStyle}" Margin="10,0,0,0" Background="#D50000"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Page>

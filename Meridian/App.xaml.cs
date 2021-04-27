@@ -1,188 +1,176 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Threading;
-using Meridian.Controls;
-using Meridian.Domain;
-using Meridian.Model;
-using Meridian.Resources.Localization;
+﻿using Windows.ApplicationModel.Activation;
+using Microsoft.UI.Xaml;
+using Jupiter.Application;
+using Jupiter.Services.Navigation;
+using Meridian.View;
+using GalaSoft.MvvmLight.Ioc;
+using VkLib;
 using Meridian.Services;
-using Meridian.View.Flyouts;
-using Meridian.ViewModel;
-using Yandex.Metrica;
-using Application = System.Windows.Application;
+using Windows.ApplicationModel.Core;
+using Windows.Foundation.Metadata;
+using Windows.UI.ViewManagement;
+using Microsoft.UI;
+using GalaSoft.MvvmLight.Messaging;
+using Meridian.Utils.Messaging;
+using Windows.ApplicationModel;
+using System;
+using Meridian.View.Common;
+using Meridian.Enum;
+using System.Globalization;
+using Meridian.Utils.Helpers;
+using Windows.UI.Popups;
+using Windows.System;
+using LastFmLib;
+using Meridian.WinUI;
+using Windows.UI.Core;
 
 namespace Meridian
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public partial class App : Application
+    sealed partial class App
     {
-        private NotifyIcon _trayIcon;
+        private Window _window;
+        private NavigationService _navigationService;
 
-        public static readonly string Root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-        private async void App_OnStartup(object sender, StartupEventArgs e)
+        public Window CurrentWindow
         {
-            LoggingService.Log("Meridian v" + Assembly.GetExecutingAssembly().GetName().Version + " started. OS: " + Environment.OSVersion);
-
-            //DispatcherHelper.Initialize();
-
-            Settings.Load();
-
-            if (Settings.Instance.SendStats)
-            {
-                YandexMetricaFolder.SetCurrent(Directory.GetCurrentDirectory());
-                YandexMetrica.Activate("60fb8ba9-ab3c-4ee8-81ac-559c8aeb305e"); //Yandex Metrica
-            }
-
-            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Instance.Language);
-            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Threading.Thread.CurrentThread.CurrentCulture;
-
-            if (Settings.Instance.Accounts.Count == 0)
-            {
-                Settings.Instance.Accounts.Add(new Account() { Id = "vk", Title = MainResources.SettingsAccountsVk });
-                Settings.Instance.Accounts.Add(new Account() { Id = "lasfm", Title = MainResources.SettingsAccountsLastFm });
-            }
-
-            ServiceLocator.DataBaseService.Initialize();
-
-            if (Settings.Instance.NeedClean)
-            {
-                ViewModelLocator.UpdateService.Clean();
-
-                Settings.Instance.NeedClean = false;
-            }
-
-            switch (Settings.Instance.AccentColor)
-            {
-                case "Red":
-                case "Emerald":
-                case "Magenta":
-                case "Mango":
-                case "Sea":
-                case "Sky":
-                case "Purple":
-                case "Pink":
-                    Resources.MergedDictionaries[0].Source = new Uri(string.Format("/Resources/Themes/Accents/{0}.xaml", Settings.Instance.AccentColor), UriKind.Relative);
-                    break;
-
-                default:
-                    Resources.MergedDictionaries[0].Source = new Uri("/Resources/Themes/Accents/Blue.xaml", UriKind.Relative);
-                    break;
-            }
-
-            switch (Settings.Instance.Theme)
-            {
-                case "Light":
-                case "Dark":
-                case "Graphite":
-                case "Accent":
-                    Resources.MergedDictionaries[1].Source = new Uri(string.Format("/Resources/Themes/{0}.xaml", Settings.Instance.Theme), UriKind.Relative);
-                    break;
-
-                default:
-                    Resources.MergedDictionaries[1].Source = new Uri("/Resources/Themes/Light.xaml", UriKind.Relative);
-                    break;
-            }
-
-            if (Settings.Instance.EnableTrayIcon)
-                AddTrayIcon();
-
-            ViewModelLocator.Vkontakte.UseHttps = Settings.Instance.UseHttps;
-
-            AudioService.Load();
+            get { return _window; }
         }
 
-        private void App_OnExit(object sender, ExitEventArgs e)
+        public NavigationService NavigationService
         {
-            RemoveTrayIcon();
-
-            AudioService.Save();
-            AudioService.Dispose();
+            get { return _navigationService; }
         }
 
-        private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        /// <summary>
+        /// Initializes the singleton application object.  This is the first line of authored code
+        /// executed, and as such is the logical equivalent of main() or WinMain().
+        /// </summary>
+        public App()
         {
-            LoggingService.Log(e.Exception);
+            this.InitializeComponent();
 
-            Dispatcher.Invoke(async () =>
-            {
-                e.Handled = true;
+            Ioc.Setup();
 
-                var flyout = new FlyoutControl();
-                flyout.FlyoutContent = new CommonErrorView();
-                var restart = (bool)await flyout.ShowAsync();
-                if (restart)
-                {
-                    Process.Start(Application.ResourceAssembly.Location);
-                }
-
-                Shutdown();
-            });
-
+            if (AppState.Theme != null)
+                RequestedTheme = AppState.Theme.Value;
         }
 
-        public void AddTrayIcon()
+        protected async override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs e)
         {
-            if (_trayIcon != null)
+            base.OnLaunched(e);
+
+            Logger.AppStart();
+
+            await AudioService.Instance.LoadState();
+
+            _window = new Window();
+            _window.Activate();
+
+            var shell = new Shell();
+            _window.Content = shell;
+
+            _navigationService = new NavigationService(shell.ContentFrame);
+
+            var vk = SimpleIoc.Default.GetInstance<Vk>();
+            vk.Language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+            var lastFm = Ioc.Resolve<LastFm>();
+            lastFm.SessionKey = AppState.LastFmSession?.Key;
+
+            if (AppState.VkToken == null || AppState.VkToken.HasExpired)
             {
-                return;
+                NavigationService.Navigate(typeof(LoginView));
             }
-
-            _trayIcon = new NotifyIcon
+            else
             {
-                Icon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location),
-                Text = "Meridian " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2)
-            };
-            _trayIcon.MouseClick += TrayIconOnMouseClick;
-            _trayIcon.Visible = true;
 
-            _trayIcon.ContextMenuStrip = new ContextMenuStrip();
-            var closeItem = new System.Windows.Forms.ToolStripMenuItem();
-            closeItem.Text = MainResources.Close;
-            closeItem.Click += (s, e) =>
-            {
-                foreach (Window window in Windows)
-                {
-                    window.Close();
-                }
-            };
-            _trayIcon.ContextMenuStrip.Items.Add(closeItem);
-        }
+                vk.AccessToken = AppState.VkToken;
+                Messenger.Default.Send(new MessageUserAuthChanged { IsLoggedIn = true });
 
-        private void TrayIconOnMouseClick(object sender, MouseEventArgs mouseEventArgs)
-        {
-            foreach (Window window in Windows)
-            {
-                if (window.Visibility == Visibility.Collapsed)
-                {
-                    window.Visibility = Visibility.Visible;
-                    window.Show();
-                }
-
-                window.Activate();
-
-                if (window.WindowState == WindowState.Minimized)
-                    window.WindowState = WindowState.Normal;
+                if (AppState.StartPage == StartPage.Mymusic)
+                    NavigationService.Navigate(typeof(MyMusicView));
+                else
+                    NavigationService.Navigate(typeof(ExploreView));
             }
         }
 
-        public void RemoveTrayIcon()
-        {
-            if (_trayIcon != null)
-            {
-                _trayIcon.MouseClick -= TrayIconOnMouseClick;
-                _trayIcon.Visible = false;
-                _trayIcon.Dispose();
-                _trayIcon = null;
-            }
-        }
+        //public override async void OnStart(StartKind startKind, IActivatedEventArgs args)
+        //{
+        //    Logger.AppStart();
+
+        //    //DispatcherHelper.Initialize();
+        //    //CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
+        //    //if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+        //    //{
+        //    //    var appView = ApplicationView.GetForCurrentView();
+        //    //    appView.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+        //    //    appView.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+        //    //}
+
+        //    //await AudioService.Instance.LoadState();
+
+        //    //var vk = SimpleIoc.Default.GetInstance<Vk>();
+        //    //vk.Language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+        //    //var lastFm = Ioc.Resolve<LastFm>();
+        //    //lastFm.SessionKey = AppState.LastFmSession?.Key;
+
+        //    //if (AppState.VkToken == null || AppState.VkToken.HasExpired)
+        //    //{
+        //    //    NavigationService.Navigate(typeof(LoginView));
+        //    //}
+        //    //else
+        //    //{
+
+        //    //    vk.AccessToken = AppState.VkToken;
+        //    //    Messenger.Default.Send(new MessageUserAuthChanged { IsLoggedIn = true });
+
+        //    //    if (AppState.StartPage == StartPage.Mymusic)
+        //    //        NavigationService.Navigate(typeof(MyMusicView));
+        //    //    else
+        //    //        NavigationService.Navigate(typeof(ExploreView));
+        //    //}
+        //}
+
+        //public override async void OnSuspending(SuspendingEventArgs e)
+        //{
+        //    base.OnSuspending(e);
+
+        //    //var deferral = e.SuspendingOperation.GetDeferral();
+
+        //    //TileHelper.UpdateIsPlaying(false);
+        //    //await AudioService.Instance.SaveState();
+
+        //    //deferral.Complete();
+        //}
+
+        //public override void OnInitialize(IActivatedEventArgs args)
+        //{
+        //    //var window = new Window();
+        //    //window.Activate();
+
+        //    ////content may already be shell when resuming
+        //    //if (Window.Current?.Content is Shell)
+        //    //{
+        //    //    base.OnInitialize(args);
+        //    //    return;
+        //    //}
+
+        //    //if (AppState.Accent != "Blue")
+        //    //    Resources.MergedDictionaries[0].Source = new Uri($"ms-appx:///Resources/Accents/{AppState.Accent ?? "Blue"}.xaml");
+
+        //    //// setup hamburger shell
+        //    //var shell = new Shell();
+        //    //var navigationService = new NavigationService(shell.ContentFrame);
+        //    //navigationService.IsBackButtonEnabled = false;
+        //    //var windowWrapper = new WindowWrapper(window);
+        //    //WindowWrapper.Current().NavigationService = navigationService;
+        //    ////Window.Current.Content = shell;
+        //    //window.Content = shell;
+        //}
     }
 }

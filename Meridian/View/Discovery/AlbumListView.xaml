@@ -1,0 +1,83 @@
+﻿<Page
+    x:Class="Meridian.View.Discovery.AlbumListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="using:Meridian.View.Controls"
+    xmlns:appControls="using:Meridian.Controls"
+    xmlns:vm="using:Meridian.ViewModel.Discovery"
+    mc:Ignorable="d"
+    x:Name="rootElement">
+
+    <Page.DataContext>
+        <vm:AlbumlistViewModel />
+    </Page.DataContext>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="CompactState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <RelativePanel >
+            <view:PageHeaderControl x:Name="PageHeader" Title="{Binding [PageHeader_Albums], Source={StaticResource Resources}}" />
+
+            <appControls:SearchBox x:Name="SearchBox" x:Uid="SearchBox" SearchCommand="{Binding Main.SearchCommand, Source={StaticResource Locator}}"
+                                   Margin="0,0,10,0"
+                                   RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
+        </RelativePanel>
+
+        <!-- Albums -->
+        <ListView Grid.Row="1" Margin="0,5,0,0" Padding="7,0,0,0" ItemsSource="{Binding Albums}" Style="{StaticResource TracksListViewStyle}" ItemContainerStyle="{StaticResource PlaylistCompactListViewItemStyle}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Button Style="{StaticResource SimpleButtonStyle}"
+                            Width="100" ToolTipService.ToolTip="{Binding Title}"
+                            Command="{Binding DataContext.GoToAlbumCommand, ElementName=rootElement}"
+                            CommandParameter="{Binding}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="45"/>
+                            </Grid.RowDefinitions>
+                            <Grid Background="{ThemeResource SystemControlForegroundAccentBrush}">
+                                <Path Data="{StaticResource LogoBird}" Fill="White" Stretch="Uniform" Margin="40"/>
+                                <Image Source="{Binding Cover}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Grid>
+                            <StackPanel Grid.Row="1" >
+                                <TextBlock Text="{Binding Title}" Margin="0,5,0,0" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" TextTrimming="CharacterEllipsis" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="2"/>
+                                <TextBlock Text="{Binding Artist.Name}" Margin="0,-2,0,0" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" TextTrimming="CharacterEllipsis" Opacity="0.6"/>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

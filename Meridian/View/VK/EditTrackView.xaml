@@ -1,0 +1,48 @@
+﻿<Page
+    x:Class="Meridian.View.VK.EditTrackView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Meridian.ViewModel.VK"
+    d:DesignHeight="500"
+    d:DesignWidth="600"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:EditTrackViewModel />
+    </Page.DataContext>
+
+    <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid HorizontalAlignment="Stretch" MaxWidth="400" Margin="15,10,15,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="{Binding [EditTrack_Title], Source={StaticResource Resources}, Converter={StaticResource StringToUpperConverter}}" FontWeight="Bold" FontSize="14"/>
+
+            <ScrollViewer Grid.Row="1" Margin="0,20,-15,0" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
+                <StackPanel Margin="0,0,15,0">
+                    <TextBox Header="{Binding [EditTrack_TitleHeader], Source={StaticResource Resources}}" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Header="{Binding [EditTrack_ArtistHeader], Source={StaticResource Resources}}" Text="{Binding Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0"/>
+
+                    <StackPanel Margin="0,10,0,0">
+                        <TextBlock Text="{Binding [EditTrack_LyricsHeader], Source={StaticResource Resources}}" Margin="0,0,0,8"/>
+                        <TextBox AcceptsReturn="True" Text="{Binding Lyrics, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="180" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0" Grid.Row="2">
+                <Button Content="{Binding [Save], Source={StaticResource Resources}}"  Command="{Binding SaveCommand}"
+                        Style="{StaticResource HighlightButtonStyle}" />
+
+                <Button Content="{Binding [Close], Source={StaticResource Resources}}" VerticalAlignment="Bottom" Command="{Binding CloseCommand}"
+                        Style="{StaticResource CommonButtonStyle}" Margin="10,0,0,0" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Page>

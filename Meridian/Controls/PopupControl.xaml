@@ -1,0 +1,103 @@
+﻿<UserControl
+    x:Class="Meridian.Controls.PopupControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Meridian.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    x:Name="rootElement">
+
+    <UserControl.Resources>
+        <Storyboard x:Key="ShowAnim">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BackgroundOverlay" Storyboard.TargetProperty="Opacity">
+                <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0.6">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetName="BackgroundBlur" Storyboard.TargetProperty="Opacity">
+                <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase Exponent="8" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>-->
+        </Storyboard>
+
+        <Storyboard x:Key="CloseAnim" Completed="CloseAnim_Completed">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="rootElement" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="CompactState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BottomRow.Height" Value="0" />
+                        <Setter Target="TopRow.Height" Value="0.1*" />
+                        <Setter Target="TopShadow.Height" Value="14" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BottomRow.Height" Value="0.3*" />
+                        <Setter Target="TopRow.Height" Value="0.3*" />
+                        <Setter Target="TopShadow.Height" Value="2" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TopRow" Height="0.3*"/>
+            <RowDefinition />
+            <RowDefinition x:Name="BottomRow" Height="0.3*"/>
+        </Grid.RowDefinitions>
+
+        <controls:BackDrop x:Name="BackgroundBlur" Grid.RowSpan="3" BlurAmount="0"/>
+        <Rectangle x:Name="BackgroundOverlay" Fill="Black" Opacity="0.6" Grid.RowSpan="3" Tapped="BackgroundOverlay_Tapped"/>
+
+        <Rectangle x:Name="TopShadow" VerticalAlignment="Bottom" Height="2" Opacity="0.1">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#00000000" Offset="0"/>
+                    <GradientStop Color="#FF000000" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle x:Name="BottomShadow" VerticalAlignment="Top" Height="8" Opacity="0.1" Grid.Row="2">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                    <GradientStop Color="#00000000" Offset="0"/>
+                    <GradientStop Color="#FF000000" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Frame x:Name="PopupFrame" Grid.Row="1" Navigating="PopupFrame_Navigating" Navigated="PopupFrame_Navigated">
+            <!--<Frame.ContentTransitions>
+                <TransitionCollection>
+                    <ContentThemeTransition />
+                </TransitionCollection>
+            </Frame.ContentTransitions>-->
+        </Frame>
+    </Grid>
+</UserControl>

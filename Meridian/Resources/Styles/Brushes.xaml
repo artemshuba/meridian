@@ -1,0 +1,24 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <Color x:Key="BackgroundArtFadeColor">#00FFFFFF</Color>
+            <Color x:Key="BackgroundArtMiddleFadeColor">#55FFFFFF</Color>
+
+            <x:String x:Key="AlbumDefaultCover">/Resources/Images/AlbumDefaultCover-Light.png</x:String>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <Color x:Key="BackgroundArtFadeColor">#00232323</Color>
+            <Color x:Key="BackgroundArtMiddleFadeColor">#55232323</Color>
+
+            <Color x:Key="SystemAltHighColor">#232323</Color>
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#232323"/>
+
+            <x:String x:Key="AlbumDefaultCover">/Resources/Images/AlbumDefaultCover-Dark.png</x:String>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <SolidColorBrush x:Key="ScrollBarTrackFill" Color="{ThemeResource SystemBaseHighColor}" Opacity="0.05"/>
+</ResourceDictionary>

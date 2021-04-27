@@ -1,0 +1,18 @@
+﻿using Meridian.ViewModel.VK;
+using Microsoft.UI.Xaml.Controls;
+
+namespace Meridian.View
+{
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class PopularMusicView : Page
+    {
+        public PopularMusicViewModel ViewModel => DataContext as PopularMusicViewModel;
+
+        public PopularMusicView()
+        {
+            this.InitializeComponent();
+        }
+    }
+}

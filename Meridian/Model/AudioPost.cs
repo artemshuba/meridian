@@ -1,32 +1,54 @@
-﻿using System;
+﻿using Meridian.Interfaces;
+using System;
 using System.Collections.Generic;
 using VkLib.Core.Users;
 
 namespace Meridian.Model
 {
     /// <summary>
-    /// Пост с аудиозаписями
+    /// Post with attached tracks
     /// </summary>
-    public class AudioPost : Audio
+    public class AudioPost
     {
         /// <summary>
-        /// Текст
+        /// Id
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Publish date
+        /// </summary>
+        public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Post content
         /// </summary>
         public string Text { get; set; }
 
         /// <summary>
-        /// Аудиозаписи
+        /// Author
         /// </summary>
-        public List<Audio> Audios { get; set; }
+        public VkProfileBase Author { get; set; }
 
         /// <summary>
-        /// Автор
+        /// Image uri
         /// </summary>
-        public VkProfile Author { get; set; }
+        public Uri ImageUri { get; set; }
 
         /// <summary>
-        /// Дата публикации
+        /// Tracks
         /// </summary>
-        public DateTime Date { get; set; }
+        public List<IAudio> Tracks { get; set; }
+
+        /// <summary>
+        /// Link to this post
+        /// </summary>
+        public Uri PostUri { get; set; }
+
+        /// <summary>
+        /// Link to author
+        /// </summary>
+        public Uri AuthorUri { get; set; }
+
     }
 }
